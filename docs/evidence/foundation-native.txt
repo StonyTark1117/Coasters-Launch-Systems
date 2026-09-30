@@ -1,0 +1,21 @@
+> Task :createMinecraftArtifacts UP-TO-DATE
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :jarJar NO-SOURCE
+> Task :jar
+> Task :assemble
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+> Task :test
+> Task :check
+> Task :build
+> Task :downloadAssets
+> Task :writeGameTestServerLegacyClasspath
+> Task :prepareGameTestServerRun
+> Task :runGameTestServer
+LS_NATIVE_POINT_FORCE phase=launch speed=3.991027593612671 seconds=1.999999999999997 impulse=3.999999999999994 mass=1.0 moved=4.0499725341796875
+LS_NATIVE_POINT_FORCE phase=stop speed=0.0 impulse=-9.5978379299963E-6
+[13:04:26] [Server thread/INFO] [minecraft/GameTestServer]: All 1 required tests passed :)
+BUILD SUCCESSFUL in 1m 19s

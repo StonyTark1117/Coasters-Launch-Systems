@@ -1,0 +1,2 @@
+dev.coasterslaunchsystems.MechanismMathTest: tests=8 failures=0 errors=0
+dev.coasterslaunchsystems.StoredEnergyTest: tests=4 failures=0 errors=0

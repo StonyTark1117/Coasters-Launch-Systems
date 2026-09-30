@@ -1,0 +1,100 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+
+version = mod_version
+group = 'dev.coasterslaunchsystems'
+base { archivesName = 'coasters-launch-systems' }
+// Java classpaths use ':' as a separator on Unix. Keep compiled outputs outside a
+// colon-containing checkout (such as the project's human-readable title).
+if (projectDir.absolutePath.contains(':') && File.pathSeparator == ':') {
+    layout.buildDirectory = file("${System.getProperty('java.io.tmpdir')}/coasterslaunchsystems-${Integer.toHexString(projectDir.absolutePath.hashCode())}/build")
+}
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+if (project.hasProperty('lsPackaged')) {
+    sourceSets { packaged }
+    configurations.packagedImplementation.extendsFrom(configurations.implementation)
+    configurations.packagedRuntimeOnly.extendsFrom(configurations.runtimeOnly)
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.blamejared.com' }
+    maven { url = 'https://maven.createmod.net' }
+    maven { url = 'https://maven.ithundxr.dev/snapshots' }
+    maven {
+        url = 'https://maven.ryanhcode.dev/releases'
+        content { includeGroup 'dev.ryanhcode.sable'; includeGroup 'dev.ryanhcode.sable-companion' }
+    }
+    maven { url = 'https://www.cursemaven.com'; content { includeGroup 'curse.maven' } }
+}
+
+neoForge {
+    version = neo_version
+    if (project.hasProperty('lsPackaged')) addModdingDependenciesTo sourceSets.packaged
+    runs {
+        client {
+            client(); gameDirectory = layout.buildDirectory.dir(project.hasProperty('lsPackaged') ? 'runs/packaged-client' : 'runs/client').get().asFile
+            if (project.hasProperty('lsConnect')) programArguments.addAll '--quickPlayMultiplayer', project.property('lsConnect')
+            if (project.hasProperty('lsWorld')) programArguments.addAll '--quickPlaySingleplayer', project.property('lsWorld')
+            systemProperty 'coasterslaunchsystems.validation', project.hasProperty('lsValidation').toString()
+        }
+        observer {
+            client(); gameDirectory = layout.buildDirectory.dir(project.hasProperty('lsPackaged') ? 'runs/packaged-observer' : 'runs/observer').get().asFile
+            programArguments.addAll '--username', 'Observer'
+            if (project.hasProperty('lsConnect')) programArguments.addAll '--quickPlayMultiplayer', project.property('lsConnect')
+            systemProperty 'coasterslaunchsystems.validation', project.hasProperty('lsValidation').toString()
+        }
+        server {
+            server(); gameDirectory = layout.buildDirectory.dir(project.hasProperty('lsPackaged') ? 'runs/packaged-server' : 'runs/server').get().asFile; programArgument '--nogui'
+            systemProperty 'coasterslaunchsystems.freezeOnStart', project.hasProperty('lsFrozen').toString()
+        }
+        gameTestServer {
+            type = 'gameTestServer'
+            gameDirectory = layout.buildDirectory.dir('runs/gametest').get().asFile
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'coasterslaunchsystems'
+        }
+        configureEach {
+            logLevel = org.slf4j.event.Level.INFO
+            if (project.hasProperty('lsPackaged')) {
+                sourceSet = sourceSets.packaged
+                loadedMods = []
+            }
+        }
+    }
+    if (!project.hasProperty('lsPackaged')) mods { coasterslaunchsystems { sourceSet(sourceSets.main) } }
+}
+
+dependencies {
+    if (project.hasProperty('lsPackaged')) packagedRuntimeOnly files(layout.buildDirectory.file("libs/coasters-launch-systems-${mod_version}.jar"))
+    implementation('com.simibubi.create:create-1.21.1:6.0.10-280:slim') { transitive = false }
+    implementation 'net.createmod.ponder:ponder-neoforge:1.0.82+mc1.21.1'
+    compileOnly 'dev.engine-room.flywheel:flywheel-neoforge-api-1.21.1:1.0.6'
+    runtimeOnly 'dev.engine-room.flywheel:flywheel-neoforge-1.21.1:1.0.6'
+    implementation 'com.tterrag.registrate:Registrate:MC1.21-1.3.0+67'
+    implementation 'dev.ryanhcode.sable:sable-neoforge-1.21.1:2.0.3'
+    implementation 'curse.maven:create-coasters-simulated-1601871:8655742'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'
+}
+configurations.configureEach {
+    resolutionStrategy.force 'com.simibubi.create:create-1.21.1:6.0.10-280'
+}
+
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+tasks.named('test') { useJUnitPlatform() }
+tasks.named('jar') {
+    from('LICENSE') { into 'META-INF'; rename { 'LICENSE-coasterslaunchsystems.txt' } }
+}
+tasks.named('runGameTestServer') {
+    doFirst { delete layout.buildDirectory.dir('runs/gametest/world') }
+}
+tasks.named('processResources') {
+    inputs.property 'version', project.version
+    filesMatching('META-INF/neoforge.mods.toml') { expand version: project.version }
+}
