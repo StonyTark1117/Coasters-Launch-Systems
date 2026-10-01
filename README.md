@@ -2,7 +2,7 @@
 
 A standalone Create: Coasters Simulated addon in development toward **0.4.0**. The planned release includes tire, LIM, LSM, flywheel, hydraulic and pneumatic launches, distinct friction/skid/magnetic brakes, local ride control and explicit compatibility with Fourth Dimension vehicles.
 
-The current `0.0.1-dev.9` checkpoint adds departure into an adjacent reserved section, whole-consist tail clearance, interruption retention and inspected saved-transfer recovery. The controller reserves the receiver before applying exit tire work and requires a fresh request after initial hold or saved inspection. Occupied ordinary carts, coupled ordinary/Arrow pairs and individual Free Spin cars use native rail transitions and vehicle-owned dispatch. Earlier tire, friction and passive-magnetic evidence remains. The requested 0.4.0 release gates remain in progress. See [release roadmap](ROADMAP.md), [section transfer scope](docs/SECTION-TRANSFERS.md), and [validation status](docs/VALIDATION.md).
+The current `0.0.1-dev.10` checkpoint reserves curved routes between straight equipment sections. Occupied ordinary carts, coupled ordinary/Arrow pairs and an individual Free Spin car complete repeated native circuits, actual passenger exit/reboarding and a fresh departure in scoped fixtures. Intermediate occupancy and handle-only geometry edits deny departure without launch work. Fourth Dimension station capture remains an explicit public operation in the fixture; automatic station behavior and the requested 0.4.0 release gates remain in progress. See [release roadmap](ROADMAP.md), [circuit scope](docs/CIRCUITS.md), and [validation status](docs/VALIDATION.md).
 
 ## Development stack
 

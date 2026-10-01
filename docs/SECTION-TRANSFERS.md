@@ -1,5 +1,7 @@
 # Section transfer checkpoint: 0.0.1-dev.9
 
+This page preserves dev.9 acceptance. See [dev.10 circuit scope](CIRCUITS.md) for longer reserved routes, schema-3 persistence and explicit station capture/boarding fixtures.
+
 This extends the straight, level, unbanked controller prototype with a reserved handoff between two consecutive fixed edges. It is partial LS004/LS104 progress toward the complete 0.4.0 release. A complete circuit, station boarding/capture/reset, curved routes, switches and the remaining release gates are unfinished.
 
 ## Installation

@@ -1,0 +1,16 @@
+Private repository: StonyTark1117/Coasters-Launch-Systems
+Source: 0111a090d13a960bac4b763d407ca81afaa6a054
+Run: https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36840919325
+Conclusion: success
+Command: ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2
+Downloaded report: 23 unit tests, 0 failures, 0 ignored, 100% success
+Downloaded JAR SHA-256: f358b444536b3499534ff0cc45ef334f6a03453c6e6c13e85ed08aaa22fa145c
+Local standalone and combined JAR SHA-256: f358b444536b3499534ff0cc45ef334f6a03453c6e6c13e85ed08aaa22fa145c
+Exact byte-for-byte hash match. Combined Fourth Dimension validation remains local against the copied pinned schema-4 JAR.
+
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T09:15:43.5169995Z LS_ROUTE_GUARD mode=occupied_curve retained=2 added_work=0.0
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T09:15:43.5549675Z LS_ROUTE_GUARD mode=edited_curve retained=2 added_work=0.0
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T09:16:34.1982264Z LS_CIRCUIT mode=linked_forward departures=6 cars=2 riders=8 curve_steps=3764 retained_steps=6134 boarded_steps=1398 work=1239.6434039735389 peak_speed=2.7768084863651277 joint_error=0.0 coupler_error=0.0010282681894224766 rotor_response=0.0 loaded_mass=54.400000000000006 empty_mass=48.0
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T09:16:34.6984566Z LS_CIRCUIT mode=single_forward departures=6 cars=1 riders=4 curve_steps=1918 retained_steps=5718 boarded_steps=1406 work=613.3392059475833 peak_speed=2.680835485458374 joint_error=0.0 coupler_error=0.0 rotor_response=0.0 loaded_mass=27.200000000000003 empty_mass=24.0
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T09:16:41.5075990Z [09:16:41] [Server thread/INFO] [minecraft/GameTestServer]: All 66 required tests passed :)
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T09:16:43.8864843Z BUILD SUCCESSFUL in 6m 30s

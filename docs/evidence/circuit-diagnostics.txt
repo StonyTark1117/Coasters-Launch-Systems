@@ -1,0 +1,33 @@
+Dev.10 circuit development diagnostics; these failed runs are not acceptance evidence.
+
+Initial ordinary fixture: receiver inlet tires overlapped exit tires at the same cabinet positions. Rebinding an already armed cabinet correctly rejected setup. The fixture now places inlet tires at even offsets 2..16 and exit tires at odd offsets 11..63. The armed-module guard is unchanged.
+
+Initial combined fixture: the pinned public Fourth Dimension connect operation optimized primary endpoint axes without updating the straight neighbors to meet them. Endpoint positions matched, but tangents did not. The runtime continuity guard correctly rejected all three 4D circuits.
+
+Correction: author continuous native U-turn geometry while empty, then invoke public ProfileEditor.rebind before creating vehicles. No direct rail-profile eligibility writes, carrier-angle writes, or weakened tangent/joint/force thresholds were used.
+
+The final complete standalone/combined suites pass on source 0111a090d13a960bac4b763d407ca81afaa6a054. See circuit-packaged-standalone.txt and circuit-packaged-combined.txt.
+
+Historical diagnostic log: launchsystems-circuit-standalone.log
+[01:33:36] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_routes.circuit_single_forward failed at -11304106, -60, 11821985! Disarm the module before rebinding
+[01:33:36] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_routes.circuit_linked_forward failed at -11304098, -60, 11821985! Disarm the module before rebinding
+[01:33:36] [Server thread/INFO] [minecraft/GameTestServer]: 2 required tests failed :(
+BUILD FAILED in 22s
+
+Historical diagnostic log: launchsystems-circuit-combined.log
+[01:41:53] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_routes.circuit_arrow_forward failed at -9592635, -60, -2279408! Transfer route has a discontinuous rail joint
+[01:41:53] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_routes.circuit_arrow_linked_forward failed at -9592627, -60, -2279408! Transfer route has a discontinuous rail joint
+[01:41:53] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_routes.circuit_free_spin_forward failed at -9592619, -60, -2279408! Transfer route has a discontinuous rail joint
+[01:42:20] [Server thread/INFO] [minecraft/GameTestServer]: 3 required tests failed :(
+BUILD FAILED in 45s
+
+Historical diagnostic log: launchsystems-circuit-join-diagnostic.log
+LS_CIRCUIT_JOIN mode=arrow_forward a_end=(128.5, 304.8125, -831.5) a_forward=(0.0, 0.0, 1.0) curve_start=(128.5, 304.8125, -831.5) curve_forward=(0.7661638586454365, 0.0, 0.6426452689513366) curve_end_forward=(0.6129004900233158, 0.0, -0.7901601036050727) b_forward=(-0.0, -0.0, -1.0)
+[01:46:04] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_routes.circuit_arrow_forward failed at -3953995, -60, 13146766! Transfer route has a discontinuous rail joint
+LS_CIRCUIT_JOIN mode=arrow_linked_forward a_end=(176.5, 304.8125, -831.5) a_forward=(0.0, 0.0, 1.0) curve_start=(176.5, 304.8125, -831.5) curve_forward=(0.7661638586454365, 0.0, 0.6426452689513366) curve_end_forward=(0.6129004900233158, 0.0, -0.7901601036050727) b_forward=(-0.0, -0.0, -1.0)
+[01:46:04] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_routes.circuit_arrow_linked_forward failed at -3953987, -60, 13146766! Transfer route has a discontinuous rail joint
+LS_CIRCUIT_JOIN mode=free_spin_forward a_end=(224.5, 304.8125, -831.5) a_forward=(0.0, 0.0, 1.0) curve_start=(224.5, 304.8125, -831.5) curve_forward=(0.7661638586454365, 0.0, 0.6426452689513366) curve_end_forward=(0.6129004900233158, 0.0, -0.7901601036050727) b_forward=(-0.0, -0.0, -1.0)
+[01:46:04] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_routes.circuit_free_spin_forward failed at -3953979, -60, 13146766! Transfer route has a discontinuous rail joint
+[01:46:30] [Server thread/INFO] [minecraft/GameTestServer]: 3 required tests failed :(
+BUILD FAILED in 44s
+
