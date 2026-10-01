@@ -1,6 +1,7 @@
 package dev.coasterslaunchsystems.runtime;
 
 import com.mojang.logging.LogUtils;
+import dev.coasterslaunchsystems.api.MotionProviders;
 import dev.coasterslaunchsystems.content.EquipmentCabinetEntity;
 import dev.coasterslaunchsystems.content.EquipmentContent;
 import dev.coasterslaunchsystems.content.RideControllerEntity;
@@ -28,12 +29,28 @@ import net.minecraft.world.level.block.Blocks;
 import org.joml.Quaterniond;
 import org.joml.Vector3d;
 
-/** Restores a passive native guide/hold for an inspected, idle carriage after world load. */
+/** Restores native holds for saved cable carriages without granting dispatch authority. */
 public final class CableRecovery {
-  private record Hold(ServerSubLevel carriage, GenericConstraintHandle guide, NativeFinClamp brake,
-      Vector3d home, Vector3d point) {
-    void close() { brake.close(); if (guide.isValid()) guide.remove(); }
+  private static final class Hold {
+    private final ServerSubLevel carriage;
+    private final GenericConstraintHandle guide;
+    private final NativeFinClamp brake;
+    private final Vector3d home, point;
+    private GenericConstraintHandle catchJoint;
+    private UUID caught;
+    private Hold(ServerSubLevel carriage, GenericConstraintHandle guide, NativeFinClamp brake, Vector3d home, Vector3d point) {
+      this.carriage = carriage; this.guide = guide; this.brake = brake; this.home = home; this.point = point;
+    }
+    ServerSubLevel carriage() { return carriage; }
+    Vector3d home() { return home; }
+    Vector3d point() { return point; }
+    void close() { if (catchJoint != null && catchJoint.isValid()) catchJoint.remove(); brake.close(); if (guide.isValid()) guide.remove(); }
     boolean valid() { return !carriage.isRemoved() && guide.isValid() && brake.valid(); }
+    boolean caught(UUID chassis) { return chassis != null && chassis.equals(caught) && catchJoint != null && catchJoint.isValid(); }
+    void attach(UUID chassis, GenericConstraintHandle joint) {
+      if (catchJoint != null && catchJoint.isValid()) catchJoint.remove();
+      caught = chassis; catchJoint = joint;
+    }
   }
   private static final Map<ServerLevel, Map<UUID, Hold>> HOLDS = new HashMap<>();
   private static final Map<ServerLevel, Set<UUID>> WARNED = new HashMap<>();
@@ -49,7 +66,7 @@ public final class CableRecovery {
     var container = SubLevelContainer.getContainer(level);
     if (container != null) for (var info : container.getAllTickets().values()) for (var ticket : info.tickets()) {
       if (ticket.getType() != CableTickets.CARRIAGE || !(ticket.getKey() instanceof CableTickets.Key key)
-          || retained.containsKey(key.carriage()) || CableControllers.hasLiveCarriage(level, key.carriage())
+          || CableControllers.hasLiveCarriage(level, key.carriage())
           || Math.abs((long) key.cabinet().getX()) > 1024 || Math.abs((long) key.cabinet().getZ()) > 1024) continue;
       // A force-loaded native carriage must bring its owning cabinet into memory before the first physics step.
       level.getChunkAt(key.cabinet());
@@ -58,11 +75,25 @@ public final class CableRecovery {
     for (var cabinet : candidates) {
       if (cabinet.isRemoved() || cabinet.mechanism() != Mechanism.FLYWHEEL || !cabinet.cableInstalled()
           || cabinet.cableCarriage() == null || cabinet.fault().isEmpty()
-          || CableControllers.hasLiveCarriage(level, cabinet.cableCarriage())
-          || retained.containsKey(cabinet.cableCarriage())) continue;
+          || CableControllers.hasLiveCarriage(level, cabinet.cableCarriage())) continue;
       try {
-        var hold = restorePassive(level, cabinet);
-        if (hold != null) { retained.put(cabinet.cableCarriage(), hold); WARNED.computeIfAbsent(level, ignored -> new HashSet<>()).remove(cabinet.cableCarriage()); }
+        var hold = retained.get(cabinet.cableCarriage());
+        if (hold == null) {
+          hold = restorePassive(level, cabinet);
+          if (hold != null) retained.put(cabinet.cableCarriage(), hold);
+        }
+        if (hold != null) {
+          if (cabinet.cableInUse() && !hold.caught(cabinet.cableChassis())) {
+            try { restoreCatch(level, cabinet, hold); }
+            catch (RuntimeException failure) {
+              if (WARNED.computeIfAbsent(level, ignored -> new HashSet<>()).add(cabinet.cableCarriage()))
+                LogUtils.getLogger().warn("Cable carriage {} is passively held; active catch joint is pending inspection: {}",
+                    cabinet.cableCarriage(), failure.getMessage());
+              continue;
+            }
+          }
+          WARNED.computeIfAbsent(level, ignored -> new HashSet<>()).remove(cabinet.cableCarriage());
+        }
       } catch (RuntimeException failure) {
         // A mismatched carriage is never pulled toward the guide or made operable.
         if (WARNED.computeIfAbsent(level, ignored -> new HashSet<>()).add(cabinet.cableCarriage()))
@@ -75,6 +106,10 @@ public final class CableRecovery {
   public static boolean stabilized(ServerLevel level, UUID carriage) {
     var hold = HOLDS.getOrDefault(level, Map.of()).get(carriage);
     return hold != null && hold.valid();
+  }
+  public static boolean catchRestored(ServerLevel level, UUID carriage, UUID chassis) {
+    var hold = HOLDS.getOrDefault(level, Map.of()).get(carriage);
+    return hold != null && hold.valid() && hold.caught(chassis);
   }
 
   /** Explicitly retire a reloaded idle installation only after its entire physical ownership is checked. */
@@ -147,15 +182,6 @@ public final class CableRecovery {
         && new CableTickets.Key(id, cabinet.getBlockPos()).equals(entry.getKey())
         || entry.getType() == CableTickets.LEGACY_CARRIAGE && id.equals(entry.getKey()))) return null;
     if (!(container.getSubLevel(id) instanceof ServerSubLevel carriage) || carriage.isRemoved()) return null;
-    if (cabinet.cableInUse()) {
-      var chassis = cabinet.cableChassis();
-      var body = chassis == null ? null : container.getSubLevel(chassis);
-      var info = chassis == null ? null : container.getAllTickets().get(chassis);
-      var key = new CableTickets.Key(id, cabinet.getBlockPos());
-      if (!(body instanceof ServerSubLevel) || info == null || info.tickets().stream().noneMatch(
-          entry -> entry.getType() == CableTickets.CAPTURED_BODY && key.equals(entry.getKey())))
-        throw new IllegalStateException("Saved captured train body or its native loading ticket is unavailable");
-    }
     var track = cabinet.resolve(level);
     if (track == null || cabinet.cableHome() + 20 > track.length()) return null;
     var hit = track.hitAtDistance(level, cabinet.cableHome());
@@ -198,6 +224,56 @@ public final class CableRecovery {
     guide.setLimit(ConstraintJointAxis.LINEAR_X, 0, 20);
     try { return new Hold(carriage, guide, new NativeFinClamp(pipeline, carriage, point, direction, 256), home, point); }
     catch (RuntimeException failure) { guide.remove(); throw failure; }
+  }
+
+  private static void restoreCatch(ServerLevel level, EquipmentCabinetEntity cabinet, Hold hold) {
+    if (!hold.valid() || !cabinet.cableInUse() || cabinet.cableChassis() == null)
+      throw new IllegalStateException("Active catch journal or passive carriage hold is unavailable");
+    var container = SubLevelContainer.getContainer(level);
+    var chassisId = cabinet.cableChassis();
+    var key = new CableTickets.Key(cabinet.cableCarriage(), cabinet.getBlockPos());
+    var carriageTicket = container.getAllTickets().get(cabinet.cableCarriage());
+    if (carriageTicket == null || carriageTicket.tickets().stream().noneMatch(
+        t -> t.getType() == CableTickets.CARRIAGE && key.equals(t.getKey())))
+      throw new IllegalStateException("Saved carriage loading ticket changed before catch reconstruction");
+    if (!(container.getSubLevel(chassisId) instanceof ServerSubLevel chassis) || chassis.isRemoved())
+      throw new IllegalStateException("Saved captured chassis is not loaded");
+    var motion = MotionProviders.resolve(level, chassisId).orElseThrow(
+        () -> new IllegalStateException("Captured vehicle owner is unavailable after reload"));
+    var consist = Set.copyOf(motion.consist());
+    var bodies = new HashSet<UUID>();
+    for (var id : consist) {
+      var member = MotionProviders.resolve(level, id).orElseThrow(
+          () -> new IllegalStateException("Captured consist member is unavailable after reload"));
+      if (!member.provider().equals(motion.provider()) || !Set.copyOf(member.consist()).equals(consist)
+          || !member.interfaces().contains(Mechanism.FLYWHEEL))
+        throw new IllegalStateException("Captured consist identity or cable certificate changed");
+      for (var body : member.bodies()) if (!bodies.add(body))
+        throw new IllegalStateException("Captured consist has duplicate native bodies");
+    }
+    var ticketed = new HashSet<UUID>();
+    for (var entry : container.getAllTickets().entrySet())
+      if (entry.getValue().tickets().stream().anyMatch(t -> t.getType() == CableTickets.CAPTURED_BODY && key.equals(t.getKey())))
+        ticketed.add(entry.getKey());
+    if (!ticketed.equals(bodies) || bodies.isEmpty() || !bodies.contains(chassisId)
+        || bodies.stream().anyMatch(id -> !(container.getSubLevel(id) instanceof ServerSubLevel loaded) || loaded.isRemoved()))
+      throw new IllegalStateException("Captured native bodies or their loading tickets changed");
+    var socket = VehicleInterfaces.catchPoint(chassis);
+    if (socket == null || NativeCableRig.worldPoint(chassis, socket).distance(
+        NativeCableRig.worldPoint(hold.carriage(), hold.point())) >= .03)
+      throw new IllegalStateException("Saved catch socket is missing or no longer aligned");
+    var pipeline = container.physicsSystem().getPipeline();
+    for (var id : bodies) {
+      var body = (ServerSubLevel) container.getSubLevel(id);
+      if (pipeline.getLinearVelocity(body, new Vector3d()).length() >= .5
+          || pipeline.getAngularVelocity(body, new Vector3d()).length() >= .1)
+        throw new IllegalStateException("Saved captured native body is still moving");
+    }
+    var track = cabinet.resolve(level);
+    if (track == null) throw new IllegalStateException("Saved catch rail is unavailable");
+    var forward = track.forward(level, track.hitAtDistance(level, cabinet.cableHome()));
+    var direction = new Vector3d(forward.x, forward.y, forward.z);
+    hold.attach(chassisId, NativeCableRig.attachCatch(pipeline, hold.carriage(), chassis, hold.point(), socket, direction));
   }
 
   private static boolean carriageIntact(ServerSubLevel carriage) {

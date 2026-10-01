@@ -63,6 +63,8 @@ Dev.19 adds a cabinet-addressed loading ticket and a passive guide/brake reconst
 
 Dev.20 journals the captured chassis and force-loads captured native bodies while the catch is engaged. The carriage now uses a mass-centred pose pivot so Sable's saved pose preserves its world position. A real occupied home catch survives a separate server restart with both bodies present, the socket aligned, a passive carriage guide/brake and the cabinet disarmed; the earlier idle restart/inspection path still passes. Reconstructing the active catch joint and an inspected operator release, mid-pull/return restarts, articulated-body saved-world coverage, chunk/multiplayer/rendered service and the remaining mechanism gates are still open.
 
+Dev.21 reconstructs a bounded zero-target native catch joint after a saved home catch reopens. The passive carriage guide remains in place while startup verifies current provider/consist identity, every captured native body and its ticket, the socket and settled pose. Separate-process occupied ordinary and pinned Fourth Dimension Arrow fixtures check that the joint and alignment survive startup. A removed-socket fixture retains the passive carriage hold but denies joint reconstruction. The cabinet stays disarmed; active operator release, moving catches, actual chunk/multiplayer/rendered operation and the other release gates remain open.
+
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |
 | LS301 | Shared cable guide, catch socket, carriage and release/reset machine | 0.2. Real constrained pull, rated guide/end clearance, physical return and misalignment handling. No teleport, one-shot impulse or prescribed train path. |

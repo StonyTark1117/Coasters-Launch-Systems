@@ -1,0 +1,39 @@
+Dev.21 local validation, 2026-10-01, Java 21, NeoForge GameTest server.
+
+Artifact: coasters-launch-systems-0.0.1-dev.21.jar
+SHA-256: 8905c910c37a38cee3f7ff10c8a90a3ed72cb909a279b9dec7359b82baa2
+Pinned Fourth Dimension schema-4 binary SHA-256:
+027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16
+
+JUnit: 27 passed, no failures, errors or skips.
+Packaged standalone full suite: 114/114 required GameTests passed.
+Packaged combined cable suite with pinned Fourth Dimension: 17/17 passed.
+
+Idle saved-world sequence, four separate processes retaining one world:
+prepare 13/13; verify 13/13; reclaim 13/13; verifyRetired 13/13.
+The original carriage UUID survived until inspected retirement; the cleared journal
+persisted across the last restart.
+
+Occupied ordinary home catch, three separate processes retaining one world:
+prepareActive 13/13; verifyActive 13/13; repeated verifyActive 13/13.
+Same carriage UUID: 13d873f5-ce30-4d4e-9af8-e28ed287cb92.
+Same captured chassis UUID: 2f91ef7c-8d2e-405e-ae44-b0e1d2a7597f.
+At both restarts the carriage/socket separation was 0.000061411 block, the passive
+guide and reconstructed native catch joint remained valid through delayed startup,
+and the cabinet remained disarmed and faulted for inspection.
+
+Occupied Arrow home catch with the pinned Fourth Dimension binary, two separate
+processes: prepareActiveArrow 18/18; verifyActiveArrow 18/18.
+Same carriage UUID: 20bf05d6-20df-492f-9219-48180c2d5252.
+Same captured chassis UUID: 75312a06-da75-48de-a08b-fc9ecb6beb0b.
+After restart all provider-declared articulated bodies matched loaded native tickets.
+The catch joint remained valid through delayed startup and socket separation was
+0.001974937 block; the cabinet remained disarmed and faulted.
+
+Removed-socket saved-world negative case, two separate processes:
+prepareActiveMissingSocket 13/13; verifyActiveMissingSocket 13/13.
+The carriage retained its passive guide/brake but no catch joint was reconstructed.
+
+These checks establish home-position catch reconstruction and hardware-loss denial.
+They do not establish an operator release path, moving-catch restart, actual chunk
+unload/multiplayer/rendered service, or complete 0.4.0 acceptance.

@@ -149,12 +149,7 @@ public final class NativeCableRig implements AutoCloseable {
     var cart = (ServerSubLevel) container.getSubLevel(chassis); var socket = VehicleInterfaces.catchPoint(cart);
     if (socket == null || worldPoint(cart, socket).distance(worldPoint(carriage, point)) > .03)
       throw new IllegalStateException("Catch socket is not aligned with the physical carriage");
-    var frame = new Quaterniond().rotationTo(new Vector3d(1, 0, 0), direction);
-    catchJoint = pipeline.addConstraint(carriage, cart, new GenericConstraintConfiguration(point, socket, frame,
-        new Quaterniond(cart.logicalPose().orientation()).invert().mul(frame)));
-    if (catchJoint == null || !catchJoint.isValid()) throw new IllegalStateException("Native catch unavailable");
-    catchJoint.setContactsEnabled(false);
-    catchJoint.setMotor(ConstraintJointAxis.LINEAR_X, 0, 100_000, 10_000, true, 256);
+    catchJoint = attachCatch(pipeline, carriage, cart, point, socket, direction);
     if (cabinetPosition != null) {
       var ticketed = new HashSet<UUID>();
       var key = new CableTickets.Key(carriage.getUniqueId(), cabinetPosition);
@@ -274,6 +269,17 @@ public final class NativeCableRig implements AutoCloseable {
   public void emergencyHold(String reason) {
     fault = reason == null || reason.isBlank() ? "Cable operation needs inspection" : reason;
     phase = Phase.FAULT; if (holding.valid()) holding.setForce(256); previousAcceleration = 0;
+  }
+  /** A stationary, bounded native coupling; dispatch authority remains with the owner. */
+  static GenericConstraintHandle attachCatch(PhysicsPipeline pipeline, ServerSubLevel carriage, ServerSubLevel chassis,
+      Vector3d carriagePoint, Vector3d socket, Vector3d direction) {
+    var frame = new Quaterniond().rotationTo(new Vector3d(1, 0, 0), direction);
+    var joint = pipeline.addConstraint(carriage, chassis, new GenericConstraintConfiguration(carriagePoint, socket, frame,
+        new Quaterniond(chassis.logicalPose().orientation()).invert().mul(frame)));
+    if (joint == null || !joint.isValid()) throw new IllegalStateException("Native catch unavailable");
+    joint.setContactsEnabled(false);
+    joint.setMotor(ConstraintJointAxis.LINEAR_X, 0, 100_000, 10_000, true, 256);
+    return joint;
   }
   private void releaseCapturedTickets() {
     var container = SubLevelContainer.getContainer(level);
