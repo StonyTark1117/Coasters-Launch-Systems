@@ -34,11 +34,12 @@ import org.joml.Vector3d;
 public final class RideControllerGameTests {
   private static final List<Scene> SCENES = new ArrayList<>();
   private static boolean registered;
-  private static final class Scene {
+  static final class Scene {
     final OrdinaryPassengerGameTests.Scene base;
     final String mode;
     final boolean reverse, linked, fourthDimension;
     final List<Object> vehicles = new ArrayList<>();
+    final Map<UUID, UUID> riderBodies = new HashMap<>();
     final List<Double> initialAngles = new ArrayList<>();
     final Map<UUID, Double> oldDistances = new HashMap<>();
     final List<BlockPos> equipment = new ArrayList<>(), motors = new ArrayList<>();
@@ -49,8 +50,9 @@ public final class RideControllerGameTests {
     int driveSteps, closedPadSteps, runSteps;
     boolean launched, closed;
     String failure = "";
-    Scene(GameTestHelper helper, int slot, String mode) {
-      base = new OrdinaryPassengerGameTests.Scene(helper, slot, 240, -896); this.mode = mode;
+    Scene(GameTestHelper helper, int slot, String mode) { this(helper, slot, mode, 240); }
+    Scene(GameTestHelper helper, int slot, String mode, int height) {
+      base = new OrdinaryPassengerGameTests.Scene(helper, slot, height, -896); this.mode = mode;
       reverse = mode.contains("reverse"); linked = mode.contains("linked"); fourthDimension = mode.startsWith("arrow") || mode.startsWith("free_spin"); controllerPosition = base.from.offset(4, -2, 8);
       if (!fourthDimension) { base.cart(reverse ? 56 : 8); if (linked) base.cart(reverse ? 50 : 14); }
       else prepareFourthDimension();
@@ -93,7 +95,7 @@ public final class RideControllerGameTests {
           for (var seat : (List<?>) read(carrier, "seats")) {
             var pig = net.minecraft.world.entity.EntityType.PIG.create(base.level); pig.setNoAi(true); pig.setPos(base.from.getX(), base.from.getY() + 4, base.from.getZ() + 8);
             base.level.addFreshEntity(pig); com.simibubi.create.content.contraptions.actors.seat.SeatBlock.sitDown(base.level, body.getPlot().getCenterBlock().offset((BlockPos) seat), pig);
-            base.helper.assertTrue(pig.isPassenger(), "4D controller rider failed to board"); base.riders.add(pig);
+            base.helper.assertTrue(pig.isPassenger(), "4D controller rider failed to board"); base.riders.add(pig); riderBodies.put(pig.getUUID(), body.getUniqueId());
           }
         }
       }
@@ -107,14 +109,15 @@ public final class RideControllerGameTests {
       for (int s = 8; s <= 16; s += 2) { module(s, false); module(s, true); }
       for (int s = 21; s <= (shortBank ? 21 : 41); s += 2) module(s, true);
     }
-    void module(int distance, boolean fin) {
+    void module(int distance, boolean fin) { module(distance, fin, false); }
+    void module(int distance, boolean fin, boolean exit) {
       var level = base.level; var pos = base.from.offset(fin ? 1 : -1, -2, reverse ? 64 - distance : distance);
       var motor = fin ? pos.east() : pos.west(); equipment.add(pos); motors.add(motor);
       level.setBlockAndUpdate(pos, (fin ? EquipmentContent.FIN : EquipmentContent.TIRE).get().defaultBlockState().setValue(RotatedPillarBlock.AXIS, Direction.Axis.X));
       level.setBlockAndUpdate(motor, AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalBlock.FACING, fin ? Direction.WEST : Direction.EAST));
       ((CreativeMotorBlockEntity) level.getBlockEntity(motor)).generatedSpeed.setValue(64);
       var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(pos);
-      cabinet.bind(level, reverse ? base.to : base.from, reverse ? base.from : base.to); controller.link(cabinet); cabinet.setArmed(true);
+      cabinet.bind(level, reverse ? base.to : base.from, reverse ? base.from : base.to); controller.link(cabinet, exit); cabinet.setArmed(true);
     }
     void at(int tick, Runnable action) {
       base.helper.runAtTickTime(tick + (fourthDimension ? 120 : 0), () -> { try { action.run(); }

@@ -38,6 +38,13 @@ public final class RideControllers {
         || entry.controller().modules().stream().noneMatch(m -> m.position().equals(module.getBlockPos()) && m.identity().equals(module.identity()))) return null;
     return entry.controller();
   }
+  public static RideControllerEntity controller(ServerLevel level, RideControllerEntity.Peer peer) {
+    if (peer == null || !level.hasChunkAt(peer.position())) return null;
+    var entry = CONTROLLERS.getOrDefault(level, Map.of()).get(peer.position());
+    if (entry == null || entry.tick() < level.getGameTime() - 1 || entry.controller().isRemoved()
+        || level.getBlockEntity(peer.position()) != entry.controller() || !entry.controller().identity().equals(peer.identity())) return null;
+    return entry.controller();
+  }
   public static boolean editingAllowed(ServerLevel level, EquipmentCabinetEntity module) {
     if (module.controllerIdentity() == null) return true;
     var controller = owner(level, module);
@@ -59,22 +66,36 @@ public final class RideControllers {
         && occupiedEquipment(level, event.getPos())) event.setCanceled(true);
   }
   public static Object ownership(ServerLevel level, EquipmentCabinetEntity module) {
-    var owner = owner(level, module); return owner == null ? module : owner.identity();
+    var owner = owner(level, module); return owner == null ? module : owner.incoming() == null ? owner.identity() : owner.incoming().identity();
   }
   public static boolean permitsDrive(ServerLevel level, EquipmentCabinetEntity module, UUID chassis) {
     if (module.controllerIdentity() == null) return true;
     var controller = owner(level, module);
-    return controller != null && controller.armed() && controller.phase() == State.RUNNING && controller.reservation().contains(chassis);
+    if (controller == null || !controller.armed() || !controller.reservation().contains(chassis)) return false;
+    if (controller.phase() == State.EXITING) return controller.exitDrive(module);
+    if (controller.phase() == State.RUNNING) return !controller.exitDrive(module);
+    if (controller.phase() != State.RECEIVING || controller.exitDrive(module)) return false;
+    var source = controller(level, controller.incoming());
+    return source != null && source.armed() && source.phase() == State.EXITING && source.transferring()
+        && source.reservation().equals(controller.reservation());
   }
   public static boolean finReleased(ServerLevel level, EquipmentCabinetEntity module) {
     if (Math.abs(module.getSpeed()) < 32) return false;
     if (module.controllerIdentity() == null) return true;
     var controller = owner(level, module);
-    if (controller == null || !controller.armed() || controller.phase() != State.RUNNING) return false;
+    if (controller == null || !controller.armed()) return false;
+    if (controller.phase() == State.EXITING) return true;
+    boolean running = controller.phase() == State.RUNNING;
+    if (controller.phase() == State.RECEIVING) {
+      var source = controller(level, controller.incoming());
+      running = source != null && source.armed() && source.phase() == State.EXITING && source.transferring()
+          && source.reservation().equals(controller.reservation());
+    }
+    if (!running) return false;
     // Only the launch pads retract; downstream stop pads remain applied even with a powered shaft.
     return controller.modules().stream().map(m -> level.getBlockEntity(m.position()))
         .filter(EquipmentCabinetEntity.class::isInstance).map(EquipmentCabinetEntity.class::cast)
-        .anyMatch(m -> m.mechanism() == Mechanism.TIRE && m.interval().end() >= module.interval().start()
+        .anyMatch(m -> m.mechanism() == Mechanism.TIRE && !controller.exitDrive(m) && m.interval().end() >= module.interval().start()
             && m.interval().start() <= module.interval().end());
   }
   public static void physics(ServerLevel level) {
@@ -95,7 +116,7 @@ public final class RideControllers {
     for (var controller : controllers) {
       if (!controller.armed() || controller.phase() == State.FAULT) { controller.consumeRequest(); continue; }
       var track = tracks.get(controller); if (track == null) { controller.consumeRequest(); continue; }
-      try { evaluate(level, controller, track); }
+      try { if (!RideTransfers.active(level, controller, track)) evaluate(level, controller, track); }
       catch (IllegalArgumentException | IllegalStateException failure) { controller.fail(failure.getMessage()); }
     }
   }
@@ -116,7 +137,7 @@ public final class RideControllers {
       }
       modules.add(module);
     }
-    var drives = modules.stream().filter(m -> m.mechanism() == Mechanism.TIRE).toList();
+    var drives = modules.stream().filter(m -> m.mechanism() == Mechanism.TIRE && !controller.exitDrive(m)).toList();
     if (drives.isEmpty()) { controller.fail("No linked tire drive"); return; }
     double launchEnd = drives.stream().mapToDouble(m -> m.interval().end()).max().orElseThrow();
     var stops = modules.stream().filter(m -> m.mechanism() == Mechanism.FIN_BRAKE && m.interval().start() > launchEnd)
@@ -175,7 +196,7 @@ public final class RideControllers {
       held &= Math.abs(speed) < .03 && ((EquipmentRuntime.activeFinClamps(level, id) > 0) || motion.dispatchReady() && !motion.propulsionAllowed());
       ready &= motion.dispatchReady() && drives.stream().anyMatch(m -> m.interval().intersects(distance, distance, .6));
     }
-    if (allClear) { controller.clearVerifiedReservation(); controller.consumeRequest(); return; }
+    if (allClear) { controller.fail("Train left the section without a reserved transfer"); return; }
     if (!Double.isFinite(smallest) || !Double.isFinite(largest)) { controller.consumeRequest(); return; }
     double ceiling = drives.stream().mapToDouble(m -> Math.abs(DriveMath.wheelSpeed(m.getSpeed(), .4))).max().orElse(0);
     boolean powered = drives.stream().allMatch(m -> m.getSpeed() >= 1 && m.getSpeed() <= 128)
@@ -199,6 +220,7 @@ public final class RideControllers {
       if (held && maximumSpeed < .03 && controller.phase() == State.BRAKING) controller.state(State.HOLD);
       controller.consumeRequest(); return;
     }
+    if (RideTransfers.departure(level, controller, track, held)) return;
     controller.state(held && ready && powered && largest + radius < stopStart ? State.READY : State.HOLD);
     if (!controller.consumeRequest() || controller.phase() != State.READY) return;
     // The route has already been reserved. Delegate release to the uniquely resolved vehicle owner.

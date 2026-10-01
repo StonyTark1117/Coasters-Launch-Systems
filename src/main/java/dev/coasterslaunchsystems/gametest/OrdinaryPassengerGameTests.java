@@ -93,6 +93,9 @@ public final class OrdinaryPassengerGameTests {
       var hit = new CoasterPathTrackFrame.GraphHit(from.getCenter().add(0, 0, distance), edge, distance / 64);
       // Use the upstream sampled world point, including its rail-height convention.
       hit = CoasterPathTrackFrame.closestHitOnEdge(level, edge, hit.point());
+      return cart(hit);
+    }
+    ServerSubLevel cart(CoasterPathTrackFrame.GraphHit hit) {
       var body = CoasterCartSpawner.spawnMinimalContraption(level, hit.point(),
           CoasterPathTrackFrame.quaternionFromTrackBasis(CoasterPathTrackFrame.trackBasisAtHit(level, hit)), hit);
       parents.add(body);

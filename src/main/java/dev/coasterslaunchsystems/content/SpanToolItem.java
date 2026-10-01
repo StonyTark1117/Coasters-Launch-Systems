@@ -39,6 +39,13 @@ public final class SpanToolItem extends Item {
       var from = stack.get(EquipmentContent.FROM.get()); var to = stack.get(EquipmentContent.TO.get());
       var selected = stack.get(EquipmentContent.CONTROLLER_SELECTION.get());
       if (level.getBlockEntity(pos) instanceof RideControllerEntity controller) {
+        if (selected != null) {
+          if (!selected.dimension().equals(level.dimension()) || !level.hasChunkAt(selected.pos()) || !level.mayInteract(player, selected.pos())
+              || !(level.getBlockEntity(selected.pos()) instanceof RideControllerEntity source))
+            throw new IllegalArgumentException("Selected source controller is unavailable or protected");
+          source.connectDestination(controller); stack.remove(EquipmentContent.CONTROLLER_SELECTION.get());
+          player.displayClientMessage(Component.literal("Source linked to downstream stopping section."), true); return InteractionResult.SUCCESS;
+        }
         if (from == null || to == null || !from.dimension().equals(level.dimension()) || !to.dimension().equals(level.dimension()))
           throw new IllegalArgumentException("Select two section anchors first; shift-use selects a bound controller for module linking");
         if (!level.mayInteract(player, from.pos()) || !level.mayInteract(player, to.pos())) throw new IllegalArgumentException("Track endpoints are protected");
@@ -49,7 +56,8 @@ public final class SpanToolItem extends Item {
         if (!selected.dimension().equals(level.dimension()) || !level.hasChunkAt(selected.pos())
             || !level.mayInteract(player, selected.pos()) || !(level.getBlockEntity(selected.pos()) instanceof RideControllerEntity controller))
           throw new IllegalArgumentException("Selected controller is unavailable or protected");
-        controller.link(cabinet); player.displayClientMessage(Component.literal("Module linked to selected controller."), true);
+        boolean exit = player.getOffhandItem().is(net.minecraft.world.item.Items.REDSTONE_TORCH);
+        controller.link(cabinet, exit); player.displayClientMessage(Component.literal(exit ? "Exit transport linked to selected controller." : "Module linked to selected controller."), true);
       } else if (level.getBlockEntity(pos) instanceof EquipmentCabinetEntity cabinet) {
         if (from == null || to == null || !from.dimension().equals(level.dimension()) || !to.dimension().equals(level.dimension()))
           throw new IllegalArgumentException("Select two track anchors in this dimension first");

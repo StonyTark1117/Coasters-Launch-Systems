@@ -1,6 +1,6 @@
 # Local controller checkpoint: 0.0.1-dev.8
 
-This is partial LS004/LS102/LS104 progress toward the full 0.4.0 goal. The prototype controls one straight, level, unbanked fixed rail edge, within the existing equipment coordinate limits. It certifies linked tire drives and friction-fin modules. It is a bounded launch-and-stop fixture controller; multi-edge operation, a complete repeatable ride cycle and the remaining release gates are unfinished.
+This records partial LS004/LS102/LS104 progress toward the full 0.4.0 goal at dev.8. The prototype controls one straight, level, unbanked fixed rail edge, within the existing equipment coordinate limits. It certifies linked tire drives and friction-fin modules. The later [dev.9 section transfer checkpoint](SECTION-TRANSFERS.md) adds departure into an adjacent reserved edge. A complete repeatable ride cycle and the remaining release gates are unfinished.
 
 ## Installation and operation
 
@@ -22,7 +22,7 @@ Adjacent modules share an intentional controller owner. Each cabinet retains its
 
 Reservation chassis IDs, controller/module UUIDs, bindings and geometry fingerprints persist. Server loads always enter disarmed INSPECTION, retain the reservation and discard commands/input history. Replaced module identities, changed direction/geometry, missing support, unticking equipment, unavailable route chunks, missing native bodies, changed consists and competing section owners deny operation. Ordinary player breaking, Create wrench rotation and manual disarming of reserved equipment are rejected; unexpected block loss faults the controller. Native world teardown owns constraint disposal.
 
-Reservations are cleared only if every member is currently engaged on another edge and its whole measured body envelope is beyond this section. Missing contact or a missing body retains ownership. That adjacent-edge clearance path and rollback transition are implemented conservatively but do not yet have native acceptance evidence. Final hold does not clear the reservation or restore Fourth Dimension boarding capture. A repeatable departure/handoff/capture cycle remains required before LS104/LS105 can be completed.
+At dev.8, adjacent-edge clearance and rollback lacked native acceptance evidence. Dev.9 now requires a paired receiving reservation before any clearance and exercises loaded tail clearance and interrupted handoff; see [section transfers](SECTION-TRANSFERS.md). Missing contact or a missing body retains ownership. Final hold does not clear the receiver's reservation or restore Fourth Dimension boarding capture. A repeatable complete ride/capture cycle remains required before LS104/LS105 can be completed.
 
 ## Native evidence and limits
 
@@ -34,7 +34,7 @@ Measured fixture results and final binary hashes are recorded in [combined nativ
 
 The initial combined fixture reused ordinary test rail coordinates. Fourth Dimension's persisted rail records then affected later ordinary tests, producing three failures. Moving controller fixtures to separate coordinates resolved this fixture interference. The earlier phase check also assumed every car would reach the raw stop-bank start; real finite pads can stop the front at the extended contact boundary while launch pads hold the rear. Final HOLD now requires measured low speed and actual native clamps on the complete consist. Neither issue was resolved by relaxing native support, rider, force or joint checks.
 
-Remaining acceptance includes rendered survival workflow and signals, closed ride cycles, occupied bank departure, adjacent-edge tail clearance, rollback, mixed-interface banks, 4D slope/profile traversal, restart and real chunk unload/reload, packaged multiplayer/late join, Ponder and all LIM/LSM/skid/catch/stored-energy mechanisms. NBT reconstruction is not server-restart evidence. Scoped tests do not establish a completed 0.1 or 0.4.0 release.
+At dev.8, occupied bank departure, adjacent-edge tail clearance and rollback were open; the dev.9 checkpoint supplies scoped native handoff evidence. Remaining acceptance includes rendered survival workflow and signals, closed ride cycles, mixed-interface banks, 4D slope/profile traversal, restart and real chunk unload/reload, packaged multiplayer/late join, Ponder and all LIM/LSM/skid/catch/stored-energy mechanisms. NBT reconstruction is not server-restart evidence. Scoped tests do not establish a completed 0.1 or 0.4.0 release.
 
 
 ## Reproduction

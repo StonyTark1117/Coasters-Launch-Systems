@@ -2,7 +2,7 @@
 
 A standalone Create: Coasters Simulated addon in development toward **0.4.0**. The planned release includes tire, LIM, LSM, flywheel, hydraulic and pneumatic launches, distinct friction/skid/magnetic brakes, local ride control and explicit compatibility with Fourth Dimension vehicles.
 
-The current `0.0.1-dev.8` checkpoint adds a fixed-section controller, loaded stopping-envelope checks, whole-consist reservations, controlled spring-pad release and delegated Fourth Dimension dispatch. Occupied ordinary carts, coupled ordinary/Arrow pairs and individual Free Spin cars launch and stop in both directions in packaged native tests. Earlier tire, friction and passive-magnetic evidence remains. The requested 0.4.0 release gates remain in progress. See [release roadmap](ROADMAP.md), [controller scope](docs/LOCAL-CONTROLLER.md), and [validation status](docs/VALIDATION.md).
+The current `0.0.1-dev.9` checkpoint adds departure into an adjacent reserved section, whole-consist tail clearance, interruption retention and inspected saved-transfer recovery. The controller reserves the receiver before applying exit tire work and requires a fresh request after initial hold or saved inspection. Occupied ordinary carts, coupled ordinary/Arrow pairs and individual Free Spin cars use native rail transitions and vehicle-owned dispatch. Earlier tire, friction and passive-magnetic evidence remains. The requested 0.4.0 release gates remain in progress. See [release roadmap](ROADMAP.md), [section transfer scope](docs/SECTION-TRANSFERS.md), and [validation status](docs/VALIDATION.md).
 
 ## Development stack
 
