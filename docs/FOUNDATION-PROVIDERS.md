@@ -1,6 +1,6 @@
-# Contact and motion-provider checkpoint
+# Contact and motion-provider checkpoint: 0.0.1-dev.2
 
-This development checkpoint advances LS002–LS005. It does not complete the 0.4.0 release or certify player-facing launch equipment. The core works without Fourth Dimension; the combined installation uses an isolated, read-only adapter for its declared `0.9.0-dev.1`, schema-4 API shape.
+This historical development checkpoint advances LS002–LS005. It does not complete the 0.4.0 release or certify player-facing launch equipment. The core works without Fourth Dimension; the combined installation uses an isolated, read-only adapter for its declared `0.9.0-dev.1`, schema-4 API shape. Subsequent tire hardware, placement and ordinary-cart equipment progress is documented in [0.0.1-dev.3](EQUIPMENT-PROTOTYPE.md).
 
 ## Contact and direction
 
@@ -16,7 +16,7 @@ The ordinary fallback includes a Coasters chassis and loaded rigid rivet descend
 
 The Fourth Dimension adapter reads its authoritative vehicles and carriers, checks native accepted support through `EligibilityHooks.allows`, and preserves restraints, capture, maintenance, faults, variant consistency, and PAX ownership. It does not dispatch or change Fourth Dimension state. A mismatched API fails clearly. The exact declared optional dependency is intentional while there is no published stable facade.
 
-Both providers currently advertise an empty set of certified equipment interfaces. The native fixtures are force-path experiments; reaction surfaces, friction interfaces, catch sockets, and their placement certificates still need implementation. A registered provider is not permission for arbitrary equipment to act on every vehicle.
+At this 0.0.1-dev.2 checkpoint, both providers advertised an empty set of certified equipment interfaces. These native fixtures are force-path experiments. The later ordinary-cart tire certificate requires an installed drive strip; Fourth Dimension equipment certification, friction interfaces and catch sockets remain incomplete. A registered provider is not permission for arbitrary equipment to act on every vehicle.
 
 ## Native fixture scope
 
@@ -44,6 +44,6 @@ For combined validation, first copy the Fourth Dimension artifact out of its act
   --no-daemon --max-workers=2
 ```
 
-Only the Launch Systems namespace is enabled; five extra required integration tests are generated when Fourth Dimension is installed. Without it, those tests are absent, not successful skipped integration results. `-PlsPackaged` requires the already built Launch Systems binary. The saved evidence identifies both binary checksums and the actual test scope.
+Only the Launch Systems namespace is enabled; five extra required integration tests are generated when Fourth Dimension is installed. Without it, those tests are absent, not successful skipped integration results. The original checkpoint required a prebuilt binary; current packaged runs depend on the JAR task automatically. The saved evidence identifies both binary checksums and the actual test scope.
 
 Open gates include loaded ordinary carts, linked loaded Arrow consists, rotating Arrow profile traversal during launch/rollback, equipment interfaces and controls, full/uneven loads, interrupted saves, unavailable bodies/chunks, third-party overlap control, rendered clients and multiplayer. All player equipment and the physical catch/release/reset mechanisms also remain required for 0.4.0.

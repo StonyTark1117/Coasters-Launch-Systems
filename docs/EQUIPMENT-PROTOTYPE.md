@@ -31,6 +31,8 @@ Eight standalone native tests cover the earlier point-force foundation, real too
 
 Evidence: [unit results](evidence/equipment-unit.txt), [packaged standalone](evidence/equipment-packaged-standalone.txt), [packaged combined](evidence/equipment-packaged-combined.txt), [checksums](evidence/equipment-artifacts.sha256).
 
+[CI run 36804981215](https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36804981215) passed for implementation commit `c2d192390c24f199b19ce6b40b7a96b42ccdce73`. It ran a clean build and the eight packaged standalone native tests. The downloaded CI JAR exactly matched the local SHA-256 `bda99f6f836a5a6fefaad926954609ce79997763fa9774544bf8b72159af3b49`. The combined Fourth Dimension evidence remains local against the identified copied artifact. See [CI excerpt](evidence/equipment-ci.txt).
+
 ## Remaining acceptance
 
 Fin and passive-magnetic cabinets are registered scaffolds with original models/recipes, and reject operation. They do not yet brake or hold a vehicle. Full obstruction/clearance checks, tire wheel animation/rendered QA, dynamic stress, rolling entry, linked consists, ordinary passengers, Fourth Dimension tire certification, controllers, reservations, Ponder and multiplayer lifecycle evidence remain. Save/load reconstruction was tested; active server restart/chunk loss is not yet accepted. LIM/LSM, skid, catch, physical reset, flywheel, hydraulic and pneumatic equipment remain on the roadmap.
