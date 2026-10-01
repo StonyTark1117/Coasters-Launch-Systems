@@ -6,6 +6,7 @@
     "coasterslaunchsystems:eddy_brake",
     "coasterslaunchsystems:tire_surface",
     "coasterslaunchsystems:brake_fin",
-    "coasterslaunchsystems:conductive_fin"
+    "coasterslaunchsystems:conductive_fin",
+    "coasterslaunchsystems:ride_controller"
   ]
 }

@@ -22,12 +22,12 @@ import java.util.UUID;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 
-/** Isolated read-only adapter for the schema-4 prototype, pending a published upstream facade. */
+/** Isolated schema-4 adapter; dispatch delegates to the upstream public operation after reservation. */
 public final class FourthDimensionMotionProvider implements VehicleMotionProvider {
   private static final Map<String, String> HARDWARE_VARIANTS = Map.of(
       "ARROW", "arrow_four_rail_v1", "ZACSPIN", "zacspin_legacy_v1",
       "FREE_SPIN", "sns_magnetic_v1", "ZACSPIN_REVISED", "zacspin_revised_v1");
-  private final Method data, markers, allows, ready;
+  private final Method data, markers, allows, ready, dispatchOperation;
   private final Field vehicles, carriers, carrierBody, capture, family, restraints, stopping,
       maintenance, fault, variant;
 
@@ -38,6 +38,7 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
         throw new ReflectiveOperationException("Unsupported Fourth Dimension save/API schema");
       var vehicle = Class.forName("dev.fourthdimension.runtime.FoundationData$Vehicle");
       var carrier = Class.forName("dev.fourthdimension.runtime.FoundationData$Carrier");
+      dispatchOperation = Class.forName("dev.fourthdimension.vehicle.VehicleOperations").getMethod("dispatch", ServerLevel.class, vehicle);
       data = foundation.getMethod("get", ServerLevel.class);
       vehicles = foundation.getField("vehicles");
       carriers = vehicle.getField("carriers"); carrierBody = carrier.getField("body");
@@ -114,6 +115,17 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
     } catch (ReflectiveOperationException failure) {
       throw new IllegalStateException("Fourth Dimension motion snapshot failed; launch vetoed", failure);
     }
+  }
+
+  @Override public boolean requestDispatch(ServerLevel level, UUID chassis) {
+    var snapshot = resolve(level, chassis).orElse(null);
+    if (snapshot == null || !snapshot.dispatchReady() || !snapshot.exclusiveOperator().isEmpty()) return false;
+    try {
+      var vehicle = ((Map<?, ?>) vehicles.get(data.invoke(null, level))).get(chassis);
+      if (vehicle == null) return false;
+      dispatchOperation.invoke(null, level, vehicle);
+      return resolve(level, chassis).map(MotionVehicle::propulsionAllowed).orElse(false);
+    } catch (ReflectiveOperationException failure) { throw new IllegalStateException("Fourth Dimension dispatch request was rejected", failure); }
   }
 
   private boolean captured(Object carrier) {

@@ -18,6 +18,9 @@ import net.minecraft.server.level.ServerLevel;
 /** Native Coasters carts and rigid rivet descendants; foreign articulated carts need providers. */
 public final class OrdinaryMotionProvider implements VehicleMotionProvider {
   public static final String ID = "simulatedcoasters:ordinary_0.1.5";
+  @Override public boolean requestDispatch(ServerLevel level, UUID chassis) {
+    return resolve(level, chassis).map(m -> m.dispatchReady() && m.propulsionAllowed()).orElse(false);
+  }
   @Override public String id() { return ID; }
 
   @Override public Optional<MotionVehicle> resolve(ServerLevel level, UUID chassis) {

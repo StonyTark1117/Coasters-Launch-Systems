@@ -18,6 +18,8 @@ import net.minecraft.world.phys.Vec3;
 
 /** A persisted module identity and binding. Native handles never enter block-entity saves. */
 public final class EquipmentCabinetEntity extends KineticBlockEntity {
+  private BlockPos controllerPosition;
+  private UUID controllerIdentity;
   private UUID identity = UUID.randomUUID();
   private BlockPos from, to;
   private long geometry;
@@ -37,6 +39,18 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
       if (mechanism() == Mechanism.EDDY_BRAKE && server.getGameTime() % 20 == 0) sendData();
     }
   }
+  public BlockPos controllerPosition() { return controllerPosition; }
+  public UUID controllerIdentity() { return controllerIdentity; }
+  public void linkController(BlockPos position, UUID id) {
+    if (controllerIdentity != null && (!controllerIdentity.equals(id) || !controllerPosition.equals(position)))
+      throw new IllegalArgumentException("Module already belongs to another controller");
+    controllerPosition = position.immutable(); controllerIdentity = id; changed();
+  }
+  public void unlinkController(ServerLevel level) {
+    if (armed || !dev.coasterslaunchsystems.runtime.RideControllers.editingAllowed(level, this))
+      throw new IllegalArgumentException("Disarm an empty controller and module before unlinking");
+    controllerPosition = null; controllerIdentity = null; changed();
+  }
   public UUID identity() { return identity; }
   public boolean armed() { return armed; }
   public Mechanism mechanism() { return ((EquipmentCabinetBlock) getBlockState().getBlock()).mechanism; }
@@ -51,11 +65,15 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   public void setArmed(boolean value) {
     if (value && from == null) throw new IllegalArgumentException("Use the span tool to bind this module first");
     if (value && !fault.isEmpty()) throw new IllegalArgumentException("Inspect and rebind the faulted module before arming");
+    if (!value && level instanceof ServerLevel server && !dev.coasterslaunchsystems.runtime.RideControllers.editingAllowed(server, this))
+      throw new IllegalArgumentException("Occupied controller equipment cannot be manually disarmed");
     armed = value; changed();
   }
 
   public void bind(ServerLevel level, BlockPos first, BlockPos second) {
     if (armed) throw new IllegalArgumentException("Disarm the module before rebinding");
+    if (!dev.coasterslaunchsystems.runtime.RideControllers.editingAllowed(level, this))
+      throw new IllegalArgumentException("Occupied or unavailable controller owns this binding");
     for (var pos : new BlockPos[] {worldPosition, first, second})
       if (Math.abs((long) pos.getX()) > 1024 || Math.abs((long) pos.getZ()) > 1024)
         throw new IllegalArgumentException("Native launch equipment currently requires track within 1024 blocks of origin");
@@ -127,12 +145,15 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     if (mechanism() == Mechanism.EDDY_BRAKE) return "Passive magnets; no static hold. Heat " + Math.round(heat.heat())
         + "/4096. " + (heat.overheated() ? "Thermal force derated. " : "");
     if (mechanism() != Mechanism.FIN_BRAKE) return "";
+    if (level instanceof ServerLevel server && controllerIdentity != null)
+      return dev.coasterslaunchsystems.runtime.RideControllers.finReleased(server, this) ? "Controller granted pad release. " : "Controller spring pads applied when armed. ";
     return Math.abs(getSpeed()) >= 32 ? "Pads power-released. " : "Spring pads applied when armed. ";
   }
   private void changed() { setChanged(); sendData(); }
   @Override protected void write(CompoundTag tag, HolderLookup.Provider registries, boolean client) {
     super.write(tag, registries, client);
-    tag.putInt("ls_schema", 2); tag.putDouble("ls_heat", heat.heat()); tag.putUUID("ls_identity", identity);
+    tag.putInt("ls_schema", 3);
+    if (controllerIdentity != null) { tag.putUUID("ls_controller", controllerIdentity); tag.putLong("ls_controller_pos", controllerPosition.asLong()); } tag.putDouble("ls_heat", heat.heat()); tag.putUUID("ls_identity", identity);
     tag.putBoolean("ls_armed", armed); tag.putString("ls_fault", fault);
     if (from != null) {
       tag.putLong("ls_from", from.asLong()); tag.putLong("ls_to", to.asLong());
@@ -142,8 +163,10 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   }
   @Override protected void read(CompoundTag tag, HolderLookup.Provider registries, boolean client) {
     super.read(tag, registries, client);
-    if (tag.contains("ls_schema") && tag.getInt("ls_schema") != 1 && tag.getInt("ls_schema") != 2) throw new IllegalArgumentException("Unsupported equipment schema");
-    heat = new dev.coasterslaunchsystems.math.BrakeHeat(4096, 8, tag.getInt("ls_schema") == 2 ? tag.getDouble("ls_heat") : 0);
+    if (tag.contains("ls_schema") && tag.getInt("ls_schema") != 1 && tag.getInt("ls_schema") != 2 && tag.getInt("ls_schema") != 3) throw new IllegalArgumentException("Unsupported equipment schema");
+    heat = new dev.coasterslaunchsystems.math.BrakeHeat(4096, 8, tag.getInt("ls_schema") >= 2 ? tag.getDouble("ls_heat") : 0);
+    controllerIdentity = tag.hasUUID("ls_controller") ? tag.getUUID("ls_controller") : null;
+    controllerPosition = controllerIdentity == null ? null : BlockPos.of(tag.getLong("ls_controller_pos"));
     if (tag.hasUUID("ls_identity")) identity = tag.getUUID("ls_identity");
     from = tag.contains("ls_from") ? BlockPos.of(tag.getLong("ls_from")) : null;
     to = tag.contains("ls_to") ? BlockPos.of(tag.getLong("ls_to")) : null;

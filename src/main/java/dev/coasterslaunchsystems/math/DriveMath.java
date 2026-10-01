@@ -56,6 +56,13 @@ public final class DriveMath {
     return Math.copySign(Math.min(Math.abs(candidate), Math.abs(requested)), requested);
   }
 
+  /** Allocate work against the point's combined impulse, including cross terms between contacts. */
+  public static double incrementalWorkShare(double mass, double speed, double force, double totalForce, double dt) {
+    Numbers.positive(mass, "mass"); Numbers.finite(speed, "speed"); Numbers.finite(force, "force");
+    Numbers.finite(totalForce, "total force"); Numbers.positive(dt, "dt");
+    return force * (speed + .5 * totalForce / mass * dt) * dt;
+  }
+
   public static double incrementalWork(double mass, double speed, double force, double dt) {
     Numbers.positive(mass, "mass"); Numbers.finite(speed, "speed");
     Numbers.finite(force, "force"); Numbers.positive(dt, "dt");

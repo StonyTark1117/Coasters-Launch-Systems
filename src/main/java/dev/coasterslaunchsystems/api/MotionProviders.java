@@ -32,6 +32,14 @@ public final class MotionProviders {
     return Optional.ofNullable(result);
   }
 
+  /** Dispatch is delegated only to the uniquely resolved owner after local route reservation. */
+  public static boolean requestDispatch(ServerLevel level, UUID chassis) {
+    var motion = resolve(level, chassis).orElse(null);
+    if (motion == null || !motion.dispatchReady() || !motion.exclusiveOperator().isEmpty()) return false;
+    for (var provider : PROVIDERS) if (provider.id().equals(motion.provider())) return provider.requestDispatch(level, chassis);
+    return fallback != null && fallback.id().equals(motion.provider()) && fallback.requestDispatch(level, chassis);
+  }
+
   /** An ordinary cart must never override an integration's vetoed or retained vehicle. */
   public static synchronized void registerOrdinaryFallback(VehicleMotionProvider provider) {
     if (fallback != null || provider.apiVersion() != VehicleMotionProvider.API_VERSION

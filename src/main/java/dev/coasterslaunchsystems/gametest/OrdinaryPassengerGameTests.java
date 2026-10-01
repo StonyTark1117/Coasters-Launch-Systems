@@ -61,7 +61,7 @@ public final class OrdinaryPassengerGameTests {
   private static final List<BlockPos> SEATS = List.of(new BlockPos(-1, 1, -1), new BlockPos(1, 1, -1),
       new BlockPos(-1, 1, 1), new BlockPos(1, 1, 1));
 
-  private static final class Scene {
+  static final class Scene {
     final GameTestHelper helper;
     final net.minecraft.server.level.ServerLevel level;
     final BlockPos from, to;
@@ -76,11 +76,12 @@ public final class OrdinaryPassengerGameTests {
     int drivenSteps;
     String failure = "";
     boolean closed;
-    Scene(GameTestHelper helper, int slot) {
+    Scene(GameTestHelper helper, int slot) { this(helper, slot, 208, -640); }
+    Scene(GameTestHelper helper, int slot, int height, int zPosition) {
       this.helper = helper; level = helper.getLevel();
-      from = new BlockPos(32 + slot * 48, 208, -640); to = from.offset(0, 0, 64);
+      from = new BlockPos(32 + slot * 48, height, zPosition); to = from.offset(0, 0, 64);
       for (int x = from.getX() / 16 - 1; x <= from.getX() / 16 + 1; x++)
-        for (int z = -41; z <= -35; z++) level.setChunkForced(x, z, true);
+        for (int z = Math.floorDiv(from.getZ(), 16) - 1; z <= Math.floorDiv(to.getZ(), 16) + 1; z++) level.setChunkForced(x, z, true);
       for (var pos : List.of(from, to)) level.setBlockAndUpdate(pos, SimulatedCoastersBlocks.COASTER_ANCHORPOINT.get().defaultBlockState());
       var curve = new BezierConnection(Couple.create(from, to),
           Couple.create(CoasterAnchorpointBlockEntity.worldCenter(level, from), CoasterAnchorpointBlockEntity.worldCenter(level, to)),

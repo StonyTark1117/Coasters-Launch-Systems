@@ -20,6 +20,9 @@ public final class LaunchSystems {
     net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST,
         dev.coasterslaunchsystems.runtime.EquipmentRuntime::physics);
     net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(dev.coasterslaunchsystems.runtime.EquipmentRuntime::unload);
+    net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(dev.coasterslaunchsystems.runtime.RideControllers::unload);
+    net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(dev.coasterslaunchsystems.runtime.RideControllers::breaking);
+    net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(dev.coasterslaunchsystems.runtime.RideControllers::wrenching);
     MotionProviders.registerOrdinaryFallback(new OrdinaryMotionProvider());
     if (ModList.get().isLoaded("fourthdimension"))
       MotionProviders.register(new FourthDimensionMotionProvider());

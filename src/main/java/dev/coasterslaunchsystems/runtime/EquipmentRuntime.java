@@ -35,6 +35,10 @@ public final class EquipmentRuntime {
   public static void register(ServerLevel level, EquipmentCabinetEntity module) {
     MODULES.computeIfAbsent(level, ignored -> new LinkedHashMap<>()).put(module.getBlockPos(), new Entry(module, level.getGameTime()));
   }
+  public static boolean available(ServerLevel level, EquipmentCabinetEntity module) {
+    var entry = MODULES.getOrDefault(level, Map.of()).get(module.getBlockPos());
+    return entry != null && entry.module() == module && !module.isRemoved() && entry.tick() >= level.getGameTime() - 1;
+  }
   /** Read-only native contact diagnostics; no saved or caller-owned constraint handles. */
   public static int activeFinClamps(ServerLevel level, UUID chassis) {
     var clamps = CLAMPS.get(level);
@@ -50,6 +54,7 @@ public final class EquipmentRuntime {
   }
   public static void physics(ForgeSablePrePhysicsTickEvent event) {
     var level = event.getPhysicsSystem().getLevel();
+    RideControllers.physics(level);
     var modules = MODULES.get(level);
     if (modules == null) {
       var old = CLAMPS.remove(level);
@@ -78,7 +83,7 @@ public final class EquipmentRuntime {
       var mechanism = module.mechanism();
       if (mechanism == Mechanism.TIRE && (Math.abs(module.getSpeed()) < 1 || Math.abs(module.getSpeed()) > 128)) continue;
       // Spring applied, shaft released. Loss of shaft power applies an armed, supported clamp.
-      if (mechanism == Mechanism.FIN_BRAKE && Math.abs(module.getSpeed()) >= 32) continue;
+      if (mechanism == Mechanism.FIN_BRAKE && RideControllers.finReleased(level, module)) continue;
       for (var cart : container.getAllSubLevels()) {
         var contact = EngagedContacts.current(level, cart).orElse(null);
         if (contact == null || !track.matches(contact.hit())) continue;
@@ -91,7 +96,8 @@ public final class EquipmentRuntime {
         if (!module.interval().intersects(oldDistance, distance, .6)) continue;
         try {
           var motion = MotionProviders.resolve(level, cart.getUniqueId()).orElse(null);
-          if (motion == null || !permitted(motion, mechanism)) continue;
+          if (motion == null || !permitted(motion, mechanism)
+              || mechanism == Mechanism.TIRE && !RideControllers.permitsDrive(level, module, cart.getUniqueId())) continue;
           if (!motion.interfaces().contains(mechanism)) {
             module.fail(switch (mechanism) {
               case TIRE -> "Vehicle has no certified tire interface";
@@ -164,21 +170,54 @@ public final class EquipmentRuntime {
     var allocated = new LinkedHashMap<EquipmentCabinetEntity, List<Request>>();
     for (var requests : groups.values()) {
       var owners = requests.stream().map(Request::module).distinct().toList();
-      if (owners.size() != 1) {
+      if (owners.stream().map(m -> RideControllers.ownership(level, m)).distinct().count() != 1) {
         owners.forEach(m -> m.fail("Overlapping modules claim this consist; separate their contact zones")); continue;
       }
-      var module = owners.getFirst();
-      allocated.computeIfAbsent(module, ignored -> new ArrayList<>()).addAll(requests);
+      for (var request : requests) allocated.computeIfAbsent(request.module(), ignored -> new ArrayList<>()).add(request);
+    }
+    // Coordinated adjacent drives still share the vehicle's force/acceleration rating.
+    var tireDemand = new HashMap<UUID, Double>();
+    var tireLimits = new HashMap<UUID, Double>();
+    for (var allocation : allocated.entrySet()) {
+      if (allocation.getKey().mechanism() != Mechanism.TIRE) continue;
+      for (var request : allocation.getValue()) {
+        UUID id = request.cart().getUniqueId(); tireDemand.merge(id, Math.abs(request.force()), Double::sum);
+        var motion = MotionProviders.resolve(level, id).orElseThrow();
+        tireLimits.merge(id, Math.min(motion.maximumForce(), request.mass() * motion.maximumAcceleration()), Math::min);
+      }
+    }
+    for (var allocation : allocated.entrySet()) {
+      if (allocation.getKey().mechanism() != Mechanism.TIRE) continue;
+      allocation.setValue(allocation.getValue().stream().map(r -> {
+        double demand = tireDemand.get(r.cart().getUniqueId());
+        double scale = demand > 0 ? Math.min(1, tireLimits.get(r.cart().getUniqueId()) / demand) : 1;
+        return new Request(r.module(), r.cart(), r.mass(), r.energyMass(), r.speed(), r.direction(), r.point(), r.force() * scale, r.key(), r.distance());
+      }).toList());
     }
     var clamps = CLAMPS.computeIfAbsent(level, ignored -> new HashMap<>());
     var retained = new HashSet<Key>();
+    // A coordinated pad bank shares each chassis provider rating across all of its contacts.
+    var finShares = new HashMap<Key, Double>();
+    var chassisDemand = new HashMap<UUID, Double>();
+    for (var allocation : allocated.entrySet()) {
+      if (allocation.getKey().mechanism() != Mechanism.FIN_BRAKE) continue;
+      double totalMass = allocation.getValue().stream().mapToDouble(Request::mass).sum();
+      for (var request : allocation.getValue()) {
+        double share = Math.min(request.force(), FIN_FORCE * request.mass() / totalMass);
+        finShares.put(request.key(), share); chassisDemand.merge(request.cart().getUniqueId(), share, Double::sum);
+      }
+    }
+    for (var requests : allocated.values()) for (var request : requests) {
+      var share = finShares.get(request.key()); if (share == null) continue;
+      double scale = Math.min(1, request.force() / chassisDemand.get(request.cart().getUniqueId()));
+      finShares.put(request.key(), share * scale);
+    }
     for (var allocation : allocated.entrySet()) {
       var module = allocation.getKey();
       if (module.mechanism() != Mechanism.FIN_BRAKE || !module.armed() || !module.fault().isEmpty()) continue;
       var requests = allocation.getValue();
-      double contactedMass = requests.stream().mapToDouble(Request::mass).sum();
       for (var request : requests) {
-        double share = Math.min(request.force(), FIN_FORCE * request.mass() / contactedMass);
+        double share = finShares.get(request.key());
         double gravity = Math.abs(dev.ryanhcode.sable.physics.config.dimension_physics.DimensionPhysicsData.getGravity(level).dot(request.direction()));
         if (gravity * request.mass() > .8 * share) {
           module.fail("Shared fin clamp load exceeds the slope rating"); break;
@@ -187,7 +226,7 @@ public final class EquipmentRuntime {
       if (!module.armed() || !module.fault().isEmpty()) continue;
       for (var request : requests) {
         try {
-          double share = Math.min(request.force(), FIN_FORCE * request.mass() / contactedMass);
+          double share = finShares.get(request.key());
           var existing = clamps.get(request.key());
           if (existing != null && (!existing.identity().equals(module.identity()) || !existing.handle().valid())) {
             existing.handle().close(); clamps.remove(request.key()); existing = null;
@@ -208,24 +247,32 @@ public final class EquipmentRuntime {
       if (retained.contains(e.getKey())) return false;
       e.getValue().handle().close(); return true;
     });
+    var driveGroups = new LinkedHashMap<Object, Map<EquipmentCabinetEntity, List<Request>>>();
     for (var allocation : allocated.entrySet()) {
       var module = allocation.getKey();
-      // A later contact can invalidate earlier requests collected from this module.
       if (!module.fault().isEmpty() || !module.armed() || module.mechanism() != Mechanism.TIRE) continue;
-      var requests = allocation.getValue();
-      double work = 8 * Math.abs(module.getSpeed()) * 2 * Math.PI / 60 * dt;
-      // Share one shaft-work budget across all contacted consists. Dissipation is not credit.
+      driveGroups.computeIfAbsent(RideControllers.ownership(level, module), ignored -> new LinkedHashMap<>())
+          .put(module, allocation.getValue());
+    }
+    for (var bank : driveGroups.values()) {
+      var totals = new HashMap<UUID, Double>();
+      bank.values().forEach(requests -> requests.forEach(r -> totals.merge(r.cart().getUniqueId(), r.force(), Double::sum)));
       double lower = 0, upper = 1;
+      // Account for the combined impulse's cross-work. Every cabinet retains its own budget;
+      // a negative-work contact grants no credit to any positive-work contact.
       for (int iteration = 0; iteration < 50; iteration++) {
-        double scale = (lower + upper) / 2, demand = 0;
-        for (var request : requests) demand += Math.max(0,
-            DriveMath.incrementalWork(request.energyMass(), request.speed(), request.force() * scale, dt));
-        if (demand <= work) lower = scale; else upper = scale;
+        double scale = (lower + upper) / 2; boolean fits = true;
+        for (var allocation : bank.entrySet()) {
+          double budget = 8 * Math.abs(allocation.getKey().getSpeed()) * 2 * Math.PI / 60 * dt, demand = 0;
+          for (var r : allocation.getValue()) demand += Math.max(0, DriveMath.incrementalWorkShare(r.energyMass(), r.speed(),
+              r.force() * scale, totals.get(r.cart().getUniqueId()) * scale, dt));
+          if (demand > budget) { fits = false; break; }
+        }
+        if (fits) lower = scale; else upper = scale;
       }
-      for (var request : requests) {
+      for (var requests : bank.values()) for (var request : requests) {
         double force = request.force() * lower;
-        NativeForces.pointForce(request.cart(), request.point(),
-            new Vector3d(request.direction()).mul(force), dt);
+        NativeForces.pointForce(request.cart(), request.point(), new Vector3d(request.direction()).mul(force), dt);
         history.put(request.key(), new History(step, request.distance(), force / request.mass()));
       }
     }

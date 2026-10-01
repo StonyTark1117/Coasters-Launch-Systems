@@ -94,3 +94,17 @@ save(f"data/{MOD}/loot_table/blocks/conductive_fin.json", {"type": "minecraft:bl
 save(f"data/{MOD}/recipe/conductive_fin.json", {"type": "minecraft:crafting_shaped", "category": "redstone", "pattern": [" C ", " C ", "CCC"],
     "key": {"C": {"item": "create:copper_sheet"}}, "result": {"id": f"{MOD}:conductive_fin", "count": 2}})
 save("data/minecraft/tags/block/mineable/pickaxe.json", {"replace": False, "values": [f"{MOD}:{n}" for n in [*modules, "tire_surface", "brake_fin", "conductive_fin"]]})
+
+lang[f"block.{MOD}.ride_controller"] = "Local Ride Controller"
+save(f"assets/{MOD}/lang/en_us.json", lang)
+save(f"assets/{MOD}/models/block/ride_controller.json", {"parent": "minecraft:block/block", "textures": {
+    "steel": "minecraft:block/iron_block", "panel": "minecraft:block/green_terracotta", "particle": "minecraft:block/iron_block"},
+    "elements": [box([1, 0, 1], [15, 14, 15], "#steel"), box([3, 4, 0], [13, 12, 2], "#panel")]})
+save(f"assets/{MOD}/blockstates/ride_controller.json", {"variants": {"": {"model": f"{MOD}:block/ride_controller"}}})
+save(f"assets/{MOD}/models/item/ride_controller.json", {"parent": f"{MOD}:block/ride_controller"})
+save(f"data/{MOD}/loot_table/blocks/ride_controller.json", {"type": "minecraft:block", "pools": [{"rolls": 1,
+    "entries": [{"type": "minecraft:item", "name": f"{MOD}:ride_controller"}], "conditions": [{"condition": "minecraft:survives_explosion"}]}]})
+save(f"data/{MOD}/recipe/ride_controller.json", {"type": "minecraft:crafting_shaped", "category": "redstone", "pattern": ["IRI", "RCR", "IRI"],
+    "key": {"I": {"tag": "c:ingots/iron"}, "R": {"item": "minecraft:redstone"}, "C": {"item": "create:andesite_casing"}},
+    "result": {"id": f"{MOD}:ride_controller"}})
+save("data/minecraft/tags/block/mineable/pickaxe.json", {"replace": False, "values": [f"{MOD}:{n}" for n in [*modules, "tire_surface", "brake_fin", "conductive_fin", "ride_controller"]]})

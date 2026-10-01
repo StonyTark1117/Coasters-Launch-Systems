@@ -19,6 +19,13 @@ public final class EquipmentContent {
   public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, LaunchSystems.ID);
   public static final DeferredRegister<DataComponentType<?>> COMPONENTS = DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, LaunchSystems.ID);
 
+  public static final DeferredBlock<RideControllerBlock> CONTROLLER = BLOCKS.register("ride_controller",
+      () -> new RideControllerBlock(BlockBehaviour.Properties.of().strength(3)));
+  public static final DeferredItem<BlockItem> CONTROLLER_ITEM = ITEMS.register("ride_controller",
+      () -> new BlockItem(CONTROLLER.get(), new Item.Properties()));
+  public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RideControllerEntity>> CONTROLLER_ENTITY =
+      ENTITIES.register("ride_controller", () -> BlockEntityType.Builder.of(RideControllerEntity::new, CONTROLLER.get()).build(null));
+  public static final DeferredHolder<DataComponentType<?>, DataComponentType<GlobalPos>> CONTROLLER_SELECTION = selection("controller_selection");
   public static final DeferredBlock<EquipmentCabinetBlock> TIRE = cabinet("tire_drive", Mechanism.TIRE);
   public static final DeferredBlock<EquipmentCabinetBlock> FIN = cabinet("fin_brake", Mechanism.FIN_BRAKE);
   public static final DeferredBlock<EquipmentCabinetBlock> EDDY = cabinet("eddy_brake", Mechanism.EDDY_BRAKE);
@@ -56,7 +63,7 @@ public final class EquipmentContent {
     BLOCKS.register(bus); ITEMS.register(bus); ENTITIES.register(bus); COMPONENTS.register(bus);
     bus.addListener((net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent event) -> {
       if (event.getTabKey().equals(net.minecraft.world.item.CreativeModeTabs.REDSTONE_BLOCKS)) {
-        event.accept(TIRE.get()); event.accept(FIN.get()); event.accept(EDDY.get()); event.accept(TIRE_SURFACE.get()); event.accept(BRAKE_FIN.get()); event.accept(CONDUCTIVE_FIN.get());
+        event.accept(CONTROLLER.get()); event.accept(TIRE.get()); event.accept(FIN.get()); event.accept(EDDY.get()); event.accept(TIRE_SURFACE.get()); event.accept(BRAKE_FIN.get()); event.accept(CONDUCTIVE_FIN.get());
       }
       if (event.getTabKey().equals(net.minecraft.world.item.CreativeModeTabs.TOOLS_AND_UTILITIES)) event.accept(TOOL.get());
     });

@@ -1,0 +1,166 @@
+package dev.coasterslaunchsystems.content;
+
+import dev.coasterslaunchsystems.track.DirectedTrack;
+import dev.coasterslaunchsystems.runtime.RideControllers;
+import java.util.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+
+/** Local fixed-edge controller. Configuration/reservations persist; commands and native handles do not. */
+public final class RideControllerEntity extends BlockEntity {
+  public enum State { INSPECTION, HOLD, READY, RUNNING, BRAKING, FAULT }
+  public record Module(BlockPos position, UUID identity) {}
+  private UUID identity = UUID.randomUUID();
+  private BlockPos from, to;
+  private long geometry;
+  private DirectedTrack cachedTrack;
+  private int graphRevision = Integer.MIN_VALUE;
+  private final Set<BlockPos> routeChunks = new LinkedHashSet<>();
+  private final List<Module> modules = new ArrayList<>();
+  private final Set<UUID> reservation = new LinkedHashSet<>();
+  private boolean armed, high, inputObserved, launchRequested;
+  private State phase = State.INSPECTION;
+  private String fault = "";
+  private double required, available;
+
+  public RideControllerEntity(BlockPos pos, BlockState state) { super(EquipmentContent.CONTROLLER_ENTITY.get(), pos, state); }
+  public void tick() {
+    if (!(level instanceof ServerLevel server)) return;
+    RideControllers.register(server, this);
+    // Only the top is a request input; outputs cannot feed their own request latch.
+    boolean powered = server.getSignal(worldPosition.above(), Direction.UP) > 0;
+    if (inputObserved && powered && !high && phase == State.READY) launchRequested = true;
+    high = powered; inputObserved = true;
+  }
+  public boolean endpoint(BlockPos pos) { return pos.equals(from) || pos.equals(to); }
+  public UUID identity() { return identity; }
+  public List<Module> modules() { return List.copyOf(modules); }
+  public Set<UUID> reservation() { return Set.copyOf(reservation); }
+  public State phase() { return phase; }
+  public boolean armed() { return armed; }
+  public String fault() { return fault; }
+  public boolean consumeRequest() { boolean value = launchRequested; launchRequested = false; return value; }
+  public void setArmed(boolean value) {
+    if (value && (from == null || modules.isEmpty())) throw new IllegalArgumentException("Bind a rail section and link its drive/fin modules first");
+    if (value && level instanceof ServerLevel server && resolve(server) == null) throw new IllegalArgumentException(fault);
+    armed = value; launchRequested = false; inputObserved = false; fault = "";
+    phase = value ? State.HOLD : State.INSPECTION; changed();
+  }
+  public void bind(ServerLevel level, BlockPos first, BlockPos second) {
+    if (armed || !reservation.isEmpty() || !modules.isEmpty()) throw new IllegalArgumentException("Disarm an empty controller and unlink its modules before rebinding");
+    if (dev.silvergold.simulatedcoasters.track.cart.CoasterCartResolve.findSubLevelAt(level, worldPosition) != null)
+      throw new IllegalArgumentException("Controller requires fixed world support");
+    var track = DirectedTrack.resolve(level, first, second).orElseThrow(() -> new IllegalArgumentException("Select one loaded fixed rail edge"));
+    for (int i = 0; i <= 64; i++) {
+      var hit = track.hitAtDistance(level, track.length() * i / 64);
+      var tangent = track.forward(level, hit);
+      var firstDirection = track.forward(level, track.hitAtDistance(level, 0));
+      var up = dev.silvergold.simulatedcoasters.track.graph.CoasterPathTrackFrame.trackBasisAtHit(level, hit).up();
+      if (Math.abs(tangent.y) > .001 || tangent.dot(firstDirection) < .99999 || up.y < .99999)
+        throw new IllegalArgumentException("This controller prototype requires a straight, level, unbanked section");
+    }
+    from = first.immutable(); to = second.immutable(); geometry = track.fingerprint();
+    cachedTrack = null; graphRevision = Integer.MIN_VALUE; routeChunks.clear();
+    modules.clear(); phase = State.INSPECTION; fault = ""; changed();
+  }
+  public DirectedTrack resolve(ServerLevel level) {
+    if (from == null || to == null) return null;
+    if (dev.silvergold.simulatedcoasters.track.cart.CoasterCartResolve.findSubLevelAt(level, worldPosition) != null) { fail("Controller lost fixed support"); return null; }
+    int current = dev.silvergold.simulatedcoasters.track.graph.CoasterPathGraphManager.get(level).revision();
+    if (cachedTrack == null || graphRevision != current) {
+      var track = DirectedTrack.resolve(level, from, to).orElse(null);
+      if (track == null || track.fingerprint() != geometry) { fail("Reserved rail support or geometry changed"); return null; }
+      routeChunks.clear(); routeChunks.add(from); routeChunks.add(to);
+      for (double s = 0; s <= track.length(); s += 1) {
+        var pos = BlockPos.containing(track.hitAtDistance(level, s).point());
+        routeChunks.add(new BlockPos(Math.floorDiv(pos.getX(), 16) * 16, pos.getY(), Math.floorDiv(pos.getZ(), 16) * 16));
+      }
+      cachedTrack = track; graphRevision = current;
+    }
+    for (var pos : routeChunks) if (!level.hasChunkAt(pos)) { fail("Reserved route chunk is unavailable"); return null; }
+    return cachedTrack;
+  }
+  public void link(EquipmentCabinetEntity cabinet) {
+    if (armed || !reservation.isEmpty()) throw new IllegalArgumentException("Disarm an empty controller before linking equipment");
+    if (!(level instanceof ServerLevel server) || from == null) throw new IllegalArgumentException("Bind the controller's section first");
+    var track = resolve(server); var other = cabinet.resolve(server);
+    if (track == null || other == null || !track.edge().equals(other.edge()) || track.forward(server, track.hitAtDistance(server, 0)).dot(other.forward(server, other.hitAtDistance(server, 0))) < .99)
+      throw new IllegalArgumentException("Module must use this section's anchor order");
+    if (cabinet.mechanism() != dev.coasterslaunchsystems.math.Mechanism.TIRE && cabinet.mechanism() != dev.coasterslaunchsystems.math.Mechanism.FIN_BRAKE)
+      throw new IllegalArgumentException("Controller currently certifies tire drives and friction fins");
+    if (cabinet.armed()) throw new IllegalArgumentException("Disarm the module before linking it");
+    cabinet.linkController(worldPosition, identity);
+    modules.removeIf(m -> m.position().equals(cabinet.getBlockPos()));
+    modules.add(new Module(cabinet.getBlockPos(), cabinet.identity())); changed();
+  }
+  public void unlink(EquipmentCabinetEntity cabinet) {
+    if (armed || !reservation.isEmpty() || !(level instanceof ServerLevel server))
+      throw new IllegalArgumentException("Disarm an empty controller before unlinking");
+    if (!identity.equals(cabinet.controllerIdentity()) || !worldPosition.equals(cabinet.controllerPosition()))
+      throw new IllegalArgumentException("Module belongs to another controller");
+    cabinet.unlinkController(server);
+    modules.removeIf(m -> m.position().equals(cabinet.getBlockPos()) && m.identity().equals(cabinet.identity())); changed();
+  }
+  public void reserve(Set<UUID> members) {
+    if (!reservation.isEmpty() && !reservation.equals(members)) throw new IllegalArgumentException("Reservation belongs to another consist");
+    if (reservation.isEmpty()) { reservation.addAll(members); changed(); }
+  }
+  public void clearVerifiedReservation() { reservation.clear(); phase = State.HOLD; changed(); }
+  public void state(State next) { if (phase != next) { phase = next; changed(); } }
+  public void envelope(double needed, double usable) { required = needed; available = usable; }
+  public void fail(String reason) {
+    String message = reason == null || reason.isBlank() ? "Controller validation failed" : reason;
+    launchRequested = false;
+    if (phase != State.FAULT || !fault.equals(message)) { phase = State.FAULT; fault = message; changed(); }
+  }
+  public int signal(Direction face) {
+    return switch (face) {
+      case NORTH -> phase == State.READY ? 15 : 0;
+      case SOUTH -> reservation.isEmpty() ? 0 : 15;
+      case EAST -> phase == State.FAULT || phase == State.INSPECTION ? 15 : 0;
+      case WEST -> phase == State.HOLD || phase == State.READY ? 15 : 0;
+      default -> 0;
+    };
+  }
+  public String status() { return "Ride controller: " + phase + ", reserved chassis " + reservation.size()
+      + ", required brake length " + String.format(java.util.Locale.ROOT, "%.2f/%.2f", required, available) + ". " + fault; }
+  private void changed() {
+    setChanged();
+    if (level != null) { level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3); level.updateNeighborsAt(worldPosition, getBlockState().getBlock()); }
+  }
+  @Override public ClientboundBlockEntityDataPacket getUpdatePacket() { return ClientboundBlockEntityDataPacket.create(this); }
+  @Override public CompoundTag getUpdateTag(HolderLookup.Provider registries) { return saveWithoutMetadata(registries); }
+  @Override protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    super.saveAdditional(tag, registries);
+    tag.putInt("ls_controller_schema", 1); tag.putUUID("identity", identity); tag.putString("phase", phase.name()); tag.putString("fault", fault);
+    tag.putBoolean("armed", armed); tag.putDouble("required", required); tag.putDouble("available", available);
+    if (from != null) { tag.putLong("from", from.asLong()); tag.putLong("to", to.asLong()); tag.putLong("geometry", geometry); }
+    var linked = new ListTag();
+    for (var module : modules) { var entry = new CompoundTag(); entry.putLong("pos", module.position().asLong()); entry.putUUID("id", module.identity()); linked.add(entry); }
+    tag.put("modules", linked); var occupied = new ListTag();
+    for (var member : reservation) { var entry = new CompoundTag(); entry.putUUID("id", member); occupied.add(entry); }
+    tag.put("reservation", occupied);
+  }
+  @Override protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    super.loadAdditional(tag, registries);
+    if (tag.getInt("ls_controller_schema") != 1) throw new IllegalArgumentException("Unsupported controller schema");
+    identity = tag.getUUID("identity"); from = tag.contains("from") ? BlockPos.of(tag.getLong("from")) : null;
+    to = tag.contains("to") ? BlockPos.of(tag.getLong("to")) : null; geometry = tag.getLong("geometry");
+    modules.clear(); for (var entry : tag.getList("modules", 10)) { var e = (CompoundTag) entry; modules.add(new Module(BlockPos.of(e.getLong("pos")), e.getUUID("id"))); }
+    reservation.clear(); for (var entry : tag.getList("reservation", 10)) reservation.add(((CompoundTag) entry).getUUID("id"));
+    required = tag.getDouble("required"); available = tag.getDouble("available");
+    // Client packets display authoritative state. Server loads always require deliberate inspection.
+    boolean client = level != null && level.isClientSide;
+    armed = client && tag.getBoolean("armed"); phase = client ? State.valueOf(tag.getString("phase")) : State.INSPECTION;
+    fault = client ? tag.getString("fault") : "Reloaded controller requires inspection; reservation retained";
+    cachedTrack = null; graphRevision = Integer.MIN_VALUE; routeChunks.clear();
+    high = false; inputObserved = false; launchRequested = false;
+  }
+}
