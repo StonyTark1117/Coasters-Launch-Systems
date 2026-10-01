@@ -48,6 +48,13 @@ public final class SpanToolItem extends Item {
           if (!selected.dimension().equals(level.dimension()) || !level.hasChunkAt(selected.pos()) || !level.mayInteract(player, selected.pos())
               || !(level.getBlockEntity(selected.pos()) instanceof RideControllerEntity source))
             throw new IllegalArgumentException("Selected source controller is unavailable or protected");
+          if (player.getOffhandItem().is(net.minecraft.world.item.Items.COMPASS)) {
+            for (var module : source.receiverManifest()) if (!level.mayInteract(player, module.position()))
+              throw new IllegalArgumentException("Receiving equipment is protected");
+            source.requestReceiverRepair(controller); stack.remove(EquipmentContent.CONTROLLER_SELECTION.get());
+            player.displayClientMessage(Component.literal("Receiver inspection queued. Check the source status before arming both controllers and making a fresh request."), true);
+            return InteractionResult.SUCCESS;
+          }
           source.connectDestination(controller); stack.remove(EquipmentContent.CONTROLLER_SELECTION.get());
           player.displayClientMessage(Component.literal("Source linked to downstream stopping section."), true); return InteractionResult.SUCCESS;
         }

@@ -67,7 +67,27 @@ public final class RideControllers {
         && occupiedEquipment(level, event.getPos())) event.setCanceled(true);
   }
   public static Object ownership(ServerLevel level, EquipmentCabinetEntity module) {
-    var owner = owner(level, module); return owner == null ? module : leaseOwner(level, owner);
+    var owner = owner(level, module);
+    if (owner != null) return leaseOwner(level, owner);
+    // A lost receiver never grants drive commands. Its exact journaled spring pads retain the source brake owner.
+    if (module.mechanism() == Mechanism.FIN_BRAKE && module.controllerIdentity() != null) {
+      UUID retained = null;
+      var track = module.resolve(level);
+      if (track != null) for (var entry : CONTROLLERS.getOrDefault(level, Map.of()).values()) {
+        var source = entry.controller(); var peer = source.destination();
+        if (source.isRemoved() || entry.tick() < level.getGameTime() - 1 || !level.hasChunkAt(source.getBlockPos())
+            || level.getBlockEntity(source.getBlockPos()) != source || !source.transferring() || source.reservation().isEmpty()
+            || peer == null || !peer.position().equals(module.controllerPosition()) || !peer.identity().equals(module.controllerIdentity())
+            || source.receiverManifest().stream().noneMatch(m -> m.position().equals(module.getBlockPos()) && m.identity().equals(module.identity()))
+            || source.savedTransferSpans().isEmpty()) continue;
+        var receiving = source.savedTransferSpans().getLast();
+        if (!receiving.sameRail(track.edge().from(), track.edge().to()) || receiving.geometry() != track.fingerprint()) continue;
+        if (retained != null && !retained.equals(source.identity())) return module; // Ambiguity cannot select an owner by callback order.
+        retained = source.identity();
+      }
+      if (retained != null) return retained;
+    }
+    return module;
   }
   private static UUID leaseOwner(ServerLevel level, RideControllerEntity controller) {
     var source = controller(level, controller.incoming());
@@ -76,12 +96,17 @@ public final class RideControllers {
         && source.reservation().equals(controller.reservation()) ? source.identity() : controller.identity();
   }
   public static boolean routeAvailable(ServerLevel level, RideControllerEntity source, RideControllerEntity target, DirectedRoute route) {
+    return routeAvailable(level, source, target, route, List.of());
+  }
+  static boolean routeAvailable(ServerLevel level, RideControllerEntity source, RideControllerEntity target, DirectedRoute route,
+      List<RideControllerEntity.Module> inspectedOrphans) {
     for (var entry : CONTROLLERS.getOrDefault(level, Map.of()).values()) {
       var other = entry.controller();
+      if (other.isRemoved() || !level.hasChunkAt(other.getBlockPos()) || level.getBlockEntity(other.getBlockPos()) != other) continue;
       if (other == source || other == target || !other.armed() && other.reservation().isEmpty()) continue;
       if (other.claimedSpans().stream().anyMatch(s -> route.spans().stream().anyMatch(r -> r.sameRail(s.from(), s.to())))) return false;
     }
-    return !EquipmentRuntime.foreignRouteEquipment(level, source, target, route);
+    return !EquipmentRuntime.foreignRouteEquipment(level, source, target, route, inspectedOrphans);
   }
   public static boolean permitsDrive(ServerLevel level, EquipmentCabinetEntity module, UUID chassis) {
     if (module.controllerIdentity() == null) return true;
@@ -118,6 +143,7 @@ public final class RideControllers {
     entries.values().removeIf(e -> e.controller().isRemoved() || e.tick() < level.getGameTime() - 1
         || level.getBlockEntity(e.controller().getBlockPos()) != e.controller());
     var controllers = entries.values().stream().map(Entry::controller).toList();
+    for (var controller : controllers) controller.inspectRequestedReceiver(level);
     var tracks = new HashMap<RideControllerEntity, DirectedTrack>();
     for (var controller : controllers) {
       if (!controller.armed() && controller.reservation().isEmpty()) continue;

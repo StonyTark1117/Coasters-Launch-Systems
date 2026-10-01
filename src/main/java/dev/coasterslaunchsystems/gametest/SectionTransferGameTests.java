@@ -49,15 +49,22 @@ public final class SectionTransferGameTests {
     DirectedTrack sourceTrack, targetTrack;
     double work, peakSpeed, maxJoint, maxCoupler, minimumTail = Double.POSITIVE_INFINITY;
     int straddling, retainedTailSteps, transferForceSteps, postClearSteps, faultForceSteps, stoppedDriveSteps, missingCarrierDenialSteps;
-    boolean departure, disturbed, missingCarrier, closed;
+    boolean departure, disturbed, missingCarrier, closed, movingRepairDenied;
+    RideControllerEntity replacement;
+    RideControllerEntity.Peer repairPeer;
+    List<RideControllerEntity.Module> repairManifest;
+    final Map<BlockPos, net.minecraft.nbt.CompoundTag> repairHardware = new HashMap<>();
+    final Map<UUID, Integer> repairClamps = new HashMap<>();
+    boolean repairDenied() { return mode.endsWith("_changed_module") || mode.endsWith("_occupied") || mode.endsWith("_binding") || mode.endsWith("_legacy") || mode.endsWith("_cancelled"); }
     String failure = "";
     Scene(GameTestHelper helper, int slot, String mode) {
       this.mode = mode;
-      String design = mode.startsWith("arrow") || mode.startsWith("free_spin") ? mode : mode.contains("single") ? mode : "linked_forward";
+      String fixtureMode = mode.contains("_repair") ? mode.substring(0, mode.indexOf("_repair")) : mode;
+      String design = fixtureMode.startsWith("arrow") || fixtureMode.startsWith("free_spin") ? fixtureMode : fixtureMode.contains("single") || fixtureMode.contains("linked") ? fixtureMode : "linked_forward";
       // Adverse ordinary modes still use a fully occupied native coupled pair.
       if (mode.equals("power_loss") || mode.equals("rollback") || mode.startsWith("reload") || mode.equals("occupied_destination") || mode.equals("short_destination") || mode.equals("missing_destination")) design = "linked_forward";
       if (mode.equals("arrow_missing_carrier")) design = "arrow_linked_forward";
-      source = new RideControllerGameTests.Scene(helper, slot, design, 272);
+      source = new RideControllerGameTests.Scene(helper, slot, design, mode.contains("_repair") ? 304 : 272);
       otherEnd = source.reverse ? source.base.from.offset(0, 0, -64) : source.base.to.offset(0, 0, 64);
       var joint = source.reverse ? source.base.from : source.base.to; receiverPos = joint.offset(4, -2, source.reverse ? -8 : 8);
       for (int x = Math.floorDiv(joint.getX(), 16) - 1; x <= Math.floorDiv(joint.getX(), 16) + 1; x++)
@@ -94,7 +101,29 @@ public final class SectionTransferGameTests {
       receiver.bind(level, joint, otherEnd);
       for (int s = 1; s <= 17; s += 2) { module(s, false); module(s, true); }
       for (int s = 21; s <= (mode.equals("short_destination") ? 21 : 41); s += 2) module(s, true);
+      if (mode.equals("linked_reverse_repair")) receiver.setStationCapture(true);
       source.controller.connectDestination(receiver); receiver.setArmed(true); source.controller.setArmed(true);
+    }
+    RideControllerEntity replacement(boolean wrongDirection) {
+      var level = source.base.level; var joint = source.reverse ? source.base.from : source.base.to;
+      level.setBlockAndUpdate(receiverPos, EquipmentContent.CONTROLLER.get().defaultBlockState());
+      var replacement = (RideControllerEntity) level.getBlockEntity(receiverPos);
+      replacement.bind(level, wrongDirection ? otherEnd : joint, wrongDirection ? joint : otherEnd);
+      return replacement;
+    }
+    net.minecraft.world.InteractionResult repairWithTool(RideControllerEntity replacement) {
+      var level = source.base.level;
+      var player = net.neoforged.neoforge.common.util.FakePlayerFactory.get(level, new com.mojang.authlib.GameProfile(UUID.randomUUID(), "LSReceiverRepair"));
+      player.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
+      player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, EquipmentContent.TOOL.get().getDefaultInstance());
+      player.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND, net.minecraft.world.item.Items.COMPASS.getDefaultInstance());
+      player.setShiftKeyDown(true); player.setPos(source.controller.getBlockPos().getCenter());
+      var selected = player.getMainHandItem().useOn(new net.minecraft.world.item.context.UseOnContext(player, net.minecraft.world.InteractionHand.MAIN_HAND,
+          new net.minecraft.world.phys.BlockHitResult(source.controller.getBlockPos().getCenter(), Direction.UP, source.controller.getBlockPos(), false)));
+      source.base.helper.assertTrue(selected == net.minecraft.world.InteractionResult.SUCCESS, "Real span tool did not select retained source");
+      player.setShiftKeyDown(false); player.setPos(replacement.getBlockPos().getCenter());
+      return player.getMainHandItem().useOn(new net.minecraft.world.item.context.UseOnContext(player, net.minecraft.world.InteractionHand.MAIN_HAND,
+          new net.minecraft.world.phys.BlockHitResult(replacement.getBlockPos().getCenter(), Direction.UP, replacement.getBlockPos(), false)));
     }
     void module(int distance, boolean fin) {
       var level = source.base.level; var joint = source.reverse ? source.base.from : source.base.to;
@@ -142,7 +171,7 @@ public final class SectionTransferGameTests {
           onSource |= s.sourceTrack.matches(contact.hit()); onTarget |= s.targetTrack.matches(contact.hit());
           var current = s.sourceTrack.matches(contact.hit()) ? s.sourceTrack : s.targetTrack; double distance = current.distance(contact.hit());
           double global = distance + (current == s.targetTrack ? 64 : 0), old = s.oldDistances.getOrDefault(cart.getUniqueId(), global); s.oldDistances.put(cart.getUniqueId(), global);
-          for (var pos : concat(s.source.equipment, s.modules)) if (s.source.base.level.getBlockEntity(pos) instanceof EquipmentCabinetEntity cabinet && cabinet.mechanism() == Mechanism.TIRE) {
+          for (var pos : concat(s.source.equipment, s.modules)) if (s.source.base.level.getBlockEntity(pos) instanceof EquipmentCabinetEntity cabinet && cabinet.armed() && cabinet.mechanism() == Mechanism.TIRE) {
             var owner = RideControllers.owner(s.source.base.level, cabinet); double offset = owner == s.receiver ? 64 : 0;
             if (cabinet.interval().intersects(old - offset, global - offset, .6)) contacted.add(pos);
           }
@@ -173,14 +202,23 @@ public final class SectionTransferGameTests {
         double budget = contacted.stream().map(p -> (EquipmentCabinetEntity) s.source.base.level.getBlockEntity(p)).mapToDouble(c -> 8 * Math.abs(c.getSpeed()) * 2 * Math.PI / 60 * event.getTimeStep()).sum();
         s.source.base.helper.assertTrue(stepWork <= budget + 1e-8, "Transfer duplicated contacted shaft work");
         s.source.base.helper.assertTrue(s.source.base.riders.stream().allMatch(net.minecraft.world.entity.animal.Pig::isPassenger), "Transfer lost a real rider");
-        if (onSource && onTarget && !s.disturbed && s.departure) {
+        if ((onSource && onTarget || s.mode.contains("_repair") && onTarget) && !s.disturbed && s.departure) {
           if (s.mode.equals("power_loss")) { ((CreativeMotorBlockEntity) s.source.base.level.getBlockEntity(s.motors.getFirst())).generatedSpeed.setValue(0); s.disturbed = true; }
           if (s.mode.startsWith("reload")) {
             var a = s.source.controller.saveWithFullMetadata(s.source.base.level.registryAccess());
             var b = s.receiver.saveWithFullMetadata(s.source.base.level.registryAccess());
             s.source.controller.loadWithComponents(a, s.source.base.level.registryAccess()); s.receiver.loadWithComponents(b, s.source.base.level.registryAccess()); s.disturbed = true;
           }
-          if (s.mode.equals("missing_destination")) { s.source.base.level.removeBlock(s.receiverPos, false); s.disturbed = true; }
+          if (s.mode.equals("missing_destination") || s.mode.contains("_repair")) {
+            s.source.base.level.removeBlock(s.receiverPos, false); s.disturbed = true;
+            if (s.mode.endsWith("_repair_moving")) {
+              s.source.controller.setArmed(false); s.replacement = s.replacement(false);
+              var peer = s.source.controller.destination();
+              s.source.base.helper.assertTrue(s.train.stream().anyMatch(c -> Math.abs(s.source.base.speed(c)) > .1), "Moving repair fixture had no native speed");
+              s.source.base.helper.assertTrue(s.repairWithTool(s.replacement) == net.minecraft.world.InteractionResult.SUCCESS
+                  && s.source.controller.destination().equals(peer) && s.replacement.modules().isEmpty() && s.replacement.reservation().isEmpty(), "Queued inspection mutated a moving train's ownership immediately");
+            }
+          }
           if (s.mode.equals("arrow_missing_carrier")) {
             var carrier = ((List<?>) read(s.source.vehicles.getFirst(), "carriers")).getFirst();
             var id = (UUID) read(carrier, "body"); var body = SubLevelContainer.getContainer(s.source.base.level).getSubLevel(id);
@@ -216,6 +254,15 @@ public final class SectionTransferGameTests {
     for (var mode : modes) { int index = slot++; tests.add(new TestFunction("launchsystems_section_transfer", "coasterslaunchsystems.transfer_" + mode, "coasterslaunchsystems:empty", mode.equals("reload_resume") ? 3000 : 2300, 0, true, h -> run(new Scene(h, index, mode)))); }
     return tests;
   }
+  @GameTestGenerator public static List<TestFunction> receiverRepairs() {
+    var modes = new ArrayList<>(List.of("linked_forward_repair", "linked_reverse_repair", "linked_forward_repair_moving",
+        "linked_forward_repair_changed_module", "linked_forward_repair_occupied", "linked_forward_repair_binding", "linked_forward_repair_legacy", "linked_forward_repair_cancelled"));
+    if (ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of("arrow_linked_forward_repair", "arrow_linked_reverse_repair", "free_spin_forward_repair"));
+    var tests = new ArrayList<TestFunction>(); int slot = 0;
+    for (var mode : modes) { int index = slot++; tests.add(new TestFunction("launchsystems_receiver_repair", "coasterslaunchsystems_recovery." + mode,
+        "coasterslaunchsystems_recovery:empty", 3000, 0, true, h -> run(new Scene(h, index, mode)))); }
+    return tests;
+  }
   private static void run(Scene s) {
     if (!registered) { NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, SectionTransferGameTests::before); NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, SectionTransferGameTests::after); registered = true; }
     s.at(40, () -> { s.train.addAll(s.source.base.parents); if (s.source.fourthDimension) s.source.boardFourthDimension(); else for (var cart : s.train) for (int seat = 0; seat < 4; seat++) s.source.base.board(cart, seat); });
@@ -243,6 +290,92 @@ public final class SectionTransferGameTests {
       } else s.source.base.helper.assertTrue(s.source.controller.phase() == RideControllerEntity.State.EXITING && s.receiver.phase() == RideControllerEntity.State.RECEIVING
           && s.source.controller.reservation().equals(s.receiver.reservation()) && s.transferForceSteps > 10, "Departure did not reserve both sections before applying native tire work");
     });
+    if (s.mode.contains("_repair")) {
+      s.at(1500, () -> {
+        if (s.mode.endsWith("_repair_moving")) {
+          s.source.base.helper.assertTrue(s.replacement != null && s.replacement.modules().isEmpty() && s.replacement.reservation().isEmpty()
+              && s.source.controller.destination().identity().equals(s.receiver.identity()) && s.source.controller.fault().contains("physically stopped and held"), "Moving native inspection failed to retain ownership or rejected for an unrelated reason: " + s.source.controller.status());
+          s.movingRepairDenied = true;
+        }
+        if (s.mode.endsWith("_occupied")) {
+          var foreign = s.source.base.cart(s.targetTrack.hitAtDistance(s.source.base.level, 32)); for (int seat = 0; seat < 4; seat++) s.source.base.board(foreign, seat);
+        }
+      });
+      s.at(1600, () -> {
+        var level = s.source.base.level; var source = s.source.controller; var previous = source.destination();
+        s.source.base.helper.assertTrue(s.disturbed && source.reservation().size() == s.train.size() && source.transferring(), "Missing receiver lost the original transfer journal");
+        source.setArmed(false); s.stoppedDriveSteps = s.transferForceSteps;
+        if (s.replacement == null) s.replacement = s.replacement(s.mode.endsWith("_binding"));
+        var manifest = source.receiverManifest();
+        s.source.base.helper.assertTrue(manifest.equals(s.receiver.modules()) && !manifest.isEmpty(), "Source failed to retain exact receiving equipment roles");
+        var first = manifest.getFirst(); var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(first.position());
+        boolean normalLinkDenied = false;
+        try { cabinet.linkController(s.replacement.getBlockPos(), s.replacement.identity()); } catch (IllegalArgumentException denied) { normalLinkDenied = true; }
+        s.source.base.helper.assertTrue(normalLinkDenied, "Normal linking stole an orphaned occupied module");
+        if (s.mode.endsWith("_changed_module")) {
+          var state = cabinet.getBlockState(); level.removeBlock(first.position(), false); level.setBlockAndUpdate(first.position(), state);
+        }
+        if (s.mode.endsWith("_legacy")) {
+          var old = source.saveWithFullMetadata(level.registryAccess()); old.putInt("ls_controller_schema", 4); old.remove("receiver_manifest"); source.loadWithComponents(old, level.registryAccess());
+          s.source.base.helper.assertTrue(source.receiverManifest().isEmpty(), "Old save invented an equipment manifest");
+        }
+        boolean denied = s.repairDenied(); s.repairPeer = previous; s.repairManifest = manifest;
+        if (!denied) s.source.base.helper.assertTrue(s.train.stream().allMatch(c -> Math.abs(s.source.base.speed(c)) < .03 && EquipmentRuntime.activeFinClamps(level, c.getUniqueId()) > 0), "Missing receiver lost whole-train spring hold before inspection");
+        var hardware = s.repairHardware; var clamps = s.repairClamps;
+        if (!denied) {
+          for (var link : manifest) { var savedModule = ((EquipmentCabinetEntity) level.getBlockEntity(link.position())).saveWithoutMetadata(level.registryAccess()); savedModule.remove("ls_controller"); savedModule.remove("ls_controller_pos"); hardware.put(link.position(), savedModule); }
+          for (var cart : s.train) clamps.put(cart.getUniqueId(), EquipmentRuntime.activeFinClamps(level, cart.getUniqueId()));
+        }
+        var result = s.repairWithTool(s.replacement);
+        s.source.base.helper.assertTrue(result == net.minecraft.world.InteractionResult.SUCCESS && s.replacement.reservation().isEmpty() && s.replacement.modules().isEmpty()
+            && source.destination().equals(previous), "Real tool did not queue a read-only inspection");
+        if (s.mode.endsWith("_cancelled")) {
+          var saved = source.saveWithFullMetadata(level.registryAccess()); source.loadWithComponents(saved, level.registryAccess());
+        }
+      });
+      s.at(1602, () -> {
+        var level = s.source.base.level; var source = s.source.controller; var previous = s.repairPeer; var manifest = s.repairManifest;
+        var hardware = s.repairHardware; var clamps = s.repairClamps;
+        if (s.repairDenied()) {
+          s.source.base.helper.assertTrue((source.fault().startsWith("Receiver inspection refused:") || s.mode.endsWith("_cancelled") && source.fault().startsWith("Reloaded controller")) && source.destination().equals(previous)
+              && source.reservation().size() == s.train.size() && s.replacement.modules().isEmpty() && s.replacement.reservation().isEmpty()
+              && !s.replacement.armed() && source.phase() == RideControllerEntity.State.INSPECTION, "Rejected inspection mutated ownership or dropped the retained lease");
+          return;
+        }
+        s.source.base.helper.assertTrue(source.destination().identity().equals(s.replacement.identity()), "Native inspection refused receiver repair: " + source.status());
+        boolean savedStation = s.receiver.stationCapture(); s.receiver = s.replacement;
+        s.source.base.helper.assertTrue(s.receiver.stationCapture() == savedStation, "Repair lost the receiving station-capture setting");
+        s.source.base.helper.assertTrue(!source.armed() && !s.receiver.armed() && source.phase() == RideControllerEntity.State.INSPECTION
+            && s.receiver.phase() == RideControllerEntity.State.INSPECTION && source.reservation().equals(s.receiver.reservation())
+            && source.destination().identity().equals(s.receiver.identity()) && s.receiver.incoming().identity().equals(source.identity())
+            && s.receiver.modules().equals(manifest) && !source.boardingReady() && !s.receiver.boardingReady(), "Repair did not retain inspected paired ownership and exact equipment roles");
+        for (var link : manifest) {
+          var restored = (EquipmentCabinetEntity) level.getBlockEntity(link.position());
+          s.source.base.helper.assertTrue(restored.controllerIdentity().equals(s.receiver.identity()), "Restored receiver failed to own its saved module");
+          var savedModule = restored.saveWithoutMetadata(level.registryAccess()); savedModule.remove("ls_controller"); savedModule.remove("ls_controller_pos");
+          s.source.base.helper.assertTrue(hardware.get(link.position()).equals(savedModule), "Repair changed module identity, binding, heat or native shaft configuration");
+        }
+        for (var cart : s.train) s.source.base.helper.assertTrue(clamps.get(cart.getUniqueId()) == EquipmentRuntime.activeFinClamps(level, cart.getUniqueId()), "Repair recreated or released a native spring clamp");
+        var saved = source.saveWithFullMetadata(level.registryAccess()); source.loadWithComponents(saved, level.registryAccess());
+        var received = s.receiver.saveWithFullMetadata(level.registryAccess()); s.receiver.loadWithComponents(received, level.registryAccess());
+        s.source.base.helper.assertTrue(source.receiverManifest().equals(manifest) && source.destination().identity().equals(s.receiver.identity())
+            && source.reservation().equals(s.receiver.reservation()) && !source.armed() && !s.receiver.armed(), "Repaired save lost its journal or replayed motion");
+      });
+      s.at(1620, () -> {
+        s.source.base.helper.assertTrue(s.transferForceSteps == s.stoppedDriveSteps, "Inspection repair granted native tire work");
+        if (!s.repairDenied()) s.receiver.setArmed(true);
+      });
+      s.at(1640, () -> {
+        if (s.receiver != s.replacement) return;
+        s.source.base.helper.assertTrue(s.receiver.phase() == RideControllerEntity.State.HOLD && s.transferForceSteps == s.stoppedDriveSteps, "Receiver rearming replayed an interrupted transfer"); s.source.controller.setArmed(true);
+      });
+      s.at(1680, () -> {
+        if (s.receiver != s.replacement) return;
+        s.source.base.helper.assertTrue(s.source.controller.phase() == RideControllerEntity.State.READY_EXIT && s.transferForceSteps == s.stoppedDriveSteps, "Repaired pair replayed held-high departure or failed readiness: " + s.source.controller.status());
+        s.source.high(false);
+      });
+      s.at(1720, () -> { if (s.receiver == s.replacement) s.source.high(true); });
+    }
     if (s.mode.equals("reload_resume")) {
       s.at(1600, () -> {
         s.source.base.helper.assertTrue(s.disturbed && !s.source.controller.armed() && !s.receiver.armed()
@@ -261,9 +394,17 @@ public final class SectionTransferGameTests {
       });
       s.at(1720, () -> s.source.high(true));
     }
-    s.at(s.mode.equals("reload_resume") ? 2700 : 1900, () -> {
+    s.at(s.mode.equals("reload_resume") || s.mode.contains("_repair") ? 2700 : 1900, () -> {
       if (s.closed) return;
       s.source.base.helper.assertTrue(s.failure.isEmpty(), "Native transfer observer failed: " + s.failure);
+      boolean repairDenied = s.mode.contains("_repair") && s.receiver != s.replacement;
+      if (repairDenied) {
+        s.source.base.helper.assertTrue(s.source.controller.phase() == RideControllerEntity.State.INSPECTION && s.source.controller.reservation().size() == s.train.size()
+            && s.source.controller.transferring() && s.transferForceSteps == s.stoppedDriveSteps && s.replacement.modules().isEmpty() && s.replacement.reservation().isEmpty(), "Denied receiver repair released its train or equipment");
+        System.out.println("LS_RECEIVER_REPAIR_DENIED mode=" + s.mode + " retained=" + s.source.controller.reservation().size() + " drive_steps_after_attempt=" + (s.transferForceSteps - s.stoppedDriveSteps));
+        s.cleanup(); s.source.base.helper.succeed(); return;
+      }
+      if (s.mode.endsWith("_repair_moving")) s.source.base.helper.assertTrue(s.movingRepairDenied, "No actual moving repair rejection was observed");
       boolean interrupted = List.of("rollback", "power_loss", "reload", "missing_destination", "arrow_missing_carrier").contains(s.mode);
       if (interrupted) {
         s.source.base.helper.assertTrue(s.disturbed && s.source.controller.reservation().size() == s.train.size() && s.source.controller.transferring()

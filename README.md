@@ -2,7 +2,7 @@
 
 A standalone Create: Coasters Simulated addon in development toward **0.4.0**. The planned release includes tire, LIM, LSM, flywheel, hydraulic and pneumatic launches, distinct friction/skid/magnetic brakes, local ride control and explicit compatibility with Fourth Dimension vehicles.
 
-The current `0.0.1-dev.11` checkpoint adds optional station capture to the reserved native circuit controller. A completely held train returns to its vehicle owner for alignment and boarding; readiness is separate from departure permission. Occupied ordinary, Arrow and Free Spin circuits exercise actual exit/reboarding, open-restraint departure denial and a fresh departure. Station mode defaults off for older saves. The requested 0.4.0 release gates remain in progress. See [release roadmap](ROADMAP.md), [station setup and scope](docs/STATIONS.md), [circuit scope](docs/CIRCUITS.md), and [validation status](docs/VALIDATION.md).
+The current `0.0.1-dev.12` checkpoint adds inspected recovery of a receiving controller removed during a reserved transfer. The source saves the exact receiving equipment, preserves coordinated spring braking while its controller is missing, and queues a one-time native inspection before rebinding an empty replacement. Success retains the complete train lease and leaves both controllers disarmed; departure requires separate arming and a fresh request. Optional vehicle-owned station capture from dev.11 remains available. The requested 0.4.0 release gates remain in progress. See [release roadmap](ROADMAP.md), [receiver recovery and limits](docs/RECEIVER-RECOVERY.md), [station setup](docs/STATIONS.md), and [validation status](docs/VALIDATION.md).
 
 ## Development stack
 

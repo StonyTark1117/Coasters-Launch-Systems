@@ -16,6 +16,10 @@ Inspected source paths under `../Coasters: Fourth Dimension/src/main/java/dev/fo
 
 The sibling `research/dependency-audit.json` contains earlier exact release coordinates, hashes and signatures. It is inherited evidence, not a fresh compatibility result. Its Track Styles review covers 1.1.0-hotfix1; the current project page now advertises 1.2.0. Its Immersion review covers 0.2.3.
 
+### Recovery of the exact pinned artifact, October 1, 2026
+
+After temporary validation files were cleared, the schema-4 JAR was recovered from [Fourth Dimension CI run 36775040079](https://github.com/StonyTark1117/Coasters-Fourth-Dimension/actions/runs/36775040079), artifact `validation-evidence` (ID `11124877451`). The downloaded 421806-byte JAR exactly matches historical SHA-256 `027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16`. The successful run identifies upstream source commit `a881e3d34415edd691baa166668f4f97d3a4a7e8`; the pin's source identity is now verified. Its declared version remains `0.9.0-dev.1`. A durable validation-cache copy is retained outside the upstream checkout. No active upstream checkout or process was changed.
+
 ### Pinned station operation inspection, October 1, 2026
 
 Inspected `javap -c dev.fourthdimension.vehicle.VehicleOperations` and the public `Boarding` signatures in the copied schema-4 JAR, SHA-256 `027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16`. This artifact is isolated from the active sibling checkout and is the same pinned dependency used in the combined native tests.

@@ -41,11 +41,17 @@ public final class EquipmentRuntime {
   }
   public static boolean foreignRouteEquipment(ServerLevel level, dev.coasterslaunchsystems.content.RideControllerEntity source,
       dev.coasterslaunchsystems.content.RideControllerEntity target, dev.coasterslaunchsystems.track.DirectedRoute route) {
+    return foreignRouteEquipment(level, source, target, route, List.of());
+  }
+  static boolean foreignRouteEquipment(ServerLevel level, dev.coasterslaunchsystems.content.RideControllerEntity source,
+      dev.coasterslaunchsystems.content.RideControllerEntity target, dev.coasterslaunchsystems.track.DirectedRoute route,
+      List<dev.coasterslaunchsystems.content.RideControllerEntity.Module> inspectedOrphans) {
     for (var entry : List.copyOf(MODULES.getOrDefault(level, Map.of()).values())) {
       var module = entry.module();
       if (!available(level, module) || !module.armed() || !module.fault().isEmpty()) continue;
       var track = module.resolve(level);
-      if (track != null && route.contains(track.edge()) && ownerOutsidePair(level, module, source, target)) return true;
+      if (track != null && route.contains(track.edge()) && ownerOutsidePair(level, module, source, target)
+          && inspectedOrphans.stream().noneMatch(m -> m.position().equals(module.getBlockPos()) && m.identity().equals(module.identity()))) return true;
     }
     return false;
   }

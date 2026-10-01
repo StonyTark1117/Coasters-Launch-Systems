@@ -46,13 +46,19 @@ public final class RideTransfers {
   private RideTransfers() {}
 
   private static Section section(ServerLevel level, RideControllerEntity controller, DirectedTrack track) {
-    if (!controller.armed() || controller.phase() == State.FAULT || track == null) throw new IllegalStateException("Transfer section is unarmed or unavailable");
+    if (!controller.armed() || controller.phase() == State.FAULT) throw new IllegalStateException("Transfer section is unarmed or unavailable");
+    return section(level, controller, track, controller.modules(), new RideControllerEntity.Peer(controller.getBlockPos(), controller.identity()), true);
+  }
+  private static Section section(ServerLevel level, RideControllerEntity controller, DirectedTrack track,
+      List<RideControllerEntity.Module> links, RideControllerEntity.Peer owner, boolean liveOwner) {
+    if (track == null) throw new IllegalStateException("Transfer rail is unavailable");
     var launch = new ArrayList<EquipmentCabinetEntity>(); var exit = new ArrayList<EquipmentCabinetEntity>(); var fins = new ArrayList<EquipmentCabinetEntity>();
-    for (var link : controller.modules()) {
+    for (var link : links) {
       if (!level.hasChunkAt(link.position()) || !(level.getBlockEntity(link.position()) instanceof EquipmentCabinetEntity module)
-          || !link.identity().equals(module.identity()) || RideControllers.owner(level, module) != controller
+          || !link.identity().equals(module.identity()) || !owner.identity().equals(module.controllerIdentity())
+          || !owner.position().equals(module.controllerPosition()) || liveOwner && RideControllers.owner(level, module) != controller
           || !EquipmentRuntime.available(level, module) || !module.armed() || !module.fault().isEmpty())
-        throw new IllegalStateException("Transfer equipment is unavailable or replaced");
+        throw new IllegalStateException("Transfer equipment at " + link.position().toShortString() + " is unavailable, replaced, disarmed, faulted or owned by another controller");
       var bound = module.resolve(level);
       if (bound == null || !track.edge().equals(bound.edge()) || track.forward(level, track.hitAtDistance(level, 0))
           .dot(bound.forward(level, bound.hitAtDistance(level, 0))) < .99) throw new IllegalStateException("Transfer module binding changed");
@@ -122,7 +128,7 @@ public final class RideTransfers {
       gravity = Math.max(gravity, Math.abs(nativeGravity.dot(new Vector3d(tangent.x, tangent.y, tangent.z))));
     }
     var envelope = new StoppingEnvelope(train.mass(), speed, train.force(), gravity, .1, train.length());
-    first.controller().envelope(envelope.requiredLength(), second.brakeEnd() - second.brakeStart());
+    if (first.controller().armed()) first.controller().envelope(envelope.requiredLength(), second.brakeEnd() - second.brakeStart());
     return envelope.fits(second.brakeEnd() - second.brakeStart());
   }
   private static double speedBound(ServerLevel level, Section first, Section second, DirectedRoute route, Train train) {
@@ -145,6 +151,55 @@ public final class RideTransfers {
   }
   private static boolean chainOnRoute(ServerLevel level, DirectedRoute route) {
     return route.samples().stream().anyMatch(hit -> ChainLiftSpanQuery.findAtGraphHit(level, hit, 0) != null);
+  }
+
+  /** Read-only ownership proof for replacing a missing receiver of a retained, stopped transfer. */
+  public static void inspectReceiverRepair(ServerLevel level, RideControllerEntity source, RideControllerEntity target) {
+    try {
+      var peer = source.destination(); var manifest = source.receiverManifest();
+      if (source.getLevel() != level || target.getLevel() != level || source == target
+          || source.isRemoved() || target.isRemoved() || !level.hasChunkAt(source.getBlockPos()) || !level.hasChunkAt(target.getBlockPos())
+          || source.from() == null || source.to() == null || SubLevelContainer.getContainer(level) == null
+          || level.getBlockEntity(source.getBlockPos()) != source || level.getBlockEntity(target.getBlockPos()) != target
+          || source.armed() || source.phase() != State.INSPECTION || source.incoming() != null
+          || !source.transferring() || source.reservation().isEmpty())
+        throw new IllegalStateException("Disarm the source with its retained transfer reservation before repair");
+      if (peer == null || !peer.position().equals(target.getBlockPos()) || peer.identity().equals(target.identity())
+          || RideControllers.controller(level, peer) != null || target.armed() || target.phase() != State.INSPECTION
+          || !target.reservation().isEmpty() || !target.modules().isEmpty() || target.incoming() != null
+          || target.transferring() || target.destination() != null)
+        throw new IllegalStateException("Repair requires an empty replacement controller at the missing receiver's exact position");
+      if (manifest.isEmpty() || source.savedTransferSpans().isEmpty())
+        throw new IllegalStateException("No receiving-equipment manifest is saved; restore the original controller and inspect it");
+      var spans = source.savedTransferSpans(); var last = spans.getLast();
+      if (!last.from().equals(target.from()) || !last.to().equals(target.to()))
+        throw new IllegalStateException("Bind the replacement to the saved receiving anchors in their original order");
+      var firstTrack = source.resolve(level); var lastTrack = target.resolve(level);
+      var route = DirectedRoute.between(level, source.from(), source.to(), target.from(), target.to());
+      if (!spans.equals(route.spans())) throw new IllegalStateException("Saved transfer route geometry changed; reservation retained");
+      route.requireLoaded(level);
+      var first = section(level, source, firstTrack, source.modules(), new RideControllerEntity.Peer(source.getBlockPos(), source.identity()), true);
+      var second = section(level, target, lastTrack, manifest, peer, false);
+      if (!RideControllers.routeAvailable(level, source, target, route, manifest) || occupied(level, route, source.reservation()) || chainOnRoute(level, route))
+        throw new IllegalStateException("A conflicting owner, train or native chain occupies the saved route");
+      var train = train(level, source, route); var container = SubLevelContainer.getContainer(level);
+      String provider = train.rows().getFirst().motion().provider();
+      for (var row : train.rows()) {
+        if (!provider.equals(row.motion().provider())) throw new IllegalStateException("Reserved train has conflicting vehicle providers");
+        var pipeline = container.physicsSystem().getPipeline();
+        var velocity = pipeline.getLinearVelocity(row.cart(), new Vector3d());
+        var point = VehicleInterfaces.tirePoint(row.cart());
+        if (point == null) throw new IllegalStateException("Reserved chassis lacks its certified tire interface");
+        var arm = new Vector3d(point).sub(row.cart().getMassTracker().getCenterOfMass()).rotate(row.cart().logicalPose().orientation());
+        var pointVelocity = pipeline.getAngularVelocity(row.cart(), new Vector3d()).cross(arm).add(velocity);
+        if (!Double.isFinite(velocity.lengthSquared()) || !Double.isFinite(pointVelocity.lengthSquared())
+            || velocity.length() >= .03 || pointVelocity.length() >= .03
+            || EquipmentRuntime.activeFinClamps(level, row.cart().getUniqueId()) == 0
+                && (row.motion().propulsionAllowed() || !StationCapture.vehicleHeld(level, row.cart().getUniqueId())))
+          throw new IllegalStateException("Every reserved chassis must be physically stopped and held before repair");
+      }
+      if (!certificate(level, first, second, route, train)) throw new IllegalStateException("Receiving stopping certificate no longer fits the loaded train");
+    } catch (IllegalStateException failure) { throw new IllegalArgumentException(failure.getMessage(), failure); }
   }
 
   /** Called before ordinary local decisions; receiver commands are suppressed while another section owns its lease. */

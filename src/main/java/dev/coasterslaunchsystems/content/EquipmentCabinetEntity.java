@@ -47,6 +47,11 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
       throw new IllegalArgumentException("Module already belongs to another controller");
     controllerPosition = position.immutable(); controllerIdentity = id; changed();
   }
+  void restoreController(RideControllerEntity.Peer previous, RideControllerEntity target) {
+    if (!previous.identity().equals(controllerIdentity) || !previous.position().equals(controllerPosition)
+        || target.armed() || !target.reservation().isEmpty()) throw new IllegalArgumentException("Inspected module ownership changed");
+    controllerPosition = target.getBlockPos().immutable(); controllerIdentity = target.identity(); changed();
+  }
   public void unlinkController(ServerLevel level) {
     if (armed || !dev.coasterslaunchsystems.runtime.RideControllers.editingAllowed(level, this))
       throw new IllegalArgumentException("Disarm an empty controller and module before unlinking");
