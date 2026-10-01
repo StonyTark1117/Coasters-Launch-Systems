@@ -57,6 +57,8 @@ Dev.16 feeds the native catch from the placed cabinet's actual saved flywheel st
 
 Dev.17 adds a placed controller path for one flywheel, a catch-home launch fin and a continuous downstream stop bank. An occupied ordinary cart engages and dispatches from the cabinet and a fresh redstone input, then stops under linked pads while the carriage physically returns. Installation is journaled and only a disarmed, physically home carriage retires. A pinned Arrow case also launches with an independent preparation hold. The installed-carriage journal currently fails closed across reload; native identity inspection and reclamation, Arrow staging equipment, real chunk/restart and rendered operation remain open.
 
+Dev.18 records the installed native carriage UUID and accepted rail home in the cabinet, and registers a Sable force-load ticket for that carriage. Controller dispatch checks the live carriage against the saved identity and home; physical retirement removes the ticket and journal. Legacy journals without an identity remain disarmed and faulted. In-memory NBT reload and ticket lifecycle have focused native coverage, but a real world restart, native constraint reconstruction, inspected reclamation and broader gameplay acceptance remain open.
+
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |
 | LS301 | Shared cable guide, catch socket, carriage and release/reset machine | 0.2. Real constrained pull, rated guide/end clearance, physical return and misalignment handling. No teleport, one-shot impulse or prescribed train path. |

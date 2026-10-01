@@ -89,7 +89,11 @@ final class CableControllers {
     var key = new Key(level, controller.getBlockPos(), controller.identity());
     var installed = INSTALLED.get(key);
     if (cabinet.cableInstalled() && installed == null) { controller.fail("Saved cable carriage needs inspected recovery"); return; }
-    if (installed != null && !installed.cabinet().equals(cabinet.identity())) { controller.fail("Cable cabinet identity changed"); return; }
+    if (installed != null && (!installed.cabinet().equals(cabinet.identity())
+        || !installed.rig().carriage().getUniqueId().equals(cabinet.cableCarriage())
+        || Math.abs(installed.home() - cabinet.cableHome()) > 1e-6)) {
+      controller.fail("Cable cabinet or carriage identity changed"); return;
+    }
 
     var container = SubLevelContainer.getContainer(level);
     if (container == null) { controller.fail("Native cable physics unavailable"); return; }
@@ -165,7 +169,7 @@ final class CableControllers {
     if (installed == null && held && ready) {
       try {
         var rig = new NativeCableRig(level, track, lead.distance(), RELEASE_TRAVEL, GUIDE_TRAVEL);
-        try { cabinet.installCable(); } catch (RuntimeException failure) { rig.close(); throw failure; }
+        try { cabinet.installCable(rig); } catch (RuntimeException failure) { rig.close(); throw failure; }
         installed = new Installation(cabinet.getBlockPos(), cabinet.identity(), lead.distance(), rig); INSTALLED.put(key, installed);
       } catch (RuntimeException failure) { controller.fail("Cable carriage installation failed: " + failure.getMessage()); return; }
     }

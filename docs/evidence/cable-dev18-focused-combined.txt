@@ -1,0 +1,7 @@
+Final dev.18 packaged cable namespace with the verified pinned schema-4 Fourth Dimension JAR.
+Both placed-controller cases assert registered native carriage ticket, UUID/home NBT reload, legacy fail-closed behavior and ticket removal at physical retirement.
+LS_CABLE_CONTROLLER mode=ordinary_controller_dispatch phase=INSPECTION peak_speed=2.874640464782715 distance=21.881897901978363 energy=750.3631221246196->1793.303792201797
+LS_CABLE_CONTROLLER mode=arrow_controller_dispatch phase=INSPECTION peak_speed=2.859165906906128 distance=23.22021578334222 energy=750.3631221246196->1789.6512139755805
+[14:10:42] [Server thread/INFO] [minecraft/GameTestServer]: ========= 17 GAME TESTS COMPLETE IN 47.20 s ======================
+[14:10:42] [Server thread/INFO] [minecraft/GameTestServer]: All 17 required tests passed :)
+BUILD SUCCESSFUL in 1m 10s

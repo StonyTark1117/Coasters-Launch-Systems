@@ -7,6 +7,7 @@ import dev.coasterslaunchsystems.content.EquipmentContent;
 import dev.coasterslaunchsystems.content.RideControllerEntity;
 import dev.coasterslaunchsystems.api.MotionProviders;
 import dev.coasterslaunchsystems.runtime.EquipmentRuntime;
+import dev.coasterslaunchsystems.runtime.CableTickets;
 import dev.coasterslaunchsystems.runtime.NativeFinClamp;
 import dev.coasterslaunchsystems.runtime.VehicleInterfaces;
 import dev.ryanhcode.sable.api.sublevel.SubLevelContainer;
@@ -16,6 +17,7 @@ import dev.coasterslaunchsystems.track.EngagedContacts;
 import dev.ryanhcode.sable.neoforge.event.ForgeSablePrePhysicsTickEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTestGenerator;
@@ -23,6 +25,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestFunction;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.gametest.GameTestHolder;
@@ -39,6 +42,7 @@ public final class CableControllerGameTests {
     final List<NativeFinClamp> preparation = new ArrayList<>();
     final BlockPos flywheel, motor;
     double peakSpeed, initialEnergy, minimumRunningEnergy = Double.POSITIVE_INFINITY, finalDistance;
+    UUID carriage;
     boolean running, braking;
     String failure = "";
     Scene(GameTestHelper helper, int slot, String mode) {
@@ -118,6 +122,24 @@ public final class CableControllerGameTests {
               + " clamps=" + EquipmentRuntime.activeFinClamps(level, r.base.parents.getFirst().getUniqueId())
               + " ready=" + MotionProviders.resolve(level, r.base.parents.getFirst().getUniqueId()).orElseThrow().dispatchReady()
               + " speed=" + r.base.speed(r.base.parents.getFirst()) + " " + s.failure);
+      s.carriage = s.cabinet().cableCarriage();
+      var ticket = s.carriage == null ? null : SubLevelContainer.getContainer(level).getAllTickets().get(s.carriage);
+      r.base.helper.assertTrue(ticket != null && ticket.tickets().stream().anyMatch(t -> t.getType().equals(CableTickets.CARRIAGE)
+          && s.carriage.equals(t.getKey())), "Installed native carriage has no registered loading ticket");
+      var saved = s.cabinet().saveWithFullMetadata(level.registryAccess());
+      var restored = (EquipmentCabinetEntity) BlockEntity.loadStatic(s.flywheel, s.cabinet().getBlockState(), saved, level.registryAccess());
+      r.base.helper.assertTrue(restored != null && restored.cableInstalled() && s.carriage.equals(restored.cableCarriage())
+          && Math.abs(restored.cableHome() - s.cabinet().cableHome()) < 1e-8
+          && !restored.armed() && restored.fault().contains("inspected recovery"),
+          "Saved cable journal did not retain native carriage identity, home or inspection state: "
+              + (restored == null ? "null" : "installed=" + restored.cableInstalled() + " id=" + restored.cableCarriage()
+                  + " home=" + restored.cableHome() + " armed=" + restored.armed() + " fault=" + restored.fault()));
+      var legacyTag = saved.copy(); legacyTag.putInt("ls_schema", 5);
+      legacyTag.remove("ls_cable_carriage"); legacyTag.remove("ls_cable_home");
+      var legacy = (EquipmentCabinetEntity) BlockEntity.loadStatic(s.flywheel, s.cabinet().getBlockState(), legacyTag, level.registryAccess());
+      r.base.helper.assertTrue(legacy != null && legacy.cableInstalled() && legacy.cableCarriage() == null
+          && !legacy.armed() && legacy.fault().contains("Legacy cable installation"),
+          "A pre-identity cable journal invented a native carriage or silently rearmed");
       s.initialEnergy = s.cabinet().flywheel().energy(); r.high(true);
     });
     s.at(425, () -> r.high(false));
@@ -132,7 +154,10 @@ public final class CableControllerGameTests {
       r.controller.setArmed(false);
     });
     s.at(1130, () -> {
-      r.base.helper.assertTrue(!s.cabinet().cableInstalled(), "Disarmed controller did not retire its physically home carriage");
+      r.base.helper.assertTrue(!s.cabinet().cableInstalled() && s.cabinet().cableCarriage() == null
+          && !SubLevelContainer.getContainer(level).getAllTickets().containsKey(s.carriage)
+          && SubLevelContainer.getContainer(level).getSubLevel(s.carriage) == null,
+          "Disarmed controller did not retire its physically home carriage and loading ticket");
       System.out.println("LS_CABLE_CONTROLLER mode=" + s.mode + " phase=" + r.controller.phase() + " peak_speed=" + s.peakSpeed + " distance=" + s.finalDistance
           + " energy=" + s.initialEnergy + "->" + s.cabinet().flywheel().energy());
       s.cleanup(); r.base.helper.succeed();

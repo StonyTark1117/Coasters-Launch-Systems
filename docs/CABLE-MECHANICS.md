@@ -1,6 +1,6 @@
-# Native cable mechanics — dev.17
+# Native cable mechanics — dev.18
 
-This is partial LS301–LS303 implementation toward the requested 0.4.0 release. The socket, carriage and guide bed have registered models and recipes. A kinetic flywheel cabinet supplies the native catch from its own persisted finite store. A placed ride controller now installs and dispatches that catch for an occupied ordinary cart, then uses linked friction fins for the stop. Inspected restart recovery and broader gameplay acceptance remain required.
+This is partial LS301–LS303 implementation toward the requested 0.4.0 release. The socket, carriage and guide bed have registered models and recipes. A kinetic flywheel cabinet supplies the native catch from its own persisted finite store. A placed ride controller installs and dispatches that catch for an occupied ordinary cart, then uses linked friction fins for the stop. The installed carriage now has a registered Sable loading ticket and a saved UUID/home journal. Actual restart loading, inspected reclamation and broader gameplay acceptance remain required.
 
 ## Physical connection
 
@@ -30,7 +30,7 @@ The placed cabinet's `FlywheelStore` has inertia 4, maximum angular speed 50 and
 
 The interface's translational/angular lever response bounds affordable force. Positive pre-constraint free-body impulse work spends `work / 0.85`. Conversion loss and negative work become heat, without energy credit. Paid work may subsequently dissipate through guides and joints.
 
-Charging reads actual Create RPM from the placed flywheel cabinet: `0.9 × 8 × |RPM| × 2π/60 × dt`. Installation journals the native carriage, and engagement journals an active catch and pauses background charging. The same saved store funds each carriage impulse; return spends the step's shaft budget first and charges only from the remainder. Physical return home clears the active catch journal. Controller disarm at home retires the carriage and clears its installation journal. Loading either journal keeps the cabinet disarmed and faulted, blocks edits, and requires inspected recovery after a real restart. The live active-catch reload fixture enters a retained emergency hold.
+Charging reads actual Create RPM from the placed flywheel cabinet: `0.9 × 8 × |RPM| × 2π/60 × dt`. Installation journals the native carriage UUID and home position and registers a Sable force-load ticket. Engagement journals an active catch and pauses background charging. The same saved store funds each carriage impulse; return spends the step's shaft budget first and charges only from the remainder. Physical return home clears the active catch journal. Controller disarm at home retires the carriage and removes its ticket and installation journal. Loading either journal keeps the cabinet disarmed and faulted, blocks edits, and requires inspected recovery after a real restart. Legacy installed journals without an identity also fail closed. The live active-catch reload fixture enters a retained emergency hold. Native constraint handles are transient and are not reconstructed by this checkpoint.
 
 ## Evidence and limitations
 
@@ -40,7 +40,7 @@ Focused ordinary single/coupled peaks are about 2.95/2.93 blocks/second; Arrow a
 
 The native joint getter reports zero for this motor constraint; that is diagnostic data, not proof of absent or bounded load. Whole-train longitudinal momentum change, counting each body once, measures net pull traction around 20–40 native force units below the configured cap. It is not a substep motor-load or complete drum certification.
 
-The separate mechanics fixtures still use fixture-created native clamps after release. The new ordinary controller test stops with placed, linked friction fins, while the Arrow controller test uses a preparation clamp before dispatch. Mechanics power-loss remains an external emergency-hold call; the controller path additionally detects shaft/pad power loss during launch, but interrupted-drive acceptance is still pending. The geometry case edits collinear handles while preserving rail support. Removed rail/socket/carriage, curved/moving guides, return interruption, real chunk unload/restart, thermal gameplay, multiplayer/rendered setup and repeated ride operation remain open. This does not complete a flywheel or 0.4.0 gate.
+The separate mechanics fixtures still use fixture-created native clamps after release. The ordinary controller test stops with placed, linked friction fins, while the Arrow controller test uses a preparation clamp before dispatch. The controller fixture also checks its live ticket, saved journal identity/home, legacy fail-closed loading and ticket removal at retirement. It does not simulate an actual server restart or demonstrate Sable reconstructing the carriage and its native constraints. Mechanics power-loss remains an external emergency-hold call; the controller path additionally detects shaft/pad power loss during launch, but interrupted-drive acceptance is still pending. The geometry case edits collinear handles while preserving rail support. Removed rail/socket/carriage, curved/moving guides, return interruption, real chunk unload/restart, thermal gameplay, multiplayer/rendered setup and repeated ride operation remain open. This does not complete a flywheel or 0.4.0 gate.
 
 ## Reproduction
 

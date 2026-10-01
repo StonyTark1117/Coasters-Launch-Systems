@@ -84,8 +84,14 @@ public final class NativeCableRig implements AutoCloseable {
     if (guide == null || !guide.isValid()) throw new IllegalStateException("Native cable guide unavailable");
     guide.setLimit(ConstraintJointAxis.LINEAR_X, 0, guideTravel);
     holding = new NativeFinClamp(pipeline, carriage, point, direction, 256);
+    if (!container.addForceLoadTicket(carriage, CableTickets.CARRIAGE, carriage.getUniqueId())) {
+      holding.close(); guide.remove();
+      container.removeSubLevel(carriage, SubLevelRemovalReason.REMOVED);
+      throw new IllegalStateException("Native cable carriage loading ticket was not installed");
+    }
   }
   public Phase phase() { return phase; }
+  public double homeDistance() { return homeDistance; }
   /** Bed top stays below the carriage's lowest steel ballast block. */
   public static BlockPos guideBlockAt(ServerLevel level, DirectedTrack track, double distance) {
     var hit = track.hitAtDistance(level, distance);
@@ -241,6 +247,10 @@ public final class NativeCableRig implements AutoCloseable {
   @Override public void close() {
     if (catchJoint != null && catchJoint.isValid()) catchJoint.remove();
     holding.close(); if (guide.isValid()) guide.remove();
-    if (!carriage.isRemoved()) SubLevelContainer.getContainer(level).removeSubLevel(carriage, SubLevelRemovalReason.REMOVED);
+    var container = SubLevelContainer.getContainer(level);
+    if (container != null) {
+      container.removeForceLoadTicket(carriage, CableTickets.CARRIAGE, carriage.getUniqueId());
+      if (!carriage.isRemoved()) container.removeSubLevel(carriage, SubLevelRemovalReason.REMOVED);
+    }
   }
 }

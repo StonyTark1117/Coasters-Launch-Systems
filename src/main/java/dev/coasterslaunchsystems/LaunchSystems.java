@@ -13,6 +13,7 @@ public final class LaunchSystems {
   public static final String ID = "coasterslaunchsystems";
 
   public LaunchSystems(IEventBus bus) {
+    dev.coasterslaunchsystems.runtime.CableTickets.bootstrap();
     dev.coasterslaunchsystems.content.EquipmentContent.register(bus);
     net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOW,
         dev.coasterslaunchsystems.runtime.OrdinaryPassengers::physics);
