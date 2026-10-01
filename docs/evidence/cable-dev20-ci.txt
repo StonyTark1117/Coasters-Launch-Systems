@@ -1,0 +1,8 @@
+GitHub Actions clean CI on implementation commit befd1ee3b75c2fc50aa6e3944e3ab66ca41e7973
+Run: https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36936889148
+Workflow: Build and native checks; validate job completed successfully in 10m14s.
+Command: ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2
+Result: All 114 required packaged GameTests passed; build successful in 9m20s.
+Uploaded validation-evidence artifact ID: 11198329846.
+Downloaded CI JAR SHA-256: 9df49399c7b35afec152db2b520a55c7eeffb91f002d9620568ca07ceb46f0e8.
+The downloaded JAR is byte-identical to the local combined and saved-world restart JAR.
