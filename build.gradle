@@ -54,6 +54,7 @@ neoForge {
             type = 'gameTestServer'
             gameDirectory = layout.buildDirectory.dir('runs/gametest').get().asFile
             systemProperty 'neoforge.enabledGameTestNamespaces', project.findProperty('lsTestNamespaces') ?: 'coasterslaunchsystems,coasterslaunchsystems_routes,coasterslaunchsystems_recovery,coasterslaunchsystems_linear,coasterslaunchsystems_cable'
+            if (project.hasProperty('lsCableRestartPhase')) systemProperty 'coasterslaunchsystems.cableRestartPhase', project.property('lsCableRestartPhase')
         }
         configureEach {
             logLevel = org.slf4j.event.Level.INFO
@@ -98,7 +99,7 @@ tasks.named('jar') {
     from('LICENSE') { into 'META-INF'; rename { 'LICENSE-coasterslaunchsystems.txt' } }
 }
 tasks.named('runGameTestServer') {
-    doFirst { delete layout.buildDirectory.dir('runs/gametest/world') }
+    if (!project.hasProperty('lsKeepGameTestWorld')) doFirst { delete layout.buildDirectory.dir('runs/gametest/world') }
 }
 if (project.hasProperty('lsPackaged')) {
     // Packaged runs consume our binary and must build it even when invoked directly.

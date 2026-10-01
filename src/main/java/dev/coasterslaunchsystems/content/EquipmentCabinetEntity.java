@@ -100,6 +100,13 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
       throw new IllegalStateException("Only a physically home, unlatched cable carriage can be retired");
     rig.close(); cableInstalled = false; cableCarriage = null; cableHome = 0; changed();
   }
+  public void finishInspectedCableRetirement(UUID carriage) {
+    if (mechanism() != Mechanism.FLYWHEEL || !cableInstalled || cableInUse || armed
+        || cableCarriage == null || !cableCarriage.equals(carriage) || fault.isEmpty())
+      throw new IllegalStateException("Saved cable installation changed during inspected retirement");
+    cableInstalled = false; cableCarriage = null; cableHome = 0;
+    fault = "Idle carriage reclaimed by inspection; verify and rebind the guide before arming"; changed();
+  }
   public void chargeFlywheel(double dt) {
     if (mechanism() == Mechanism.FLYWHEEL && !cableInUse && fault.isEmpty()
         && flywheel.charge(dev.coasterslaunchsystems.math.LinearMotor.chargingWork(getSpeed(), dt)) > 0) setChanged();

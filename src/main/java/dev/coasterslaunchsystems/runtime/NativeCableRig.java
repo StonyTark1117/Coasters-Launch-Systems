@@ -24,6 +24,7 @@ public final class NativeCableRig implements AutoCloseable {
   public enum Phase { HOME, ENGAGED, PULLING, RELEASING, RETURNING, FAULT }
   public record Step(double force, double work, double storeDraw, double heat, boolean returning) {}
   private final ServerLevel level;
+  private final BlockPos cabinetPosition;
   private final DirectedTrack track;
   private final PhysicsPipeline pipeline;
   private final ServerSubLevel carriage;
@@ -41,7 +42,12 @@ public final class NativeCableRig implements AutoCloseable {
   private String fault = "";
 
   public NativeCableRig(ServerLevel level, DirectedTrack track, double homeDistance, double releaseTravel, double guideTravel) {
+    this(level, track, homeDistance, releaseTravel, guideTravel, null);
+  }
+  public NativeCableRig(ServerLevel level, DirectedTrack track, double homeDistance, double releaseTravel, double guideTravel,
+      BlockPos cabinetPosition) {
     this.level = level; this.track = track; this.homeDistance = Numbers.nonnegative(homeDistance, "guide home");
+    this.cabinetPosition = cabinetPosition == null ? null : cabinetPosition.immutable();
     this.releaseTravel = Numbers.positive(releaseTravel, "release travel"); this.guideTravel = Numbers.positive(guideTravel, "guide travel");
     if (releaseTravel + 4 > guideTravel || homeDistance + guideTravel > track.length())
       throw new IllegalArgumentException("Leave four supported carriage braking blocks after cable release");
@@ -84,7 +90,11 @@ public final class NativeCableRig implements AutoCloseable {
     if (guide == null || !guide.isValid()) throw new IllegalStateException("Native cable guide unavailable");
     guide.setLimit(ConstraintJointAxis.LINEAR_X, 0, guideTravel);
     holding = new NativeFinClamp(pipeline, carriage, point, direction, 256);
-    if (!container.addForceLoadTicket(carriage, CableTickets.CARRIAGE, carriage.getUniqueId())) {
+    boolean ticketed = cabinetPosition == null
+        ? container.addForceLoadTicket(carriage, CableTickets.LEGACY_CARRIAGE, carriage.getUniqueId())
+        : container.addForceLoadTicket(carriage, CableTickets.CARRIAGE,
+            new CableTickets.Key(carriage.getUniqueId(), cabinetPosition));
+    if (!ticketed) {
       holding.close(); guide.remove();
       container.removeSubLevel(carriage, SubLevelRemovalReason.REMOVED);
       throw new IllegalStateException("Native cable carriage loading ticket was not installed");
@@ -249,7 +259,9 @@ public final class NativeCableRig implements AutoCloseable {
     holding.close(); if (guide.isValid()) guide.remove();
     var container = SubLevelContainer.getContainer(level);
     if (container != null) {
-      container.removeForceLoadTicket(carriage, CableTickets.CARRIAGE, carriage.getUniqueId());
+      if (cabinetPosition == null) container.removeForceLoadTicket(carriage, CableTickets.LEGACY_CARRIAGE, carriage.getUniqueId());
+      else container.removeForceLoadTicket(carriage, CableTickets.CARRIAGE,
+          new CableTickets.Key(carriage.getUniqueId(), cabinetPosition));
       if (!carriage.isRemoved()) container.removeSubLevel(carriage, SubLevelRemovalReason.REMOVED);
     }
   }

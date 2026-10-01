@@ -77,6 +77,9 @@ public final class EquipmentRuntime {
   }
   public static void physics(ForgeSablePrePhysicsTickEvent event) {
     var level = event.getPhysicsSystem().getLevel();
+    var registered = MODULES.get(level);
+    CableRecovery.stabilize(level, registered == null ? List.of() : registered.values().stream()
+        .filter(entry -> entry.tick() >= level.getGameTime() - 1).map(Entry::module).toList());
     RideControllers.physics(level, event.getTimeStep());
     var modules = MODULES.get(level);
     if (modules == null) {

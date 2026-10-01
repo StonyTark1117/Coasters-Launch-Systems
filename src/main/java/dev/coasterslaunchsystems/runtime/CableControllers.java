@@ -33,6 +33,10 @@ final class CableControllers {
   }
 
   static void unload(ServerLevel level) { INSTALLED.keySet().removeIf(k -> k.level() == level); }
+  static boolean hasLiveCarriage(ServerLevel level, UUID carriage) {
+    return INSTALLED.entrySet().stream().anyMatch(entry -> entry.getKey().level() == level
+        && entry.getValue().rig().carriage().getUniqueId().equals(carriage));
+  }
 
   static void audit(ServerLevel level, Collection<RideControllerEntity> live) {
     for (var entry : INSTALLED.entrySet()) {
@@ -168,7 +172,7 @@ final class CableControllers {
     boolean padPower = launchFins.stream().allMatch(c -> Math.abs(c.getSpeed()) >= 32);
     if (installed == null && held && ready) {
       try {
-        var rig = new NativeCableRig(level, track, lead.distance(), RELEASE_TRAVEL, GUIDE_TRAVEL);
+        var rig = new NativeCableRig(level, track, lead.distance(), RELEASE_TRAVEL, GUIDE_TRAVEL, cabinet.getBlockPos());
         try { cabinet.installCable(rig); } catch (RuntimeException failure) { rig.close(); throw failure; }
         installed = new Installation(cabinet.getBlockPos(), cabinet.identity(), lead.distance(), rig); INSTALLED.put(key, installed);
       } catch (RuntimeException failure) { controller.fail("Cable carriage installation failed: " + failure.getMessage()); return; }

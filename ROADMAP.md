@@ -59,6 +59,8 @@ Dev.17 adds a placed controller path for one flywheel, a catch-home launch fin a
 
 Dev.18 records the installed native carriage UUID and accepted rail home in the cabinet, and registers a Sable force-load ticket for that carriage. Controller dispatch checks the live carriage against the saved identity and home; physical retirement removes the ticket and journal. Legacy journals without an identity remain disarmed and faulted. In-memory NBT reload and ticket lifecycle have focused native coverage, but a real world restart, native constraint reconstruction, inspected reclamation and broader gameplay acceptance remain open.
 
+Dev.19 adds a cabinet-addressed loading ticket and a passive guide/brake reconstructed for an idle carriage on world startup. A separate two-process packaged GameTest saves and reopens the same world, confirms the carriage stays at home through repeated restarts, then retires it under explicit empty-track inspection and confirms the retired journal persists. This closes the idle-carriage restart/reclamation slice; active catches, legacy UUID-only ticket stabilization, real chunk/multiplayer/rendered service and the remaining mechanism gates are still open.
+
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |
 | LS301 | Shared cable guide, catch socket, carriage and release/reset machine | 0.2. Real constrained pull, rated guide/end clearance, physical return and misalignment handling. No teleport, one-shot impulse or prescribed train path. |

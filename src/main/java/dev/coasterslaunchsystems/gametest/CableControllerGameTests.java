@@ -125,7 +125,7 @@ public final class CableControllerGameTests {
       s.carriage = s.cabinet().cableCarriage();
       var ticket = s.carriage == null ? null : SubLevelContainer.getContainer(level).getAllTickets().get(s.carriage);
       r.base.helper.assertTrue(ticket != null && ticket.tickets().stream().anyMatch(t -> t.getType().equals(CableTickets.CARRIAGE)
-          && s.carriage.equals(t.getKey())), "Installed native carriage has no registered loading ticket");
+          && new CableTickets.Key(s.carriage, s.flywheel).equals(t.getKey())), "Installed native carriage has no registered loading ticket");
       var saved = s.cabinet().saveWithFullMetadata(level.registryAccess());
       var restored = (EquipmentCabinetEntity) BlockEntity.loadStatic(s.flywheel, s.cabinet().getBlockState(), saved, level.registryAccess());
       r.base.helper.assertTrue(restored != null && restored.cableInstalled() && s.carriage.equals(restored.cableCarriage())

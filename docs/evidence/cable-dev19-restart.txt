@@ -1,0 +1,26 @@
+Same disposable world retained across five sequential server processes; prepare starts fresh, later phases retain the world.
+Phase prepare (separate packaged GameTest server process):
+LS_CABLE_RESTART prepared id=a2b572db-99d9-4f42-ba2c-e26f58685731 home=8.0 point=( 9.925E+2  2.249E+2 -8.875E+2)
+[14:42:49] [Server thread/INFO] [minecraft/GameTestServer]: ========= 13 GAME TESTS COMPLETE IN 15.98 s ======================
+[14:42:49] [Server thread/INFO] [minecraft/GameTestServer]: All 13 required tests passed :)
+BUILD SUCCESSFUL in 26s
+Phase verify (separate packaged GameTest server process):
+LS_CABLE_RESTART verified id=a2b572db-99d9-4f42-ba2c-e26f58685731 home=8.0 point=( 9.925E+2  2.231E+2 -8.875E+2) reclaimed=false fault=Cable catch needs inspected recovery after reload
+[14:43:26] [Server thread/INFO] [minecraft/GameTestServer]: ========= 13 GAME TESTS COMPLETE IN 16.83 s ======================
+[14:43:26] [Server thread/INFO] [minecraft/GameTestServer]: All 13 required tests passed :)
+BUILD SUCCESSFUL in 26s
+Phase repeat (separate packaged GameTest server process):
+LS_CABLE_RESTART verified id=a2b572db-99d9-4f42-ba2c-e26f58685731 home=8.0 point=( 9.925E+2  2.231E+2 -8.875E+2) reclaimed=false fault=Cable catch needs inspected recovery after reload
+[14:44:07] [Server thread/INFO] [minecraft/GameTestServer]: ========= 13 GAME TESTS COMPLETE IN 17.82 s ======================
+[14:44:07] [Server thread/INFO] [minecraft/GameTestServer]: All 13 required tests passed :)
+BUILD SUCCESSFUL in 27s
+Phase reclaim (separate packaged GameTest server process):
+LS_CABLE_RESTART verified id=a2b572db-99d9-4f42-ba2c-e26f58685731 home=0.0 point=( 9.925E+2  2.231E+2 -8.875E+2) reclaimed=true fault=Idle carriage reclaimed by inspection; verify and rebind the guide before arming
+[14:44:42] [Server thread/INFO] [minecraft/GameTestServer]: ========= 13 GAME TESTS COMPLETE IN 16.85 s ======================
+[14:44:42] [Server thread/INFO] [minecraft/GameTestServer]: All 13 required tests passed :)
+BUILD SUCCESSFUL in 26s
+Phase retired (separate packaged GameTest server process):
+LS_CABLE_RESTART retired journal persisted fault=Idle carriage reclaimed by inspection; verify and rebind the guide before arming
+[14:45:19] [Server thread/INFO] [minecraft/GameTestServer]: ========= 13 GAME TESTS COMPLETE IN 16.53 s ======================
+[14:45:19] [Server thread/INFO] [minecraft/GameTestServer]: All 13 required tests passed :)
+BUILD SUCCESSFUL in 26s

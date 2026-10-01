@@ -1,0 +1,6 @@
+Final dev.19 packaged cable namespace with the pinned schema-4 Fourth Dimension JAR.
+LS_CABLE_CONTROLLER mode=ordinary_controller_dispatch phase=INSPECTION peak_speed=2.874640464782715 distance=21.881897901978363 energy=750.3631221246196->1793.303792201797
+LS_CABLE_CONTROLLER mode=arrow_controller_dispatch phase=INSPECTION peak_speed=2.859165906906128 distance=23.22021578334222 energy=750.3631221246196->1789.6512139755805
+[14:46:16] [Server thread/INFO] [minecraft/GameTestServer]: ========= 17 GAME TESTS COMPLETE IN 33.80 s ======================
+[14:46:16] [Server thread/INFO] [minecraft/GameTestServer]: All 17 required tests passed :)
+BUILD SUCCESSFUL in 48s

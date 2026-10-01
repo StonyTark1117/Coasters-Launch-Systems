@@ -26,16 +26,19 @@ public final class RideControllers {
   private record Entry(RideControllerEntity controller, long tick) {}
   private static final Map<ServerLevel, Map<BlockPos, Entry>> CONTROLLERS = new HashMap<>();
   private static final Map<ServerLevel, Map<UUID, Long>> REGISTRATION_GRACE = new HashMap<>();
+  private static final long STARTUP_REGISTRATION_GRACE_TICKS = 20;
   private RideControllers() {}
   public static void register(ServerLevel level, RideControllerEntity controller) {
     CONTROLLERS.computeIfAbsent(level, ignored -> new LinkedHashMap<>()).put(controller.getBlockPos(), new Entry(controller, level.getGameTime()));
   }
-  public static void unload(LevelEvent.Unload event) { if (event.getLevel() instanceof ServerLevel level) { CONTROLLERS.remove(level); REGISTRATION_GRACE.remove(level); CableControllers.unload(level); } }
+  public static void unload(LevelEvent.Unload event) { if (event.getLevel() instanceof ServerLevel level) { CONTROLLERS.remove(level); REGISTRATION_GRACE.remove(level); CableControllers.unload(level); CableRecovery.unload(level); } }
   static boolean awaitingRegistration(ServerLevel level, RideControllerEntity controller) {
     if (!controller.reservation().isEmpty() || controller.phase() != State.HOLD) return false;
     long first = REGISTRATION_GRACE.computeIfAbsent(level, ignored -> new HashMap<>())
         .computeIfAbsent(controller.identity(), ignored -> level.getGameTime());
-    return level.getGameTime() - first <= 2;
+    // A newly armed, empty section cannot dispatch during registration. Let its cabinets finish
+    // their first block-entity ticks under slow world startup before treating absence as a fault.
+    return level.getGameTime() - first <= STARTUP_REGISTRATION_GRACE_TICKS;
   }
   static void registrationReady(ServerLevel level, RideControllerEntity controller) {
     var waiting = REGISTRATION_GRACE.get(level);

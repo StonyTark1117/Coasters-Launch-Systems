@@ -38,6 +38,14 @@ public final class SpanToolItem extends Item {
       }
       var from = stack.get(EquipmentContent.FROM.get()); var to = stack.get(EquipmentContent.TO.get());
       var selected = stack.get(EquipmentContent.CONTROLLER_SELECTION.get());
+      if (level.getBlockEntity(pos) instanceof EquipmentCabinetEntity inspected
+          && inspected.mechanism() == dev.coasterslaunchsystems.math.Mechanism.FLYWHEEL
+          && player.getOffhandItem().is(net.minecraft.world.item.Items.COMPASS)) {
+        try { dev.coasterslaunchsystems.runtime.CableRecovery.inspectRetireIdle(level, inspected); }
+        catch (RuntimeException failure) { throw new IllegalArgumentException("Cable inspection refused: " + failure.getMessage(), failure); }
+        player.displayClientMessage(Component.literal("Idle native carriage retired by inspection. Verify and rebind the guide before arming."), true);
+        return InteractionResult.SUCCESS;
+      }
       if (level.getBlockEntity(pos) instanceof RideControllerEntity controller) {
         if (player.getOffhandItem().is(net.minecraft.world.item.Items.CLOCK)) {
           controller.setStationCapture(!controller.stationCapture());
