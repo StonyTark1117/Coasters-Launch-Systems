@@ -42,3 +42,8 @@ JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer -PlsPackaged 
 ```
 
 Remaining work includes complete repeatable rides and boarding capture, an inspected repair workflow after a missing/replaced peer, three Ponder demonstration rides, rendered survival setup/signals, obstruction/clearance checks, curved/profile traversal, live chunk/restart/multiplayer acceptance and all LIM/LSM/skid/catch/stored-energy mechanisms. This checkpoint does not complete the 0.1 or 0.4.0 gate.
+
+
+Final implementation source `aca7af6b9f984d5f6ffbb2d528c64864b1751f36` is pushed to the private repository. [CI run 36830877470](https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36830877470) passed a clean build, twenty-three unit tests and all sixty-one packaged standalone native tests. The downloaded CI JAR exactly matched local standalone/combined SHA-256 `057e14b6207bc7455174e179586e4781bf4419424723055524cc1dfa97a81d46`. [CI evidence](evidence/transfer-ci.txt) records the source and artifact verification. All 136 combined native tests passed locally against the same copied upstream JAR.
+
+The earlier CI run 36827748987 failed the existing passive-magnetic forward fixture with zero recorded impulse. Native entry/contact/cabinet-availability checks were added; the final CI forward/reverse fixtures each measured eighty contact and live-cabinet steps and passed their unchanged dissipation/heat checks. The earlier failure and diagnostic correction are preserved in [diagnostic evidence](evidence/transfer-diagnostics.txt). Its original cause remains unconfirmed and repeatability remains an open final-release gate. The complete 0.4.0 goal remains active.

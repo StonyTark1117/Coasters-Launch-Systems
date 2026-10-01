@@ -1,6 +1,6 @@
 # Launch Systems validation status
 
-Updated September 30, 2026. The goal is a complete 0.4.0 release validated and pushed to this addon's own private GitHub repository. Foundation checkpoints do not satisfy that release goal.
+Updated October 1, 2026. The goal is a complete 0.4.0 release validated and pushed to this addon's own private GitHub repository. Foundation checkpoints do not satisfy that release goal.
 
 | Requirement | Current state |
 | --- | --- |
@@ -18,6 +18,7 @@ Updated September 30, 2026. The goal is a complete 0.4.0 release validated and p
 | Loaded ordinary and all eligible 4D mechanisms | Full/uneven 4D tire/fin/magnetic loads and fully occupied native linked Arrow pairs passed; occupied ordinary single/coupled tire/brake fixtures now pass; profile traversal and other equipment mechanisms pending |
 | Recipes, models, tutorials and Ponder scenes | Original cabinet/drive-strip/fin models and seven recipes added; rendered QA, complete mechanisms, tutorials and Ponder remain |
 | Packaged client, dedicated server, multiplayer and interrupted saves | Pending |
+| Native validation repeatability | An initial dev.9 CI run recorded zero impulse in the earlier passive-magnet forward fixture; physics-phase entry/contact/availability diagnostics now pass locally; the original cause remains open before final release |
 | 0.4.0 artifact, commit and verified private remote push | Pending |
 
 The native force fixture does not prescribe cart velocity or teleport a train. It creates a near-origin Coasters track/cart, queues timestep-scaled forces on the real chassis, and verifies translation, retained engagement and final stop. It is foundation evidence only, not an occupied gameplay or articulated-vehicle acceptance test.
@@ -105,6 +106,11 @@ The controller reserves the complete consist in the receiver before releasing so
 
 Coupled ordinary trains straddled for ninety physics steps; coupled Arrow trains straddled for ninety to ninety-two steps and retained both leases for 184–186 receiving-edge steps before tail clearance. The coupled Arrow certificate required about 21.21 of 22 brake blocks. Carrier separation stayed below 0.00024 blocks and Arrow coupler error below 0.00012 blocks. A removed Arrow carrier caused both controllers to fault with both leases intact; 1,215 later native steps recorded no queued propulsion and primary-provider denial on both chassis. Its two removed-seat riders are excluded from surviving-seat retention evidence; all six surviving-seat riders remained seated.
 
-See [setup, scope and reproduction](SECTION-TRANSFERS.md), [unit results](evidence/transfer-unit.txt), [packaged standalone](evidence/transfer-packaged-standalone.txt), [packaged combined](evidence/transfer-packaged-combined.txt), [artifact hashes](evidence/transfer-artifacts.sha256) and [fixture diagnostics](evidence/transfer-diagnostics.txt). Local JAR SHA-256 is `9722033d7b0d7b0b2182aa1b1958560d73806f4883a078b1a398e08542e87e87`. The copied upstream artifact is unchanged; its active checkout/processes were untouched.
+See [setup, scope and reproduction](SECTION-TRANSFERS.md), [unit results](evidence/transfer-unit.txt), [packaged standalone](evidence/transfer-packaged-standalone.txt), [packaged combined](evidence/transfer-packaged-combined.txt), [artifact hashes](evidence/transfer-artifacts.sha256) and [fixture diagnostics](evidence/transfer-diagnostics.txt). Local JAR SHA-256 is `057e14b6207bc7455174e179586e4781bf4419424723055524cc1dfa97a81d46`. The copied upstream artifact is unchanged; its active checkout/processes were untouched.
 
 This is partial LS004/LS104 progress. Complete circuit and boarding/capture/reset workflows, missing-peer repair, broader curved/profile routes, rendered survival/signals/Ponder, active restart/chunk/multiplayer acceptance and all remaining LIM/LSM/skid/catch/stored-energy mechanisms remain open. Controller NBT reconstruction is not server-restart evidence. The complete 0.4.0 goal remains active.
+
+
+Final implementation source `aca7af6b9f984d5f6ffbb2d528c64864b1751f36` is pushed to the private repository. [CI run 36830877470](https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36830877470) passed a clean build, twenty-three unit tests and all sixty-one packaged standalone native tests. The downloaded CI JAR exactly matched local standalone/combined SHA-256 `057e14b6207bc7455174e179586e4781bf4419424723055524cc1dfa97a81d46`. [CI evidence](evidence/transfer-ci.txt) records the source and artifact verification. All 136 combined native tests passed locally against the same copied upstream JAR.
+
+The earlier CI run 36827748987 failed the existing passive-magnetic forward fixture with zero recorded impulse. Native entry/contact/cabinet-availability checks were added; the final CI forward/reverse fixtures each measured eighty contact and live-cabinet steps and passed their unchanged dissipation/heat checks. The earlier failure and diagnostic correction are preserved in [diagnostic evidence](evidence/transfer-diagnostics.txt). Its original cause remains unconfirmed and repeatability remains an open final-release gate. The complete 0.4.0 goal remains active.

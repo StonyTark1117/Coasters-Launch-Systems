@@ -1,0 +1,18 @@
+Private repository: StonyTark1117/Coasters-Launch-Systems
+Implementation source: aca7af6b9f984d5f6ffbb2d528c64864b1751f36
+CI run: 36830877470
+URL: https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36830877470
+Conclusion: success
+Command: ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2
+CI report: 23 tests, 0 failures, 0 skipped
+Packaged standalone native tests: 61 required passed
+Downloaded binary SHA-256: 057e14b6207bc7455174e179586e4781bf4419424723055524cc1dfa97a81d46
+Local standalone/combined binary SHA-256: 057e14b6207bc7455174e179586e4781bf4419424723055524cc1dfa97a81d46
+Packaged combined: 136 required native tests passed locally using copied schema-4 upstream JAR
+Upstream SHA-256: 027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16
+CI forward and reverse passive-magnet entry checks each recorded 80 native physical contact steps and 80 live cabinet steps.
+Earlier CI run 36827748987 failed eddy_forward with zero impulse. Its matching binary and failure are recorded in transfer-diagnostics.txt. Original cause remains unconfirmed; stronger native entry diagnostics passed the final local and CI suites.
+Full 0.4.0 acceptance remains pending.
+
+2026-10-01T07:36:08.6579889Z LS_EDDY_CONTACT fixture=FORWARD entry=8.525034417154954 last=9.350107658490943 interval=SpanInterval[start=7.000000453561528, end=9.000000453561528] contact_steps=80 available_steps=80 armed=true
+2026-10-01T07:36:08.6599956Z LS_EDDY_CONTACT fixture=REVERSE entry=6.474985360219678 last=5.649912107398265 interval=SpanInterval[start=5.000000229185453, end=7.000000229185453] contact_steps=80 available_steps=80 armed=true
