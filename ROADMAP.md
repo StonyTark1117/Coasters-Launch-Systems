@@ -27,6 +27,12 @@ Foundation is a release gate. LS003 and LS004 require a validated Fourth Dimensi
 
 The 0.1 gate requires all packages through LS106. It includes verified Arrow and at least one free-spin family; revised carriers and broader variants continue at later gates. PAX is recognized and vetoed when its winch owns the train.
 
+The next LS104/LS105 step is a repeatable circuit through straight equipment sections and curved native rails. Dev.9 only transfers across one adjacent straight joint. A longer handoff must first resolve a unique, unbranched directed route between sections, retain its geometry and loaded-chunk requirements, and reserve the route and complete receiver before departure. Accepted native contact on every intermediate edge must keep the whole-consist leases alive. The receiver's stopping certificate must include downhill acceleration along the route; tire RPM alone cannot bound its arrival speed. Tail clearance must still use the loaded native body bounds.
+
+Station arrival must return carrier capture to the vehicle's provider after the complete train is physically held. The copied schema-4 Fourth Dimension artifact exposes public `VehicleOperations.capture` and `dispatch` operations; capture sets whole-consist stopping/capture state and preserves its PAX owner guard. Its boarding readiness remains a separate measured condition. A provider operation should default to denial, verify the complete live consist and exclusive ownership, and never write carrier angles. This is an audited integration direction, not implemented station functionality.
+
+Acceptance remains three usable demonstration rides: ordinary, Arrow and individual free spin. Each must complete repeated departure, route traversal, whole-train stop, appropriate native capture, passenger exit/boarding and a fresh dispatch request. An occupied route, changed geometry, missing receiver, lost power/support, rollback or unavailable chunk must retain ownership and deny further propulsion. Rendered survival setup and packaged multiplayer/restart evidence remain required.
+
 ## Version 0.2 linear motors and local block operation
 
 | ID | Work | Prerequisites and acceptance |

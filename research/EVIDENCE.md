@@ -16,6 +16,14 @@ Inspected source paths under `../Coasters: Fourth Dimension/src/main/java/dev/fo
 
 The sibling `research/dependency-audit.json` contains earlier exact release coordinates, hashes and signatures. It is inherited evidence, not a fresh compatibility result. Its Track Styles review covers 1.1.0-hotfix1; the current project page now advertises 1.2.0. Its Immersion review covers 0.2.3.
 
+### Pinned station operation inspection, October 1, 2026
+
+Inspected `javap -c dev.fourthdimension.vehicle.VehicleOperations` and the public `Boarding` signatures in the copied schema-4 JAR, SHA-256 `027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16`. This artifact is isolated from the active sibling checkout and is the same pinned dependency used in the combined native tests.
+
+`capture(ServerLevel, FoundationData.Vehicle)` first checks the upstream shuttle owner. A winch outside `BOARDING` is faulted for emergency inspection and the operation returns. Otherwise it resolves the consist, sets each vehicle's `stopping`, sets its carriers' capture flags, increments revisions and marks saved data dirty. `Boarding.ready` is a separate public query; calling capture alone is not readiness evidence. The existing dispatch adapter already delegates to `VehicleOperations.dispatch` after reservation. Station capture delegation and repeated exit/boarding remain planned acceptance work, with PAX continuing to veto Launch Systems ownership.
+
+The upstream stopping operation also owns common translation braking. A station adapter must request capture only after our complete train is physically held, retain its section lease and verify upstream readiness before boarding. It must not treat capture as an extra launch/brake-force grant or write carrier angles. This inspection establishes available integration operations, not a passing station lifecycle fixture.
+
 ## Engineered release inspection
 
 Reinspected the existing local Engineered 1.1.1 artifact using ZIP metadata and `javap` signatures/bytecode; no mod was executed. Distribution reference: [CurseForge file 8863559](https://www.curseforge.com/minecraft/mc-mods/coasters-engineered/files/8863559).

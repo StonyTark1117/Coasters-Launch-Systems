@@ -1,0 +1,7 @@
+October 1, 2026; source 2ae922f2f0d02d8c34417a1f34afa2c0b012d8fb; development version 0.0.1-dev.9.
+Final local build with copied Fourth Dimension dependency: 23 tests, 0 failures, 0 errors, 0 skipped.
+dev.coasterslaunchsystems.StoredEnergyTest: 4 passed
+dev.coasterslaunchsystems.StoppingEnvelopeTest: 3 passed
+dev.coasterslaunchsystems.MechanismMathTest: 9 passed
+dev.coasterslaunchsystems.TrackDistanceTest: 5 passed
+dev.coasterslaunchsystems.MotionAuthorityTest: 2 passed

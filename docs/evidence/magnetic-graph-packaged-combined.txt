@@ -1,0 +1,25 @@
+October 1, 2026; source 2ae922f2f0d02d8c34417a1f34afa2c0b012d8fb; development version 0.0.1-dev.9.
+Final binary-JAR combined installation; 137 required native tests passed.
+LS_EDDY_EQUIPMENT fixture=FORWARD mass=26.0 initial=1.9955118894577026 speed=0.0142110176384449 impulse=51.62979071276116 peak_force=102.4000585945078 work=42.53087687263946 heat=26.730876872639378 fault=
+LS_EDDY_CONTACT fixture=FORWARD entry=8.525034417154954 last=9.350107658490943 interval=SpanInterval[start=7.000000453561528, end=9.000000453561528] contact_steps=80 available_steps=80 armed=true missing_contact_steps=0 mismatched_edge_steps=0
+LS_EDDY_EQUIPMENT fixture=REVERSE mass=26.0 initial=-1.9955118894577026 speed=-0.0142110176384449 impulse=51.62979067497716 peak_force=102.40005859291027 work=42.53087675747606 heat=26.730876757475993 fault=
+LS_EDDY_CONTACT fixture=REVERSE entry=6.474985360219678 last=5.649912107398265 interval=SpanInterval[start=5.000000229185453, end=7.000000229185453] contact_steps=80 available_steps=80 armed=true missing_contact_steps=0 mismatched_edge_steps=0
+LS_EDDY_EQUIPMENT fixture=FULL_LOAD mass=64.0 initial=1.9955118894577026 speed=1.0027698278427124 impulse=63.678995652880914 peak_force=102.40005859140938 work=90.2992498174933 heat=74.4992498174931 fault=
+LS_EDDY_CONTACT fixture=FULL_LOAD entry=8.524963849827198 last=10.833191370066446 interval=SpanInterval[start=7.000000453561528, end=9.000000453561528] contact_steps=30 available_steps=80 armed=true missing_contact_steps=0 mismatched_edge_steps=0
+LS_EDDY_EQUIPMENT fixture=AT_REST mass=26.0 initial=0.0 speed=-4.3600529436860214E-11 impulse=1.9717125657372398E-9 peak_force=3.05634062140305E-9 work=3.19144919882609E-20 heat=7.165808471628133E-23 fault=
+LS_EDDY_CONTACT fixture=AT_REST entry=7.500009766052276 last=7.500009766052276 interval=SpanInterval[start=7.000000453561528, end=9.000000453561528] contact_steps=80 available_steps=80 armed=true missing_contact_steps=0 mismatched_edge_steps=0
+LS_EDDY_EQUIPMENT fixture=SLOPE mass=26.0 initial=5.5800643167458475E-5 speed=-1.1213772296905518 impulse=108.61062123228935 peak_force=68.36008495766046 work=85.0312365757999 heat=70.25217665374039 fault=
+LS_EDDY_CONTACT fixture=SLOPE entry=6.957881042278894 last=5.242290115479286 interval=SpanInterval[start=5.730363852747704, end=7.730363852747704] contact_steps=80 available_steps=80 armed=true missing_contact_steps=0 mismatched_edge_steps=0
+LS_EDDY_EQUIPMENT fixture=MISSING_FIN mass=25.0 initial=1.9955116510391235 speed=1.9955307245254517 impulse=0.0 peak_force=0.0 work=0.0 heat=0.0 fault=Vehicle has no certified conductive fin
+LS_EDDY_CONTACT fixture=MISSING_FIN entry=8.524944777199162 last=12.46683929312754 interval=SpanInterval[start=7.000000453561528, end=9.000000453561528] contact_steps=22 available_steps=80 armed=false missing_contact_steps=0 mismatched_edge_steps=0
+LS_EDDY_EQUIPMENT fixture=CONFLICT mass=27.0 initial=1.9955118894577026 speed=1.9955309629440308 impulse=0.0 peak_force=0.0 work=0.0 heat=0.0 fault=Overlapping modules claim this consist; separate their contact zones
+LS_EDDY_CONTACT fixture=CONFLICT entry=8.525038221647831 last=12.466932757880752 interval=SpanInterval[start=7.000000453561528, end=9.000000453561528] contact_steps=22 available_steps=80 armed=false missing_contact_steps=0 mismatched_edge_steps=0
+LS_EDDY_EQUIPMENT fixture=HOT mass=26.0 initial=1.9955118894577026 speed=1.758913278579712 impulse=6.1656108538518195 peak_force=10.240005859450783 work=11.410493573852914 heat=8187.410493573815 fault=
+LS_EDDY_CONTACT fixture=HOT entry=8.525034417154954 last=12.02637717832538 interval=SpanInterval[start=7.000000453561528, end=9.000000453561528] contact_steps=24 available_steps=80 armed=true missing_contact_steps=0 mismatched_edge_steps=0
+LS_EDDY_EQUIPMENT fixture=POWER_LOSS mass=26.0 initial=1.9955118894577026 speed=0.0142110176384449 impulse=51.629790698281816 peak_force=102.40005859440629 work=42.53087687935849 heat=26.73087687935841 fault=
+LS_EDDY_CONTACT fixture=POWER_LOSS entry=8.525034417154954 last=9.350107658490943 interval=SpanInterval[start=7.000000453561528, end=9.000000453561528] contact_steps=80 available_steps=80 armed=true missing_contact_steps=0 mismatched_edge_steps=0
+LS_EDDY_EQUIPMENT fixture=GRAPH_CHANGE mass=26.0 initial=1.9955118894577026 speed=0.0142110176384449 impulse=51.629790692157 peak_force=102.40005859440629 work=42.53087687919721 heat=26.730876879197123 fault=
+LS_EDDY_CONTACT fixture=GRAPH_CHANGE entry=8.525034417154954 last=9.350107658490943 interval=SpanInterval[start=7.000000453561528, end=9.000000453561528] contact_steps=80 available_steps=80 armed=true missing_contact_steps=0 mismatched_edge_steps=0
+LS_EDDY_DISTURBANCE speed=0.3063802123069763 moved=0.35595703125 impulse=22.016215118415303 work=4.412980171504061
+[01:03:47] [Server thread/INFO] [minecraft/GameTestServer]: All 137 required tests passed :)
+BUILD SUCCESSFUL in 4m 52s
