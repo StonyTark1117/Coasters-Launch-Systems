@@ -2,7 +2,7 @@
 
 A standalone Create: Coasters Simulated addon in development toward **0.4.0**. The planned release includes tire, LIM, LSM, flywheel, hydraulic and pneumatic launches, distinct friction/skid/magnetic brakes, local ride control and explicit compatibility with Fourth Dimension vehicles.
 
-The current `0.0.1-dev.6` checkpoint adds passive magnetic equipment, persisted brake heat and independent provider brake ratings. Loaded friction/magnetic equipment is validated on four pinned Fourth Dimension variants, including fully occupied native coupled Arrow pairs. It retains the earlier shaft-powered tires and ordinary fin stopping/holding prototype. The requested 0.4.0 release and its acceptance gates remain in progress. See [release roadmap](ROADMAP.md), [design](PLAN.md), [magnetic and 4D brake checkpoint](docs/MAGNETIC-AND-4D-BRAKES.md), [fin clamp checkpoint](docs/FIN-CLAMPS.md), and [validation status](docs/VALIDATION.md).
+The current `0.0.1-dev.7` checkpoint adds real ordinary seat-passenger mass, native recovery preservation and occupied tire/fin/magnetic equipment checks, including fully occupied native coupled pairs. It retains the earlier four-variant Fourth Dimension equipment certification, passive magnetic heat and independent brake ratings. The requested 0.4.0 release and its acceptance gates remain in progress. See [release roadmap](ROADMAP.md), [occupied ordinary checkpoint](docs/ORDINARY-PASSENGERS.md), [magnetic and 4D brake checkpoint](docs/MAGNETIC-AND-4D-BRAKES.md), and [validation status](docs/VALIDATION.md).
 
 ## Development stack
 

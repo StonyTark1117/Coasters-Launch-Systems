@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.0.1-dev.7 occupied ordinary cart development
+
+- Add equal declared native mass/inertia for real ordinary Create seat passengers before equipment force collection, respecting primary-provider mass ownership.
+- Remove contributions on dismount, seat loss or provider transfer, and restore them once on return to ordinary ownership.
+- Restore previously owned rider contributions during Sable's tracker rebuild before native body recovery initialization, fixing a measured 0.0625-block COM-frame displacement without writing train pose or velocity.
+- Add a passenger lifecycle fixture and twelve occupied bidirectional tire/fin/magnetic equipment fixtures, including real fully occupied native six-block coupled pairs and rolling tire entry.
+
+Twenty unit checks, forty packaged standalone native tests and 102 packaged combined native tests passed with the same JAR. This is partial LS003/LS004/LS101–LS103 progress. Full stopping envelopes, controllers, occupied rivet children, rendered/multiplayer lifecycle and the remaining 0.4.0 mechanisms remain open. See [scope and evidence](docs/ORDINARY-PASSENGERS.md).
+
 ## 0.0.1-dev.6 magnetic and articulated brake development
 
 - Add an installed copper conductive fin and passive magnetic cabinet behavior with point-speed force, bounded dissipative impulses, a shared force budget and zero shaft stress.

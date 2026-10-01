@@ -6,7 +6,7 @@ Updated September 30, 2026. The goal is a complete 0.4.0 release validated and p
 | --- | --- |
 | Pinned standalone project and build | Build and packaged native test-server passed; rendered client and normal dedicated-server gameplay checks remain |
 | Force, brake, heat, energy and distance math | 20 unit tests passed, including independent rated brake authority and legacy denial; further gameplay integration remains |
-| Native point-force launch and friction stop | Forward/reverse ordinary and single-rider 4D fixtures passed; native contact and joint separation verified |
+| Native point-force launch and friction stop | Occupied ordinary single/coupled equipment and loaded 4D fixtures passed; native mass/contact and joint separation verified |
 | Versioned provider contract | API 3 ordinary fallback and read-only schema-4 Fourth Dimension adapter registered; pinned tire/friction/conductive interfaces certified in scoped fixtures; stable facade and lifecycle validation remain |
 | Directed contact and span occupancy | Actual span-tool placement, persisted two-block binding, level/shaft checks and support invalidation tested; obstruction envelopes, adjacent edges and train reservations pending |
 | Tire modules and passive/friction brakes | Ordinary and four pinned 4D equipment variants passed scoped bidirectional fixtures, including occupied linked Arrow; ordinary fin holds through mass 64 and passive magnetic heat/no-hold checks passed; full stopping/brake gates remain |
@@ -15,7 +15,7 @@ Updated September 30, 2026. The goal is a complete 0.4.0 release validated and p
 | Skid brakes and gameplay heat limits | Passive magnetic heat/cooling/derating and NBT migration tested; skid brakes and interrupted-world acceptance pending |
 | Physical guide, catch, release, reset and flywheel launch | Pending |
 | Hydraulic/pneumatic gameplay equipment | Pending |
-| Loaded ordinary and all eligible 4D mechanisms | Full/uneven 4D tire/fin/magnetic loads and fully occupied native linked Arrow pairs passed; ordinary passengers, profile traversal and other equipment mechanisms pending |
+| Loaded ordinary and all eligible 4D mechanisms | Full/uneven 4D tire/fin/magnetic loads and fully occupied native linked Arrow pairs passed; occupied ordinary single/coupled tire/brake fixtures now pass; profile traversal and other equipment mechanisms pending |
 | Recipes, models, tutorials and Ponder scenes | Original cabinet/drive-strip/fin models and seven recipes added; rendered QA, complete mechanisms, tutorials and Ponder remain |
 | Packaged client, dedicated server, multiplayer and interrupted saves | Pending |
 | 0.4.0 artifact, commit and verified private remote push | Pending |
@@ -71,3 +71,11 @@ Thirty-eight new combined tests exercise real friction/magnetic cabinets on full
 See [ratings, measured results, reproduction and limitations](MAGNETIC-AND-4D-BRAKES.md), [unit evidence](evidence/brakes-unit.txt), [packaged standalone](evidence/brakes-packaged-standalone.txt), [packaged combined](evidence/brakes-packaged-combined.txt), and [artifact hashes](evidence/brakes-artifacts.sha256). This is partial LS003/LS004/LS102/LS103 progress. Real chunk unload/reload, active saves, rendered/multiplayer gameplay, ordinary passengers, 4D slope hold/profile traversal, stopping envelopes, controllers and all remaining launch mechanisms stay open. No upstream Fourth Dimension checkout or process was changed. The complete 0.4.0 goal remains active.
 
 Implementation commit `458672920af165ea57cc056709ca09c33cd28389` was pushed to the private remote. [CI run 36815560966](https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36815560966) passed a clean build, twenty unit checks and all twenty-seven packaged standalone native tests. Its downloaded JAR exactly matched local SHA-256 `89eb76642bc9e3b188d683611bf018c90d5b5fe7d0a341ca167464d2e411b079`. [CI evidence](evidence/brakes-ci.txt) records the source and artifact verification. Combined evidence remains local against the copied pinned Fourth Dimension JAR. The full 0.4.0 release goal remains active.
+
+## Occupied ordinary cart checkpoint: 0.0.1-dev.7
+
+Twenty unit checks, forty packaged standalone native tests and 102 packaged combined native tests passed with the same binary JAR. Ordinary seat passengers now contribute equal declared native mass/inertia before equipment force collection. One real lifecycle fixture verifies boarding, native recovery, dismount/reboarding, empty seats, primary-provider handoff/return and occupied seat removal. A native tracker-rebuild hook restores previously owned rider contributions before Sable re-adds a recovered body, eliminating a measured 0.0625-block guide-point displacement.
+
+Twelve new equipment fixtures use four real passengers per chassis and fully occupied native coupled pairs in both directions. Actual cabinets provide rolling-entry tire transport, friction stop/hold and dissipative magnetic trim. Native rider mass/retention, guide support, coupler error, common translation and shared work/force budgets are measured. Existing combined 4D fixtures still require exactly 0.8 added native mass per rider and retain their joint/ownership evidence.
+
+See [loading policy, recovery ordering, measured layouts and limitations](ORDINARY-PASSENGERS.md), [unit evidence](evidence/passengers-unit.txt), [packaged standalone](evidence/passengers-packaged-standalone.txt), [packaged combined](evidence/passengers-packaged-combined.txt), [artifact hashes](evidence/passengers-artifacts.sha256) and [pre-fix diagnostics](evidence/passengers-diagnostics.txt). This is partial LS003/LS004/LS101–LS103 progress. Full stopping envelopes, controllers, occupied rivet children, rendered/multiplayer gameplay, active saves/chunk reload and remaining launch mechanisms remain open. The full 0.4.0 goal remains active.

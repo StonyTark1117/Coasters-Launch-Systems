@@ -1,0 +1,13 @@
+Pre-fix diagnostics; NOT passing artifact evidence.
+
+Missing ordinary rider mass:
+LS_ORDINARY_PASSENGER phase=board baseline=22.0 mass=22.0
+[21:41:27] [Server thread/ERROR] [minecraft/LogTestReporter]: nativepassengermasslifecycle failed at -13842942, -60, -14021893! Ordinary passenger omitted or duplicated native mass
+
+Late restoration changed recovered COM frame:
+LS_ORDINARY_PASSENGER phase=board baseline=24.0 mass=24.8
+LS_ORDINARY_REBUILD phase=before mass=25.6
+LS_ORDINARY_REBUILD phase=after mass=24.0 invalid=false
+LS_ORDINARY_REBUILD phase=later removed=false mass=25.6 bearing=Block{simulatedcoasters:coaster_cart}[snap_engaged=true]
+LS_ORDINARY_RECOVERY displacement=0.0625000037252903 before=( 6.565E+2  2.091E+2 -6.320E+2) after=( 6.565E+2  2.091E+2 -6.319E+2)
+[21:53:19] [Server thread/ERROR] [minecraft/LogTestReporter]: nativepassengermasslifecycle failed at -9116154, -60, -9934251! Mass reconstruction moved the supported chassis

@@ -14,6 +14,9 @@ public final class LaunchSystems {
 
   public LaunchSystems(IEventBus bus) {
     dev.coasterslaunchsystems.content.EquipmentContent.register(bus);
+    net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOW,
+        dev.coasterslaunchsystems.runtime.OrdinaryPassengers::physics);
+    net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(dev.coasterslaunchsystems.runtime.OrdinaryPassengers::unload);
     net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST,
         dev.coasterslaunchsystems.runtime.EquipmentRuntime::physics);
     net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(dev.coasterslaunchsystems.runtime.EquipmentRuntime::unload);
