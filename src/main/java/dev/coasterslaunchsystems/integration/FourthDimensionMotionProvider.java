@@ -108,6 +108,7 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
         if (VehicleInterfaces.brakePoint(body) != null) interfaces.add(Mechanism.FIN_BRAKE);
         if (VehicleInterfaces.conductivePoint(body) != null) interfaces.add(Mechanism.EDDY_BRAKE);
         for (var mechanism : List.of(Mechanism.LSM, Mechanism.LIM)) if (VehicleInterfaces.linearPoint(body, mechanism) != null) interfaces.add(mechanism);
+        if (((Enum<?>) family.get(vehicle)).name().equals("ARROW") && VehicleInterfaces.catchPoint(body) != null) interfaces.add(Mechanism.FLYWHEEL);
       }
       double loadedMass = dev.coasterslaunchsystems.runtime.NativeForces.mass(level, new ArrayList<>(bodies));
       dispatch &= loadedMass > 0; propel &= loadedMass > 0;

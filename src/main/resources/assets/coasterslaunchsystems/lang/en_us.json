@@ -10,5 +10,7 @@
   "block.coasterslaunchsystems.lsm_drive": "Linear Synchronous Drive",
   "block.coasterslaunchsystems.lim_drive": "Linear Induction Drive",
   "block.coasterslaunchsystems.lsm_reaction_plate": "LSM Magnet Reaction Plate",
-  "block.coasterslaunchsystems.lim_reaction_plate": "LIM Conductive Reaction Plate"
+  "block.coasterslaunchsystems.lim_reaction_plate": "LIM Conductive Reaction Plate",
+  "block.coasterslaunchsystems.catch_socket": "Cable Catch Socket",
+  "block.coasterslaunchsystems.catch_carriage": "Cable Catch Carriage"
 }

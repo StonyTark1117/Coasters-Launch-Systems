@@ -36,4 +36,10 @@ public final class VehicleInterfaces {
     if (plate == null || !chassis.getLevel().getBlockState(plate).is(hardware.get())) return null;
     return new Vector3d(plate.getX() + .5, plate.getY() + .875, plate.getZ() + .5);
   }
+  public static Vector3d catchPoint(ServerSubLevel chassis) {
+    var bearing = CoasterCartTrackSnap.representativeBearingPlotPos(chassis);
+    var socket = bearing == null ? null : bearing.below(2);
+    if (socket == null || !chassis.getLevel().getBlockState(socket).is(EquipmentContent.CATCH_SOCKET.get())) return null;
+    return new Vector3d(socket.getX() + .5, socket.getY() + .5, socket.getZ() + .5);
+  }
 }

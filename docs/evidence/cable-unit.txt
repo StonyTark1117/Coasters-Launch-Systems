@@ -1,0 +1,8 @@
+dev.14 local build, Java 21
+dev.coasterslaunchsystems.LinearMotorTest: tests=4 failures=0 errors=0
+dev.coasterslaunchsystems.MechanismMathTest: tests=9 failures=0 errors=0
+dev.coasterslaunchsystems.MotionAuthorityTest: tests=2 failures=0 errors=0
+dev.coasterslaunchsystems.StoppingEnvelopeTest: tests=3 failures=0 errors=0
+dev.coasterslaunchsystems.StoredEnergyTest: tests=4 failures=0 errors=0
+dev.coasterslaunchsystems.TrackDistanceTest: tests=5 failures=0 errors=0
+Total unit tests: 27

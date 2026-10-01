@@ -2,7 +2,7 @@
 
 A standalone Create: Coasters Simulated addon in development toward **0.4.0**. The planned release includes tire, LIM, LSM, flywheel, hydraulic and pneumatic launches, distinct friction/skid/magnetic brakes, local ride control and explicit compatibility with Fourth Dimension vehicles.
 
-The current `0.0.1-dev.13` checkpoint adds original LSM/LIM cabinets, separately installed reaction plates, finite shaft-charged buffers and tool tuning. Native local control waits for whole-train charge and a fresh request, coordinates adjacent drives and retains spring braking through power loss. Earlier tire/fin/passive-magnet equipment, provider-owned station capture and inspected receiver recovery remain available. This is partial implementation toward the requested 0.4.0 release. See [linear equipment and limits](docs/LINEAR-MOTORS.md), [release roadmap](ROADMAP.md), and [validation status](docs/VALIDATION.md).
+The current `0.0.1-dev.14` checkpoint adds a native cable-mechanics prototype: a constrained carriage pulls an installed catch socket, spends finite flywheel work, releases and physically returns. Occupied ordinary and eligible Arrow fixtures exercise it. The prototype still needs playable flywheel controls, physical guide placement and interruption persistence. Earlier LSM/LIM, tire/fin/passive-magnet equipment, provider-owned station capture and inspected receiver recovery remain available. This is partial implementation toward the requested 0.4.0 release. See [cable scope](docs/CABLE-MECHANICS.md), [linear equipment and limits](docs/LINEAR-MOTORS.md), [release roadmap](ROADMAP.md), and [validation status](docs/VALIDATION.md).
 
 ## Development stack
 

@@ -33,6 +33,10 @@ public final class EquipmentContent {
   public static final DeferredBlock<EquipmentCabinetBlock> LIM = cabinet("lim_drive", Mechanism.LIM);
   public static final DeferredBlock<LinearReactionBlock> LSM_PLATE = reaction("lsm_reaction_plate");
   public static final DeferredBlock<LinearReactionBlock> LIM_PLATE = reaction("lim_reaction_plate");
+  public static final DeferredBlock<CatchSocketBlock> CATCH_SOCKET = BLOCKS.register("catch_socket", () -> new CatchSocketBlock(BlockBehaviour.Properties.of().strength(4).noOcclusion()));
+  public static final DeferredItem<BlockItem> CATCH_SOCKET_ITEM = ITEMS.register("catch_socket", () -> new BlockItem(CATCH_SOCKET.get(), new Item.Properties()));
+  public static final DeferredBlock<CatchCarriageBlock> CATCH_CARRIAGE = BLOCKS.register("catch_carriage", () -> new CatchCarriageBlock(BlockBehaviour.Properties.of().strength(4).noOcclusion()));
+  public static final DeferredItem<BlockItem> CATCH_CARRIAGE_ITEM = ITEMS.register("catch_carriage", () -> new BlockItem(CATCH_CARRIAGE.get(), new Item.Properties()));
   public static final DeferredBlock<TireSurfaceBlock> TIRE_SURFACE = BLOCKS.register("tire_surface",
       () -> new TireSurfaceBlock(BlockBehaviour.Properties.of().strength(3).noOcclusion()));
   public static final DeferredItem<BlockItem> TIRE_SURFACE_ITEM = ITEMS.register("tire_surface",
@@ -74,6 +78,7 @@ public final class EquipmentContent {
       if (event.getTabKey().equals(net.minecraft.world.item.CreativeModeTabs.REDSTONE_BLOCKS)) {
         event.accept(CONTROLLER.get()); event.accept(TIRE.get()); event.accept(FIN.get()); event.accept(EDDY.get()); event.accept(TIRE_SURFACE.get()); event.accept(BRAKE_FIN.get()); event.accept(CONDUCTIVE_FIN.get());
         event.accept(LSM.get()); event.accept(LIM.get()); event.accept(LSM_PLATE.get()); event.accept(LIM_PLATE.get());
+        event.accept(CATCH_SOCKET.get()); event.accept(CATCH_CARRIAGE.get());
       }
       if (event.getTabKey().equals(net.minecraft.world.item.CreativeModeTabs.TOOLS_AND_UTILITIES)) event.accept(TOOL.get());
     });

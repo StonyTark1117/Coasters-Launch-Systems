@@ -1,0 +1,55 @@
+Superseded attempts, not acceptance evidence.
+Corrections: accepted bearing offset and collision clearance; physical jaw/native plot bounds; physics-phase contact/dispatch; deferred fixture removal; exact empty-store setup. No contact/alignment/energy/whole-train hold guard was relaxed.
+
+cable-focus.log
+[06:20:44] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.linked_forward failed at 9475335, -60, -4906578! No value present
+[06:20:44] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.linked_reverse failed at 9475343, -60, -4906578! No value present
+[06:20:45] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.single_forward failed at 9475327, -60, -4906578! Carriage is not physically home and held
+[06:20:45] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.depleted failed at 9475359, -60, -4906578! Cable carriage/shaft charging did not settle: 
+[06:20:45] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.power_loss failed at 9475367, -60, -4906578! Carriage is not physically home and held
+[06:20:45] [Server thread/INFO] [minecraft/GameTestServer]: 5 required tests failed :(
+BUILD FAILED in 15s
+
+cable-focus-v3.log
+[06:31:05] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.linked_forward failed at 1088257, -60, 12685971! No value present
+[06:31:05] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.linked_reverse failed at 1088265, -60, 12685971! No value present
+[06:31:06] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.single_forward failed at 1088249, -60, 12685971! Cable carriage/shaft charging did not settle: java.lang.RuntimeException: Body has been removed
+[06:31:06] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.misaligned failed at 1088273, -60, 12685971! Cable carriage/shaft charging did not settle: java.lang.RuntimeException: Body has been removed
+[06:31:06] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.depleted failed at 1088281, -60, 12685971! Cable carriage/shaft charging did not settle: java.lang.RuntimeException: Body has been removed
+[06:31:06] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.power_loss failed at 1088289, -60, 12685971! Cable carriage/shaft charging did not settle: java.lang.RuntimeException: Body has been removed
+[06:31:06] [Server thread/INFO] [minecraft/GameTestServer]: 6 required tests failed :(
+BUILD FAILED in 16s
+
+cable-focus-v4.log
+[06:33:27] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.linked_forward failed at 10497912, -60, -8854262! No value present
+[06:33:27] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.linked_reverse failed at 10497920, -60, -8854262! No value present
+LS_CABLE_HOME mode=single_forward travel=1.1368683772161603E-13 speed=0.0 guide_error=8.54492185453637E-6 socket=(32.5 223.125 -888) carriage=(32.5 221.353 -887.5)
+[06:33:28] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.single_forward failed at 10497904, -60, -8854262! Cable consist is not ready, supported, certified and exclusively available
+LS_CABLE_HOME mode=misaligned travel=0.0 speed=0.0 guide_error=8.54492185453637E-6 socket=(176.5 223.125 -888) carriage=(176.5 221.353 -886.5)
+LS_CABLE_HOME mode=depleted travel=1.1368683772161603E-13 speed=0.0 guide_error=8.54492185453637E-6 socket=(224.5 223.125 -888) carriage=(224.5 221.353 -887.5)
+[06:33:28] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.depleted failed at 10497936, -60, -8854262! Cable consist is not ready, supported, certified and exclusively available
+LS_CABLE_HOME mode=power_loss travel=1.1368683772161603E-13 speed=0.0 guide_error=8.54492185453637E-6 socket=(272.5 223.125 -888) carriage=(272.5 221.353 -887.5)
+[06:33:28] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.power_loss failed at 10497944, -60, -8854262! Cable consist is not ready, supported, certified and exclusively available
+[06:33:28] [Server thread/INFO] [minecraft/GameTestServer]: 5 required tests failed :(
+BUILD FAILED in 18s
+
+cable-focus-v6.log
+LS_CABLE_HOME mode=single_forward travel=0.0 speed=0.0 guide_error=8.54492185453637E-6 socket=(32.5 223.125 -888) carriage=(32.5 221.353 -888)
+LS_CABLE_HOME mode=linked_forward travel=0.0 speed=0.0 guide_error=8.54492185453637E-6 socket=(80.5 223.125 -882) carriage=(80.5 221.353 -882)
+LS_CABLE_HOME mode=linked_reverse travel=-0.0 speed=-0.0 guide_error=8.54492185453637E-6 socket=(128.5 223.125 -846) carriage=(128.5 221.353 -846)
+LS_CABLE_HOME mode=misaligned travel=-1.1368683772161603E-13 speed=0.0 guide_error=8.54492185453637E-6 socket=(176.5 223.125 -888) carriage=(176.5 221.353 -887)
+[06:37:04] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.depleted failed at -10848849, -60, 301079! Cable carriage/shaft charging did not settle: java.util.NoSuchElementException: No value present
+[06:37:04] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.power_loss failed at -10848841, -60, 301079! Cable carriage/shaft charging did not settle: java.util.NoSuchElementException: No value present
+[06:37:08] [Server thread/INFO] [minecraft/GameTestServer]: 2 required tests failed :(
+BUILD FAILED in 32s
+
+cable-focus-v7.log
+LS_CABLE_HOME mode=single_forward travel=0.0 speed=0.0 guide_error=8.54492185453637E-6 socket=(32.5 223.125 -888) carriage=(32.5 221.353 -888)
+LS_CABLE_HOME mode=linked_forward travel=0.0 speed=0.0 guide_error=8.54492185453637E-6 socket=(80.5 223.125 -882) carriage=(80.5 221.353 -882)
+LS_CABLE_HOME mode=linked_reverse travel=-0.0 speed=-0.0 guide_error=8.54492185453637E-6 socket=(128.5 223.125 -846) carriage=(128.5 221.353 -846)
+LS_CABLE_HOME mode=misaligned travel=-1.1368683772161603E-13 speed=0.0 guide_error=8.54492185453637E-6 socket=(176.5 223.125 -888) carriage=(176.5 221.353 -887)
+LS_CABLE_HOME mode=depleted travel=0.0 speed=0.0 guide_error=8.54492185453637E-6 socket=(224.5 223.125 -888) carriage=(224.5 221.353 -888)
+LS_CABLE_HOME mode=power_loss travel=0.0 speed=0.0 guide_error=8.54492185453637E-6 socket=(272.5 223.125 -888) carriage=(272.5 221.353 -888)
+[06:38:15] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_cable.depleted failed at 8615277, -60, 7209387! Empty flywheel created a launch/reset
+[06:38:15] [Server thread/INFO] [minecraft/GameTestServer]: 1 required tests failed :(
+BUILD FAILED in 28s

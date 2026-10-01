@@ -1,6 +1,6 @@
 # Coasters: Launch Systems release roadmap
 
-Implementation started September 30, 2026 toward the user's goal of a validated 0.4.0 release in its own private GitHub repository. LS001–LS005, LS101–LS104 and LS201–LS202 are in progress; remaining packages are planned. Track actual acceptance in [validation status](docs/VALIDATION.md). Stable LS identifiers allow later requests to name a concrete scope. Completing a package requires its evidence; version numbers do not establish completion. The user approved a standalone core with optional integrations.
+Implementation started September 30, 2026 toward the user's goal of a validated 0.4.0 release in its own private GitHub repository. LS001–LS005, LS101–LS104, LS201–LS202 and LS301–LS303 are in progress; remaining packages are planned. Track actual acceptance in [validation status](docs/VALIDATION.md). Stable LS identifiers allow later requests to name a concrete scope. Completing a package requires its evidence; version numbers do not establish completion. The user approved a standalone core with optional integrations.
 
 ## Foundation
 
@@ -48,6 +48,8 @@ Dev.13 adds original LSM/LIM cabinets, matching chassis plates, finite kinetic c
 | LS205 | All eligible 4D family linear-drive/brake fixtures | LS004, LS201–LS204. Legacy, Free Spin and revised groups retain independent loaded rotation; Arrow retraces profiles in rollback. PAX remains under its declared restrictions. |
 
 ## Version 0.3 physical flywheel launch
+
+Dev.14 adds a [native cable-mechanics prototype](docs/CABLE-MECHANICS.md): a real constrained carriage pulls a separate chassis socket, releases, brakes and physically returns. Finite flywheel work, loaded ordinary/coupled/Arrow motion, misalignment and unsupported-family denial, external interruption hold, early reset denial, handle edits and changing mass pass scoped fixtures. This remains internal mechanics: playable guide/flywheel/drum controls, shared controller ownership, journals/restart/recovery, removed support and rendered/lifecycle acceptance remain open.
 
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |
