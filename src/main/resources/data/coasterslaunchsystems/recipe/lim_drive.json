@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "ICI",
+    "SRS",
+    "ICI"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "C": {
+      "tag": "c:ingots/copper"
+    },
+    "S": {
+      "item": "create:shaft"
+    },
+    "R": {
+      "item": "create:precision_mechanism"
+    }
+  },
+  "result": {
+    "id": "coasterslaunchsystems:lim_drive",
+    "count": 1
+  }
+}

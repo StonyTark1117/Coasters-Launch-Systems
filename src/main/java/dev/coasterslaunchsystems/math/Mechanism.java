@@ -4,6 +4,9 @@ package dev.coasterslaunchsystems.math;
 public enum Mechanism {
   TIRE, LSM, LIM, FIN_BRAKE, SKID_BRAKE, EDDY_BRAKE, FLYWHEEL, HYDRAULIC, PNEUMATIC;
 
+  public boolean linear() { return this == LSM || this == LIM; }
+  public boolean drive() { return this == TIRE || linear(); }
+
   public boolean cable() {
     return this == FLYWHEEL || this == HYDRAULIC || this == PNEUMATIC;
   }

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "coasterslaunchsystems:block/lsm_drive"
+    },
+    "axis=z": {
+      "model": "coasterslaunchsystems:block/lsm_drive",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "coasterslaunchsystems:block/lsm_drive",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

@@ -64,7 +64,7 @@ public final class RideTransfers {
           .dot(bound.forward(level, bound.hitAtDistance(level, 0))) < .99) throw new IllegalStateException("Transfer module binding changed");
       if (module.mechanism() == Mechanism.TIRE) (link.exitDrive() ? exit : launch).add(module);
       else if (module.mechanism() == Mechanism.FIN_BRAKE) fins.add(module);
-      else throw new IllegalStateException("Uncertified transfer mechanism");
+      else throw new IllegalStateException("Uncertified transfer mechanism; linear drives currently certify local sections only");
     }
     if (launch.isEmpty()) throw new IllegalStateException("Transfer section has no inlet drives");
     double launchEnd = launch.stream().mapToDouble(m -> m.interval().end()).max().orElseThrow();

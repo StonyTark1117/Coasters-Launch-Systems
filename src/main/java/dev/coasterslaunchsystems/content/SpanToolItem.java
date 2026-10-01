@@ -71,6 +71,20 @@ public final class SpanToolItem extends Item {
         boolean exit = player.getOffhandItem().is(net.minecraft.world.item.Items.REDSTONE_TORCH);
         controller.link(cabinet, exit); player.displayClientMessage(Component.literal(exit ? "Exit transport linked to selected controller." : "Module linked to selected controller."), true);
       } else if (level.getBlockEntity(pos) instanceof EquipmentCabinetEntity cabinet) {
+        if (cabinet.mechanism().linear()) {
+          var item = player.getOffhandItem();
+          if (item.is(net.minecraft.world.item.Items.CLOCK)) {
+            double next = cabinet.targetSpeed() + 3; if (next > 12) next = -12;
+            cabinet.tuneLinear(next, cabinet.accelerationLimit(), cabinet.jerkLimit());
+          } else if (item.is(net.minecraft.world.item.Items.IRON_NUGGET)) {
+            double next = cabinet.accelerationLimit() + .5; if (next > 2) next = .5;
+            cabinet.tuneLinear(cabinet.targetSpeed(), next, cabinet.jerkLimit());
+          } else if (item.is(net.minecraft.world.item.Items.GOLD_NUGGET)) {
+            double next = cabinet.jerkLimit() * 2; if (next > 8) next = 1;
+            cabinet.tuneLinear(cabinet.targetSpeed(), cabinet.accelerationLimit(), next);
+          } else item = null;
+          if (item != null) { player.displayClientMessage(Component.literal(cabinet.status()), false); return InteractionResult.SUCCESS; }
+        }
         if (from == null || to == null || !from.dimension().equals(level.dimension()) || !to.dimension().equals(level.dimension()))
           throw new IllegalArgumentException("Select two track anchors in this dimension first");
         if (!level.mayInteract(player, from.pos()) || !level.mayInteract(player, to.pos()))

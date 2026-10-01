@@ -135,7 +135,7 @@ public final class RideControllers {
     // Only the launch pads retract; downstream stop pads remain applied even with a powered shaft.
     return controller.modules().stream().map(m -> level.getBlockEntity(m.position()))
         .filter(EquipmentCabinetEntity.class::isInstance).map(EquipmentCabinetEntity.class::cast)
-        .anyMatch(m -> m.mechanism() == Mechanism.TIRE && !controller.exitDrive(m) && m.interval().end() >= module.interval().start()
+        .anyMatch(m -> m.mechanism().drive() && !controller.exitDrive(m) && m.interval().end() >= module.interval().start()
             && m.interval().start() <= module.interval().end());
   }
   public static void physics(ServerLevel level) {
@@ -180,8 +180,9 @@ public final class RideControllers {
       }
       modules.add(module);
     }
-    var drives = modules.stream().filter(m -> m.mechanism() == Mechanism.TIRE && !controller.exitDrive(m)).toList();
-    if (drives.isEmpty()) { controller.fail("No linked tire drive"); return; }
+    var drives = modules.stream().filter(m -> m.mechanism().drive() && !controller.exitDrive(m)).toList();
+    if (drives.isEmpty()) { controller.fail("No linked drive"); return; }
+    var driveInterfaces = drives.stream().map(EquipmentCabinetEntity::mechanism).collect(java.util.stream.Collectors.toSet());
     double launchEnd = drives.stream().mapToDouble(m -> m.interval().end()).max().orElseThrow();
     var stops = modules.stream().filter(m -> m.mechanism() == Mechanism.FIN_BRAKE && m.interval().start() > launchEnd)
         .sorted(Comparator.comparingDouble(m -> m.interval().start())).toList();
@@ -212,7 +213,8 @@ public final class RideControllers {
       if (!(container.getSubLevel(id) instanceof ServerSubLevel cart) || cart.isRemoved()) { controller.fail("Reserved chassis unavailable; ownership retained"); return; }
       var motion = MotionProviders.resolve(level, id).orElse(null); var contact = EngagedContacts.current(level, cart).orElse(null);
       if (motion == null || contact == null || !Set.copyOf(motion.consist()).equals(members) || !motion.exclusiveOperator().isEmpty()
-          || !motion.interfaces().contains(Mechanism.TIRE) || !motion.interfaces().contains(Mechanism.FIN_BRAKE)) {
+          || !motion.interfaces().contains(Mechanism.TIRE) || !motion.interfaces().contains(Mechanism.FIN_BRAKE)
+          || !motion.interfaces().containsAll(driveInterfaces)) {
         controller.fail("Reserved vehicle support, consist or certified interfaces changed"); return;
       }
       if (ChainLiftSpanQuery.findAtGraphHit(level, contact.hit(), 0) != null) { controller.fail("A native chain owns the reserved consist"); return; }
@@ -241,8 +243,8 @@ public final class RideControllers {
     }
     if (allClear) { controller.fail("Train left the section without a reserved transfer"); return; }
     if (!Double.isFinite(smallest) || !Double.isFinite(largest)) { controller.consumeRequest(); return; }
-    double ceiling = drives.stream().mapToDouble(m -> Math.abs(DriveMath.wheelSpeed(m.getSpeed(), .4))).max().orElse(0);
-    boolean powered = drives.stream().allMatch(m -> m.getSpeed() >= 1 && m.getSpeed() <= 128)
+    double ceiling = drives.stream().mapToDouble(m -> Math.abs(DriveEquipment.speed(m))).max().orElse(0);
+    boolean powered = drives.stream().allMatch(DriveEquipment::forwardPowered)
         && modules.stream().filter(m -> m.mechanism() == Mechanism.FIN_BRAKE && m.interval().start() <= launchEnd)
             .allMatch(m -> Math.abs(m.getSpeed()) >= 32);
     if (mass > 64) { controller.fail("Loaded consist exceeds the current 64-unit fin rating"); return; }
@@ -265,7 +267,10 @@ public final class RideControllers {
     }
     if (StationCapture.evaluate(level, controller, held)) return;
     if (RideTransfers.departure(level, controller, track, held)) return;
-    controller.state(held && ready && powered && largest + radius < stopStart ? State.READY : State.HOLD);
+    double launchMass = mass;
+    boolean charged = drives.stream().filter(m -> m.mechanism().linear()).allMatch(m -> m.targetSpeed() > 0
+        && m.energy() >= dev.coasterslaunchsystems.math.LinearMotor.launchReserve(m.mechanism(), launchMass, m.targetSpeed(), m.accelerationLimit(), m.jerkLimit()));
+    controller.state(held && ready && powered && charged && largest + radius < stopStart ? State.READY : State.HOLD);
     if (!controller.consumeRequest() || controller.phase() != State.READY) return;
     // The route has already been reserved. Delegate release to the uniquely resolved vehicle owner.
     if (!MotionProviders.requestDispatch(level, members.iterator().next())) { controller.fail("Vehicle provider rejected dispatch"); return; }

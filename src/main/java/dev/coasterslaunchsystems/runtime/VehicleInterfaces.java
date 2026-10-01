@@ -28,4 +28,12 @@ public final class VehicleInterfaces {
     if (fin == null || !chassis.getLevel().getBlockState(fin).is(EquipmentContent.CONDUCTIVE_FIN.get())) return null;
     return new Vector3d(fin.getX() + .5, fin.getY() + .5, fin.getZ() + .5);
   }
+  public static Vector3d linearPoint(ServerSubLevel chassis, dev.coasterslaunchsystems.math.Mechanism mechanism) {
+    if (!mechanism.linear()) throw new IllegalArgumentException("Not a linear motor interface");
+    var bearing = CoasterCartTrackSnap.representativeBearingPlotPos(chassis);
+    var plate = bearing == null ? null : (mechanism == dev.coasterslaunchsystems.math.Mechanism.LSM ? bearing.north() : bearing.south()).below();
+    var hardware = mechanism == dev.coasterslaunchsystems.math.Mechanism.LSM ? EquipmentContent.LSM_PLATE : EquipmentContent.LIM_PLATE;
+    if (plate == null || !chassis.getLevel().getBlockState(plate).is(hardware.get())) return null;
+    return new Vector3d(plate.getX() + .5, plate.getY() + .875, plate.getZ() + .5);
+  }
 }

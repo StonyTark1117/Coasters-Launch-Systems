@@ -42,6 +42,18 @@ public final class NativeForces {
 
   public record PointDynamics(double speed, double effectiveMass) {}
 
+  /** Velocity response at one interface to a unit impulse at another on the same native body. */
+  public static double pointImpulseResponse(ServerSubLevel chassis, Vector3dc receiverPoint, Vector3dc receiverDirection,
+      Vector3dc sourcePoint, Vector3dc sourceDirection) {
+    var tracker = chassis.getMassTracker();
+    var receiver = chassis.logicalPose().transformNormalInverse(new Vector3d(receiverDirection));
+    var source = chassis.logicalPose().transformNormalInverse(new Vector3d(sourceDirection));
+    var receiverLever = new Vector3d(receiverPoint).sub(tracker.getCenterOfMass()).cross(receiver);
+    var sourceLever = new Vector3d(sourcePoint).sub(tracker.getCenterOfMass()).cross(source);
+    return dev.coasterslaunchsystems.math.Numbers.finite(tracker.getInverseMass() * receiver.dot(source)
+        + receiverLever.dot(tracker.getInverseInertiaTensor().transform(sourceLever)), "point impulse response");
+  }
+
   /** Point speed and free-body impulse work include the strip's angular lever arm. */
   public static PointDynamics pointDynamics(ServerSubLevel chassis, PhysicsPipeline pipeline,
       Vector3dc plotPoint, Vector3dc worldDirection) {

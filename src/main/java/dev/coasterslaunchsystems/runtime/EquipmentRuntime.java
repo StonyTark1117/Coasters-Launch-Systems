@@ -4,6 +4,7 @@ import dev.coasterslaunchsystems.api.MotionProviders;
 import dev.coasterslaunchsystems.content.EquipmentCabinetEntity;
 import dev.coasterslaunchsystems.math.DriveMath;
 import dev.coasterslaunchsystems.math.Mechanism;
+import dev.coasterslaunchsystems.math.LinearMotor;
 import dev.coasterslaunchsystems.math.Numbers;
 import dev.coasterslaunchsystems.track.EngagedContacts;
 import dev.ryanhcode.sable.api.sublevel.SubLevelContainer;
@@ -22,6 +23,7 @@ public final class EquipmentRuntime {
   private record Entry(EquipmentCabinetEntity module, long tick) {}
   private record Key(BlockPos module, UUID cart) {}
   private record History(long step, double distance, double acceleration) {}
+  private record DriveKey(Object owner, UUID cart) {}
   private record Clamp(UUID identity, NativeFinClamp handle) {}
   private static final double FIN_FORCE = 256, FIN_MASS = 64, EDDY_FORCE = 128;
   private static final Map<ServerLevel, Map<Key, Clamp>> CLAMPS = new HashMap<>();
@@ -29,6 +31,7 @@ public final class EquipmentRuntime {
       double mass, double energyMass, double speed, Vector3d direction, Vector3d point, double force, Key key, double distance) {}
   private static final Map<ServerLevel, Map<BlockPos, Entry>> MODULES = new HashMap<>();
   private static final Map<ServerLevel, Map<Key, History>> HISTORY = new HashMap<>();
+  private static final Map<ServerLevel, Map<DriveKey, History>> DRIVE_HISTORY = new HashMap<>();
   private static final Map<ServerLevel, Long> STEPS = new HashMap<>();
   private EquipmentRuntime() {}
 
@@ -67,7 +70,7 @@ public final class EquipmentRuntime {
   }
   public static void unload(LevelEvent.Unload event) {
     if (event.getLevel() instanceof ServerLevel level) {
-      MODULES.remove(level); HISTORY.remove(level); STEPS.remove(level);
+      MODULES.remove(level); HISTORY.remove(level); DRIVE_HISTORY.remove(level); STEPS.remove(level);
       // Sable world teardown owns all native joints. Avoid JNI calls after another unload listener disposes it.
       CLAMPS.remove(level);
     }
@@ -85,23 +88,26 @@ public final class EquipmentRuntime {
     var container = SubLevelContainer.getContainer(level);
     if (container == null) return;
     var history = HISTORY.computeIfAbsent(level, ignored -> new HashMap<>());
+    var driveHistory = DRIVE_HISTORY.computeIfAbsent(level, ignored -> new HashMap<>());
     long step = STEPS.merge(level, 1L, Long::sum);
     double dt = event.getTimeStep();
     var groups = new LinkedHashMap<UUID, List<Request>>();
     for (var entry : List.copyOf(modules.values())) {
       var module = entry.module();
       module.cool(dt);
+      module.chargeLinear(dt);
       if (!module.armed() || !module.fault().isEmpty()) continue;
       if (ModList.get().isLoaded("coastersengineered") || ModList.get().isLoaded("coasterfins")) {
         module.fail("An installed drive addon needs an ownership adapter"); continue;
       }
       var track = module.resolve(level);
       if (track == null) continue;
-      if (module.mechanism() != Mechanism.TIRE && module.mechanism() != Mechanism.FIN_BRAKE && module.mechanism() != Mechanism.EDDY_BRAKE) {
+      if (!module.mechanism().drive() && module.mechanism() != Mechanism.FIN_BRAKE && module.mechanism() != Mechanism.EDDY_BRAKE) {
         module.fail("Matching brake reaction hardware is required"); continue;
       }
       var mechanism = module.mechanism();
       if (mechanism == Mechanism.TIRE && (Math.abs(module.getSpeed()) < 1 || Math.abs(module.getSpeed()) > 128)) continue;
+      if (mechanism.linear() && !module.linearPowered()) continue;
       // Spring applied, shaft released. Loss of shaft power applies an armed, supported clamp.
       if (mechanism == Mechanism.FIN_BRAKE && RideControllers.finReleased(level, module)) continue;
       for (var cart : container.getAllSubLevels()) {
@@ -117,26 +123,31 @@ public final class EquipmentRuntime {
         try {
           var motion = MotionProviders.resolve(level, cart.getUniqueId()).orElse(null);
           if (motion == null || !permitted(motion, mechanism)
-              || mechanism == Mechanism.TIRE && !RideControllers.permitsDrive(level, module, cart.getUniqueId())) continue;
+              || mechanism.drive() && !RideControllers.permitsDrive(level, module, cart.getUniqueId())) continue;
           if (!motion.interfaces().contains(mechanism)) {
             module.fail(switch (mechanism) {
               case TIRE -> "Vehicle has no certified tire interface";
               case FIN_BRAKE -> "Vehicle has no certified friction fin";
+              case LSM, LIM -> "Vehicle has no certified " + mechanism + " reaction plate";
               default -> "Vehicle has no certified conductive fin";
             }); continue;
           }
           boolean available = true; double consistMass = 0;
+          var bodyIds = new HashSet<UUID>();
           for (var member : motion.consist()) {
             var linked = container.getSubLevel(member);
             var accepted = linked instanceof ServerSubLevel server ? EngagedContacts.current(level, server).orElse(null) : null;
             if (accepted == null) { available = false; break; }
             var linkedMotion = MotionProviders.resolve(level, member).orElse(null);
             if (linkedMotion == null || !permitted(linkedMotion, mechanism)
-                || !linkedMotion.interfaces().contains(mechanism)) {
+                || !linkedMotion.interfaces().contains(mechanism) || !linkedMotion.provider().equals(motion.provider())
+                || !Set.copyOf(linkedMotion.consist()).equals(Set.copyOf(motion.consist()))) {
               available = false; break;
             }
             double memberMass = NativeForces.mass(level, linkedMotion);
             if (memberMass <= 0) { available = false; break; }
+            for (var body : linkedMotion.bodies()) if (!bodyIds.add(body)) { available = false; break; }
+            if (!available) { module.fail("Duplicate native body in equipment consist"); break; }
             consistMass += memberMass;
             if (ChainLiftSpanQuery.findAtGraphHit(level, accepted.hit(), 0) != null) {
               module.fail("Native chain drive owns part of this consist"); available = false; break;
@@ -146,6 +157,7 @@ public final class EquipmentRuntime {
           var point = switch (mechanism) {
             case TIRE -> VehicleInterfaces.tirePoint(cart);
             case FIN_BRAKE -> VehicleInterfaces.brakePoint(cart);
+            case LSM, LIM -> VehicleInterfaces.linearPoint(cart, mechanism);
             default -> VehicleInterfaces.conductivePoint(cart);
           };
           if (point == null) { module.fail("Chassis interface hardware was removed"); continue; }
@@ -174,12 +186,14 @@ public final class EquipmentRuntime {
                 dynamics.effectiveMass(), speed, direction, point, force, key, distance));
             continue;
           }
-          double wheelSpeed = DriveMath.wheelSpeed(module.getSpeed(), .4);
-          double requested = DriveMath.tireForce(speed, wheelSpeed, 20, 8, .4);
-          double limit = Math.min(Math.min(motion.maximumForce(), mass * motion.maximumAcceleration()),
-              dynamics.effectiveMass() * Math.abs(wheelSpeed - speed) / dt);
+          double target = mechanism.linear() ? module.targetSpeed() : DriveMath.wheelSpeed(module.getSpeed(), .4);
+          double requested = mechanism.linear() ? LinearMotor.force(mechanism, speed, target, 20) * module.thermalFraction()
+              : DriveMath.tireForce(speed, target, 20, 8, .4);
+          double authority = mechanism.linear() && requested * speed < 0 ? motion.maximumBrakeForce() : motion.maximumForce();
+          double limit = Math.min(Math.min(authority, mass * Math.min(motion.maximumAcceleration(), mechanism.linear() ? module.accelerationLimit() : 2)),
+              dynamics.effectiveMass() * Math.abs(target - speed) / dt);
           requested = Numbers.clamp(requested, -limit, limit);
-          double acceleration = DriveMath.tireAccelerationStep(oldAcceleration, requested / mass, 4, dt);
+          double acceleration = mechanism.linear() ? requested / mass : DriveMath.tireAccelerationStep(oldAcceleration, requested / mass, 4, dt);
           var request = new Request(module, cart, mass, dynamics.effectiveMass(), speed,
               direction, point, acceleration * mass, key, distance);
           UUID consist = motion.consist().stream().min(UUID::compareTo).orElseThrow();
@@ -199,18 +213,38 @@ public final class EquipmentRuntime {
     var tireDemand = new HashMap<UUID, Double>();
     var tireLimits = new HashMap<UUID, Double>();
     for (var allocation : allocated.entrySet()) {
-      if (allocation.getKey().mechanism() != Mechanism.TIRE) continue;
+      if (!allocation.getKey().mechanism().drive()) continue;
       for (var request : allocation.getValue()) {
         UUID id = request.cart().getUniqueId(); tireDemand.merge(id, Math.abs(request.force()), Double::sum);
         var motion = MotionProviders.resolve(level, id).orElseThrow();
-        tireLimits.merge(id, Math.min(motion.maximumForce(), request.mass() * motion.maximumAcceleration()), Math::min);
+        double authority = allocation.getKey().mechanism().linear() && request.force() * request.speed() < 0 ? motion.maximumBrakeForce() : motion.maximumForce();
+        tireLimits.merge(id, Math.min(authority, request.mass() * Math.min(motion.maximumAcceleration(), allocation.getKey().mechanism().linear() ? allocation.getKey().accelerationLimit() : 2)), Math::min);
       }
     }
+    // A bank's configured linear jerk limit belongs to the chassis, not to every duplicated pad.
+    var jerkScales = new HashMap<UUID, Double>();
+    var linearJerks = new HashMap<UUID, Double>();
+    var signedDemand = new HashMap<UUID, Double>();
+    var chassisMass = new HashMap<UUID, Double>();
+    var driveKeys = new HashMap<UUID, DriveKey>();
+    for (var allocation : allocated.entrySet()) if (allocation.getKey().mechanism().drive()) for (var r : allocation.getValue()) {
+      UUID id = r.cart().getUniqueId(); signedDemand.merge(id, r.force(), Double::sum); chassisMass.put(id, r.mass());
+      driveKeys.put(id, new DriveKey(RideControllers.ownership(level, r.module()), id));
+      if (allocation.getKey().mechanism().linear()) linearJerks.merge(id, allocation.getKey().jerkLimit(), Math::min);
+    }
+    for (var entry : linearJerks.entrySet()) {
+      var id = entry.getKey(); double requested = signedDemand.get(id);
+      var previous = driveHistory.get(driveKeys.get(id));
+      double old = previous != null && previous.step() == step - 1 ? previous.acceleration() : 0;
+      double limited = DriveMath.tireAccelerationStep(old, requested / chassisMass.get(id), entry.getValue(), dt) * chassisMass.get(id);
+      jerkScales.put(id, Math.abs(requested) > 1e-10 ? Math.min(1, Math.abs(limited / requested)) : 0);
+    }
     for (var allocation : allocated.entrySet()) {
-      if (allocation.getKey().mechanism() != Mechanism.TIRE) continue;
+      if (!allocation.getKey().mechanism().drive()) continue;
       allocation.setValue(allocation.getValue().stream().map(r -> {
         double demand = tireDemand.get(r.cart().getUniqueId());
-        double scale = demand > 0 ? Math.min(1, tireLimits.get(r.cart().getUniqueId()) / demand) : 1;
+        double scale = Math.min(demand > 0 ? Math.min(1, tireLimits.get(r.cart().getUniqueId()) / demand) : 1,
+            jerkScales.getOrDefault(r.cart().getUniqueId(), 1.0));
         return new Request(r.module(), r.cart(), r.mass(), r.energyMass(), r.speed(), r.direction(), r.point(), r.force() * scale, r.key(), r.distance());
       }).toList());
     }
@@ -270,31 +304,55 @@ public final class EquipmentRuntime {
     var driveGroups = new LinkedHashMap<Object, Map<EquipmentCabinetEntity, List<Request>>>();
     for (var allocation : allocated.entrySet()) {
       var module = allocation.getKey();
-      if (!module.fault().isEmpty() || !module.armed() || module.mechanism() != Mechanism.TIRE) continue;
+      if (!module.fault().isEmpty() || !module.armed() || !module.mechanism().drive()) continue;
       driveGroups.computeIfAbsent(RideControllers.ownership(level, module), ignored -> new LinkedHashMap<>())
           .put(module, allocation.getValue());
     }
     for (var bank : driveGroups.values()) {
-      var totals = new HashMap<UUID, Double>();
-      bank.values().forEach(requests -> requests.forEach(r -> totals.merge(r.cart().getUniqueId(), r.force(), Double::sum)));
+      var responses = new HashMap<Key, Double>();
+      var allRequests = bank.values().stream().flatMap(List::stream).toList();
+      for (var r : allRequests) {
+        double response = 0;
+        for (var other : allRequests) if (r.cart() == other.cart()) response += other.force()
+            * NativeForces.pointImpulseResponse(r.cart(), r.point(), r.direction(), other.point(), other.direction());
+        responses.put(r.key(), response);
+      }
       double lower = 0, upper = 1;
       // Account for the combined impulse's cross-work. Every cabinet retains its own budget;
       // a negative-work contact grants no credit to any positive-work contact.
       for (int iteration = 0; iteration < 50; iteration++) {
         double scale = (lower + upper) / 2; boolean fits = true;
         for (var allocation : bank.entrySet()) {
-          double budget = 8 * Math.abs(allocation.getKey().getSpeed()) * 2 * Math.PI / 60 * dt, demand = 0;
-          for (var r : allocation.getValue()) demand += Math.max(0, DriveMath.incrementalWorkShare(r.energyMass(), r.speed(),
-              r.force() * scale, totals.get(r.cart().getUniqueId()) * scale, dt));
+          var module = allocation.getKey();
+          double budget = module.mechanism().linear() ? module.energy() : 8 * Math.abs(module.getSpeed()) * 2 * Math.PI / 60 * dt, demand = 0;
+          for (var r : allocation.getValue()) {
+            double force = r.force() * scale;
+            double work = force * (r.speed() + .5 * responses.get(r.key()) * scale * dt) * dt;
+            demand += module.mechanism().linear() ? LinearMotor.transfer(module.mechanism(), r.speed(), module.targetSpeed(), force, work, dt).energy() : Math.max(0, work);
+          }
           if (demand > budget) { fits = false; break; }
         }
         if (fits) lower = scale; else upper = scale;
       }
+      // Pay every independent cabinet before queueing any motor force in the coordinated bank.
+      for (var allocation : bank.entrySet()) if (allocation.getKey().mechanism().linear()) {
+        var module = allocation.getKey(); double energy = 0, heat = 0;
+        for (var r : allocation.getValue()) {
+          double force = r.force() * lower;
+          double work = force * (r.speed() + .5 * responses.get(r.key()) * lower * dt) * dt;
+          var transfer = LinearMotor.transfer(module.mechanism(), r.speed(), module.targetSpeed(), force, work, dt);
+          energy += transfer.energy(); heat += transfer.heat();
+        }
+        module.spendLinear(energy); module.absorbHeat(heat);
+      }
+      var actual = new HashMap<UUID, Double>();
       for (var requests : bank.values()) for (var request : requests) {
         double force = request.force() * lower;
         NativeForces.pointForce(request.cart(), request.point(), new Vector3d(request.direction()).mul(force), dt);
         history.put(request.key(), new History(step, request.distance(), force / request.mass()));
+        actual.merge(request.cart().getUniqueId(), force / request.mass(), Double::sum);
       }
+      actual.forEach((id, acceleration) -> driveHistory.put(driveKeys.get(id), new History(step, 0, acceleration)));
     }
     for (var allocation : allocated.entrySet()) {
       var module = allocation.getKey();
@@ -314,9 +372,10 @@ public final class EquipmentRuntime {
       }
     }
     history.values().removeIf(h -> h.step() < step - 2);
+    driveHistory.values().removeIf(h -> h.step() < step - 2);
   }
   private static boolean permitted(dev.coasterslaunchsystems.api.MotionVehicle motion, Mechanism mechanism) {
     return motion.exclusiveOperator().isEmpty()
-        && (mechanism == Mechanism.TIRE ? motion.propulsionAllowed() : motion.brakingAllowed());
+        && (mechanism.linear() ? motion.propulsionAllowed() && motion.brakingAllowed() : mechanism == Mechanism.TIRE ? motion.propulsionAllowed() : motion.brakingAllowed());
   }
 }

@@ -6,5 +6,9 @@
   "block.coasterslaunchsystems.tire_surface": "Chassis Tire Drive Strip",
   "block.coasterslaunchsystems.brake_fin": "Chassis Friction Brake Fin",
   "block.coasterslaunchsystems.conductive_fin": "Chassis Conductive Brake Fin",
-  "block.coasterslaunchsystems.ride_controller": "Local Ride Controller"
+  "block.coasterslaunchsystems.ride_controller": "Local Ride Controller",
+  "block.coasterslaunchsystems.lsm_drive": "Linear Synchronous Drive",
+  "block.coasterslaunchsystems.lim_drive": "Linear Induction Drive",
+  "block.coasterslaunchsystems.lsm_reaction_plate": "LSM Magnet Reaction Plate",
+  "block.coasterslaunchsystems.lim_reaction_plate": "LIM Conductive Reaction Plate"
 }

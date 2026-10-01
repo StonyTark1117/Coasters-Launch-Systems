@@ -31,13 +31,15 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   private int revision = Integer.MIN_VALUE;
   private long handleRevision = Long.MIN_VALUE;
   private dev.coasterslaunchsystems.math.BrakeHeat heat = new dev.coasterslaunchsystems.math.BrakeHeat(4096, 8, 0);
+  private dev.coasterslaunchsystems.math.EnergyBuffer buffer = new dev.coasterslaunchsystems.math.EnergyBuffer(dev.coasterslaunchsystems.math.LinearMotor.CAPACITY, 0);
+  private double target = 3, accelerationLimit = 2, jerkLimit = 4;
 
   public EquipmentCabinetEntity(BlockPos pos, BlockState state) { super(EquipmentContent.ENTITY.get(), pos, state); }
   @Override public void tick() {
     super.tick();
     if (level instanceof ServerLevel server) {
       dev.coasterslaunchsystems.runtime.EquipmentRuntime.register(server, this);
-      if (mechanism() == Mechanism.EDDY_BRAKE && server.getGameTime() % 20 == 0) sendData();
+      if ((mechanism() == Mechanism.EDDY_BRAKE || mechanism().linear()) && server.getGameTime() % 20 == 0) sendData();
     }
   }
   public BlockPos controllerPosition() { return controllerPosition; }
@@ -66,7 +68,28 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   public double thermalFraction() { return heat.forceFraction(); }
   public void absorbHeat(double work) { if (work > 0) { heat.absorb(work); setChanged(); } }
   public void cool(double dt) { if (heat.heat() > 0) { heat.cool(dt); setChanged(); } }
-  @Override public float calculateStressApplied() { return lastStressApplied = mechanism() == Mechanism.TIRE ? 16 : 0; }
+  @Override public float calculateStressApplied() { return lastStressApplied = mechanism().drive() ? 16 : 0; }
+  public double energy() { return buffer.energy(); }
+  public double targetSpeed() { return target; }
+  public double accelerationLimit() { return accelerationLimit; }
+  public double jerkLimit() { return jerkLimit; }
+  public boolean linearPowered() { return mechanism().linear() && Math.abs(getSpeed()) >= 1 && Math.abs(getSpeed()) <= 128 && energy() > 1e-9; }
+  public void chargeLinear(double dt) {
+    if (mechanism().linear() && buffer.charge(dev.coasterslaunchsystems.math.LinearMotor.chargingWork(getSpeed(), dt)) > 0) setChanged();
+  }
+  public void spendLinear(double work) {
+    dev.coasterslaunchsystems.math.Numbers.nonnegative(work, "Motor work");
+    if (!mechanism().linear() || work > buffer.energy() + 1e-8) throw new IllegalArgumentException("Linear buffer cannot fund this step");
+    if (buffer.draw(work) > 0) setChanged();
+  }
+  public void tuneLinear(double speed, double acceleration, double jerk) {
+    if (!mechanism().linear() || armed || level instanceof ServerLevel server && !dev.coasterslaunchsystems.runtime.RideControllers.editingAllowed(server, this))
+      throw new IllegalArgumentException("Disarm an empty linear drive and controller before tuning");
+    dev.coasterslaunchsystems.math.Numbers.finite(speed, "Target speed");
+    if (Math.abs(speed) > 12 || acceleration <= 0 || acceleration > 2 || jerk <= 0 || jerk > 8
+        || !Double.isFinite(acceleration) || !Double.isFinite(jerk)) throw new IllegalArgumentException("Target must be -12..12, acceleration 0..2, jerk 0..8");
+    target = speed; accelerationLimit = acceleration; jerkLimit = jerk; changed();
+  }
 
   public void setArmed(boolean value) {
     if (value && from == null) throw new IllegalArgumentException("Use the span tool to bind this module first");
@@ -150,6 +173,9 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
         + (fault.isEmpty() ? "" : " " + fault);
   }
   private String padStatus() {
+    if (mechanism().linear()) return "Target " + target + " blocks/s; acceleration " + accelerationLimit + ", jerk " + jerkLimit
+        + ". Buffer " + Math.round(energy()) + "/2048; heat " + Math.round(heat.heat()) + "/4096. "
+        + "Disarm; span tool + offhand clock changes target, iron nugget changes acceleration, gold nugget changes jerk. ";
     if (mechanism() == Mechanism.EDDY_BRAKE) return "Passive magnets; no static hold. Heat " + Math.round(heat.heat())
         + "/4096. " + (heat.overheated() ? "Thermal force derated. " : "");
     if (mechanism() != Mechanism.FIN_BRAKE) return "";
@@ -160,7 +186,11 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   private void changed() { setChanged(); sendData(); }
   @Override protected void write(CompoundTag tag, HolderLookup.Provider registries, boolean client) {
     super.write(tag, registries, client);
-    tag.putInt("ls_schema", 3);
+    tag.putInt("ls_schema", 4);
+    if (mechanism().linear()) {
+      tag.putDouble("ls_energy", energy()); tag.putDouble("ls_target", target);
+      tag.putDouble("ls_acceleration", accelerationLimit); tag.putDouble("ls_jerk", jerkLimit);
+    }
     if (controllerIdentity != null) { tag.putUUID("ls_controller", controllerIdentity); tag.putLong("ls_controller_pos", controllerPosition.asLong()); } tag.putDouble("ls_heat", heat.heat()); tag.putUUID("ls_identity", identity);
     tag.putBoolean("ls_armed", armed); tag.putString("ls_fault", fault);
     if (from != null) {
@@ -171,7 +201,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   }
   @Override protected void read(CompoundTag tag, HolderLookup.Provider registries, boolean client) {
     super.read(tag, registries, client);
-    if (tag.contains("ls_schema") && tag.getInt("ls_schema") != 1 && tag.getInt("ls_schema") != 2 && tag.getInt("ls_schema") != 3) throw new IllegalArgumentException("Unsupported equipment schema");
+    if (tag.contains("ls_schema") && (tag.getInt("ls_schema") < 1 || tag.getInt("ls_schema") > 4)) throw new IllegalArgumentException("Unsupported equipment schema");
     heat = new dev.coasterslaunchsystems.math.BrakeHeat(4096, 8, tag.getInt("ls_schema") >= 2 ? tag.getDouble("ls_heat") : 0);
     controllerIdentity = tag.hasUUID("ls_controller") ? tag.getUUID("ls_controller") : null;
     controllerPosition = controllerIdentity == null ? null : BlockPos.of(tag.getLong("ls_controller_pos"));
@@ -180,6 +210,17 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     to = tag.contains("ls_to") ? BlockPos.of(tag.getLong("ls_to")) : null;
     geometry = tag.getLong("ls_geometry"); start = tag.getDouble("ls_start"); end = tag.getDouble("ls_end");
     fault = tag.getString("ls_fault"); armed = tag.getBoolean("ls_armed");
+    if (mechanism().linear()) {
+      buffer = new dev.coasterslaunchsystems.math.EnergyBuffer(dev.coasterslaunchsystems.math.LinearMotor.CAPACITY, tag.getInt("ls_schema") >= 4 ? tag.getDouble("ls_energy") : 0);
+      double speed = tag.getInt("ls_schema") >= 4 ? tag.getDouble("ls_target") : 3;
+      double acceleration = tag.getInt("ls_schema") >= 4 ? tag.getDouble("ls_acceleration") : 2;
+      double jerk = tag.getInt("ls_schema") >= 4 ? tag.getDouble("ls_jerk") : 4;
+      if (!Double.isFinite(speed) || Math.abs(speed) > 12 || !Double.isFinite(acceleration) || acceleration <= 0 || acceleration > 2
+          || !Double.isFinite(jerk) || jerk <= 0 || jerk > 8) throw new IllegalArgumentException("Invalid saved linear settings");
+      target = speed; accelerationLimit = acceleration; jerkLimit = jerk;
+      // Saved energy and configuration never replay an enabled field after a server load.
+      if (!client) armed = false;
+    }
     boundAxis = from == null ? null : Direction.Axis.valueOf(tag.getString("ls_axis"));
     if ((from == null) != (to == null) || (from == null && armed)
         || (from != null && (from.equals(to) || end - start > 2.001)))

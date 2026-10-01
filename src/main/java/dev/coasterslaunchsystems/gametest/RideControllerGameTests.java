@@ -45,6 +45,7 @@ public final class RideControllerGameTests {
     final List<BlockPos> equipment = new ArrayList<>(), motors = new ArrayList<>();
     final BlockPos controllerPosition;
     RideControllerEntity controller;
+    Mechanism driveMechanism = Mechanism.TIRE;
     DirectedTrack track;
     double work, peakSpeed, baseline, travel, measuredDistance, measuredFront, maxJointError, maxCouplerError, rotorResponse;
     int driveSteps, closedPadSteps, runSteps;
@@ -113,7 +114,7 @@ public final class RideControllerGameTests {
     void module(int distance, boolean fin, boolean exit) {
       var level = base.level; var pos = base.from.offset(fin ? 1 : -1, -2, reverse ? 64 - distance : distance);
       var motor = fin ? pos.east() : pos.west(); equipment.add(pos); motors.add(motor);
-      level.setBlockAndUpdate(pos, (fin ? EquipmentContent.FIN : EquipmentContent.TIRE).get().defaultBlockState().setValue(RotatedPillarBlock.AXIS, Direction.Axis.X));
+      level.setBlockAndUpdate(pos, (fin ? EquipmentContent.FIN : driveMechanism == Mechanism.LSM ? EquipmentContent.LSM : driveMechanism == Mechanism.LIM ? EquipmentContent.LIM : EquipmentContent.TIRE).get().defaultBlockState().setValue(RotatedPillarBlock.AXIS, Direction.Axis.X));
       level.setBlockAndUpdate(motor, AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalBlock.FACING, fin ? Direction.WEST : Direction.EAST));
       ((CreativeMotorBlockEntity) level.getBlockEntity(motor)).generatedSpeed.setValue(64);
       var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(pos);
