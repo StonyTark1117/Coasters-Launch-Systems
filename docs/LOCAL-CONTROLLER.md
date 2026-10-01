@@ -35,3 +35,18 @@ Measured fixture results and final binary hashes are recorded in [combined nativ
 The initial combined fixture reused ordinary test rail coordinates. Fourth Dimension's persisted rail records then affected later ordinary tests, producing three failures. Moving controller fixtures to separate coordinates resolved this fixture interference. The earlier phase check also assumed every car would reach the raw stop-bank start; real finite pads can stop the front at the extended contact boundary while launch pads hold the rear. Final HOLD now requires measured low speed and actual native clamps on the complete consist. Neither issue was resolved by relaxing native support, rider, force or joint checks.
 
 Remaining acceptance includes rendered survival workflow and signals, closed ride cycles, occupied bank departure, adjacent-edge tail clearance, rollback, mixed-interface banks, 4D slope/profile traversal, restart and real chunk unload/reload, packaged multiplayer/late join, Ponder and all LIM/LSM/skid/catch/stored-energy mechanisms. NBT reconstruction is not server-restart evidence. Scoped tests do not establish a completed 0.1 or 0.4.0 release.
+
+
+## Reproduction
+
+Run native worlds serially; the Gradle test task recreates its own disposable world. Java 21 is required.
+
+```sh
+./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2
+./gradlew runGameTestServer -PlsPackaged -PlsFourthDimensionJar=/tmp/coasterslaunchsystems-validation/dependencies/fourthdimension-schema4.jar --no-daemon --max-workers=2
+```
+
+The optional upstream path must resolve to the copied SHA-256 identified above. A new upstream build with the same version string is a different validation target. The implementation source is commit `97b800a2060e1cba2890e1c7ceb2aaba1fc006a9`. [Diagnostic notes](evidence/controller-diagnostics.txt) preserve the earlier fixture conflict without treating that failed run as release evidence.
+
+
+Implementation commit `97b800a2060e1cba2890e1c7ceb2aaba1fc006a9` is pushed to the private remote. [CI run 36821874795](https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36821874795) passed a clean build, twenty-three unit tests and all fifty packaged standalone native tests. The downloaded CI JAR exactly matched the locally validated standalone/combined SHA-256 `d7163f67f398b062dbb3cc70f230104156efb0ae5757bdef0f5e8fb3c32a0baf`. [CI evidence](evidence/controller-ci.txt) records the source and artifact verification. Combined Fourth Dimension evidence remains local against its copied pinned JAR. The full 0.4.0 goal remains active.

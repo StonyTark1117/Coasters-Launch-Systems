@@ -1,0 +1,13 @@
+Diagnostic run before final fixture isolation, September 30, 2026. Not final artifact evidence.
+LS_ORDINARY_FAILURE tick=60
+net.minecraft.gametest.framework.GameTestAssertException: Boarding moved the native guide point instead of only changing COM bookkeeping
+[22:33:23] [Server thread/ERROR] [minecraft/LogTestReporter]: nativepassengermasslifecycle failed at -10045428, -60, 6456444! Boarding moved the native guide point instead of only changing COM bookkeeping
+LS_ORDINARY_FAILURE tick=80
+net.minecraft.gametest.framework.GameTestAssertException: Occupied ordinary car did not enter through physical force
+[22:33:24] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems.occupied_eddy_brake_linked_forward failed at -10045404, -60, 6456453! Occupied ordinary car did not enter through physical force
+LS_ORDINARY_FAILURE tick=80
+net.minecraft.gametest.framework.GameTestAssertException: Occupied ordinary car did not enter through physical force
+[22:33:24] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems.occupied_eddy_brake_linked_reverse failed at -10045396, -60, 6456453! Occupied ordinary car did not enter through physical force
+[22:33:27] [Server thread/INFO] [minecraft/GameTestServer]: 3 required tests failed :(
+
+Controller FD rail records reused later ordinary fixture coordinates. Final tests use an independent y=240, z=-896 rail row; ordinary fixtures retain y=208, z=-640. Native engagement, COM, rider and rolling-entry assertions were retained.

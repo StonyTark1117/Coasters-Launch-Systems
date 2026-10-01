@@ -1,0 +1,13 @@
+Private repository: StonyTark1117/Coasters-Launch-Systems
+Implementation source: 97b800a2060e1cba2890e1c7ceb2aaba1fc006a9
+CI run: 36821874795
+URL: https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36821874795
+Conclusion: success
+Command: ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2
+CI report: 23 tests, 0 failures, 0 skipped
+Packaged standalone native tests: 50 required passed
+Downloaded binary SHA-256: d7163f67f398b062dbb3cc70f230104156efb0ae5757bdef0f5e8fb3c32a0baf
+Local standalone/combined binary SHA-256: d7163f67f398b062dbb3cc70f230104156efb0ae5757bdef0f5e8fb3c32a0baf
+Packaged combined: 118 required native tests passed locally using the copied schema-4 upstream JAR
+Upstream SHA-256: 027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16
+Full 0.4.0 acceptance remains pending.
