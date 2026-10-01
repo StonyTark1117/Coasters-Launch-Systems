@@ -77,7 +77,7 @@ public final class EquipmentRuntime {
   }
   public static void physics(ForgeSablePrePhysicsTickEvent event) {
     var level = event.getPhysicsSystem().getLevel();
-    RideControllers.physics(level);
+    RideControllers.physics(level, event.getTimeStep());
     var modules = MODULES.get(level);
     if (modules == null) {
       var old = CLAMPS.remove(level);

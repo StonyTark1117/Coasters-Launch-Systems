@@ -172,6 +172,8 @@ public final class RideControllerEntity extends BlockEntity {
   public void setArmed(boolean value) {
     if (value && (from == null || modules.isEmpty())) throw new IllegalArgumentException("Bind a rail section and link its drive/fin modules first");
     if (value && level instanceof ServerLevel server && resolve(server) == null) throw new IllegalArgumentException(fault);
+    if (!value && level instanceof ServerLevel server && modules.stream().anyMatch(m -> server.getBlockEntity(m.position()) instanceof EquipmentCabinetEntity cabinet && cabinet.cableInUse()))
+      throw new IllegalArgumentException("Retained cable catch requires physical return or inspected recovery");
     requestedRepair = null; armed = value; boardingReady = false; launchRequested = false; inputObserved = false; fault = "";
     phase = value ? State.HOLD : State.INSPECTION; changed();
   }
@@ -218,8 +220,9 @@ public final class RideControllerEntity extends BlockEntity {
     var track = resolve(server); var other = cabinet.resolve(server);
     if (track == null || other == null || !track.edge().equals(other.edge()) || track.forward(server, track.hitAtDistance(server, 0)).dot(other.forward(server, other.hitAtDistance(server, 0))) < .99)
       throw new IllegalArgumentException("Module must use this section's anchor order");
-    if (!cabinet.mechanism().drive() && cabinet.mechanism() != dev.coasterslaunchsystems.math.Mechanism.FIN_BRAKE)
-      throw new IllegalArgumentException("Controller currently certifies tire/linear drives and friction fins");
+    if (!cabinet.mechanism().drive() && cabinet.mechanism() != dev.coasterslaunchsystems.math.Mechanism.FLYWHEEL
+        && cabinet.mechanism() != dev.coasterslaunchsystems.math.Mechanism.FIN_BRAKE)
+      throw new IllegalArgumentException("Controller currently certifies tire/linear/flywheel drives and friction fins");
     if (cabinet.armed()) throw new IllegalArgumentException("Disarm the module before linking it");
     if (exitDrive && cabinet.mechanism() != dev.coasterslaunchsystems.math.Mechanism.TIRE)
       throw new IllegalArgumentException("Exit transport currently requires a tire drive; linear transfer is not certified");

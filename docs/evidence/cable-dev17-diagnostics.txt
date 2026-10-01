@@ -1,0 +1,25 @@
+Pre-acceptance diagnostics for the placed-cable controller checkpoint.
+
+The first pinned Fourth Dimension controller fixture remained in HOLD at its engagement
+check. The captured Arrow reported dispatchReady=false and had no equipment fin clamp.
+The controller test now supplies an independent native preparation hold, as the older
+mechanics fixture did. This proves Arrow dispatch/pull compatibility after an upstream
+staging hold; a player-operated Arrow staging brake remains an open implementation gate.
+
+The first two focused combined runs then failed the older linked_forward mechanics
+fixture before rig allocation. The new Arrow controller fixture had used the same
+absolute rail position in an earlier test batch. Upstream Fourth Dimension rail
+family metadata persisted there after teardown. Controller fixtures moved to slots
+17 and 18, separate from the mechanics fixtures' slots 0..14. The resulting focused
+combined suite passed all 17 tests without changing provider/contact eligibility.
+
+The first full packaged combined run reached controller_single_forward with an empty
+reservation and faulted because a just-placed cabinet had not yet made its first
+physics registration. The controller now waits at most two game ticks only while
+empty and in HOLD; a lost registration after reservation or beyond that short setup
+window faults. That superseded run is excluded from final acceptance evidence.
+
+A subsequent final-source full packaged combined run reached the repeated-circuit
+batch with no reported test failure, then its process received SIGTERM (exit 143).
+It produced no GameTest completion summary and is also excluded from acceptance.
+The final-source focused packaged combined cable run completed separately.

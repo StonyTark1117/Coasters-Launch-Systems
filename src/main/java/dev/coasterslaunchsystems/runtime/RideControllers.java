@@ -25,11 +25,22 @@ import org.joml.Vector3d;
 public final class RideControllers {
   private record Entry(RideControllerEntity controller, long tick) {}
   private static final Map<ServerLevel, Map<BlockPos, Entry>> CONTROLLERS = new HashMap<>();
+  private static final Map<ServerLevel, Map<UUID, Long>> REGISTRATION_GRACE = new HashMap<>();
   private RideControllers() {}
   public static void register(ServerLevel level, RideControllerEntity controller) {
     CONTROLLERS.computeIfAbsent(level, ignored -> new LinkedHashMap<>()).put(controller.getBlockPos(), new Entry(controller, level.getGameTime()));
   }
-  public static void unload(LevelEvent.Unload event) { if (event.getLevel() instanceof ServerLevel level) CONTROLLERS.remove(level); }
+  public static void unload(LevelEvent.Unload event) { if (event.getLevel() instanceof ServerLevel level) { CONTROLLERS.remove(level); REGISTRATION_GRACE.remove(level); CableControllers.unload(level); } }
+  static boolean awaitingRegistration(ServerLevel level, RideControllerEntity controller) {
+    if (!controller.reservation().isEmpty() || controller.phase() != State.HOLD) return false;
+    long first = REGISTRATION_GRACE.computeIfAbsent(level, ignored -> new HashMap<>())
+        .computeIfAbsent(controller.identity(), ignored -> level.getGameTime());
+    return level.getGameTime() - first <= 2;
+  }
+  static void registrationReady(ServerLevel level, RideControllerEntity controller) {
+    var waiting = REGISTRATION_GRACE.get(level);
+    if (waiting != null) waiting.remove(controller.identity());
+  }
   public static RideControllerEntity owner(ServerLevel level, EquipmentCabinetEntity module) {
     if (module.controllerIdentity() == null || !level.hasChunkAt(module.controllerPosition())) return null;
     var entries = CONTROLLERS.getOrDefault(level, Map.of()); var entry = entries.get(module.controllerPosition());
@@ -52,7 +63,7 @@ public final class RideControllers {
     return controller != null && controller.reservation().isEmpty() && !controller.armed();
   }
   public static boolean occupiedEquipment(ServerLevel level, BlockPos pos) {
-    if (level.getBlockEntity(pos) instanceof EquipmentCabinetEntity module && (module.cableInUse() || !editingAllowed(level, module))) return true;
+    if (level.getBlockEntity(pos) instanceof EquipmentCabinetEntity module && (module.cableInUse() || module.cableInstalled() || !editingAllowed(level, module))) return true;
     if (level.getBlockEntity(pos) instanceof RideControllerEntity controller && (!controller.reservation().isEmpty() || !controller.modules().isEmpty())) return true;
     return CONTROLLERS.getOrDefault(level, Map.of()).values().stream().map(Entry::controller)
         .anyMatch(c -> !c.reservation().isEmpty() && c.endpoint(pos));
@@ -135,14 +146,17 @@ public final class RideControllers {
     // Only the launch pads retract; downstream stop pads remain applied even with a powered shaft.
     return controller.modules().stream().map(m -> level.getBlockEntity(m.position()))
         .filter(EquipmentCabinetEntity.class::isInstance).map(EquipmentCabinetEntity.class::cast)
-        .anyMatch(m -> m.mechanism().drive() && !controller.exitDrive(m) && m.interval().end() >= module.interval().start()
-            && m.interval().start() <= module.interval().end());
+        .anyMatch(m -> (m.mechanism().drive() && !controller.exitDrive(m) && m.interval().end() >= module.interval().start()
+            && m.interval().start() <= module.interval().end())
+            || m.mechanism() == Mechanism.FLYWHEEL && module.interval().start() <= m.interval().end()
+                && module.interval().end() >= m.interval().start());
   }
-  public static void physics(ServerLevel level) {
-    var entries = CONTROLLERS.get(level); if (entries == null) return;
+  public static void physics(ServerLevel level, double dt) {
+    var entries = CONTROLLERS.get(level); if (entries == null) { CableControllers.audit(level, List.of()); return; }
     entries.values().removeIf(e -> e.controller().isRemoved() || e.tick() < level.getGameTime() - 1
         || level.getBlockEntity(e.controller().getBlockPos()) != e.controller());
     var controllers = entries.values().stream().map(Entry::controller).toList();
+    CableControllers.audit(level, controllers);
     for (var controller : controllers) controller.inspectRequestedReceiver(level);
     var tracks = new HashMap<RideControllerEntity, DirectedTrack>();
     for (var controller : controllers) {
@@ -157,10 +171,14 @@ public final class RideControllers {
         a.fail("Another controller claims this reserved route"); b.fail("Another controller claims this reserved route");
       }
     for (var controller : controllers) {
-      if (!controller.armed() || controller.phase() == State.FAULT) { controller.consumeRequest(); continue; }
-      var track = tracks.get(controller); if (track == null) { controller.consumeRequest(); continue; }
-      try { if (!RideTransfers.active(level, controller, track)) evaluate(level, controller, track); }
+      if (!controller.armed() || controller.phase() == State.FAULT) { CableControllers.idle(level, controller); controller.consumeRequest(); continue; }
+      var track = tracks.get(controller); if (track == null) { CableControllers.idle(level, controller); controller.consumeRequest(); continue; }
+      try {
+        if (CableControllers.applies(level, controller)) CableControllers.evaluate(level, controller, track, dt);
+        else if (!RideTransfers.active(level, controller, track)) evaluate(level, controller, track);
+      }
       catch (IllegalArgumentException | IllegalStateException failure) { controller.fail(failure.getMessage()); }
+      if (controller.phase() == State.FAULT) CableControllers.idle(level, controller);
     }
   }
   private static void evaluate(ServerLevel level, RideControllerEntity controller, DirectedTrack track) {
@@ -176,6 +194,11 @@ public final class RideControllers {
         controller.fail("Linked module identity or controller ownership changed at " + linked.position()); return;
       }
       if (!EquipmentRuntime.available(level, module)) {
+        // A newly armed section may be evaluated before a just-placed cabinet's first BE tick.
+        // Once any consist is reserved, loss of registration is a real operating fault.
+        if (awaitingRegistration(level, controller)) {
+          controller.consumeRequest(); return;
+        }
         controller.fail("Linked module has no current physics registration at " + linked.position()); return;
       }
       if (!module.armed() || !module.fault().isEmpty()) {
@@ -189,6 +212,7 @@ public final class RideControllers {
       }
       modules.add(module);
     }
+    registrationReady(level, controller);
     var drives = modules.stream().filter(m -> m.mechanism().drive() && !controller.exitDrive(m)).toList();
     if (drives.isEmpty()) { controller.fail("No linked drive"); return; }
     var driveInterfaces = drives.stream().map(EquipmentCabinetEntity::mechanism).collect(java.util.stream.Collectors.toSet());
@@ -297,7 +321,7 @@ public final class RideControllers {
         .rotate(body.logicalPose().orientation()).add(body.logicalPose().position());
   }
   /** Use actual loaded native bounds rather than a style-based car length; re-evaluate at every physics step. */
-  private static double radius(ServerLevel level, MotionVehicle motion) {
+  static double radius(ServerLevel level, MotionVehicle motion) {
     var container = SubLevelContainer.getContainer(level); var cart = (ServerSubLevel) container.getSubLevel(motion.chassis());
     var origin = bearing(cart); double result = .6;
     for (var id : motion.bodies()) {

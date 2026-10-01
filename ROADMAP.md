@@ -55,6 +55,8 @@ Dev.15 adds a craftable world cable-guide bed and a kinetic flywheel cabinet wit
 
 Dev.16 feeds the native catch from the placed cabinet's actual saved flywheel store. Active catch ownership pauses background charging; shaft work first funds physical carriage return and only the remainder recharges the store. A persisted active-catch journal blocks automatic restart, binding edits and equipment removal after an interrupted reload. Test fixtures still request engagement/dispatch and provide final train stopping, so player controller/clutch integration and inspected recovery remain open.
 
+Dev.17 adds a placed controller path for one flywheel, a catch-home launch fin and a continuous downstream stop bank. An occupied ordinary cart engages and dispatches from the cabinet and a fresh redstone input, then stops under linked pads while the carriage physically returns. Installation is journaled and only a disarmed, physically home carriage retires. A pinned Arrow case also launches with an independent preparation hold. The installed-carriage journal currently fails closed across reload; native identity inspection and reclamation, Arrow staging equipment, real chunk/restart and rendered operation remain open.
+
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |
 | LS301 | Shared cable guide, catch socket, carriage and release/reset machine | 0.2. Real constrained pull, rated guide/end clearance, physical return and misalignment handling. No teleport, one-shot impulse or prescribed train path. |
