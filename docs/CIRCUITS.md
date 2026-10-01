@@ -1,5 +1,7 @@
 # Reserved circuit prototype: 0.0.1-dev.10
 
+This page preserves its original checkpoint scope. See [dev.11 station scope](STATIONS.md) for optional controller capture, measured boarding readiness, API 5 and schema-4 persistence.
+
 This extends the adjacent-section handoff with a unique, unbranched fixed-rail route between straight equipment sections. It is partial LS004/LS104/LS105 progress toward 0.4.0. The native fixture includes repeated laps and a provider-owned station capture/boarding prototype; automatic operator station capture and rendered demonstration rides remain unfinished.
 
 ## Configuration and ownership

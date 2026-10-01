@@ -1,0 +1,10 @@
+Source: 2e9701360c68e7fd6c81ba9614dadd9051a3d0a6
+Version: 0.0.1-dev.11
+Command: JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew build runGameTestServer -PlsPackaged -PlsFourthDimensionJar=/tmp/coasterslaunchsystems-validation/dependencies/fourthdimension-schema4.jar --no-daemon --max-workers=2
+
+dev.coasterslaunchsystems.MechanismMathTest: tests=9 failures=0 errors=0 skipped=0
+dev.coasterslaunchsystems.MotionAuthorityTest: tests=2 failures=0 errors=0 skipped=0
+dev.coasterslaunchsystems.StoppingEnvelopeTest: tests=3 failures=0 errors=0 skipped=0
+dev.coasterslaunchsystems.StoredEnergyTest: tests=4 failures=0 errors=0 skipped=0
+dev.coasterslaunchsystems.TrackDistanceTest: tests=5 failures=0 errors=0 skipped=0
+Total: tests=23 failures=0 errors=0 skipped=0

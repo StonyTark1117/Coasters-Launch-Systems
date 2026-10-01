@@ -1,0 +1,18 @@
+Private repository: StonyTark1117/Coasters-Launch-Systems
+Source: 2e9701360c68e7fd6c81ba9614dadd9051a3d0a6
+Run: https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36845312600
+Conclusion: success
+Command: ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2
+Downloaded report: 23 unit tests, 0 failures, 0 ignored, 100% success
+Downloaded CI JAR SHA-256: 8ca10f39c08dcc376c1d4f945ea78c27701ba9897924b9ee0fa65b7287c38d72
+Local standalone and combined JAR SHA-256: 8ca10f39c08dcc376c1d4f945ea78c27701ba9897924b9ee0fa65b7287c38d72
+Exact hash match. Only the historical provider fixture is packaged; compilation stubs are excluded.
+Combined Fourth Dimension validation remains local against the copied pinned schema-4 JAR.
+
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T09:55:18.1784026Z LS_STATION_API defaults_deny=true api4_rejected=true implicit_api4_binary_rejected=true
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T09:55:45.6783398Z LS_ROUTE_GUARD mode=occupied_curve retained=2 added_work=0.0
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T09:55:45.6802297Z LS_ROUTE_GUARD mode=edited_curve retained=2 added_work=0.0
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T09:56:30.5794408Z LS_CIRCUIT mode=linked_forward departures=6 cars=2 riders=8 curve_steps=3764 retained_steps=6134 boarded_steps=1398 work=1239.6434039735389 peak_speed=2.7768084863651277 joint_error=0.0 coupler_error=0.0010282681894224766 rotor_response=0.0 loaded_mass=54.400000000000006 empty_mass=48.0 capturing_steps=0 boarding_denied_steps=0 moving_capture_denied=true
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T09:56:31.0804296Z LS_CIRCUIT mode=single_forward departures=6 cars=1 riders=4 curve_steps=1918 retained_steps=5718 boarded_steps=1406 work=613.3392059475833 peak_speed=2.680835485458374 joint_error=0.0 coupler_error=0.0 rotor_response=0.0 loaded_mass=27.200000000000003 empty_mass=24.0 capturing_steps=0 boarding_denied_steps=0 moving_capture_denied=true
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T09:56:37.0932386Z [09:56:37] [Server thread/INFO] [minecraft/GameTestServer]: All 67 required tests passed :)
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T09:56:39.4978694Z BUILD SUCCESSFUL in 5m 43s

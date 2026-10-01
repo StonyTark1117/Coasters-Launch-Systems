@@ -1,0 +1,13 @@
+Dev.11 station development diagnostics; failed setup/build attempts are not acceptance evidence.
+
+The first controller-driven circuit run passed all seven existing route fixtures with manual fixture capture removed. Stronger moving-train, incomplete-lease and open-restraint checks then passed all eight focused fixtures.
+
+A proposed pure-JUnit provider test could not compile because this project's unit source set deliberately excludes Minecraft types. It was replaced by StationApiGameTests in the actual native environment; no Minecraft stubs entered the unit or gameplay classpaths.
+
+An initial annotated native test supplied a fully qualified template name where the pinned NeoForge annotation processing already adds its holder namespace. The resulting doubled resource namespace crashed test setup. The annotation now uses the local template name, matching existing pinned-version fixtures. Generator fixtures retain their full structure identifiers. Native startup and all 145 combined tests subsequently passed.
+
+Requiring explicit API-5 version declarations exposed one anonymous mass-lifecycle test provider that previously inherited the default version. Its declaration was updated with the real runtime providers. A separately compiled historical API-4 provider still has no override and is rejected through an actual AbstractMethodError converted to a clear registration rejection. The historical API/Minecraft compile stubs are not packaged.
+
+Final acceptance is source 2e9701360c68e7fd6c81ba9614dadd9051a3d0a6: 23 unit tests, 67 standalone native tests, 145 combined native tests and clean CI all pass with JAR SHA-256 8ca10f39c08dcc376c1d4f945ea78c27701ba9897924b9ee0fa65b7287c38d72.
+
+No force/work, moving-speed, native joint, capture-readiness or open-restraint thresholds were relaxed to pass these checks. Fourth Dimension's capture and alignment remain public owner operations. All test worlds ran serially; its active checkout/processes remained untouched.
