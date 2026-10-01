@@ -41,3 +41,5 @@ The constraint API/force-limit implementation was inspected in pinned Sable 2.0.
 ## Remaining acceptance
 
 Ordinary passengers, occupied/linked brake consists, Fourth Dimension brake interfaces and restraint/capture/stopping ownership, wrong-interface orientation/obstruction envelopes, complete stopping-distance/controller checks, rendered pad animation, heat, Ponder and active restart/chunk/multiplayer evidence remain. The magnetic cabinet still rejects operation. LIM/LSM, skid, physical catch/reset, flywheel, hydraulic and pneumatic equipment remain on the roadmap.
+
+Implementation commit `a5f92af89cda8ef0a4300ca6a32f224e219c9ee9` was pushed to the private remote. [CI run 36810768572](https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36810768572) passed a clean build and all eighteen packaged standalone native tests. Its downloaded JAR exactly matched local SHA-256 `001c41686ddeb8e1cc1317cc6bd9d7e321d6ee352e4c76f56cc1edcaced7f8d4`. [CI evidence](evidence/fin-ci.txt) identifies the source and artifact. Combined Fourth Dimension evidence remains local against the copied pinned upstream JAR; the full 0.4.0 goal remains active.
