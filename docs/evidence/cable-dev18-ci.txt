@@ -1,0 +1,9 @@
+Clean private GitHub Actions run: https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36927008313
+Workflow: Build and native checks
+Implementation source: 1926be7ccf9a41d004b8edb8d27516f9e34ea3db
+Gradle: clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2
+Result: 114 GAME TESTS COMPLETE; all 114 required tests passed; BUILD SUCCESSFUL.
+Uploaded artifact: validation-evidence/libs/coasters-launch-systems-0.0.1-dev.18.jar
+CI SHA-256: e1cb58c8ca494c92be381a8f5cc2e8b370b914f7daf1886d29352d2ed8b573f0
+Local focused-combined SHA-256: e1cb58c8ca494c92be381a8f5cc2e8b370b914f7daf1886d29352d2ed8b573f0
+CI did not include the optional Fourth Dimension JAR; the pinned combined tests ran locally.
