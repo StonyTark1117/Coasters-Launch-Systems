@@ -2,10 +2,14 @@ package dev.coasterslaunchsystems.integration;
 
 import dev.coasterslaunchsystems.api.MotionVehicle;
 import dev.coasterslaunchsystems.api.VehicleMotionProvider;
+import dev.coasterslaunchsystems.math.Mechanism;
+import dev.coasterslaunchsystems.runtime.VehicleInterfaces;
 import dev.coasterslaunchsystems.track.EngagedContacts;
 import dev.silvergold.simulatedcoasters.track.cart.CoasterCartResolve;
 import dev.silvergold.simulatedcoasters.track.cart.CoasterCartTrainLinkConstraint;
 import dev.ryanhcode.sable.sublevel.SubLevel;
+import dev.ryanhcode.sable.sublevel.ServerSubLevel;
+import dev.ryanhcode.sable.api.sublevel.SubLevelContainer;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -20,6 +24,9 @@ import net.minecraft.world.level.Level;
 
 /** Isolated read-only adapter for the schema-4 prototype, pending a published upstream facade. */
 public final class FourthDimensionMotionProvider implements VehicleMotionProvider {
+  private static final Map<String, String> TIRE_VARIANTS = Map.of(
+      "ARROW", "arrow_four_rail_v1", "ZACSPIN", "zacspin_legacy_v1",
+      "FREE_SPIN", "sns_magnetic_v1", "ZACSPIN_REVISED", "zacspin_revised_v1");
   private final Method data, markers, allows, ready;
   private final Field vehicles, carriers, carrierBody, capture, family, restraints, stopping,
       maintenance, fault, variant;
@@ -80,7 +87,8 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
           return Optional.of(veto(chassis, consist, "fourthdimension:mixed_or_unbound"));
         if (((Enum<?>) family.get(member)).name().equals("PAX")) operator = "fourthdimension:pax_winch";
         var contact = EngagedContacts.current(level, cart).orElse(null);
-        boolean support = contact != null && (boolean) allows.invoke(null, cart, level, contact.hit());
+        boolean support = contact != null && carriersAvailable(level, member)
+            && (boolean) allows.invoke(null, cart, level, contact.hit());
         boolean retained = maintenance.getBoolean(member) || !((String) fault.get(member)).isEmpty();
         boolean closed = restraints.getBoolean(member);
         dispatch &= support && !retained && closed && (boolean) ready.invoke(null, level, member);
@@ -88,8 +96,11 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
             && ((List<?>) carriers.get(member)).stream().noneMatch(this::captured);
       }
       if (!operator.isEmpty()) { dispatch = false; propel = false; }
+      String expected = TIRE_VARIANTS.get(((Enum<?>) family.get(vehicle)).name());
+      var interfaces = expected != null && expected.equals(variant.get(vehicle))
+          && VehicleInterfaces.tirePoint(body) != null ? Set.of(Mechanism.TIRE) : Set.<Mechanism>of();
       return Optional.of(new MotionVehicle(id(), chassis, new ArrayList<>(bodies),
-          new ArrayList<>(consist), Set.of(), dispatch, propel, operator, 2, 256));
+          new ArrayList<>(consist), interfaces, dispatch, propel, operator, 2, 256));
     } catch (ReflectiveOperationException failure) {
       throw new IllegalStateException("Fourth Dimension motion snapshot failed; launch vetoed", failure);
     }
@@ -98,6 +109,17 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
   private boolean captured(Object carrier) {
     try { return capture.getBoolean(carrier); }
     catch (IllegalAccessException failure) { throw new IllegalStateException("Carrier capture unavailable", failure); }
+  }
+
+  private boolean carriersAvailable(ServerLevel level, Object member) throws IllegalAccessException {
+    var container = SubLevelContainer.getContainer(level);
+    if (container == null) return false;
+    for (var carrier : (List<?>) carriers.get(member)) {
+      var loaded = container.getSubLevel((UUID) carrierBody.get(carrier));
+      if (!(loaded instanceof ServerSubLevel body) || body.isRemoved() || body.getMassTracker().isInvalid()
+          || !Double.isFinite(body.getMassTracker().getMass()) || body.getMassTracker().getMass() <= 0) return false;
+    }
+    return true;
   }
 
   private MotionVehicle veto(UUID chassis, Set<UUID> consist, String owner) {

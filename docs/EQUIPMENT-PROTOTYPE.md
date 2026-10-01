@@ -1,6 +1,6 @@
 # Equipment checkpoint: 0.0.1-dev.3
 
-This checkpoint advances LS005/LS101 toward the full 0.4.0 goal. It does not complete either package or a release gate.
+This historical dev.3 checkpoint advances LS005/LS101 toward the full 0.4.0 goal. The later [dev.4 tire checkpoint](FOURTH-DIMENSION-TIRES.md) certifies specified Fourth Dimension variants and occupied linked Arrow tires. It does not complete either package or a release gate.
 
 ## Current tire prototype
 
@@ -13,7 +13,7 @@ The cabinet owns at most two blocks of rail centered on its placement contact. R
 
 Original game-scale ratings: wheel radius 0.4, traction force 20, torque 8, acceleration demand ramp 4 units/second, fixed Create stress consumption 16. Provider force/acceleration ratings can further limit operation. Create stress units are not real watts. Available shaft work is torque × angular shaft speed × timestep, shared across every contacted consist. Current point speed and effective impulse mass include the drive strip's angular lever arm; dissipation grants no extra shaft credit. A reduced slip/traction envelope overrides stored ramp demand immediately.
 
-Forces act at the installed chassis strip. Native rail constraints retain guidance; the addon does not set cart velocity, pose, carrier rotation or angular velocity. Fourth Dimension's provider currently returns no certified equipment interfaces, while preserving its existing retention/readiness/maintenance/PAX vetoes. Its raw-force regression tests do not establish tire compatibility.
+Forces act at the installed chassis strip. Native rail constraints retain guidance; the addon does not set cart velocity, pose, carrier rotation or angular velocity. At dev.3, Fourth Dimension's provider returned no certified equipment interfaces, while preserving its existing retention/readiness/maintenance/PAX vetoes. Its raw-force regression tests do not establish tire compatibility.
 
 Engineered (`coastersengineered`) and Additions (`coasterfins`) presence currently disables cabinet operation until an ownership adapter exists. Native chain-span ownership is checked across every loaded consist member. Other force addons are not yet coordinated or advertised as supported. Concurrent cabinets claiming one consist are conservatively rejected; intentional distributed drive groups need LS104.
 

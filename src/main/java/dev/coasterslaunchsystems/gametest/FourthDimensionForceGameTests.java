@@ -240,13 +240,13 @@ public final class FourthDimensionForceGameTests {
     });
   }
 
-  private static Vector3d nativePoint(ServerSubLevel body, Vector3d plotPoint) {
+  static Vector3d nativePoint(ServerSubLevel body, Vector3d plotPoint) {
     // Sable 2.0.3 joints subtract the body's native mass center, independently of display pose RP.
     return plotPoint.sub(body.getMassTracker().getCenterOfMass())
         .rotate(body.logicalPose().orientation()).add(body.logicalPose().position());
   }
 
-  private static double separation(ServerLevel level, ServerSubLevel parent, Object carrier) {
+  static double separation(ServerLevel level, ServerSubLevel parent, Object carrier) {
     var container = SubLevelContainer.getContainer(level);
     var child = (ServerSubLevel) container.getSubLevel((UUID) read(carrier, "body"));
     container.physicsSystem().updatePose(parent);
@@ -262,23 +262,23 @@ public final class FourthDimensionForceGameTests {
     return pp.distance(cp);
   }
 
-  private static Class<?> type(String name) {
+  static Class<?> type(String name) {
     try { return Class.forName(name); }
     catch (ReflectiveOperationException failure) { throw new IllegalStateException(failure); }
   }
-  private static Object readStatic(String type, String field) {
+  static Object readStatic(String type, String field) {
     try { return type(type).getField(field).get(null); }
     catch (ReflectiveOperationException failure) { throw new IllegalStateException(failure); }
   }
-  private static Object read(Object value, String field) {
+  static Object read(Object value, String field) {
     try { return value.getClass().getField(field).get(value); }
     catch (ReflectiveOperationException failure) { throw new IllegalStateException(failure); }
   }
-  private static void write(Object value, String field, Object setting) {
+  static void write(Object value, String field, Object setting) {
     try { value.getClass().getField(field).set(value, setting); }
     catch (ReflectiveOperationException failure) { throw new IllegalStateException(failure); }
   }
-  private static Object invoke(String type, String method, Class<?>[] signature, Object... args) {
+  static Object invoke(String type, String method, Class<?>[] signature, Object... args) {
     try { return type(type).getMethod(method, signature).invoke(null, args); }
     catch (ReflectiveOperationException failure) { throw new IllegalStateException(failure); }
   }

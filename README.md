@@ -2,7 +2,7 @@
 
 A standalone Create: Coasters Simulated addon in development toward **0.4.0**. The planned release includes tire, LIM, LSM, flywheel, hydraulic and pneumatic launches, distinct friction/skid/magnetic brakes, local ride control and explicit compatibility with Fourth Dimension vehicles.
 
-The current `0.0.1-dev.3` checkpoint adds a shaft-powered ordinary-cart tire prototype, an installed chassis drive strip and a span-selection tool to the tested mechanism mathematics, energy stores, contact foundations and ordinary/4D motion providers. The requested 0.4.0 release and its acceptance gates remain in progress. See [release roadmap](ROADMAP.md), [design](PLAN.md), [equipment checkpoint](docs/EQUIPMENT-PROTOTYPE.md), [provider checkpoint](docs/FOUNDATION-PROVIDERS.md), and [validation status](docs/VALIDATION.md).
+The current `0.0.1-dev.4` checkpoint certifies the shaft-powered tire prototype for four pinned Fourth Dimension variants with full/uneven loads and a native coupled Arrow pair. It builds on the installed chassis drive strip, span tool, mechanism mathematics, energy stores and contact/provider foundations. The requested 0.4.0 release and its acceptance gates remain in progress. See [release roadmap](ROADMAP.md), [design](PLAN.md), [4D tire checkpoint](docs/FOURTH-DIMENSION-TIRES.md), [equipment checkpoint](docs/EQUIPMENT-PROTOTYPE.md), [provider checkpoint](docs/FOUNDATION-PROVIDERS.md), and [validation status](docs/VALIDATION.md).
 
 ## Development stack
 

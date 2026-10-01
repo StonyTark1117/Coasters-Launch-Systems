@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.0.1-dev.4 Fourth Dimension tire development
+
+- Certify installed chassis tire strips for the pinned Arrow, legacy ZacSpin, Free Spin and revised ZacSpin variants, preserving restraint, capture, maintenance, fault, support and PAX ownership vetoes.
+- Veto the whole native consist when an authoritative carrier body is missing, removed or has invalid mass.
+- Add nineteen required combined native equipment tests: four families with full/uneven loads in both directions, a powered PAX veto, and fully occupied native six-block Arrow pairs in both directions.
+- Observe actual cabinet impulses and reconcile interface work with the shared shaft budget; verify rider mass/retention, native joint and coupler separation, free carrier response, power loss and removed hardware.
+
+Eight packaged standalone and thirty-two packaged combined native tests passed, alongside eighteen unit tests. Compatibility is limited to the copied schema-4 artifact and specified fixed, level/unbanked tire setup; profile traversal, rendered/multiplayer lifecycle and other mechanisms remain pending. See [checkpoint evidence](docs/FOURTH-DIMENSION-TIRES.md). This is partial progress toward 0.4.0.
+
 ## 0.0.1-dev.3 equipment development
 
 - Add original tire/fin/passive-magnet cabinet models, recipes, block entities and a span tool.
