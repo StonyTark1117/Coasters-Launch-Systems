@@ -9,6 +9,7 @@ import dev.coasterslaunchsystems.content.EquipmentContent;
 import dev.coasterslaunchsystems.math.DriveMath;
 import dev.coasterslaunchsystems.math.Mechanism;
 import dev.coasterslaunchsystems.runtime.NativeForces;
+import dev.coasterslaunchsystems.runtime.EquipmentRuntime;
 import dev.coasterslaunchsystems.runtime.NativeFinClamp;
 import dev.coasterslaunchsystems.runtime.VehicleInterfaces;
 import dev.coasterslaunchsystems.track.DirectedTrack;
@@ -61,8 +62,10 @@ public final class EddyEquipmentGameTests {
     DirectedTrack track;
     NativeFinClamp preparationHold;
     double externalForce, impulse, dissipated, expectedHeat, peakForce, minimumSpeed = Double.POSITIVE_INFINITY;
+    double entryDistance, lastDistance;
+    int brakingContactSteps, availableSteps;
     String failure = "";
-    boolean braking, closed, boundsVerified;
+    boolean braking, closed, boundsVerified, entryVerified;
     Scene(GameTestHelper helper, ServerSubLevel body, Fixture fixture, BlockPos from, BlockPos to, BlockPos module) {
       this.helper = helper; level = helper.getLevel(); this.body = body; this.fixture = fixture;
       this.from = from; this.to = to; this.module = module;
@@ -93,6 +96,18 @@ public final class EddyEquipmentGameTests {
       try {
         var contact = EngagedContacts.current(s.level, s.body).orElse(null);
         if (contact == null || !s.track.matches(contact.hit())) continue;
+        s.lastDistance = s.track.distance(contact.hit());
+        if (s.braking) {
+          if (!s.entryVerified) {
+            s.entryDistance = s.lastDistance;
+            s.helper.assertTrue(s.cabinet().interval().intersects(s.entryDistance, s.entryDistance, .6)
+                && EquipmentRuntime.available(s.level, s.cabinet()), "Magnetic entry missed its live physical cabinet: fixture=" + s.fixture
+                + " distance=" + s.entryDistance + " interval=" + s.cabinet().interval() + " available=" + EquipmentRuntime.available(s.level, s.cabinet()));
+            s.entryVerified = true;
+          }
+          if (s.cabinet().interval().intersects(s.lastDistance, s.lastDistance, .6)) s.brakingContactSteps++;
+          if (EquipmentRuntime.available(s.level, s.cabinet())) s.availableSteps++;
+        }
         if (s.fixture == Fixture.AT_REST && s.braking && !s.boundsVerified) {
           for (double invalid : new double[] {-.01, 1.01, Double.NaN, Double.POSITIVE_INFINITY}) {
             EngagedContacts.accepted(s.level, s.body, new CoasterPathTrackFrame.GraphHit(contact.hit().point(), contact.hit().edge(), invalid));
@@ -198,8 +213,11 @@ public final class EddyEquipmentGameTests {
     scene.at(100, () -> {
       double speed = scene.speed(); var cabinet = scene.cabinet();
       helper.assertTrue(scene.failure.isEmpty(), "Native magnetic observer failed: " + scene.failure);
+      helper.assertTrue(scene.entryVerified, "Magnetic entry lacked accepted native contact");
       System.out.println("LS_EDDY_EQUIPMENT fixture=" + fixture + " mass=" + body.getMassTracker().getMass() + " initial=" + initial[0]
           + " speed=" + speed + " impulse=" + scene.impulse + " peak_force=" + scene.peakForce + " work=" + scene.dissipated + " heat=" + cabinet.heat() + " fault=" + cabinet.fault());
+      System.out.println("LS_EDDY_CONTACT fixture=" + fixture + " entry=" + scene.entryDistance + " last=" + scene.lastDistance + " interval=" + cabinet.interval()
+          + " contact_steps=" + scene.brakingContactSteps + " available_steps=" + scene.availableSteps + " armed=" + cabinet.armed());
       if (fixture == Fixture.MISSING_FIN || fixture == Fixture.CONFLICT) {
         helper.assertTrue(cabinet.fault().contains(fixture == Fixture.CONFLICT ? "Overlapping" : "conductive fin"), "Magnetic rejection lost its cause");
         helper.assertTrue(scene.impulse < 1e-9 && Math.abs(speed) > 1.5, "A rejected magnet or owner applied partial force");
