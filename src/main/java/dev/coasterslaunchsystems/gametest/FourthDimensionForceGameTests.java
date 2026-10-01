@@ -15,6 +15,7 @@ import dev.silvergold.simulatedcoasters.track.graph.CoasterPathGraphManager;
 import dev.silvergold.simulatedcoasters.track.graph.CoasterPathTrackFrame.GraphHit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
@@ -145,7 +146,11 @@ public final class FourthDimensionForceGameTests {
       if (family.equals("PAX")) {
         helper.assertTrue(motion.exclusiveOperator().equals("fourthdimension:pax_winch")
             && !motion.dispatchReady(), "PAX ownership veto was bypassed");
-        System.out.println("LS_4D_PAX exclusive_owner=" + motion.exclusiveOperator());
+        long revision = ((Number) read(v, "revision")).longValue();
+        helper.assertTrue(MotionProviders.captureState(level, id) == dev.coasterslaunchsystems.api.CaptureState.DENIED
+            && !MotionProviders.requestCapture(level, id, Set.copyOf(motion.consist()))
+            && ((Number) read(v, "revision")).longValue() == revision, "Station capture bypassed PAX ownership or mutated its vehicle");
+        System.out.println("LS_4D_PAX exclusive_owner=" + motion.exclusiveOperator() + " capture_denied=true");
         helper.succeed();
         return;
       }

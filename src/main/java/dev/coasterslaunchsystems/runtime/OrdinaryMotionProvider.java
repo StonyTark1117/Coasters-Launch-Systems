@@ -1,6 +1,7 @@
 package dev.coasterslaunchsystems.runtime;
 
 import dev.coasterslaunchsystems.api.MotionVehicle;
+import dev.coasterslaunchsystems.track.EngagedContacts;
 import dev.coasterslaunchsystems.api.VehicleMotionProvider;
 import dev.ryanhcode.sable.api.sublevel.SubLevelContainer;
 import dev.silvergold.simulatedcoasters.rivet.RivetBlockEntity;
@@ -21,6 +22,25 @@ public final class OrdinaryMotionProvider implements VehicleMotionProvider {
   @Override public boolean requestDispatch(ServerLevel level, UUID chassis) {
     return resolve(level, chassis).map(m -> m.dispatchReady() && m.propulsionAllowed()).orElse(false);
   }
+  @Override public dev.coasterslaunchsystems.api.CaptureState captureState(ServerLevel level, UUID chassis) {
+    var motion = resolve(level, chassis).orElse(null); var container = SubLevelContainer.getContainer(level);
+    if (motion == null || container == null || !motion.interfaces().contains(dev.coasterslaunchsystems.math.Mechanism.FIN_BRAKE))
+      return dev.coasterslaunchsystems.api.CaptureState.DENIED;
+    for (var id : motion.consist()) {
+      var member = resolve(level, id).orElse(null);
+      if (member == null || NativeForces.mass(level, member) <= 0
+          || !(container.getSubLevel(id) instanceof dev.ryanhcode.sable.sublevel.ServerSubLevel cart)
+          || EngagedContacts.current(level, cart).isEmpty()) return dev.coasterslaunchsystems.api.CaptureState.DENIED;
+      var velocity = container.physicsSystem().getPipeline().getLinearVelocity(cart, new org.joml.Vector3d());
+      if (!Double.isFinite(velocity.lengthSquared())) return dev.coasterslaunchsystems.api.CaptureState.DENIED;
+      if (velocity.length() >= .03) return dev.coasterslaunchsystems.api.CaptureState.RELEASED;
+    }
+    return dev.coasterslaunchsystems.api.CaptureState.READY;
+  }
+  @Override public boolean requestCapture(ServerLevel level, UUID chassis) {
+    return captureState(level, chassis) == dev.coasterslaunchsystems.api.CaptureState.READY;
+  }
+  @Override public int apiVersion() { return API_VERSION; }
   @Override public String id() { return ID; }
 
   @Override public Optional<MotionVehicle> resolve(ServerLevel level, UUID chassis) {

@@ -102,7 +102,18 @@ if (project.hasProperty('lsPackaged')) {
         tasks.named(runTask) { dependsOn tasks.named('jar') }
     }
 }
+// Compile a historical provider against API-4 stubs, then package only its binary test fixture.
+// The old API and Minecraft stubs never enter runtime classes or the distribution JAR.
+def api4Fixture = tasks.register('compileApi4Fixture', JavaCompile) {
+    source = fileTree('src/compatTest/java') { include '**/*.java' }
+    classpath = files()
+    destinationDirectory = layout.buildDirectory.dir('compat-api4')
+    javaCompiler = javaToolchains.compilerFor { languageVersion = JavaLanguageVersion.of(21) }
+    options.release = 21
+}
 tasks.named('processResources') {
+    dependsOn api4Fixture
+    from(api4Fixture.flatMap { it.destinationDirectory.file('dev/coasterslaunchsystems/compat/Api4ImplicitProvider.class') }) { into 'fixtures/api4' }
     inputs.property 'version', project.version
     filesMatching('META-INF/neoforge.mods.toml') { expand version: project.version }
 }

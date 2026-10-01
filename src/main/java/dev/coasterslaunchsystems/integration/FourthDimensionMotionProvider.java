@@ -27,7 +27,7 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
   private static final Map<String, String> HARDWARE_VARIANTS = Map.of(
       "ARROW", "arrow_four_rail_v1", "ZACSPIN", "zacspin_legacy_v1",
       "FREE_SPIN", "sns_magnetic_v1", "ZACSPIN_REVISED", "zacspin_revised_v1");
-  private final Method data, markers, allows, ready, dispatchOperation;
+  private final Method data, markers, allows, ready, dispatchOperation, captureOperation;
   private final Field vehicles, carriers, carrierBody, capture, family, restraints, stopping,
       maintenance, fault, variant;
 
@@ -39,6 +39,7 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
       var vehicle = Class.forName("dev.fourthdimension.runtime.FoundationData$Vehicle");
       var carrier = Class.forName("dev.fourthdimension.runtime.FoundationData$Carrier");
       dispatchOperation = Class.forName("dev.fourthdimension.vehicle.VehicleOperations").getMethod("dispatch", ServerLevel.class, vehicle);
+      captureOperation = Class.forName("dev.fourthdimension.vehicle.VehicleOperations").getMethod("capture", ServerLevel.class, vehicle);
       data = foundation.getMethod("get", ServerLevel.class);
       vehicles = foundation.getField("vehicles");
       carriers = vehicle.getField("carriers"); carrierBody = carrier.getField("body");
@@ -58,6 +59,7 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
     }
   }
 
+  @Override public int apiVersion() { return API_VERSION; }
   @Override public String id() { return "fourthdimension:schema4"; }
 
   @Override public Optional<MotionVehicle> resolve(ServerLevel level, UUID chassis) {
@@ -126,6 +128,38 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
       dispatchOperation.invoke(null, level, vehicle);
       return resolve(level, chassis).map(MotionVehicle::propulsionAllowed).orElse(false);
     } catch (ReflectiveOperationException failure) { throw new IllegalStateException("Fourth Dimension dispatch request was rejected", failure); }
+  }
+
+  @Override public dev.coasterslaunchsystems.api.CaptureState captureState(ServerLevel level, UUID chassis) {
+    var snapshot = resolve(level, chassis).orElse(null);
+    if (snapshot == null || !snapshot.exclusiveOperator().isEmpty() || snapshot.maximumBrakeForce() <= 0
+        || !snapshot.interfaces().containsAll(Set.of(Mechanism.TIRE, Mechanism.FIN_BRAKE))) return dev.coasterslaunchsystems.api.CaptureState.DENIED;
+    try {
+      var map = (Map<?, ?>) vehicles.get(data.invoke(null, level)); boolean captured = true, aligned = true;
+      for (var id : snapshot.consist()) {
+        var member = map.get(id); var cart = CoasterCartResolve.findCartById(level, id);
+        var contact = cart == null ? null : EngagedContacts.current(level, cart).orElse(null);
+        if (member == null || contact == null || !carriersAvailable(level, member) || maintenance.getBoolean(member)
+            || !((String) fault.get(member)).isEmpty() || !(boolean) allows.invoke(null, cart, level, contact.hit()))
+          return dev.coasterslaunchsystems.api.CaptureState.DENIED;
+        captured &= stopping.getBoolean(member) && ((List<?>) carriers.get(member)).stream().allMatch(this::captured);
+        aligned &= (boolean) ready.invoke(null, level, member);
+      }
+      return captured ? aligned ? dev.coasterslaunchsystems.api.CaptureState.READY : dev.coasterslaunchsystems.api.CaptureState.ALIGNING
+          : snapshot.propulsionAllowed() && snapshot.brakingAllowed() ? dev.coasterslaunchsystems.api.CaptureState.RELEASED : dev.coasterslaunchsystems.api.CaptureState.DENIED;
+    } catch (ReflectiveOperationException failure) { throw new IllegalStateException("Fourth Dimension capture readiness unavailable", failure); }
+  }
+  @Override public boolean requestCapture(ServerLevel level, UUID chassis) {
+    var state = captureState(level, chassis);
+    if (state == dev.coasterslaunchsystems.api.CaptureState.READY || state == dev.coasterslaunchsystems.api.CaptureState.ALIGNING) return true;
+    if (state != dev.coasterslaunchsystems.api.CaptureState.RELEASED) return false;
+    try {
+      var vehicle = ((Map<?, ?>) vehicles.get(data.invoke(null, level))).get(chassis);
+      if (vehicle == null) return false;
+      captureOperation.invoke(null, level, vehicle);
+      var after = captureState(level, chassis);
+      return after == dev.coasterslaunchsystems.api.CaptureState.ALIGNING || after == dev.coasterslaunchsystems.api.CaptureState.READY;
+    } catch (ReflectiveOperationException failure) { throw new IllegalStateException("Fourth Dimension capture request rejected", failure); }
   }
 
   private boolean captured(Object carrier) {

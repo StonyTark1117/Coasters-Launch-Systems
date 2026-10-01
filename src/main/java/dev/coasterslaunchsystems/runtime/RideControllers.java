@@ -210,7 +210,7 @@ public final class RideControllers {
       var axis = track.forward(level, contact.hit()); var direction = new Vector3d(axis.x, axis.y, axis.z);
       double speed = NativeForces.pointDynamics(cart, container.physicsSystem().getPipeline(), VehicleInterfaces.tirePoint(cart), direction).speed();
       maximumSpeed = Math.max(maximumSpeed, Math.abs(speed));
-      held &= Math.abs(speed) < .03 && ((EquipmentRuntime.activeFinClamps(level, id) > 0) || motion.dispatchReady() && !motion.propulsionAllowed());
+      held &= Math.abs(speed) < .03 && ((EquipmentRuntime.activeFinClamps(level, id) > 0) || !motion.propulsionAllowed() && (motion.dispatchReady() || controller.stationCapture() && StationCapture.vehicleHeld(level, id)));
       ready &= motion.dispatchReady() && drives.stream().anyMatch(m -> m.interval().intersects(distance, distance, .6));
     }
     if (allClear) { controller.fail("Train left the section without a reserved transfer"); return; }
@@ -237,6 +237,7 @@ public final class RideControllers {
       if (held && maximumSpeed < .03 && controller.phase() == State.BRAKING) controller.state(State.HOLD);
       controller.consumeRequest(); return;
     }
+    if (StationCapture.evaluate(level, controller, held)) return;
     if (RideTransfers.departure(level, controller, track, held)) return;
     controller.state(held && ready && powered && largest + radius < stopStart ? State.READY : State.HOLD);
     if (!controller.consumeRequest() || controller.phase() != State.READY) return;

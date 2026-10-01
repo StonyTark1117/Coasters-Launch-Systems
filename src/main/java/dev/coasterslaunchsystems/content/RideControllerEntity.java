@@ -16,7 +16,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 
 /** Local fixed-edge controller. Configuration/reservations persist; commands and native handles do not. */
 public final class RideControllerEntity extends BlockEntity {
-  public enum State { INSPECTION, HOLD, READY, RUNNING, BRAKING, READY_EXIT, EXITING, RECEIVING, TRANSFER_BRAKING, FAULT }
+  public enum State { INSPECTION, HOLD, READY, RUNNING, BRAKING, READY_EXIT, EXITING, RECEIVING, TRANSFER_BRAKING, CAPTURING, BOARDING, FAULT }
   public record Module(BlockPos position, UUID identity, boolean exitDrive) {
     public Module(BlockPos position, UUID identity) { this(position, identity, false); }
   }
@@ -37,6 +37,7 @@ public final class RideControllerEntity extends BlockEntity {
   private final Set<BlockPos> routeChunks = new LinkedHashSet<>();
   private final List<Module> modules = new ArrayList<>();
   private final Set<UUID> reservation = new LinkedHashSet<>();
+  private boolean stationCapture, boardingReady;
   private boolean armed, high, inputObserved, launchRequested;
   private State phase = State.INSPECTION;
   private String fault = "";
@@ -97,8 +98,8 @@ public final class RideControllerEntity extends BlockEntity {
     if (destination == null || !destination.identity().equals(target.identity()) || reservation.isEmpty())
       throw new IllegalArgumentException("No reserved destination configured");
     dev.coasterslaunchsystems.math.Numbers.positive(speedLimit, "transfer speed limit");
-    target.reserve(reservation()); target.incoming = new Peer(worldPosition, identity); target.phase = State.RECEIVING; target.changed();
-    transferSpeedLimit = speedLimit; transferring = true; phase = State.EXITING; changed();
+    target.reserve(reservation()); target.incoming = new Peer(worldPosition, identity); target.phase = State.RECEIVING; target.boardingReady = false; target.changed();
+    boardingReady = false; transferSpeedLimit = speedLimit; transferring = true; phase = State.EXITING; changed();
   }
   public void finishTransfer(RideControllerEntity target) {
     if (!transferring || target.incoming == null || !identity.equals(target.incoming.identity()) || !reservation().equals(target.reservation()))
@@ -112,12 +113,20 @@ public final class RideControllerEntity extends BlockEntity {
   public Set<UUID> reservation() { return Set.copyOf(reservation); }
   public State phase() { return phase; }
   public boolean armed() { return armed; }
+  public boolean stationCapture() { return stationCapture; }
+  public boolean boardingReady() { return boardingReady; }
+  public void boardingReady(boolean value) { if (boardingReady != value) { boardingReady = value; changed(); } }
+  public void setStationCapture(boolean value) {
+    if (armed || !reservation.isEmpty() || transferring || incoming != null || from == null)
+      throw new IllegalArgumentException("Disarm an empty bound controller before changing station capture");
+    stationCapture = value; boardingReady = false; changed();
+  }
   public String fault() { return fault; }
   public boolean consumeRequest() { boolean value = launchRequested; launchRequested = false; return value; }
   public void setArmed(boolean value) {
     if (value && (from == null || modules.isEmpty())) throw new IllegalArgumentException("Bind a rail section and link its drive/fin modules first");
     if (value && level instanceof ServerLevel server && resolve(server) == null) throw new IllegalArgumentException(fault);
-    armed = value; launchRequested = false; inputObserved = false; fault = "";
+    armed = value; boardingReady = false; launchRequested = false; inputObserved = false; fault = "";
     phase = value ? State.HOLD : State.INSPECTION; changed();
   }
   public void bind(ServerLevel level, BlockPos first, BlockPos second) {
@@ -184,12 +193,12 @@ public final class RideControllerEntity extends BlockEntity {
     if (!reservation.isEmpty() && !reservation.equals(members)) throw new IllegalArgumentException("Reservation belongs to another consist");
     if (reservation.isEmpty()) { reservation.addAll(members); changed(); }
   }
-  public void clearVerifiedReservation() { reservation.clear(); phase = State.HOLD; changed(); }
-  public void state(State next) { if (phase != next) { phase = next; changed(); } }
+  public void clearVerifiedReservation() { reservation.clear(); boardingReady = false; phase = State.HOLD; changed(); }
+  public void state(State next) { if (phase != next) { phase = next; if (next == State.RUNNING || next == State.BRAKING || next == State.EXITING || next == State.RECEIVING || next == State.FAULT || next == State.INSPECTION) boardingReady = false; changed(); } }
   public void envelope(double needed, double usable) { required = needed; available = usable; }
   public void fail(String reason) {
     String message = reason == null || reason.isBlank() ? "Controller validation failed" : reason;
-    launchRequested = false;
+    launchRequested = false; boardingReady = false;
     if (phase != State.FAULT || !fault.equals(message)) { phase = State.FAULT; fault = message; changed(); }
   }
   public int signal(Direction face) {
@@ -197,12 +206,13 @@ public final class RideControllerEntity extends BlockEntity {
       case NORTH -> phase == State.READY || phase == State.READY_EXIT ? 15 : 0;
       case SOUTH -> reservation.isEmpty() ? 0 : 15;
       case EAST -> phase == State.FAULT || phase == State.INSPECTION ? 15 : 0;
-      case WEST -> phase == State.HOLD || phase == State.READY || phase == State.READY_EXIT ? 15 : 0;
+      case WEST -> phase == State.HOLD || phase == State.READY || phase == State.READY_EXIT || phase == State.CAPTURING || phase == State.BOARDING ? 15 : 0;
+      case DOWN -> boardingReady ? 15 : 0;
       default -> 0;
     };
   }
   public String status() { return "Ride controller: " + phase + ", reserved chassis " + reservation.size()
-      + ", required brake length " + String.format(java.util.Locale.ROOT, "%.2f/%.2f", required, available) + ", transfer " + transferring + ". " + fault; }
+      + ", required brake length " + String.format(java.util.Locale.ROOT, "%.2f/%.2f", required, available) + ", transfer " + transferring + ", station capture " + stationCapture + ", boarding ready " + boardingReady + ". " + fault; }
   private void changed() {
     setChanged();
     if (level != null) { level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3); level.updateNeighborsAt(worldPosition, getBlockState().getBlock()); }
@@ -211,7 +221,8 @@ public final class RideControllerEntity extends BlockEntity {
   @Override public CompoundTag getUpdateTag(HolderLookup.Provider registries) { return saveWithoutMetadata(registries); }
   @Override protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     super.saveAdditional(tag, registries);
-    tag.putInt("ls_controller_schema", 3);
+    tag.putInt("ls_controller_schema", 4);
+    tag.putBoolean("station_capture", stationCapture); tag.putBoolean("boarding_ready", boardingReady);
     var route = new ListTag();
     for (var span : transferSpans) { var entry = new CompoundTag(); entry.putLong("from", span.from().asLong()); entry.putLong("to", span.to().asLong()); entry.putLong("geometry", span.geometry()); route.add(entry); }
     tag.put("transfer_route", route); tag.putDouble("transfer_speed_limit", transferSpeedLimit);
@@ -234,7 +245,7 @@ public final class RideControllerEntity extends BlockEntity {
   }
   @Override protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     super.loadAdditional(tag, registries);
-    if (tag.getInt("ls_controller_schema") < 1 || tag.getInt("ls_controller_schema") > 3) throw new IllegalArgumentException("Unsupported controller schema");
+    if (tag.getInt("ls_controller_schema") < 1 || tag.getInt("ls_controller_schema") > 4) throw new IllegalArgumentException("Unsupported controller schema");
     identity = tag.getUUID("identity"); from = tag.contains("from") ? BlockPos.of(tag.getLong("from")) : null;
     to = tag.contains("to") ? BlockPos.of(tag.getLong("to")) : null; geometry = tag.getLong("geometry");
     destination = readPeer(tag, "destination"); incoming = readPeer(tag, "incoming"); transferring = tag.getBoolean("transferring");
@@ -249,6 +260,7 @@ public final class RideControllerEntity extends BlockEntity {
     required = tag.getDouble("required"); available = tag.getDouble("available");
     // Client packets display authoritative state. Server loads always require deliberate inspection.
     boolean client = level != null && level.isClientSide;
+    stationCapture = tag.getBoolean("station_capture"); boardingReady = client && tag.getBoolean("boarding_ready");
     armed = client && tag.getBoolean("armed"); phase = client ? State.valueOf(tag.getString("phase")) : State.INSPECTION;
     fault = client ? tag.getString("fault") : "Reloaded controller requires inspection; reservation retained";
     cachedTrack = null; graphRevision = Integer.MIN_VALUE; routeChunks.clear();

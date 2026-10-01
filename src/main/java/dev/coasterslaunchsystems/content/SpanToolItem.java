@@ -39,6 +39,11 @@ public final class SpanToolItem extends Item {
       var from = stack.get(EquipmentContent.FROM.get()); var to = stack.get(EquipmentContent.TO.get());
       var selected = stack.get(EquipmentContent.CONTROLLER_SELECTION.get());
       if (level.getBlockEntity(pos) instanceof RideControllerEntity controller) {
+        if (player.getOffhandItem().is(net.minecraft.world.item.Items.CLOCK)) {
+          controller.setStationCapture(!controller.stationCapture());
+          player.displayClientMessage(Component.literal(controller.stationCapture() ? "Station capture enabled. The stopped train returns to its vehicle owner for boarding." : "Station capture disabled."), true);
+          return InteractionResult.SUCCESS;
+        }
         if (selected != null) {
           if (!selected.dimension().equals(level.dimension()) || !level.hasChunkAt(selected.pos()) || !level.mayInteract(player, selected.pos())
               || !(level.getBlockEntity(selected.pos()) instanceof RideControllerEntity source))

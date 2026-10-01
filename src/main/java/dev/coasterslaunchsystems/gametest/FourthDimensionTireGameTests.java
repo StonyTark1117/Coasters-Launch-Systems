@@ -29,6 +29,7 @@ import dev.silvergold.simulatedcoasters.track.graph.CoasterPathGraphManager;
 import dev.silvergold.simulatedcoasters.track.graph.CoasterPathTrackFrame.GraphHit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.Locale;
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -268,6 +269,9 @@ public final class FourthDimensionTireGameTests {
           new Class<?>[] {ServerLevel.class, vehicleType, boolean.class}, level, scene.vehicle, true);
       helper.assertTrue(!MotionProviders.resolve(level, scene.chassis.getUniqueId()).orElseThrow().propulsionAllowed(),
           "Public maintenance retention did not veto the cabinet");
+      helper.assertTrue(MotionProviders.captureState(level, scene.chassis.getUniqueId()) == dev.coasterslaunchsystems.api.CaptureState.DENIED
+          && !MotionProviders.requestCapture(level, scene.chassis.getUniqueId(), Set.copyOf(MotionProviders.resolve(level, scene.chassis.getUniqueId()).orElseThrow().consist())),
+          "Station capture overrode maintenance retention");
     });
     helper.runAtTickTime(150, () -> {
       if (designName.equals("PAX")) return;
@@ -280,6 +284,8 @@ public final class FourthDimensionTireGameTests {
       if (designName.equals("PAX")) return;
       helper.assertTrue(scene.impulse < 1e-9 && !MotionProviders.resolve(level, scene.chassis.getUniqueId()).orElseThrow().propulsionAllowed(),
           "Vehicle fault allowed tire propulsion");
+      helper.assertTrue(MotionProviders.captureState(level, scene.chassis.getUniqueId()) == dev.coasterslaunchsystems.api.CaptureState.DENIED,
+          "Station capture granted boarding through a vehicle fault");
       write(scene.vehicle, "fault", "");
     });
     helper.runAtTickTime(170, () -> {
@@ -360,6 +366,8 @@ public final class FourthDimensionTireGameTests {
             && !unavailable.dispatchReady(), "Missing native carrier did not veto Fourth Dimension motion");
         for (var parent : scene.parents) helper.assertTrue(!MotionProviders.resolve(level, parent.getUniqueId()).orElseThrow().propulsionAllowed(),
             "A missing carrier allowed propulsion elsewhere in the native consist");
+        for (var parent : scene.parents) helper.assertTrue(MotionProviders.captureState(level, parent.getUniqueId()) == dev.coasterslaunchsystems.api.CaptureState.DENIED
+            && !MotionProviders.requestCapture(level, parent.getUniqueId(), Set.copyOf(unavailable.consist())), "Station capture granted authority after carrier loss");
       } finally { cleanup(scene, modulePos, motorPos, from, to); }
       helper.succeed();
     });

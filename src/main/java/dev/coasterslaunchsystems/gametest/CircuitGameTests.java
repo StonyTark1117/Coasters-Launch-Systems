@@ -50,7 +50,8 @@ public final class CircuitGameTests {
     double guardWork;
     double loadedMass, emptyMass;
     int seatedCount;
-    boolean guardApplied;
+    boolean guardApplied, movingCaptureDenied;
+    int capturingSteps, boardingDeniedSteps;
     long lastReport = -1;
     String failure = "";
     Scene(GameTestHelper helper, int slot, String mode) { this(helper, slot, mode, ""); }
@@ -116,6 +117,7 @@ public final class CircuitGameTests {
             + " b_forward=" + bTrack.forward(level, bTrack.hitAtDistance(level, 0)));
       }
       source.controller.connectDestination(receiver); receiver.connectDestination(source.controller);
+      source.controller.setStationCapture(guard.isEmpty());
       source.controller.setArmed(true); receiver.setArmed(true);
       source.base.helper.assertTrue(source.controller.transferRoute(level, receiver).tracks().size() == 3, "Circuit did not reserve its curved intermediate rail");
     }
@@ -166,10 +168,16 @@ public final class CircuitGameTests {
       } else if (stage == 5 && source.controller.phase() == RideControllerEntity.State.READY_EXIT) {
         h.assertTrue(receiver.reservation().isEmpty() && !source.controller.reservation().isEmpty() && curveSteps > 100 && retainedSteps > 100, "Two laps lost complete route ownership");
         boarding = true; stage = 6;
-        if (source.fourthDimension) invoke("dev.fourthdimension.vehicle.VehicleOperations", "capture", new Class<?>[] {net.minecraft.server.level.ServerLevel.class, type("dev.fourthdimension.runtime.FoundationData$Vehicle")}, source.base.level, source.vehicles.getFirst());
+        h.assertTrue(source.controller.boardingReady() && source.controller.signal(Direction.DOWN) == 15,
+            "Automatic station capture did not establish whole-train boarding readiness");
       } else if (stage == 6) {
         if (source.fourthDimension && source.vehicles.stream().anyMatch(v -> !(boolean) invoke("dev.fourthdimension.vehicle.Boarding", "ready", new Class<?>[] {net.minecraft.server.level.ServerLevel.class, type("dev.fourthdimension.runtime.FoundationData$Vehicle")}, source.base.level, v))) return;
-        if (source.fourthDimension) invoke("dev.fourthdimension.vehicle.VehicleOperations", "restraints", new Class<?>[] {net.minecraft.server.level.ServerLevel.class, type("dev.fourthdimension.runtime.FoundationData$Vehicle"), boolean.class}, source.base.level, source.vehicles.getFirst(), false);
+        h.assertTrue(!MotionProviders.requestCapture(source.base.level, source.base.parents.getFirst().getUniqueId(), Set.of()), "An empty lease granted capture");
+        if (source.linked) h.assertTrue(!MotionProviders.requestCapture(source.base.level, source.base.parents.getFirst().getUniqueId(), Set.of(source.base.parents.getFirst().getUniqueId())), "An incomplete coupled lease granted capture");
+        if (source.fourthDimension) {
+          invoke("dev.fourthdimension.vehicle.VehicleOperations", "restraints", new Class<?>[] {net.minecraft.server.level.ServerLevel.class, type("dev.fourthdimension.runtime.FoundationData$Vehicle"), boolean.class}, source.base.level, source.vehicles.getFirst(), false);
+          high(source.controller, false); h.runAfterDelay(4, () -> high(source.controller, true));
+        }
         for (var rider : List.copyOf(source.base.riders)) { rider.stopRiding(); h.assertTrue(!rider.isPassenger(), "Captured station denied ordinary passenger exit"); rider.discard(); }
         source.base.riders.clear(); source.riderBodies.clear(); pending = true;
         h.runAfterDelay(20, () -> {
@@ -186,12 +194,14 @@ public final class CircuitGameTests {
         pending = true; high(source.controller, false);
         h.runAfterDelay(4, () -> { high(source.controller, true); departures++; stage = 8; pending = false; });
       } else if (stage == 8 && receiver.phase() == RideControllerEntity.State.READY_EXIT) {
+        h.assertTrue(movingCaptureDenied, "Circuit did not test moving-train capture refusal");
+        if (source.fourthDimension) h.assertTrue(capturingSteps > 0 && boardingDeniedSteps > 0, "Circuit did not observe automatic capture and open-restraint departure denial");
         h.assertTrue(departures == 6 && reboarded && boardedSteps > 100 && source.controller.reservation().isEmpty() && receiver.reservation().size() == source.base.parents.size(), "Freshly boarded train did not complete its next reserved departure");
         h.assertTrue(maxJoint < .01 && maxCoupler < .05, "Circuit lost native articulated or coupler joints");
         if (source.mode.startsWith("free_spin")) h.assertTrue(rotorResponse > .02, "Circuit suppressed independent carrier rotation");
         System.out.println("LS_CIRCUIT mode=" + source.mode + " departures=" + departures + " cars=" + source.base.parents.size() + " riders=" + source.base.riders.size()
             + " curve_steps=" + curveSteps + " retained_steps=" + retainedSteps + " boarded_steps=" + boardedSteps + " work=" + work + " peak_speed=" + peakSpeed
-            + " joint_error=" + maxJoint + " coupler_error=" + maxCoupler + " rotor_response=" + rotorResponse + " loaded_mass=" + loadedMass + " empty_mass=" + emptyMass);
+            + " joint_error=" + maxJoint + " coupler_error=" + maxCoupler + " rotor_response=" + rotorResponse + " loaded_mass=" + loadedMass + " empty_mass=" + emptyMass + " capturing_steps=" + capturingSteps + " boarding_denied_steps=" + boardingDeniedSteps + " moving_capture_denied=" + movingCaptureDenied);
         cleanup(); h.succeed();
       }
     }
@@ -214,6 +224,12 @@ public final class CircuitGameTests {
         var target = sender == s.source.controller ? s.receiver : s.source.controller;
         var route = sender == null ? null : sender.transferRoute(level, target);
         if (sender != null) { h.assertTrue(sender.reservation().equals(target.reservation()) && sender.reservation().size() == s.source.base.parents.size(), "Circuit cleared a whole-consist lease early"); s.retainedSteps++; }
+        if (s.source.controller.phase() == RideControllerEntity.State.CAPTURING) s.capturingSteps++;
+        if (s.source.fourthDimension && s.boarding && s.source.controller.phase() == RideControllerEntity.State.BOARDING) {
+          h.assertTrue(s.source.controller.signal(Direction.NORTH) == 0 && s.source.controller.signal(Direction.DOWN) == 15
+              && !s.source.controller.transferring() && s.source.controller.reservation().size() == s.source.base.parents.size(), "Open restraints granted departure or lost boarding ownership");
+          s.boardingDeniedSteps++;
+        }
         double stepWork = 0; var contacted = new HashSet<BlockPos>();
         var all = new ArrayList<BlockPos>(s.source.equipment); all.addAll(s.modules);
         for (var cart : s.source.base.parents) {
@@ -224,6 +240,11 @@ public final class CircuitGameTests {
           var axis = track.forward(level, contact.hit()); var direction = new Vector3d(axis.x, axis.y, axis.z);
           var dynamics = NativeForces.pointDynamics(cart, event.getPhysicsSystem().getPipeline(), VehicleInterfaces.tirePoint(cart), direction);
           s.peakSpeed = Math.max(s.peakSpeed, Math.abs(dynamics.speed()));
+          if (s.guard.isEmpty() && !s.movingCaptureDenied && s.stage == 1 && Math.abs(dynamics.speed()) > .1) {
+            h.assertTrue(!MotionProviders.requestCapture(level, cart.getUniqueId(), s.source.controller.reservation())
+                && MotionProviders.captureState(level, cart.getUniqueId()) == dev.coasterslaunchsystems.api.CaptureState.RELEASED, "Moving train accepted capture or changed vehicle ownership");
+            s.movingCaptureDenied = true;
+          }
           var group = cart.getQueuedForceGroups() == null ? null : cart.getQueuedForceGroups().get(ForceGroups.PROPULSION.get());
           double force = group == null ? 0 : new Vector3d(group.getForceTotal().getLocalForce()).rotate(cart.logicalPose().orientation()).dot(direction) / event.getTimeStep();
           var motion = MotionProviders.resolve(level, cart.getUniqueId()).orElseThrow();
@@ -239,7 +260,7 @@ public final class CircuitGameTests {
           }
           double work = DriveMath.incrementalWork(dynamics.effectiveMass(), dynamics.speed(), force, event.getTimeStep());
           s.work += Math.max(0, work); stepWork += Math.max(0, work);
-          if (s.boarding) h.assertTrue(Math.abs(force) < 1e-8 && Math.abs(dynamics.speed()) < .1, "Station capture/boarding continued propulsion");
+          if (s.boarding || s.source.controller.phase() == RideControllerEntity.State.CAPTURING) h.assertTrue(Math.abs(force) < 1e-8 && Math.abs(dynamics.speed()) < .1, "Station capture/boarding continued propulsion");
         }
         double budget = contacted.stream().map(p -> (EquipmentCabinetEntity) level.getBlockEntity(p)).mapToDouble(c -> 8 * Math.abs(c.getSpeed()) * 2 * Math.PI / 60 * event.getTimeStep()).sum();
         h.assertTrue(stepWork <= budget + 1e-8, "Circuit duplicated contacted shaft work");

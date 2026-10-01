@@ -259,6 +259,7 @@ public final class OrdinaryPassengerGameTests {
   public static void nativePassengerMassLifecycle(GameTestHelper helper) {
     if (!ownerRegistered) {
       MotionProviders.register(new dev.coasterslaunchsystems.api.VehicleMotionProvider() {
+        @Override public int apiVersion() { return API_VERSION; }
         @Override public String id() { return "coasterslaunchsystems:test_mass_owner"; }
         @Override public java.util.Optional<dev.coasterslaunchsystems.api.MotionVehicle> resolve(net.minecraft.server.level.ServerLevel level, java.util.UUID chassis) {
           return FOREIGN_OWNED.contains(chassis) ? java.util.Optional.of(new dev.coasterslaunchsystems.api.MotionVehicle(id(), chassis,

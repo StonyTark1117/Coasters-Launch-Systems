@@ -35,7 +35,7 @@ public final class EquipmentPlacementGameTests {
   public static void realToolBindingKineticPowerPersistenceAndSupportLoss(GameTestHelper helper) {
     var level = helper.getLevel();
     var from = new BlockPos(48, 104, -256); var to = from.offset(0, 0, 64);
-    var module = from.offset(1, -2, 8); var motor = module.west();
+    var module = from.offset(1, -2, 8); var motor = module.west(); var controllerPos = from.offset(4, -2, 8);
     for (int x = 2; x <= 4; x++) for (int z = -17; z <= -11; z++) level.setChunkForced(x, z, true);
     level.setBlockAndUpdate(from, SimulatedCoastersBlocks.COASTER_ANCHORPOINT.get().defaultBlockState());
     level.setBlockAndUpdate(to, SimulatedCoastersBlocks.COASTER_ANCHORPOINT.get().defaultBlockState());
@@ -62,6 +62,24 @@ public final class EquipmentPlacementGameTests {
           "Module claimed an entire long track edge");
       helper.assertTrue(player.getMainHandItem().get(EquipmentContent.FROM.get()) == null,
           "Selection retained after successful installation");
+      level.setBlockAndUpdate(controllerPos, EquipmentContent.CONTROLLER.get().defaultBlockState());
+      for (var pos : new BlockPos[] {from, to, controllerPos}) {
+        player.setPos(pos.getX() + .5, pos.getY() + 1, pos.getZ() + 2);
+        helper.assertTrue(player.getMainHandItem().useOn(new UseOnContext(player, InteractionHand.MAIN_HAND,
+            new BlockHitResult(pos.getCenter(), Direction.UP, pos, false))) == InteractionResult.SUCCESS, "Station controller tool binding failed");
+      }
+      var controller = (RideControllerEntity) level.getBlockEntity(controllerPos);
+      player.setItemInHand(InteractionHand.OFF_HAND, net.minecraft.world.item.Items.CLOCK.getDefaultInstance());
+      helper.assertTrue(player.getMainHandItem().useOn(new UseOnContext(player, InteractionHand.MAIN_HAND,
+          new BlockHitResult(controllerPos.getCenter(), Direction.UP, controllerPos, false))) == InteractionResult.SUCCESS && controller.stationCapture(), "Clock/tool did not enable station capture");
+      var controllerTag = controller.saveWithFullMetadata(level.registryAccess());
+      var restoredController = (RideControllerEntity) BlockEntity.loadStatic(controllerPos, controller.getBlockState(), controllerTag, level.registryAccess()); restoredController.setLevel(level);
+      helper.assertTrue(restoredController.stationCapture() && !restoredController.boardingReady() && !restoredController.armed()
+          && restoredController.phase() == RideControllerEntity.State.INSPECTION && !restoredController.consumeRequest(), "Saved station replayed readiness or a departure request");
+      controllerTag.putInt("ls_controller_schema", 3); controllerTag.remove("station_capture"); controllerTag.remove("boarding_ready");
+      restoredController.loadWithComponents(controllerTag, level.registryAccess());
+      helper.assertTrue(!restoredController.stationCapture(), "Legacy controller opted into new station behavior");
+      player.setItemInHand(InteractionHand.OFF_HAND, net.minecraft.world.item.ItemStack.EMPTY);
       cabinet.setArmed(true);
       ((CreativeMotorBlockEntity) level.getBlockEntity(motor)).generatedSpeed.setValue(64);
     });
@@ -92,7 +110,7 @@ public final class EquipmentPlacementGameTests {
           "Removed track did not invalidate/disarm the module");
       System.out.println("LS_EQUIPMENT_PLACEMENT rpm=" + cabinet.getSpeed() + " contact=" + cabinet.interval()
           + " identity=" + cabinet.identity() + " support_fault=" + cabinet.fault());
-      level.removeBlock(module, false); level.removeBlock(motor, false);
+      level.removeBlock(module, false); level.removeBlock(motor, false); level.removeBlock(controllerPos, false);
       level.removeBlock(from, false); level.removeBlock(to, false);
       helper.succeed();
     });
