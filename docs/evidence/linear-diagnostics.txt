@@ -1,0 +1,11 @@
+Pre-acceptance diagnostics, retained separately from final evidence
+
+Focused v1: 18 failed. The new observer was registered before native bodies had completed loading. Its transient missing snapshot/contact became a sticky failure before equipment arming. The low-supply assertion also required +1 RPM from a WEST-facing motor whose real shaft reported -1 RPM. The observer now begins after the native loading stage, and the assertion checks absolute charging speed. No provider/contact guard was relaxed.
+
+Focused v2: 17/18 passed. A 2-block LIM brake centered at the initial rest position did not produce the fixture's intended sustained trim after the cart's physically forced rolling entry. The short high-slip contact was weaker than LSM as declared by the curve. The brake/rolling cabinet was placed two blocks further along the same rail so the moving entry began inside a full supported span. The same speed reduction, dissipation, authority and resource assertions then passed for both motors. This does not certify a two-block LIM high-speed stop or static hold.
+
+Focused v3: all 18 single-cabinet tests passed. Six local-section sensors inferred shaft charging in the placement frame before cabinets had registered with the runtime. Runtime skipped those not-yet-live modules; the expected-energy delta was wrong and its sticky error prevented sensor snapshot updates. The observer now conditions charging/cooling on real cabinet availability. Native accounting and budgets remain unchanged.
+
+Focused v4: eighteen single-cabinet tests and two single-car sections passed. Four ordinary coupled sections stayed in BRAKING because the fixture placed the first downstream clamp at arc 24, leaving the rear chassis between spring-pad regions when the front stopped. The bank now starts at arc 20, retaining its long continuous downstream coverage and giving the rear actual launch-pad hold. Every member still requires a real native clamp; no whole-train hold check was weakened.
+
+Focused v5: all 30 required combined tests passed. Focused v6 added a mixed LSM/LIM bank and two local supply-loss/return tests; all 33 passed. Final full regression and clean CI evidence are recorded separately. The earlier prototype failures are fixture/sensor findings, not release acceptance.

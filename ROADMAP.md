@@ -1,6 +1,6 @@
 # Coasters: Launch Systems release roadmap
 
-Implementation started September 30, 2026 toward the user's goal of a validated 0.4.0 release in its own private GitHub repository. LS001–LS005 and LS101–LS104 are in progress; remaining packages are planned. Track actual acceptance in [validation status](docs/VALIDATION.md). Stable LS identifiers allow later requests to name a concrete scope. Completing a package requires its evidence; version numbers do not establish completion. The user approved a standalone core with optional integrations.
+Implementation started September 30, 2026 toward the user's goal of a validated 0.4.0 release in its own private GitHub repository. LS001–LS005, LS101–LS104 and LS201–LS202 are in progress; remaining packages are planned. Track actual acceptance in [validation status](docs/VALIDATION.md). Stable LS identifiers allow later requests to name a concrete scope. Completing a package requires its evidence; version numbers do not establish completion. The user approved a standalone core with optional integrations.
 
 ## Foundation
 
@@ -36,6 +36,8 @@ Dev.12 adds [inspected receiving-controller recovery](docs/RECEIVER-RECOVERY.md)
 Acceptance remains three usable demonstration rides: ordinary, Arrow and individual free spin. Each must complete repeated departure, route traversal, whole-train stop, appropriate native capture, passenger exit/boarding and a fresh dispatch request. An occupied route, changed geometry, missing receiver, lost power/support, rollback or unavailable chunk must retain ownership and deny further propulsion. Rendered survival setup and packaged multiplayer/restart evidence remain required.
 
 ## Version 0.2 linear motors and local block operation
+
+Dev.13 adds original LSM/LIM cabinets, matching chassis plates, finite kinetic charging, separate slip/loss response, signed targets and acceleration/jerk tuning. Scoped occupied local sections coordinate motor banks, wait for conservative whole-train charge and retain leases through loss/return of power. Arrow and individual Free Spin continue to use their native vehicle owner. See [linear scope](docs/LINEAR-MOTORS.md). LS201/LS202 and their 0.1 prerequisites remain open for rendered gameplay, lifecycle and broader cases; LS203 swing passes and linear section transfers are not enabled.
 
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |

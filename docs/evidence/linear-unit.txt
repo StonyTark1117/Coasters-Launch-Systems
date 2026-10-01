@@ -1,0 +1,11 @@
+Source: 23942385c2cf88aaa03ba44f0b40db96eab714d3
+Artifact: coasters-launch-systems-0.0.1-dev.13.jar
+SHA-256: 2137f31f3eb621d7bd161fa7510d7c2f766f6e6475b7b387fc2fec20b2f9efdf
+
+dev.coasterslaunchsystems.LinearMotorTest: tests=4 failures=0 errors=0
+dev.coasterslaunchsystems.MechanismMathTest: tests=9 failures=0 errors=0
+dev.coasterslaunchsystems.MotionAuthorityTest: tests=2 failures=0 errors=0
+dev.coasterslaunchsystems.StoppingEnvelopeTest: tests=3 failures=0 errors=0
+dev.coasterslaunchsystems.StoredEnergyTest: tests=4 failures=0 errors=0
+dev.coasterslaunchsystems.TrackDistanceTest: tests=5 failures=0 errors=0
+TOTAL tests=27 failures=0 errors=0

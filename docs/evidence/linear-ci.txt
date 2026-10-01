@@ -1,0 +1,12 @@
+CI run: https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36863549289
+Outcome: completed, success
+Source: 23942385c2cf88aaa03ba44f0b40db96eab714d3
+Command: ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2
+Downloaded JAR SHA-256: 2137f31f3eb621d7bd161fa7510d7c2f766f6e6475b7b387fc2fec20b2f9efdf
+Downloaded HTML unit report: 27 tests, 0 failures, 0 ignored
+Packaged standalone native suite: all 102 required tests passed
+The CI JAR exactly matches the focused combined and local full-regression binary.
+CI does not install Fourth Dimension; that scope is tested locally against the copied immutable pin.
+
+[01Oct2026 12:50:14.828] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: ========= 102 GAME TESTS COMPLETE IN 6.560 min ======================
+[01Oct2026 12:50:14.829] [Server thread/INFO] [net.minecraft.gametest.framework.GameTestServer/]: All 102 required tests passed :)

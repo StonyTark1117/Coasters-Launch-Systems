@@ -2,7 +2,7 @@
 
 A standalone Create: Coasters Simulated addon in development toward **0.4.0**. The planned release includes tire, LIM, LSM, flywheel, hydraulic and pneumatic launches, distinct friction/skid/magnetic brakes, local ride control and explicit compatibility with Fourth Dimension vehicles.
 
-The current `0.0.1-dev.12` checkpoint adds inspected recovery of a receiving controller removed during a reserved transfer. The source saves the exact receiving equipment, preserves coordinated spring braking while its controller is missing, and queues a one-time native inspection before rebinding an empty replacement. Success retains the complete train lease and leaves both controllers disarmed; departure requires separate arming and a fresh request. Optional vehicle-owned station capture from dev.11 remains available. The requested 0.4.0 release gates remain in progress. See [release roadmap](ROADMAP.md), [receiver recovery and limits](docs/RECEIVER-RECOVERY.md), [station setup](docs/STATIONS.md), and [validation status](docs/VALIDATION.md).
+The current `0.0.1-dev.13` checkpoint adds original LSM/LIM cabinets, separately installed reaction plates, finite shaft-charged buffers and tool tuning. Native local control waits for whole-train charge and a fresh request, coordinates adjacent drives and retains spring braking through power loss. Earlier tire/fin/passive-magnet equipment, provider-owned station capture and inspected receiver recovery remain available. This is partial implementation toward the requested 0.4.0 release. See [linear equipment and limits](docs/LINEAR-MOTORS.md), [release roadmap](ROADMAP.md), and [validation status](docs/VALIDATION.md).
 
 ## Development stack
 
