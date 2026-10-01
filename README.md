@@ -2,7 +2,7 @@
 
 A standalone Create: Coasters Simulated addon in development toward **0.4.0**. The planned release includes tire, LIM, LSM, flywheel, hydraulic and pneumatic launches, distinct friction/skid/magnetic brakes, local ride control and explicit compatibility with Fourth Dimension vehicles.
 
-The current `0.0.1-dev.4` checkpoint certifies the shaft-powered tire prototype for four pinned Fourth Dimension variants with full/uneven loads and a native coupled Arrow pair. It builds on the installed chassis drive strip, span tool, mechanism mathematics, energy stores and contact/provider foundations. The requested 0.4.0 release and its acceptance gates remain in progress. See [release roadmap](ROADMAP.md), [design](PLAN.md), [4D tire checkpoint](docs/FOURTH-DIMENSION-TIRES.md), [equipment checkpoint](docs/EQUIPMENT-PROTOTYPE.md), [provider checkpoint](docs/FOUNDATION-PROVIDERS.md), and [validation status](docs/VALIDATION.md).
+The current `0.0.1-dev.5` checkpoint adds an ordinary-cart friction fin clamp with bounded native stopping/holding force and a separate installed brake fin. It retains the dev.4 tire certification for four pinned Fourth Dimension variants with full/uneven loads and an occupied native coupled Arrow pair. The requested 0.4.0 release and its acceptance gates remain in progress. See [release roadmap](ROADMAP.md), [design](PLAN.md), [fin clamp checkpoint](docs/FIN-CLAMPS.md), [4D tire checkpoint](docs/FOURTH-DIMENSION-TIRES.md), and [validation status](docs/VALIDATION.md).
 
 ## Development stack
 
@@ -23,6 +23,6 @@ Unix project paths containing `:` redirect build outputs to `/tmp/coasterslaunch
 
 Mechanism math uses blocks, seconds and native Sable mass/work units. Energy stores are server-owned; hydraulic and air resources use original game-scale pressure models. No real-world performance or manufacturer replica fidelity is claimed.
 
-`VehicleMotionProvider` describes body and consist identity, verified interfaces, operator ownership and dispatch vetoes. Forces act at native chassis interfaces; child rotor angles and angular velocities remain owned by their native joints. Registering an API provider does not itself establish validated Fourth Dimension compatibility.
+`VehicleMotionProvider` API 2 describes body and consist identity, verified interfaces, operator ownership, dispatch vetoes and explicit braking permission. The acceleration limit bounds propulsion; brakes use the provider force limit and their declared mechanism ratings. Legacy motion snapshots grant no braking authority. Forces act at native chassis interfaces; child rotor angles and angular velocities remain owned by their native joints. Registering an API provider does not itself establish validated Fourth Dimension compatibility.
 
 Source and original assets are MIT licensed. [Dependency provenance](THIRD_PARTY.md) records third-party tooling and library use.

@@ -1,0 +1,112 @@
+0.0.1-dev.5 packaged combined; Java 21 / Minecraft 1.21.1 / NeoForge 21.1.248
+
+[20:24:01] [modloading-worker-0/INFO] [de.fo.FourthDimension/]: Coasters: Fourth Dimension loaded from union:/tmp/coasterslaunchsystems-validation/dependencies/fourthdimension-schema4.jar%23128!/
+[20:24:01] [modloading-worker-0/INFO] [de.co.LaunchSystems/]: Coasters: Launch Systems loaded from union:/tmp/coasterslaunchsystems-22eeb619/build/libs/coasters-launch-systems-0.0.1-dev.5.jar%23127!/
+LS_FIN_EQUIPMENT fixture=FORWARD phase=stop mass=26.0 speed=4.144504531233828E-11 moved=0.20184326171875 fault=
+LS_FIN_EQUIPMENT fixture=REVERSE phase=stop mass=26.0 speed=5.132066438484628E-10 moved=0.20184326171875 fault=
+LS_FIN_EQUIPMENT fixture=SLOPE phase=stop mass=64.0 speed=-0.0035354921128600836 moved=0.0 fault=
+LS_FIN_EQUIPMENT fixture=MISSING_FIN phase=stop mass=25.0 speed=1.9955307245254517 moved=4.04296875 fault=Vehicle has no certified friction fin
+LS_FIN_EQUIPMENT fixture=CONFLICT phase=stop mass=27.0 speed=1.9955309629440308 moved=4.04296875 fault=Overlapping modules claim this consist; separate their contact zones
+LS_FIN_EQUIPMENT fixture=OVERMASS phase=stop mass=82.0 speed=1.9955307245254517 moved=4.04296875 fault=Loaded consist exceeds the fin clamp mass/slope rating
+LS_FIN_EQUIPMENT fixture=FORWARD phase=hold creep=0.0 distance=8.726877676113517 interval=SpanInterval[start=8.000000457979326, end=10.000000457979326]
+LS_FIN_EQUIPMENT fixture=REVERSE phase=hold creep=0.0 distance=6.27314208639195 interval=SpanInterval[start=6.000000218113094, end=8.000000218113094]
+LS_FIN_EQUIPMENT fixture=SLOPE phase=hold creep=0.0 distance=6.6845789785642715 interval=SpanInterval[start=5.730363852747704, end=7.730363852747704]
+LS_FIN_EQUIPMENT fixture=SLOPE phase=powered_release speed=-1.2947492599487305 rpm=-64.0 distance=6.411977796120287
+LS_FIN_EQUIPMENT fixture=FORWARD phase=reapply speed=-3.557908689888478E-10 rpm=0.0 fault= drift=0.0 distance=8.726877676113517
+LS_FIN_EQUIPMENT fixture=REVERSE phase=reapply speed=-3.557908134776966E-10 rpm=0.0 fault= drift=0.0 distance=6.27314208639195
+LS_FIN_EQUIPMENT fixture=SLOPE phase=reapply speed=-0.0053076897747814655 rpm=0.0 fault= drift=1.0066175843793117 distance=5.67972689454029
+LS_FIN_EQUIPMENT fixture=FORWARD phase=hardware_removed speed=3.9871857166290283
+LS_FIN_EQUIPMENT fixture=REVERSE phase=hardware_removed speed=3.9871857166290283
+LS_FIN_EQUIPMENT fixture=SLOPE phase=hardware_removed speed=1.2826027870178223
+LS_EQUIPMENT_PLACEMENT rpm=64.0 contact=SpanInterval[start=7.000000453561613, end=9.000000453561613] identity=bb4df896-b71a-4b75-8bc4-2574893f4f9e support_fault=Track geometry changed; inspect and rebind
+LS_NATIVE_POINT_FORCE phase=launch speed=3.991027593612671 seconds=1.999999999999997 impulse=3.999999999999994 mass=1.0 moved=4.0499725341796875
+LS_TIRE_EQUIPMENT fixture=REVERSE_SHAFT mass=2.0 rpm=-64.0 speed=-2.1701302528381348 moved=3.785888671875 fault=
+LS_NATIVE_POINT_FORCE phase=stop speed=2.0130879420321435E-5 impulse=-3.191891195797325E-16
+LS_TIRE_EQUIPMENT fixture=MISSING_STRIP mass=1.0 rpm=64.0 speed=0.0 moved=0.0 fault=Vehicle has no certified tire interface
+LS_TIRE_EQUIPMENT fixture=LOADED mass=26.0 rpm=64.0 speed=1.81930673122406 moved=2.26318359375 fault=
+LS_TIRE_EQUIPMENT fixture=FORWARD mass=2.0 rpm=64.0 speed=2.674377679824829 moved=4.3209228515625 fault=
+LS_TIRE_EQUIPMENT fixture=REVERSE mass=2.0 rpm=64.0 speed=-2.1701302528381348 moved=3.785888671875 fault=
+LS_TIRE_EQUIPMENT fixture=CONFLICT mass=2.0 rpm=64.0 speed=0.0 moved=0.0 fault=Overlapping modules claim this consist; separate their contact zones
+LS_FIN_CONSTRAINT fixture=FORWARD phase=stop mass=25.0 speed=2.48128140810884E-4 min_directed=-7.733707207080442E-6
+LS_FIN_CONSTRAINT fixture=REVERSE phase=stop mass=25.0 speed=2.48128140810884E-4 min_directed=-7.733585334790405E-6
+LS_FIN_CONSTRAINT fixture=SLOPE phase=stop mass=25.0 speed=0.0028682815605666477 min_directed=-4.001857198930443
+LS_FIN_CONSTRAINT fixture=OVERLOAD phase=stop mass=25.0 speed=2.481281408108771E-4 min_directed=-7.733606253168546E-6
+LS_NATIVE_CONTACT phase=reverse speed=-3.991006374359131 moved=4.0499725341796875
+LS_NATIVE_CONTACT phase=complete speed=0.0 contact_steps=320 missing_steps=0
+LS_FIN_CONSTRAINT fixture=FORWARD phase=hold creep=0.0 missing=0
+LS_FIN_CONSTRAINT fixture=REVERSE phase=hold creep=0.0 missing=0
+LS_FIN_CONSTRAINT fixture=SLOPE phase=hold creep=0.0 missing=0
+LS_FIN_CONSTRAINT fixture=OVERLOAD phase=hold creep=0.0 missing=0
+LS_FIN_CONSTRAINT fixture=FORWARD phase=release_or_overload speed=-5.880605724595256E-11
+LS_FIN_CONSTRAINT fixture=REVERSE phase=release_or_overload speed=-5.880605030705865E-11
+LS_FIN_CONSTRAINT fixture=SLOPE phase=release_or_overload speed=-2.58514142036438
+LS_FIN_CONSTRAINT fixture=OVERLOAD phase=release_or_overload speed=5.108534812927246
+LS_4D_TIRE design=ARROW reverse=false uneven=false cars=1 riders=4 mass=19.2 speed=1.3815715312957764 impulse=45.2186595199608 work=32.23475324570122 shaft_work=134.04128655316467
+LS_4D_TIRE design=LEGACY reverse=false uneven=true cars=1 riders=4 mass=23.200000000000003 speed=1.3285821676254272 impulse=46.12268815004184 work=32.06047730338742 shaft_work=134.04128655316467
+LS_4D_TIRE design=LEGACY reverse=true uneven=true cars=1 riders=4 mass=23.200000000000003 speed=-1.2182214260101318 impulse=46.13190534390433 work=30.34098855473503 shaft_work=134.04128655316467
+LS_4D_TIRE design=FREE_SPIN reverse=false uneven=false cars=1 riders=8 mass=44.400000000000006 speed=0.6710002422332764 impulse=48.21068512498131 work=15.738329890983538 shaft_work=134.04128655316467
+LS_4D_TIRE design=ARROW reverse=true uneven=false cars=1 riders=4 mass=19.2 speed=-1.3816578388214111 impulse=45.21843630181808 work=32.335959572181494 shaft_work=134.04128655316467
+LS_4D_TIRE design=ARROW reverse=false uneven=true cars=1 riders=2 mass=17.6 speed=1.4992263317108154 impulse=44.72075927056768 work=34.00933322421827 shaft_work=134.04128655316467
+LS_4D_TIRE design=FREE_SPIN reverse=true uneven=false cars=1 riders=8 mass=44.400000000000006 speed=-0.6707012057304382 impulse=48.21069440903227 work=15.730864833353106 shaft_work=134.04128655316467
+LS_4D_TIRE design=FREE_SPIN reverse=false uneven=true cars=1 riders=2 mass=39.6 speed=0.7575225830078125 impulse=47.95802079519518 work=17.81094037359323 shaft_work=134.04128655316467
+LS_4D_TIRE design=REVISED reverse=false uneven=true cars=1 riders=2 mass=41.6 speed=0.6946732401847839 impulse=48.0703475020157 work=15.765788275549227 shaft_work=134.04128655316467
+LS_4D_TIRE design=REVISED reverse=true uneven=true cars=1 riders=2 mass=41.6 speed=-0.6947899460792542 impulse=48.07034771489701 work=15.765446931170837 shaft_work=134.04128655316467
+LS_4D_TIRE design=PAX owner=fourthdimension:pax_winch impulse=0.0
+LS_4D_TIRE design=ARROW reverse=true uneven=true cars=1 riders=2 mass=17.6 speed=-1.4689725637435913 impulse=44.22848438376329 work=33.31876085111438 shaft_work=132.70087368763302
+LS_4D_TIRE design=LEGACY reverse=false uneven=false cars=1 riders=8 mass=26.400000000000006 speed=1.0651739835739136 impulse=46.671659709802505 work=27.29893887121336 shaft_work=134.04128655316467
+LS_4D_TIRE design=FREE_SPIN reverse=true uneven=true cars=1 riders=2 mass=39.6 speed=-0.7572433948516846 impulse=47.95802974337953 work=17.811346633653503 shaft_work=134.04128655316467
+LS_4D_TIRE design=REVISED reverse=false uneven=false cars=1 riders=8 mass=46.400000000000006 speed=0.6093794703483582 impulse=48.312532524774625 work=13.571635370532166 shaft_work=134.04128655316467
+LS_4D_TIRE design=ARROW reverse=false uneven=false cars=2 riders=8 mass=38.4 speed=0.6917824745178223 impulse=45.27163992910569 work=18.90045391782613 shaft_work=134.04128655316467
+LS_4D_TIRE design=ARROW reverse=true uneven=false cars=2 riders=8 mass=38.4 speed=-0.6921371817588806 impulse=45.27158506867527 work=19.00698061399514 shaft_work=134.04128655316467
+LS_4D_TIRE design=LEGACY reverse=true uneven=false cars=1 riders=8 mass=26.400000000000006 speed=-1.1049185991287231 impulse=46.666015449332505 work=27.924088080907257 shaft_work=134.04128655316467
+LS_4D_TIRE design=REVISED reverse=true uneven=false cars=1 riders=8 mass=46.400000000000006 speed=-0.609410285949707 impulse=48.31253382271787 work=13.567285726349416 shaft_work=134.04128655316467
+LS_4D_TIRE_COMPLETE design=ARROW reverse=false uneven=false max_joint_error=1.501524749602791E-4 max_rotor_angle=3.761186339715933E-4 group_difference=5.967685116058569E-5 riders_retained=true cars=1 max_coupler_error=0.0 driven_steps=100 veto_steps=330
+LS_4D_TIRE_COMPLETE design=LEGACY reverse=false uneven=true max_joint_error=2.9936133595616636E-4 max_rotor_angle=0.3948458166018054 group_difference=0.10055092048157735 riders_retained=true cars=1 max_coupler_error=0.0 driven_steps=100 veto_steps=330
+LS_4D_TIRE_COMPLETE design=LEGACY reverse=true uneven=true max_joint_error=2.9810240838764484E-4 max_rotor_angle=0.281884793875766 group_difference=0.10281941355435799 riders_retained=true cars=1 max_coupler_error=0.0 driven_steps=100 veto_steps=330
+LS_4D_TIRE_COMPLETE design=FREE_SPIN reverse=false uneven=false max_joint_error=1.69735747963012E-4 max_rotor_angle=0.07756768467872639 group_difference=8.464383689561067E-4 riders_retained=true cars=1 max_coupler_error=0.0 driven_steps=100 veto_steps=330
+LS_4D_TIRE_COMPLETE design=ARROW reverse=true uneven=false max_joint_error=1.508506280382372E-4 max_rotor_angle=3.694506962121682E-4 group_difference=8.194340646150105E-5 riders_retained=true cars=1 max_coupler_error=0.0 driven_steps=100 veto_steps=330
+LS_4D_TIRE_COMPLETE design=ARROW reverse=false uneven=true max_joint_error=1.4900283272588767E-4 max_rotor_angle=4.423461961577713E-4 group_difference=1.1671002203838453E-4 riders_retained=true cars=1 max_coupler_error=0.0 driven_steps=100 veto_steps=330
+LS_4D_TIRE_COMPLETE design=FREE_SPIN reverse=true uneven=false max_joint_error=1.6894566257880336E-4 max_rotor_angle=0.07722610274451731 group_difference=9.181938098595868E-4 riders_retained=true cars=1 max_coupler_error=0.0 driven_steps=100 veto_steps=330
+LS_4D_TIRE_COMPLETE design=FREE_SPIN reverse=false uneven=true max_joint_error=1.5927957321038084E-4 max_rotor_angle=0.09713376590438334 group_difference=0.013006814476936468 riders_retained=true cars=1 max_coupler_error=0.0 driven_steps=100 veto_steps=330
+LS_4D_TIRE_COMPLETE design=REVISED reverse=false uneven=true max_joint_error=1.4082545942518542E-4 max_rotor_angle=0.09269837653321307 group_difference=0.06968908796135032 riders_retained=true cars=1 max_coupler_error=0.0 driven_steps=100 veto_steps=330
+LS_4D_TIRE_COMPLETE design=REVISED reverse=true uneven=true max_joint_error=1.4270180983990698E-4 max_rotor_angle=0.09211964594297016 group_difference=0.06916665456812877 riders_retained=true cars=1 max_coupler_error=0.0 driven_steps=100 veto_steps=330
+LS_4D_TIRE_COMPLETE design=ARROW reverse=true uneven=true max_joint_error=1.4961444213175765E-4 max_rotor_angle=4.2425841072340386E-4 group_difference=1.1087388940527078E-4 riders_retained=true cars=1 max_coupler_error=0.0 driven_steps=99 veto_steps=330
+LS_4D_TIRE_COMPLETE design=LEGACY reverse=false uneven=false max_joint_error=3.06004471777988E-4 max_rotor_angle=0.3573512111445148 group_difference=3.2608727263347403E-4 riders_retained=true cars=1 max_coupler_error=0.0 driven_steps=100 veto_steps=330
+LS_4D_TIRE_COMPLETE design=FREE_SPIN reverse=true uneven=true max_joint_error=1.575385631570785E-4 max_rotor_angle=0.09660256900294519 group_difference=0.012979269732512226 riders_retained=true cars=1 max_coupler_error=0.0 driven_steps=100 veto_steps=330
+LS_4D_TIRE_COMPLETE design=REVISED reverse=false uneven=false max_joint_error=1.5327084683104938E-4 max_rotor_angle=0.042225250935399694 group_difference=6.29923086729562E-4 riders_retained=true cars=1 max_coupler_error=0.0 driven_steps=100 veto_steps=330
+LS_4D_TIRE_COMPLETE design=ARROW reverse=false uneven=false max_joint_error=1.737831045632123E-4 max_rotor_angle=4.383099238172543E-4 group_difference=7.095118025462995E-5 riders_retained=true cars=2 max_coupler_error=6.067311466040337E-5 driven_steps=100 veto_steps=660
+LS_4D_TIRE_COMPLETE design=ARROW reverse=true uneven=false max_joint_error=1.7948272326739065E-4 max_rotor_angle=4.3881446018213794E-4 group_difference=8.94737589839715E-5 riders_retained=true cars=2 max_coupler_error=6.063392231681064E-5 driven_steps=100 veto_steps=660
+LS_4D_TIRE_COMPLETE design=LEGACY reverse=true uneven=false max_joint_error=3.026586165895169E-4 max_rotor_angle=0.26024883072758676 group_difference=1.4307431228020862E-4 riders_retained=true cars=1 max_coupler_error=0.0 driven_steps=100 veto_steps=330
+LS_4D_TIRE_COMPLETE design=REVISED reverse=true uneven=false max_joint_error=1.5168652729250631E-4 max_rotor_angle=0.042256851563104526 group_difference=5.359337596782879E-4 riders_retained=true cars=1 max_coupler_error=0.0 driven_steps=100 veto_steps=330
+LS_4D_BASELINE family=REVISED separation=4.019522855647547E-5
+LS_4D_BASELINE family=REVISED separation=8.019497663217772E-5
+LS_4D_BASELINE family=REVISED separation=1.4051164639726211E-5
+LS_4D_BASELINE family=REVISED separation=3.416569694128681E-5
+LS_4D_PAX exclusive_owner=fourthdimension:pax_winch
+LS_4D_BASELINE family=ARROW separation=1.035873173392259E-4
+LS_4D_BASELINE family=ARROW separation=5.4477548683911396E-5
+LS_4D_BASELINE family=LEGACY separation=1.41627323071632E-4
+LS_4D_BASELINE family=LEGACY separation=5.0623861583788194E-5
+LS_4D_BASELINE family=FREE_SPIN separation=6.027690214960696E-5
+LS_4D_BASELINE family=FREE_SPIN separation=8.678877924755568E-5
+LS_4D_BASELINE family=FREE_SPIN separation=1.56652420549752E-5
+LS_4D_BASELINE family=FREE_SPIN separation=3.908351708949949E-5
+LS_4D_FORCE family=REVISED phase=launch speed=3.832929849624634 group_mass=39.8 impulse=159.2 missing=0 veto=0
+LS_4D_FORCE family=ARROW phase=launch speed=3.798652172088623 group_mass=15.8 impulse=63.199999999999946 missing=0 veto=0
+LS_4D_FORCE family=LEGACY phase=launch speed=3.388836145401001 group_mass=19.8 impulse=79.19999999999996 missing=0 veto=0
+LS_4D_FORCE family=FREE_SPIN phase=launch speed=3.801750421524048 group_mass=37.8 impulse=151.19999999999985 missing=0 veto=0
+LS_4D_FORCE family=REVISED phase=stop speed=4.492471052799374E-4
+LS_4D_FORCE family=ARROW phase=stop speed=-1.5867870388319716E-5
+LS_4D_FORCE family=LEGACY phase=stop speed=-0.015136117115616798
+LS_4D_FORCE family=FREE_SPIN phase=stop speed=-0.001990534598007798
+LS_4D_FORCE family=REVISED phase=reverse speed=-3.7967703342437744
+LS_4D_FORCE family=ARROW phase=reverse speed=-3.8005433082580566
+LS_4D_FORCE family=LEGACY phase=reverse speed=-3.161459445953369
+LS_4D_FORCE family=FREE_SPIN phase=reverse speed=-3.722423791885376
+LS_4D_FORCE family=REVISED phase=complete speed=0.00169104163069278 max_joint_error=1.3017350181421738E-4 max_rotor_excursion=0.40930094785740256 max_group_difference=0.2604584383063127 rider_retained=true carrier_angles=[0.1635433039073483, 0.07122899261339788, 0.07112255550696121, 0.07119315689716811]
+LS_4D_FORCE family=ARROW phase=complete speed=-2.719088297453709E-5 max_joint_error=1.7284353667354967E-4 max_rotor_excursion=6.084383113495878E-4 max_group_difference=1.1199316348919935E-4 rider_retained=true carrier_angles=[-3.7148620184565854E-4, -4.83099094669178E-4]
+LS_4D_FORCE family=LEGACY phase=complete speed=0.007645003497600555 max_joint_error=2.1642798869142668E-4 max_rotor_excursion=0.8649295393683581 max_group_difference=0.27309467245798735 rider_retained=true carrier_angles=[-0.15092295602121356, -0.0524678180476805]
+LS_4D_FORCE family=FREE_SPIN phase=complete speed=0.004455851390957832 max_joint_error=1.3699754652228547E-4 max_rotor_excursion=0.41322641893319856 max_group_difference=0.02581731198142538 rider_retained=true carrier_angles=[0.10736994602326591, 0.10959806761082001, 0.10949738840118325, 0.10952647205019159]
+[20:24:28] [Server thread/INFO] [minecraft/GameTestServer]: ========= 42 GAME TESTS COMPLETE IN 23.89 s ======================
+[20:24:28] [Server thread/INFO] [minecraft/GameTestServer]: All 42 required tests passed :)
+BUILD SUCCESSFUL in 42s

@@ -40,9 +40,10 @@ public final class OrdinaryMotionProvider implements VehicleMotionProvider {
     var consist = new LinkedHashSet<>(CoasterCartTrainLinkConstraint.getTrainLinkedCartIds(body));
     consist.add(chassis);
     // A real installed drive strip is required. Fin, magnet and catch surfaces are separate.
-    var interfaces = VehicleInterfaces.tirePoint(body) == null ? Set.<dev.coasterslaunchsystems.math.Mechanism>of()
-        : Set.of(dev.coasterslaunchsystems.math.Mechanism.TIRE);
+    var interfaces = java.util.EnumSet.noneOf(dev.coasterslaunchsystems.math.Mechanism.class);
+    if (VehicleInterfaces.tirePoint(body) != null) interfaces.add(dev.coasterslaunchsystems.math.Mechanism.TIRE);
+    if (VehicleInterfaces.brakePoint(body) != null) interfaces.add(dev.coasterslaunchsystems.math.Mechanism.FIN_BRAKE);
     return Optional.of(new MotionVehicle(id(), chassis, new ArrayList<>(bodies),
-        new ArrayList<>(consist), interfaces, true, true, "", 2, 256));
+        new ArrayList<>(consist), interfaces, true, true, true, "", 2, 256));
   }
 }

@@ -1,0 +1,9 @@
+Pre-final source fixture diagnostic; NOT a passing release check.
+Mass-64 rollback exceeded the remaining physical contact length during reapplication.
+The corrected fixture places the cabinet around the loaded holding position; final packaged runs verify the declared transition.
+
+LS_FIN_EQUIPMENT fixture=SLOPE phase=stop mass=64.0 speed=-0.003534473478794098 moved=0.0 fault=
+LS_FIN_EQUIPMENT fixture=SLOPE phase=hold creep=0.0 distance=6.6845789785642715 interval=SpanInterval[start=6.700506302410479, end=8.700506302410478]
+LS_FIN_EQUIPMENT fixture=SLOPE phase=powered_release speed=-1.294750452041626 rpm=-64.0 distance=6.411977796120287
+LS_FIN_EQUIPMENT fixture=SLOPE phase=reapply speed=-2.8124330043792725 rpm=0.0 fault= drift=2.06016501288355 distance=4.766472598414037
+[20:19:25] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems.fin_slope failed at -8285399, -60, 311994! Power loss did not reapply the spring fin clamp

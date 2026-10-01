@@ -14,4 +14,11 @@ public final class VehicleInterfaces {
       return null;
     return new Vector3d(bearing.getX() + .5, bearing.getY() - .0625, bearing.getZ() + .5);
   }
+  /** A separate vertical fin beside the bearing; tire strips cannot stand in for a brake fin. */
+  public static Vector3d brakePoint(ServerSubLevel chassis) {
+    var bearing = CoasterCartTrackSnap.representativeBearingPlotPos(chassis);
+    var fin = bearing == null ? null : bearing.east().below();
+    if (fin == null || !chassis.getLevel().getBlockState(fin).is(EquipmentContent.BRAKE_FIN.get())) return null;
+    return new Vector3d(fin.getX() + .5, fin.getY() + .5, fin.getZ() + .5);
+  }
 }

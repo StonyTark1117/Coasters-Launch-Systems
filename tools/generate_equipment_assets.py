@@ -66,3 +66,17 @@ save(f"data/{MOD}/recipe/tire_surface.json", {"type": "minecraft:crafting_shaped
     "key": {"B": {"item": "create:belt_connector"}, "I": {"item": "create:iron_sheet"}},
     "result": {"id": f"{MOD}:tire_surface", "count": 2}})
 save("data/minecraft/tags/block/mineable/pickaxe.json", {"replace": False, "values": [f"{MOD}:{n}" for n in [*modules, "tire_surface"]]})
+
+lang[f"block.{MOD}.brake_fin"] = "Chassis Friction Brake Fin"
+save(f"assets/{MOD}/lang/en_us.json", lang)
+save(f"assets/{MOD}/models/block/brake_fin.json", {"parent": "minecraft:block/block", "textures": {
+    "steel": "minecraft:block/iron_block", "particle": "minecraft:block/iron_block"},
+    "elements": [box([7, 0, 0], [9, 16, 16], "#steel"), box([3, 14, 1], [13, 16, 15], "#steel")]})
+save(f"assets/{MOD}/blockstates/brake_fin.json", {"variants": {"": {"model": f"{MOD}:block/brake_fin"}}})
+save(f"assets/{MOD}/models/item/brake_fin.json", {"parent": f"{MOD}:block/brake_fin"})
+save(f"data/{MOD}/loot_table/blocks/brake_fin.json", {"type": "minecraft:block", "pools": [{"rolls": 1,
+    "entries": [{"type": "minecraft:item", "name": f"{MOD}:brake_fin"}],
+    "conditions": [{"condition": "minecraft:survives_explosion"}]}]})
+save(f"data/{MOD}/recipe/brake_fin.json", {"type": "minecraft:crafting_shaped", "category": "redstone", "pattern": [" I ", " I ", "III"],
+    "key": {"I": {"item": "create:iron_sheet"}}, "result": {"id": f"{MOD}:brake_fin", "count": 2}})
+save("data/minecraft/tags/block/mineable/pickaxe.json", {"replace": False, "values": [f"{MOD}:{n}" for n in [*modules, "tire_surface", "brake_fin"]]})

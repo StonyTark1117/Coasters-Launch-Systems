@@ -233,6 +233,7 @@ public final class FourthDimensionTireGameTests {
     });
     helper.runAtTickTime(100, () -> {
       var motion = MotionProviders.resolve(level, scene.chassis.getUniqueId()).orElseThrow();
+      helper.assertTrue(!motion.brakingAllowed(), "Uncertified Fourth Dimension fin brakes received authority");
       helper.assertTrue(motion.provider().equals("fourthdimension:schema4"), "Fourth Dimension equipment fell through to ordinary provider");
       helper.assertTrue(!motion.propulsionAllowed() && scene.impulse < 1e-9, "Captured vehicle received tire propulsion");
       helper.assertTrue(motion.interfaces().contains(Mechanism.TIRE) != designName.equals("PAX"), "Unexpected tire certificate");

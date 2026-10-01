@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    " I ",
+    " I ",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "create:iron_sheet"
+    }
+  },
+  "result": {
+    "id": "coasterslaunchsystems:brake_fin",
+    "count": 2
+  }
+}

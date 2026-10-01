@@ -9,7 +9,14 @@ import java.util.UUID;
 /** Bodies belong to this articulated cart; consist lists every coupled chassis, including this one. */
 public record MotionVehicle(String provider, UUID chassis, List<UUID> bodies, List<UUID> consist,
     Set<Mechanism> interfaces, boolean dispatchReady, boolean propulsionAllowed,
-    String exclusiveOperator, double maximumAcceleration, double maximumForce) {
+    boolean brakingAllowed, String exclusiveOperator, double maximumAcceleration, double maximumForce) {
+  /** Legacy snapshots carry no authority for new brake equipment. */
+  public MotionVehicle(String provider, UUID chassis, List<UUID> bodies, List<UUID> consist,
+      Set<Mechanism> interfaces, boolean dispatchReady, boolean propulsionAllowed,
+      String exclusiveOperator, double maximumAcceleration, double maximumForce) {
+    this(provider, chassis, bodies, consist, interfaces, dispatchReady, propulsionAllowed,
+        false, exclusiveOperator, maximumAcceleration, maximumForce);
+  }
   public MotionVehicle {
     Objects.requireNonNull(provider); Objects.requireNonNull(chassis);
     bodies = List.copyOf(bodies); consist = List.copyOf(consist); interfaces = Set.copyOf(interfaces);

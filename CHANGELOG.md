@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.1-dev.5 friction fin development
+
+- Implement an ordinary-cart spring-applied, shaft-released fin cabinet with a native longitudinal damping constraint, bounded force and no position spring or hard axis lock.
+- Add a separate installed chassis brake fin, original model, recipe, loot and creative-tab entry.
+- Share the cabinet's 256-unit native force rating across contacted chassis; check loaded consist mass, unbanked slope and available gravity margin before engagement.
+- Introduce explicit braking permission in provider API 2; old motion snapshot construction denies brakes. Fourth Dimension retains tire certification and grants no fin-brake authority yet.
+- Remove native clamp handles when the physical fin, contact, cabinet or ownership becomes unavailable; power loss reapplies an armed, supported spring clamp.
+- Add four native constraint proofs and six actual cabinet fixtures, including bidirectional loaded stops, mass-64 slope hold/release/reapplication, physical hardware removal, missing fins, excessive load and competing owners.
+
+Eighteen unit checks, eighteen packaged standalone native tests and forty-two packaged combined native tests passed with the same JAR. This is partial LS102 progress; 4D brakes, complete stopping envelopes, controller interlocks, heat, animations and packaged multiplayer/lifecycle acceptance remain pending. See [scope and evidence](docs/FIN-CLAMPS.md).
+
 ## 0.0.1-dev.4 Fourth Dimension tire development
 
 - Certify installed chassis tire strips for the pinned Arrow, legacy ZacSpin, Free Spin and revised ZacSpin variants, preserving restraint, capture, maintenance, fault, support and PAX ownership vetoes.

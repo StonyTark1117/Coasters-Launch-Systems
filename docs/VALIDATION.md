@@ -9,7 +9,7 @@ Updated September 30, 2026. The goal is a complete 0.4.0 release validated and p
 | Native point-force launch and friction stop | Forward/reverse ordinary and single-rider 4D fixtures passed; native contact and joint separation verified |
 | Versioned provider contract | Ordinary fallback and read-only schema-4 Fourth Dimension adapter registered; pinned tire interfaces certified; stable facade and lifecycle validation remain |
 | Directed contact and span occupancy | Actual span-tool placement, persisted two-block binding, level/shaft checks and support invalidation tested; obstruction envelopes, adjacent edges and train reservations pending |
-| Tire modules and passive/friction brakes | Ordinary and four pinned 4D tire variants passed loaded bidirectional fixtures, including occupied linked Arrow; complete tire gate and brakes pending |
+| Tire modules and passive/friction brakes | Ordinary and four pinned 4D tire variants passed loaded bidirectional fixtures, including occupied linked Arrow; ordinary fin clamp stops/holds passed through mass 64; complete tire/brake gates and magnetic brakes pending |
 | Local control, signals, conflict ownership and occupancy | Pending |
 | Original LIM and LSM equipment and swing launches | Pending |
 | Skid brakes and gameplay heat limits | Pending |
@@ -53,3 +53,9 @@ Eighteen unit tests, eight packaged standalone native tests and thirty-two packa
 See [scope, measured results and reproduction](FOURTH-DIMENSION-TIRES.md), [unit evidence](evidence/fourthdimension-tire-unit.txt), [packaged standalone](evidence/fourthdimension-tire-packaged-standalone.txt), [packaged combined](evidence/fourthdimension-tire-packaged-combined.txt), and [artifact checksums](evidence/fourthdimension-tire-artifacts.sha256). This remains partial LS003/LS004/LS101 progress. Complete release gates, other brakes/launch mechanisms, ordinary passengers, profile traversal, client/multiplayer and lifecycle evidence remain open.
 
 Implementation commit `929ca5981de96986501e5d925de7e12dfa4a8ab8` is pushed. [Its CI run](https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36808157969) passed the clean build and eight packaged standalone native tests; the downloaded JAR matched the local artifact exactly. [CI evidence](evidence/fourthdimension-tire-ci.txt) records that verification. The 0.4.0 release goal remains active.
+
+## Friction fin checkpoint: 0.0.1-dev.5
+
+Eighteen unit checks, eighteen packaged standalone native tests and forty-two packaged combined native tests passed with the same Launch Systems JAR. Four new native constraint proofs establish loaded forward/reverse stops, bounded overload slipping, slope hold and release. Six actual cabinet fixtures establish an installed fin certificate, rolling stops in both directions, a mass-64 chassis holding a 1-in-4 slope for ten seconds, shaft release/power-loss reapplication, physical fin removal and rejection of missing hardware/excessive mass/competing owners.
+
+See [ratings, scope and contact-length limitations](FIN-CLAMPS.md), [unit evidence](evidence/fin-unit.txt), [packaged standalone](evidence/fin-packaged-standalone.txt), [packaged combined](evidence/fin-packaged-combined.txt), and [artifact checksums](evidence/fin-artifacts.sha256). The API now carries explicit braking authority; Fourth Dimension remains tire-certified and brake-vetoed pending its own loaded fin fixtures. This is partial LS102 progress. Complete stopping envelopes, controller/retention interlocks, occupied/linked brakes, rendered geometry/animation, active restart/chunk/multiplayer tests and remaining 0.4.0 mechanisms are open.

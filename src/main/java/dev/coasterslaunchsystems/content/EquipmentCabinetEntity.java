@@ -60,7 +60,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     // One physical module owns two blocks around its contact, not an entire long edge.
     double beginning = Math.max(0, distance - 1), ending = Math.min(resolved.length(), distance + 1);
     if (ending - beginning < .5) throw new IllegalArgumentException("Leave half a block of supported contact");
-    // This first cabinet is rated only for level, unbanked rail with a transverse shaft.
+    // Tire drives remain level-only. Fin clamps permit unbanked slopes up to a 1-in-4 grade.
     var shaftAxis = getBlockState().getValue(RotatedPillarBlock.AXIS);
     var shaft = switch (shaftAxis) {
       case X -> new Vec3(1, 0, 0);
@@ -71,9 +71,13 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
       var sampleHit = resolved.hitAtDistance(level, beginning + (ending - beginning) * sample / 16);
       var frame = CoasterPathTrackFrame.trackBasisAtHit(level, sampleHit);
       var tangent = resolved.forward(level, sampleHit);
-      if (frame.up().y < .999 || Math.abs(tangent.y) > .01 || Math.abs(shaft.dot(tangent)) > .01
-          || shaftAxis == net.minecraft.core.Direction.Axis.Y)
-        throw new IllegalArgumentException("This module requires level unbanked rail and a transverse shaft");
+      var unbankedUp = new Vec3(0, 1, 0).subtract(tangent.scale(tangent.y)).normalize();
+      double slopeLimit = mechanism() == Mechanism.FIN_BRAKE ? .243 : .01;
+      if (frame.up().dot(unbankedUp) < .999 || Math.abs(tangent.y) > slopeLimit
+          || Math.abs(shaft.dot(tangent)) > .01 || shaftAxis == Direction.Axis.Y)
+        throw new IllegalArgumentException(mechanism() == Mechanism.FIN_BRAKE
+            ? "Fin clamp requires unbanked rail, at most 1-in-4 grade, and a transverse shaft"
+            : "This module requires level unbanked rail and a transverse shaft");
     }
     from = first.immutable(); to = second.immutable(); geometry = resolved.fingerprint();
     start = beginning; end = ending; track = resolved;
@@ -106,8 +110,13 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   }
   public String status() {
     return mechanism() + ": " + (armed ? "armed" : "disarmed") + ", " + getSpeed()
-        + " RPM. " + (from == null ? "Select two track anchors, then use the span tool here." : "Contact " + start + ".." + end + ".")
+        + " RPM. " + padStatus()
+        + (from == null ? "Select two track anchors, then use the span tool here." : "Contact " + start + ".." + end + ".")
         + (fault.isEmpty() ? "" : " " + fault);
+  }
+  private String padStatus() {
+    if (mechanism() != Mechanism.FIN_BRAKE) return "";
+    return Math.abs(getSpeed()) >= 32 ? "Pads power-released. " : "Spring pads applied when armed. ";
   }
   private void changed() { setChanged(); sendData(); }
   @Override protected void write(CompoundTag tag, HolderLookup.Provider registries, boolean client) {
