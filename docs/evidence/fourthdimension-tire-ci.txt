@@ -1,0 +1,21 @@
+CI run: https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36808157969
+Source commit: 929ca5981de96986501e5d925de7e12dfa4a8ab8
+Result: success
+Artifact SHA-256: b1269e64d715d8abcf94e1d077bbfe167a6d3fff6464fb542ff44a69c5caecd5
+CI artifact exactly matched the locally tested JAR.
+
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T02:57:12.8894579Z [02:57:12] [modloading-worker-0/INFO] [de.co.LaunchSystems/]: Coasters: Launch Systems loaded from union:/home/runner/work/Coasters-Launch-Systems/Coasters-Launch-Systems/build/libs/coasters-launch-systems-0.0.1-dev.4.jar%23127!/
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T02:57:20.6872430Z LS_EQUIPMENT_PLACEMENT rpm=64.0 contact=SpanInterval[start=7.000000453561613, end=9.000000453561613] identity=35755e0d-d4c7-4231-a320-73b245bc1662 support_fault=Track geometry changed; inspect and rebind
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T02:57:21.2884819Z LS_NATIVE_POINT_FORCE phase=launch speed=3.991027593612671 seconds=1.999999999999997 impulse=3.999999999999994 mass=1.0 moved=4.0499725341796875
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T02:57:21.3877471Z LS_TIRE_EQUIPMENT fixture=REVERSE_SHAFT mass=2.0 rpm=-64.0 speed=-2.1701302528381348 moved=3.785888671875 fault=
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T02:57:21.3894367Z LS_TIRE_EQUIPMENT fixture=MISSING_STRIP mass=1.0 rpm=64.0 speed=0.0 moved=0.0 fault=Vehicle has no certified tire interface
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T02:57:21.3938829Z LS_TIRE_EQUIPMENT fixture=LOADED mass=26.0 rpm=64.0 speed=1.81930673122406 moved=2.26318359375 fault=
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T02:57:21.3953872Z LS_TIRE_EQUIPMENT fixture=REVERSE mass=2.0 rpm=64.0 speed=-2.1701302528381348 moved=3.785888671875 fault=
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T02:57:21.3974046Z LS_TIRE_EQUIPMENT fixture=CONFLICT mass=2.0 rpm=64.0 speed=0.0 moved=0.0 fault=Overlapping modules claim this consist; separate their contact zones
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T02:57:21.4003902Z LS_TIRE_EQUIPMENT fixture=FORWARD mass=2.0 rpm=64.0 speed=2.674377679824829 moved=4.3209228515625 fault=
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T02:57:21.4874695Z LS_NATIVE_POINT_FORCE phase=stop speed=2.0130879420321435E-5 impulse=-3.191891195797325E-16
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T02:57:21.4934004Z LS_NATIVE_CONTACT phase=reverse speed=-3.991006374359131 moved=4.0499725341796875
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T02:57:21.5891107Z LS_NATIVE_CONTACT phase=complete speed=-1.8000624063879217E-16 contact_steps=320 missing_steps=0
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T02:57:21.5956920Z [02:57:21] [Server thread/INFO] [minecraft/GameTestServer]: All 8 required tests passed :)
+validate	Run ./gradlew clean build runGameTestServer -PlsPackaged --no-daemon --max-workers=2	2026-10-01T02:57:24.2672626Z BUILD SUCCESSFUL in 44s
+validate	Post Run gradle/actions/setup-gradle@0b6dd653ba04f4f93bf581ec31e66cbd7dcb644d	2026-10-01T02:57:36.2798229Z BUILD SUCCESSFUL in 7s
