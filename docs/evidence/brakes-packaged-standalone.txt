@@ -1,0 +1,54 @@
+0.0.1-dev.6 packaged standalone; real binary JAR, isolated source set
+[21:27:42] [modloading-worker-0/INFO] [de.co.LaunchSystems/]: Coasters: Launch Systems loaded from union:/tmp/coasterslaunchsystems-22eeb619/build/libs/coasters-launch-systems-0.0.1-dev.6.jar%23127!/
+LS_FIN_EQUIPMENT fixture=FORWARD phase=stop mass=26.0 speed=4.144504531233828E-11 moved=0.20184326171875 fault=
+LS_FIN_EQUIPMENT fixture=REVERSE phase=stop mass=26.0 speed=5.132066438484628E-10 moved=0.20184326171875 fault=
+LS_FIN_EQUIPMENT fixture=SLOPE phase=stop mass=64.0 speed=-0.0035354921128600836 moved=0.0 fault=
+LS_FIN_EQUIPMENT fixture=MISSING_FIN phase=stop mass=25.0 speed=1.9955307245254517 moved=4.04296875 fault=Vehicle has no certified friction fin
+LS_FIN_EQUIPMENT fixture=CONFLICT phase=stop mass=27.0 speed=1.9955309629440308 moved=4.04296875 fault=Overlapping modules claim this consist; separate their contact zones
+LS_FIN_EQUIPMENT fixture=OVERMASS phase=stop mass=82.0 speed=1.9955307245254517 moved=4.04296875 fault=Loaded consist exceeds the fin clamp mass/slope rating
+LS_FIN_EQUIPMENT fixture=FORWARD phase=hold creep=0.0 distance=8.726877676113517 interval=SpanInterval[start=8.000000457979326, end=10.000000457979326]
+LS_FIN_EQUIPMENT fixture=REVERSE phase=hold creep=0.0 distance=6.27314208639195 interval=SpanInterval[start=6.000000218113094, end=8.000000218113094]
+LS_FIN_EQUIPMENT fixture=SLOPE phase=hold creep=0.0 distance=6.6845789785642715 interval=SpanInterval[start=5.730363852747704, end=7.730363852747704]
+LS_FIN_EQUIPMENT fixture=SLOPE phase=powered_release speed=-1.294749140739441 rpm=-64.0 distance=6.411977796120287
+LS_FIN_EQUIPMENT fixture=FORWARD phase=reapply speed=-3.5579092449999905E-10 rpm=0.0 fault= drift=0.0 distance=8.726877676113517
+LS_FIN_EQUIPMENT fixture=REVERSE phase=reapply speed=-3.557908134776966E-10 rpm=0.0 fault= drift=0.0 distance=6.27314208639195
+LS_FIN_EQUIPMENT fixture=SLOPE phase=reapply speed=-0.005307525862008333 rpm=0.0 fault= drift=1.0066175843793117 distance=5.67972689454029
+LS_FIN_EQUIPMENT fixture=FORWARD phase=hardware_removed speed=3.9871857166290283
+LS_FIN_EQUIPMENT fixture=REVERSE phase=hardware_removed speed=3.9871857166290283
+LS_FIN_EQUIPMENT fixture=SLOPE phase=hardware_removed speed=1.2826029062271118
+LS_EQUIPMENT_PLACEMENT rpm=64.0 contact=SpanInterval[start=7.000000453561613, end=9.000000453561613] identity=e4f7770f-e17f-48cd-91a6-f4d49ff337bc support_fault=Track geometry changed; inspect and rebind
+LS_TIRE_EQUIPMENT fixture=LOADED mass=26.0 rpm=64.0 speed=1.81930673122406 moved=2.26318359375 fault=
+LS_TIRE_EQUIPMENT fixture=FORWARD mass=2.0 rpm=64.0 speed=2.674377679824829 moved=4.3209228515625 fault=
+LS_TIRE_EQUIPMENT fixture=REVERSE_SHAFT mass=2.0 rpm=-64.0 speed=-2.1701302528381348 moved=3.785888671875 fault=
+LS_NATIVE_POINT_FORCE phase=launch speed=3.991027593612671 seconds=1.999999999999997 impulse=3.999999999999994 mass=1.0 moved=4.0499725341796875
+LS_FIN_CONSTRAINT fixture=SLOPE phase=stop mass=25.0 speed=0.0028682815605666477 min_directed=-4.001857198930443
+LS_FIN_CONSTRAINT fixture=OVERLOAD phase=stop mass=25.0 speed=2.48128140810905E-4 min_directed=-7.733763595751952E-6
+LS_TIRE_EQUIPMENT fixture=REVERSE mass=2.0 rpm=64.0 speed=-2.1701302528381348 moved=3.785888671875 fault=
+LS_TIRE_EQUIPMENT fixture=CONFLICT mass=2.0 rpm=64.0 speed=0.0 moved=0.0 fault=Overlapping modules claim this consist; separate their contact zones
+LS_TIRE_EQUIPMENT fixture=MISSING_STRIP mass=1.0 rpm=64.0 speed=0.0 moved=0.0 fault=Vehicle has no certified tire interface
+LS_FIN_CONSTRAINT fixture=FORWARD phase=stop mass=25.0 speed=2.48128140810884E-4 min_directed=-7.733707207080442E-6
+LS_FIN_CONSTRAINT fixture=REVERSE phase=stop mass=25.0 speed=2.48128140810884E-4 min_directed=-7.733585334790405E-6
+LS_NATIVE_POINT_FORCE phase=stop speed=2.0130879420321435E-5 impulse=-3.191891195797325E-16
+LS_NATIVE_CONTACT phase=reverse speed=-3.991006374359131 moved=4.0499725341796875
+LS_NATIVE_CONTACT phase=complete speed=-1.8000624063879217E-16 contact_steps=320 missing_steps=0
+LS_FIN_CONSTRAINT fixture=SLOPE phase=hold creep=0.0 missing=0
+LS_FIN_CONSTRAINT fixture=OVERLOAD phase=hold creep=0.0 missing=0
+LS_FIN_CONSTRAINT fixture=SLOPE phase=release_or_overload speed=-2.58514142036438
+LS_FIN_CONSTRAINT fixture=OVERLOAD phase=release_or_overload speed=5.108534812927246
+LS_FIN_CONSTRAINT fixture=FORWARD phase=hold creep=0.0 missing=0
+LS_FIN_CONSTRAINT fixture=REVERSE phase=hold creep=0.0 missing=0
+LS_FIN_CONSTRAINT fixture=FORWARD phase=release_or_overload speed=1.1215224110543044E-17
+LS_FIN_CONSTRAINT fixture=REVERSE phase=release_or_overload speed=1.1215252234683871E-17
+LS_EDDY_EQUIPMENT fixture=CONFLICT mass=27.0 initial=1.9955118894577026 speed=1.9955309629440308 impulse=0.0 peak_force=0.0 work=0.0 heat=0.0 fault=Overlapping modules claim this consist; separate their contact zones
+LS_EDDY_EQUIPMENT fixture=HOT mass=26.0 initial=1.9955118894577026 speed=1.758913278579712 impulse=6.165610854504546 peak_force=10.240005859445311 work=11.410493576981182 heat=8187.410493576944 fault=
+LS_EDDY_EQUIPMENT fixture=FORWARD mass=26.0 initial=1.9955118894577026 speed=0.0142110176384449 impulse=51.62979071276116 peak_force=102.4000585945078 work=42.53087687263946 heat=26.730876872639378 fault=
+LS_EDDY_EQUIPMENT fixture=REVERSE mass=26.0 initial=-1.9955118894577026 speed=-0.0142110176384449 impulse=51.62979067497716 peak_force=102.40005859291027 work=42.53087675747606 heat=26.730876757475993 fault=
+LS_EDDY_EQUIPMENT fixture=FULL_LOAD mass=64.0 initial=1.9955118894577026 speed=1.0027698278427124 impulse=63.678995653495285 peak_force=102.40005858615102 work=90.29924981913653 heat=74.49924981913631 fault=
+LS_EDDY_EQUIPMENT fixture=AT_REST mass=26.0 initial=-2.2686324661295304E-13 speed=-2.90392675184048E-11 impulse=1.2956840580136967E-9 peak_force=3.012317530926164E-9 work=2.0344558761547556E-20 heat=3.334649535993892E-23 fault=
+LS_EDDY_EQUIPMENT fixture=POWER_LOSS mass=26.0 initial=1.9955118894577026 speed=0.0142110176384449 impulse=51.629790697591076 peak_force=102.40005861480905 work=42.53087687997769 heat=26.73087687997761 fault=
+LS_EDDY_EQUIPMENT fixture=SLOPE mass=26.0 initial=5.580063952947967E-5 speed=-1.121376872062683 impulse=108.61060469471175 peak_force=68.36005496986644 work=85.0312011123809 heat=70.25214166555298 fault=
+LS_EDDY_EQUIPMENT fixture=MISSING_FIN mass=25.0 initial=1.9955116510391235 speed=1.9955307245254517 impulse=0.0 peak_force=0.0 work=0.0 heat=0.0 fault=Vehicle has no certified conductive fin
+LS_EDDY_DISTURBANCE speed=0.3063802123069763 moved=0.35595703125 impulse=22.016215107052208 work=4.412980168845311
+[21:27:52] [Server thread/INFO] [minecraft/GameTestServer]: ========= 27 GAME TESTS COMPLETE IN 6.069 s ======================
+[21:27:52] [Server thread/INFO] [minecraft/GameTestServer]: All 27 required tests passed :)
+BUILD SUCCESSFUL in 25s

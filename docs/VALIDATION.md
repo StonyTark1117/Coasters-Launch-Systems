@@ -5,18 +5,18 @@ Updated September 30, 2026. The goal is a complete 0.4.0 release validated and p
 | Requirement | Current state |
 | --- | --- |
 | Pinned standalone project and build | Build and packaged native test-server passed; rendered client and normal dedicated-server gameplay checks remain |
-| Force, brake, heat, energy and distance math | 18 unit tests passed, including tire demand/traction-envelope regression; further gameplay integration remains |
+| Force, brake, heat, energy and distance math | 20 unit tests passed, including independent rated brake authority and legacy denial; further gameplay integration remains |
 | Native point-force launch and friction stop | Forward/reverse ordinary and single-rider 4D fixtures passed; native contact and joint separation verified |
-| Versioned provider contract | Ordinary fallback and read-only schema-4 Fourth Dimension adapter registered; pinned tire interfaces certified; stable facade and lifecycle validation remain |
+| Versioned provider contract | API 3 ordinary fallback and read-only schema-4 Fourth Dimension adapter registered; pinned tire/friction/conductive interfaces certified in scoped fixtures; stable facade and lifecycle validation remain |
 | Directed contact and span occupancy | Actual span-tool placement, persisted two-block binding, level/shaft checks and support invalidation tested; obstruction envelopes, adjacent edges and train reservations pending |
-| Tire modules and passive/friction brakes | Ordinary and four pinned 4D tire variants passed loaded bidirectional fixtures, including occupied linked Arrow; ordinary fin clamp stops/holds passed through mass 64; complete tire/brake gates and magnetic brakes pending |
+| Tire modules and passive/friction brakes | Ordinary and four pinned 4D equipment variants passed scoped bidirectional fixtures, including occupied linked Arrow; ordinary fin holds through mass 64 and passive magnetic heat/no-hold checks passed; full stopping/brake gates remain |
 | Local control, signals, conflict ownership and occupancy | Pending |
 | Original LIM and LSM equipment and swing launches | Pending |
-| Skid brakes and gameplay heat limits | Pending |
+| Skid brakes and gameplay heat limits | Passive magnetic heat/cooling/derating and NBT migration tested; skid brakes and interrupted-world acceptance pending |
 | Physical guide, catch, release, reset and flywheel launch | Pending |
 | Hydraulic/pneumatic gameplay equipment | Pending |
-| Loaded ordinary and all eligible 4D mechanisms | Full/uneven 4D tire loads and fully occupied native linked Arrow pairs passed; ordinary passengers, profile traversal and other equipment mechanisms pending |
-| Recipes, models, tutorials and Ponder scenes | Original cabinet/drive-strip models and five recipes added; rendered QA, complete mechanisms, tutorials and Ponder remain |
+| Loaded ordinary and all eligible 4D mechanisms | Full/uneven 4D tire/fin/magnetic loads and fully occupied native linked Arrow pairs passed; ordinary passengers, profile traversal and other equipment mechanisms pending |
+| Recipes, models, tutorials and Ponder scenes | Original cabinet/drive-strip/fin models and seven recipes added; rendered QA, complete mechanisms, tutorials and Ponder remain |
 | Packaged client, dedicated server, multiplayer and interrupted saves | Pending |
 | 0.4.0 artifact, commit and verified private remote push | Pending |
 
@@ -42,7 +42,7 @@ See [provider/contact scope and reproduction](FOUNDATION-PROVIDERS.md), [unit re
 
 The actual shaft-powered cabinet moved native ordinary chassis in both directions through an installed tire drive strip. The empty equipment fixture had native mass 2; six iron ballast blocks raised native mass to 26. Negative shaft RPM and reversed anchor selection each reversed motion. Missing drive strips and overlapping owners faulted without propelling the cart. The placement fixture used the real item interaction, verified Create RPM/stress and recipe loading, reconstructed persisted module identity, and invalidated removed support.
 
-This is partial LS005/LS101 progress. At this dev.3 checkpoint, complete release gates still required Fourth Dimension tire certification, linked/occupied equipment, rolling entry, obstructed envelopes, controllers, brakes and interruption/multiplayer tests. Dev.4 supplies the scoped 4D tire evidence below. Fin and magnetic cabinets currently reject operation. See [equipment scope and reproduction](EQUIPMENT-PROTOTYPE.md).
+This is partial LS005/LS101 progress. At this dev.3 checkpoint, complete release gates still required Fourth Dimension tire certification, linked/occupied equipment, rolling entry, obstructed envelopes, controllers, brakes and interruption/multiplayer tests. Dev.4 supplies the scoped 4D tire evidence below. Fin and magnetic cabinets rejected operation at dev.3; later scoped checkpoints below add their behavior. See [equipment scope and reproduction](EQUIPMENT-PROTOTYPE.md).
 
 Implementation commit `c2d192390c24f199b19ce6b40b7a96b42ccdce73` was pushed to the private remote. [Its CI run](https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36804981215) passed a clean build and all eight packaged standalone native tests; the downloaded JAR hash matched the locally validated artifact. Eighteen unit tests and all thirteen packaged combined native fixtures passed locally. The full 0.4.0 goal remains active.
 
@@ -58,6 +58,14 @@ Implementation commit `929ca5981de96986501e5d925de7e12dfa4a8ab8` is pushed. [Its
 
 Eighteen unit checks, eighteen packaged standalone native tests and forty-two packaged combined native tests passed with the same Launch Systems JAR. Four new native constraint proofs establish loaded forward/reverse stops, bounded overload slipping, slope hold and release. Six actual cabinet fixtures establish an installed fin certificate, rolling stops in both directions, a mass-64 chassis holding a 1-in-4 slope for ten seconds, shaft release/power-loss reapplication, physical fin removal and rejection of missing hardware/excessive mass/competing owners.
 
-See [ratings, scope and contact-length limitations](FIN-CLAMPS.md), [unit evidence](evidence/fin-unit.txt), [packaged standalone](evidence/fin-packaged-standalone.txt), [packaged combined](evidence/fin-packaged-combined.txt), and [artifact checksums](evidence/fin-artifacts.sha256). The API now carries explicit braking authority; Fourth Dimension remains tire-certified and brake-vetoed pending its own loaded fin fixtures. This is partial LS102 progress. Complete stopping envelopes, controller/retention interlocks, occupied/linked brakes, rendered geometry/animation, active restart/chunk/multiplayer tests and remaining 0.4.0 mechanisms are open.
+See [ratings, scope and contact-length limitations](FIN-CLAMPS.md), [unit evidence](evidence/fin-unit.txt), [packaged standalone](evidence/fin-packaged-standalone.txt), [packaged combined](evidence/fin-packaged-combined.txt), and [artifact checksums](evidence/fin-artifacts.sha256). The API at dev.5 carried explicit braking authority; Fourth Dimension remained tire-certified and brake-vetoed pending its own loaded fin fixtures. This is partial LS102 progress. Complete stopping envelopes, controller/retention interlocks, occupied/linked brakes, rendered geometry/animation, active restart/chunk/multiplayer tests and remaining 0.4.0 mechanisms are open.
 
 Implementation commit `a5f92af89cda8ef0a4300ca6a32f224e219c9ee9` was pushed to the private remote. [CI run 36810768572](https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36810768572) passed a clean build and all eighteen packaged standalone native tests. Its downloaded JAR exactly matched local SHA-256 `001c41686ddeb8e1cc1317cc6bd9d7e321d6ee352e4c76f56cc1edcaced7f8d4`. [CI evidence](evidence/fin-ci.txt) identifies the source and artifact. Combined Fourth Dimension evidence remains local against the copied pinned upstream JAR; the full 0.4.0 goal remains active.
+
+## Magnetic and Fourth Dimension brake checkpoint: 0.0.1-dev.6
+
+Twenty unit checks, twenty-seven packaged standalone native tests and eighty-nine packaged combined native tests passed with the same binary JAR. Nine new standalone fixtures establish passive bidirectional trim, mass-64 behavior, dissipative heat/cooling, overheat derating, shaft-power-loss independence, no static hold, hardware/conflict rejection and heat/identity NBT migration. Invalid/extrapolated native contact parameters now revoke contact instead of reaching an unchecked distance lookup.
+
+Thirty-eight new combined tests exercise real friction/magnetic cabinets on full/uneven loads in four exact pinned variants, fully occupied native coupled Arrow pairs in both directions, PAX ownership and live vehicle vetoes. Friction stops, magnetic work, rider mass/retention, independent carrier rotation, native joint/coupler error, maintenance interruption and whole-consist denial after carrier unavailability are measured. API 3 supplies a separate finite brake rating; old snapshots deny unrated brake authority.
+
+See [ratings, measured results, reproduction and limitations](MAGNETIC-AND-4D-BRAKES.md), [unit evidence](evidence/brakes-unit.txt), [packaged standalone](evidence/brakes-packaged-standalone.txt), [packaged combined](evidence/brakes-packaged-combined.txt), and [artifact hashes](evidence/brakes-artifacts.sha256). This is partial LS003/LS004/LS102/LS103 progress. Real chunk unload/reload, active saves, rendered/multiplayer gameplay, ordinary passengers, 4D slope hold/profile traversal, stopping envelopes, controllers and all remaining launch mechanisms stay open. No upstream Fourth Dimension checkout or process was changed. The complete 0.4.0 goal remains active.

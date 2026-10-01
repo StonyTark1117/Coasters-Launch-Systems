@@ -9,13 +9,20 @@ import java.util.UUID;
 /** Bodies belong to this articulated cart; consist lists every coupled chassis, including this one. */
 public record MotionVehicle(String provider, UUID chassis, List<UUID> bodies, List<UUID> consist,
     Set<Mechanism> interfaces, boolean dispatchReady, boolean propulsionAllowed,
-    boolean brakingAllowed, String exclusiveOperator, double maximumAcceleration, double maximumForce) {
+    boolean brakingAllowed, String exclusiveOperator, double maximumAcceleration, double maximumForce, double maximumBrakeForce) {
   /** Legacy snapshots carry no authority for new brake equipment. */
   public MotionVehicle(String provider, UUID chassis, List<UUID> bodies, List<UUID> consist,
       Set<Mechanism> interfaces, boolean dispatchReady, boolean propulsionAllowed,
       String exclusiveOperator, double maximumAcceleration, double maximumForce) {
     this(provider, chassis, bodies, consist, interfaces, dispatchReady, propulsionAllowed,
-        false, exclusiveOperator, maximumAcceleration, maximumForce);
+        false, exclusiveOperator, maximumAcceleration, maximumForce, 0);
+  }
+  /** API-2 snapshots lack an explicit brake rating and therefore grant no API-3 brake authority. */
+  public MotionVehicle(String provider, UUID chassis, List<UUID> bodies, List<UUID> consist,
+      Set<Mechanism> interfaces, boolean dispatchReady, boolean propulsionAllowed,
+      boolean brakingAllowed, String exclusiveOperator, double maximumAcceleration, double maximumForce) {
+    this(provider, chassis, bodies, consist, interfaces, dispatchReady, propulsionAllowed,
+        false, exclusiveOperator, maximumAcceleration, maximumForce, 0);
   }
   public MotionVehicle {
     Objects.requireNonNull(provider); Objects.requireNonNull(chassis);
@@ -25,6 +32,8 @@ public record MotionVehicle(String provider, UUID chassis, List<UUID> bodies, Li
       throw new IllegalArgumentException("Invalid or duplicated native body/consist identities");
     dev.coasterslaunchsystems.math.Numbers.positive(maximumAcceleration, "acceleration limit");
     dev.coasterslaunchsystems.math.Numbers.positive(maximumForce, "force limit");
+    dev.coasterslaunchsystems.math.Numbers.nonnegative(maximumBrakeForce, "brake force limit");
+    if (brakingAllowed && maximumBrakeForce == 0) throw new IllegalArgumentException("Braking authority requires a positive rating");
     Objects.requireNonNull(exclusiveOperator);
   }
 }

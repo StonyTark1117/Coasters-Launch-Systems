@@ -74,7 +74,7 @@ public final class EquipmentPlacementGameTests {
       restored.setLevel(level);
       helper.assertTrue(restored.identity().equals(cabinet.identity()) && restored.interval().equals(cabinet.interval())
           && restored.armed() && restored.resolve(level) != null, "Module identity/contact changed on save/load");
-      for (String id : new String[] {"tire_drive", "fin_brake", "eddy_brake", "span_tool", "tire_surface", "brake_fin"})
+      for (String id : new String[] {"tire_drive", "fin_brake", "eddy_brake", "span_tool", "tire_surface", "brake_fin", "conductive_fin"})
         helper.assertTrue(level.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("coasterslaunchsystems", id)).isPresent(),
             "Recipe did not load: " + id);
       level.setBlockAndUpdate(module, state.setValue(RotatedPillarBlock.AXIS, Direction.Axis.Z));

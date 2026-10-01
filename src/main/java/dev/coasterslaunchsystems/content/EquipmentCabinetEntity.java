@@ -27,17 +27,25 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   private String fault = "";
   private DirectedTrack track;
   private int revision = Integer.MIN_VALUE;
+  private dev.coasterslaunchsystems.math.BrakeHeat heat = new dev.coasterslaunchsystems.math.BrakeHeat(4096, 8, 0);
 
   public EquipmentCabinetEntity(BlockPos pos, BlockState state) { super(EquipmentContent.ENTITY.get(), pos, state); }
   @Override public void tick() {
     super.tick();
-    if (level instanceof ServerLevel server) dev.coasterslaunchsystems.runtime.EquipmentRuntime.register(server, this);
+    if (level instanceof ServerLevel server) {
+      dev.coasterslaunchsystems.runtime.EquipmentRuntime.register(server, this);
+      if (mechanism() == Mechanism.EDDY_BRAKE && server.getGameTime() % 20 == 0) sendData();
+    }
   }
   public UUID identity() { return identity; }
   public boolean armed() { return armed; }
   public Mechanism mechanism() { return ((EquipmentCabinetBlock) getBlockState().getBlock()).mechanism; }
   public SpanInterval interval() { return new SpanInterval(start, end); }
   public String fault() { return fault; }
+  public double heat() { return heat.heat(); }
+  public double thermalFraction() { return heat.forceFraction(); }
+  public void absorbHeat(double work) { if (work > 0) { heat.absorb(work); setChanged(); } }
+  public void cool(double dt) { if (heat.heat() > 0) { heat.cool(dt); setChanged(); } }
   @Override public float calculateStressApplied() { return lastStressApplied = mechanism() == Mechanism.TIRE ? 16 : 0; }
 
   public void setArmed(boolean value) {
@@ -72,11 +80,12 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
       var frame = CoasterPathTrackFrame.trackBasisAtHit(level, sampleHit);
       var tangent = resolved.forward(level, sampleHit);
       var unbankedUp = new Vec3(0, 1, 0).subtract(tangent.scale(tangent.y)).normalize();
-      double slopeLimit = mechanism() == Mechanism.FIN_BRAKE ? .243 : .01;
+      boolean slopeRated = mechanism() == Mechanism.FIN_BRAKE || mechanism() == Mechanism.EDDY_BRAKE;
+      double slopeLimit = slopeRated ? .243 : .01;
       if (frame.up().dot(unbankedUp) < .999 || Math.abs(tangent.y) > slopeLimit
           || Math.abs(shaft.dot(tangent)) > .01 || shaftAxis == Direction.Axis.Y)
-        throw new IllegalArgumentException(mechanism() == Mechanism.FIN_BRAKE
-            ? "Fin clamp requires unbanked rail, at most 1-in-4 grade, and a transverse shaft"
+        throw new IllegalArgumentException(slopeRated
+            ? "Brake module requires unbanked rail, at most 1-in-4 grade, and a transverse shaft"
             : "This module requires level unbanked rail and a transverse shaft");
     }
     from = first.immutable(); to = second.immutable(); geometry = resolved.fingerprint();
@@ -115,13 +124,15 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
         + (fault.isEmpty() ? "" : " " + fault);
   }
   private String padStatus() {
+    if (mechanism() == Mechanism.EDDY_BRAKE) return "Passive magnets; no static hold. Heat " + Math.round(heat.heat())
+        + "/4096. " + (heat.overheated() ? "Thermal force derated. " : "");
     if (mechanism() != Mechanism.FIN_BRAKE) return "";
     return Math.abs(getSpeed()) >= 32 ? "Pads power-released. " : "Spring pads applied when armed. ";
   }
   private void changed() { setChanged(); sendData(); }
   @Override protected void write(CompoundTag tag, HolderLookup.Provider registries, boolean client) {
     super.write(tag, registries, client);
-    tag.putInt("ls_schema", 1); tag.putUUID("ls_identity", identity);
+    tag.putInt("ls_schema", 2); tag.putDouble("ls_heat", heat.heat()); tag.putUUID("ls_identity", identity);
     tag.putBoolean("ls_armed", armed); tag.putString("ls_fault", fault);
     if (from != null) {
       tag.putLong("ls_from", from.asLong()); tag.putLong("ls_to", to.asLong());
@@ -131,7 +142,8 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   }
   @Override protected void read(CompoundTag tag, HolderLookup.Provider registries, boolean client) {
     super.read(tag, registries, client);
-    if (tag.contains("ls_schema") && tag.getInt("ls_schema") != 1) throw new IllegalArgumentException("Unsupported equipment schema");
+    if (tag.contains("ls_schema") && tag.getInt("ls_schema") != 1 && tag.getInt("ls_schema") != 2) throw new IllegalArgumentException("Unsupported equipment schema");
+    heat = new dev.coasterslaunchsystems.math.BrakeHeat(4096, 8, tag.getInt("ls_schema") == 2 ? tag.getDouble("ls_heat") : 0);
     if (tag.hasUUID("ls_identity")) identity = tag.getUUID("ls_identity");
     from = tag.contains("ls_from") ? BlockPos.of(tag.getLong("ls_from")) : null;
     to = tag.contains("ls_to") ? BlockPos.of(tag.getLong("ls_to")) : null;

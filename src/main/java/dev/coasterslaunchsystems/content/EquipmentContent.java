@@ -30,6 +30,10 @@ public final class EquipmentContent {
       () -> new BrakeFinBlock(BlockBehaviour.Properties.of().strength(3).noOcclusion()));
   public static final DeferredItem<BlockItem> BRAKE_FIN_ITEM = ITEMS.register("brake_fin",
       () -> new BlockItem(BRAKE_FIN.get(), new Item.Properties()));
+  public static final DeferredBlock<ConductiveFinBlock> CONDUCTIVE_FIN = BLOCKS.register("conductive_fin",
+      () -> new ConductiveFinBlock(BlockBehaviour.Properties.of().strength(3).noOcclusion()));
+  public static final DeferredItem<BlockItem> CONDUCTIVE_FIN_ITEM = ITEMS.register("conductive_fin",
+      () -> new BlockItem(CONDUCTIVE_FIN.get(), new Item.Properties()));
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EquipmentCabinetEntity>> ENTITY =
       ENTITIES.register("equipment_cabinet", () -> BlockEntityType.Builder.of(EquipmentCabinetEntity::new,
           TIRE.get(), FIN.get(), EDDY.get()).build(null));
@@ -52,7 +56,7 @@ public final class EquipmentContent {
     BLOCKS.register(bus); ITEMS.register(bus); ENTITIES.register(bus); COMPONENTS.register(bus);
     bus.addListener((net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent event) -> {
       if (event.getTabKey().equals(net.minecraft.world.item.CreativeModeTabs.REDSTONE_BLOCKS)) {
-        event.accept(TIRE.get()); event.accept(FIN.get()); event.accept(EDDY.get()); event.accept(TIRE_SURFACE.get()); event.accept(BRAKE_FIN.get());
+        event.accept(TIRE.get()); event.accept(FIN.get()); event.accept(EDDY.get()); event.accept(TIRE_SURFACE.get()); event.accept(BRAKE_FIN.get()); event.accept(CONDUCTIVE_FIN.get());
       }
       if (event.getTabKey().equals(net.minecraft.world.item.CreativeModeTabs.TOOLS_AND_UTILITIES)) event.accept(TOOL.get());
     });

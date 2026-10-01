@@ -21,4 +21,11 @@ public final class VehicleInterfaces {
     if (fin == null || !chassis.getLevel().getBlockState(fin).is(EquipmentContent.BRAKE_FIN.get())) return null;
     return new Vector3d(fin.getX() + .5, fin.getY() + .5, fin.getZ() + .5);
   }
+  /** Conductive hardware is distinct from the friction fin and from native seat magnets. */
+  public static Vector3d conductivePoint(ServerSubLevel chassis) {
+    var bearing = CoasterCartTrackSnap.representativeBearingPlotPos(chassis);
+    var fin = bearing == null ? null : bearing.west().below();
+    if (fin == null || !chassis.getLevel().getBlockState(fin).is(EquipmentContent.CONDUCTIVE_FIN.get())) return null;
+    return new Vector3d(fin.getX() + .5, fin.getY() + .5, fin.getZ() + .5);
+  }
 }

@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.1-dev.6 magnetic and articulated brake development
+
+- Add an installed copper conductive fin and passive magnetic cabinet behavior with point-speed force, bounded dissipative impulses, a shared force budget and zero shaft stress.
+- Persist brake heat in equipment schema 2, migrate schema 1 with cold heat, cool loaded cabinets and derate overheated magnetic force.
+- Introduce provider API 3 with a separate finite brake-force rating. Older snapshot overloads deny unrated new brake authority.
+- Certify installed friction/conductive fins on four exact pinned Fourth Dimension variants with conservative loaded-mass brake ratings and whole-consist vehicle vetoes; PAX remains exclusive.
+- Reject extrapolated or nonfinite native guide contacts before distance lookup, fixing a server crash exposed by a car rolling beyond an edge.
+- Add nine standalone magnetic fixtures and thirty-eight loaded articulated brake fixtures, including occupied native Arrow pairs, maintenance/capture/restraint/fault vetoes, PAX and unavailable carriers.
+
+Twenty unit checks, twenty-seven packaged standalone native tests and eighty-nine packaged combined native tests passed with the same JAR. This is partial LS003/LS004/LS102/LS103 progress. Complete stopping envelopes, 4D slope holds, ordinary passengers, controllers, rendered assets, active interruption/multiplayer validation and the remaining 0.4.0 mechanisms stay open. See [scope and evidence](docs/MAGNETIC-AND-4D-BRAKES.md).
+
 ## 0.0.1-dev.5 friction fin development
 
 - Implement an ordinary-cart spring-applied, shaft-released fin cabinet with a native longitudinal damping constraint, bounded force and no position spring or hard axis lock.

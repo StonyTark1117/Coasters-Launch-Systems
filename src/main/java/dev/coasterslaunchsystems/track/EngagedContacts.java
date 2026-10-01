@@ -18,12 +18,12 @@ public final class EngagedContacts {
   private EngagedContacts() {}
 
   public static void accepted(ServerLevel level, ServerSubLevel body, GraphHit hit) {
-    if (hit == null || body.isRemoved() || CoasterCartTrackSnap.isBearingDisengaged(body)) {
+    if (!supported(hit) || body.isRemoved() || CoasterCartTrackSnap.isBearingDisengaged(body)) {
       forget(level, body);
       return;
     }
     var graph = CoasterPathGraphManager.get(level);
-    if (!graph.edges().contains(hit.edge())) return;
+    if (!graph.edges().contains(hit.edge())) { forget(level, body); return; }
     var entries = CONTACTS.computeIfAbsent(level, ignored -> new HashMap<>());
     // Removed/unloaded bodies cannot leave a permanently growing per-world cache.
     entries.values().removeIf(c -> c.tick() < level.getGameTime() - 2);
@@ -33,13 +33,19 @@ public final class EngagedContacts {
   public static Optional<Contact> current(ServerLevel level, ServerSubLevel body) {
     var contact = CONTACTS.getOrDefault(level, Map.of()).get(body.getUniqueId());
     var graph = CoasterPathGraphManager.get(level);
-    if (contact == null || body.isRemoved() || CoasterCartTrackSnap.isBearingDisengaged(body)
+    if (contact == null || !supported(contact.hit()) || body.isRemoved() || CoasterCartTrackSnap.isBearingDisengaged(body)
         || contact.tick() != level.getGameTime() || contact.graphRevision() != graph.revision()
         || !graph.edges().contains(contact.hit().edge())) {
       forget(level, body);
       return Optional.empty();
     }
     return Optional.of(contact);
+  }
+
+  private static boolean supported(GraphHit hit) {
+    return hit != null && hit.edge() != null && hit.point() != null
+        && Double.isFinite(hit.t()) && hit.t() >= 0 && hit.t() <= 1
+        && Double.isFinite(hit.point().lengthSqr());
   }
 
   public static void forget(ServerLevel level, ServerSubLevel body) {

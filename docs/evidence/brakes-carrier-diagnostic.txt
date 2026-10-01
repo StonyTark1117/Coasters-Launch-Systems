@@ -1,0 +1,7 @@
+Initial missing-carrier fixture used permanent REMOVED destruction, invoking upstream whole-vehicle recovery/removal. Cleanup then tried removing already-destroyed parents. NOT passing evidence.
+[21:20:42] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems.4d_fin_brake_arrow_forward_uneven failed at 6968133, -60, 8863468! No sub-level at 0, 0
+[21:20:42] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems.4d_fin_brake_arrow_reverse_uneven failed at 6968141, -60, 8863468! No sub-level at 0, 3
+[21:20:42] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems.4d_fin_brake_legacy_forward_full failed at 6968149, -60, 8863468! No sub-level at 0, 6
+[21:20:42] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems.4d_fin_brake_legacy_reverse_full failed at 6968157, -60, 8863468! No sub-level at 0, 9
+
+Corrected fixture uses UNLOADED unavailability, keeps the authoritative record and chassis, and observes the denied native brake/drive authority before cleanup. Real chunk unload/reload remains pending.

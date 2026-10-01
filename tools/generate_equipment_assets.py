@@ -80,3 +80,17 @@ save(f"data/{MOD}/loot_table/blocks/brake_fin.json", {"type": "minecraft:block",
 save(f"data/{MOD}/recipe/brake_fin.json", {"type": "minecraft:crafting_shaped", "category": "redstone", "pattern": [" I ", " I ", "III"],
     "key": {"I": {"item": "create:iron_sheet"}}, "result": {"id": f"{MOD}:brake_fin", "count": 2}})
 save("data/minecraft/tags/block/mineable/pickaxe.json", {"replace": False, "values": [f"{MOD}:{n}" for n in [*modules, "tire_surface", "brake_fin"]]})
+
+lang[f"block.{MOD}.conductive_fin"] = "Chassis Conductive Brake Fin"
+save(f"assets/{MOD}/lang/en_us.json", lang)
+save(f"assets/{MOD}/models/block/conductive_fin.json", {"parent": "minecraft:block/block", "textures": {
+    "copper": "minecraft:block/copper_block", "particle": "minecraft:block/copper_block"},
+    "elements": [box([7, 0, 0], [9, 16, 16], "#copper"), box([3, 14, 1], [13, 16, 15], "#copper")]})
+save(f"assets/{MOD}/blockstates/conductive_fin.json", {"variants": {"": {"model": f"{MOD}:block/conductive_fin"}}})
+save(f"assets/{MOD}/models/item/conductive_fin.json", {"parent": f"{MOD}:block/conductive_fin"})
+save(f"data/{MOD}/loot_table/blocks/conductive_fin.json", {"type": "minecraft:block", "pools": [{"rolls": 1,
+    "entries": [{"type": "minecraft:item", "name": f"{MOD}:conductive_fin"}],
+    "conditions": [{"condition": "minecraft:survives_explosion"}]}]})
+save(f"data/{MOD}/recipe/conductive_fin.json", {"type": "minecraft:crafting_shaped", "category": "redstone", "pattern": [" C ", " C ", "CCC"],
+    "key": {"C": {"item": "create:copper_sheet"}}, "result": {"id": f"{MOD}:conductive_fin", "count": 2}})
+save("data/minecraft/tags/block/mineable/pickaxe.json", {"replace": False, "values": [f"{MOD}:{n}" for n in [*modules, "tire_surface", "brake_fin", "conductive_fin"]]})

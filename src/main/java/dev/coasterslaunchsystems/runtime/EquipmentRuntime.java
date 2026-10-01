@@ -23,7 +23,7 @@ public final class EquipmentRuntime {
   private record Key(BlockPos module, UUID cart) {}
   private record History(long step, double distance, double acceleration) {}
   private record Clamp(UUID identity, NativeFinClamp handle) {}
-  private static final double FIN_FORCE = 256, FIN_MASS = 64;
+  private static final double FIN_FORCE = 256, FIN_MASS = 64, EDDY_FORCE = 128;
   private static final Map<ServerLevel, Map<Key, Clamp>> CLAMPS = new HashMap<>();
   private record Request(EquipmentCabinetEntity module, ServerSubLevel cart,
       double mass, double energyMass, double speed, Vector3d direction, Vector3d point, double force, Key key, double distance) {}
@@ -35,11 +35,17 @@ public final class EquipmentRuntime {
   public static void register(ServerLevel level, EquipmentCabinetEntity module) {
     MODULES.computeIfAbsent(level, ignored -> new LinkedHashMap<>()).put(module.getBlockPos(), new Entry(module, level.getGameTime()));
   }
+  /** Read-only native contact diagnostics; no saved or caller-owned constraint handles. */
+  public static int activeFinClamps(ServerLevel level, UUID chassis) {
+    var clamps = CLAMPS.get(level);
+    return clamps == null ? 0 : (int) clamps.entrySet().stream()
+        .filter(e -> e.getKey().cart().equals(chassis) && e.getValue().handle().valid()).count();
+  }
   public static void unload(LevelEvent.Unload event) {
     if (event.getLevel() instanceof ServerLevel level) {
       MODULES.remove(level); HISTORY.remove(level); STEPS.remove(level);
-      var clamps = CLAMPS.remove(level);
-      if (clamps != null) clamps.values().forEach(c -> c.handle().close());
+      // Sable world teardown owns all native joints. Avoid JNI calls after another unload listener disposes it.
+      CLAMPS.remove(level);
     }
   }
   public static void physics(ForgeSablePrePhysicsTickEvent event) {
@@ -59,13 +65,14 @@ public final class EquipmentRuntime {
     var groups = new LinkedHashMap<UUID, List<Request>>();
     for (var entry : List.copyOf(modules.values())) {
       var module = entry.module();
+      module.cool(dt);
       if (!module.armed() || !module.fault().isEmpty()) continue;
       if (ModList.get().isLoaded("coastersengineered") || ModList.get().isLoaded("coasterfins")) {
         module.fail("An installed drive addon needs an ownership adapter"); continue;
       }
       var track = module.resolve(level);
       if (track == null) continue;
-      if (module.mechanism() != Mechanism.TIRE && module.mechanism() != Mechanism.FIN_BRAKE) {
+      if (module.mechanism() != Mechanism.TIRE && module.mechanism() != Mechanism.FIN_BRAKE && module.mechanism() != Mechanism.EDDY_BRAKE) {
         module.fail("Matching brake reaction hardware is required"); continue;
       }
       var mechanism = module.mechanism();
@@ -86,7 +93,11 @@ public final class EquipmentRuntime {
           var motion = MotionProviders.resolve(level, cart.getUniqueId()).orElse(null);
           if (motion == null || !permitted(motion, mechanism)) continue;
           if (!motion.interfaces().contains(mechanism)) {
-            module.fail(mechanism == Mechanism.TIRE ? "Vehicle has no certified tire interface" : "Vehicle has no certified friction fin"); continue;
+            module.fail(switch (mechanism) {
+              case TIRE -> "Vehicle has no certified tire interface";
+              case FIN_BRAKE -> "Vehicle has no certified friction fin";
+              default -> "Vehicle has no certified conductive fin";
+            }); continue;
           }
           boolean available = true; double consistMass = 0;
           for (var member : motion.consist()) {
@@ -106,7 +117,11 @@ public final class EquipmentRuntime {
             }
           }
           if (!available) continue;
-          var point = mechanism == Mechanism.TIRE ? VehicleInterfaces.tirePoint(cart) : VehicleInterfaces.brakePoint(cart);
+          var point = switch (mechanism) {
+            case TIRE -> VehicleInterfaces.tirePoint(cart);
+            case FIN_BRAKE -> VehicleInterfaces.brakePoint(cart);
+            default -> VehicleInterfaces.conductivePoint(cart);
+          };
           if (point == null) { module.fail("Chassis interface hardware was removed"); continue; }
           double mass = NativeForces.mass(level, motion);
           if (mass <= 0) continue;
@@ -116,12 +131,21 @@ public final class EquipmentRuntime {
           double speed = dynamics.speed();
           if (mechanism == Mechanism.FIN_BRAKE) {
             double gravity = Math.abs(dev.ryanhcode.sable.physics.config.dimension_physics.DimensionPhysicsData.getGravity(level).dot(direction));
-            if (consistMass > FIN_MASS || gravity * consistMass > .8 * Math.min(FIN_FORCE, motion.maximumForce())) {
+            if (consistMass > FIN_MASS || gravity * consistMass > .8 * Math.min(FIN_FORCE, motion.maximumBrakeForce())) {
               module.fail("Loaded consist exceeds the fin clamp mass/slope rating"); continue;
             }
             UUID consist = motion.consist().stream().min(UUID::compareTo).orElseThrow();
             groups.computeIfAbsent(consist, ignored -> new ArrayList<>()).add(new Request(module, cart, mass,
-                dynamics.effectiveMass(), speed, direction, point, Math.min(FIN_FORCE, motion.maximumForce()), key, distance));
+                dynamics.effectiveMass(), speed, direction, point, Math.min(FIN_FORCE, motion.maximumBrakeForce()), key, distance));
+            continue;
+          }
+          if (mechanism == Mechanism.EDDY_BRAKE) {
+            // Half the free-body no-reversal impulse keeps the discrete curve asymptotic near rest.
+            double limit = Math.min(Math.min(EDDY_FORCE, motion.maximumBrakeForce()), .5 * dynamics.effectiveMass() * Math.abs(speed) / dt);
+            double force = Numbers.clamp(DriveMath.eddyForce(speed, 64, 4) * module.thermalFraction(), -limit, limit);
+            UUID consist = motion.consist().stream().min(UUID::compareTo).orElseThrow();
+            groups.computeIfAbsent(consist, ignored -> new ArrayList<>()).add(new Request(module, cart, mass,
+                dynamics.effectiveMass(), speed, direction, point, force, key, distance));
             continue;
           }
           double wheelSpeed = DriveMath.wheelSpeed(module.getSpeed(), .4);
@@ -203,6 +227,23 @@ public final class EquipmentRuntime {
         NativeForces.pointForce(request.cart(), request.point(),
             new Vector3d(request.direction()).mul(force), dt);
         history.put(request.key(), new History(step, request.distance(), force / request.mass()));
+      }
+    }
+    for (var allocation : allocated.entrySet()) {
+      var module = allocation.getKey();
+      if (module.mechanism() != Mechanism.EDDY_BRAKE || !module.armed() || !module.fault().isEmpty()) continue;
+      double demand = allocation.getValue().stream().mapToDouble(r -> Math.abs(r.force())).sum();
+      double scale = demand > EDDY_FORCE ? EDDY_FORCE / demand : 1;
+      for (var request : allocation.getValue()) {
+        double force = request.force() * scale;
+        double work = DriveMath.incrementalWork(request.energyMass(), request.speed(), force, dt);
+        if (work > 1e-10) { module.fail("Passive magnetic request would add interface energy"); break; }
+      }
+      if (!module.armed() || !module.fault().isEmpty()) continue;
+      for (var request : allocation.getValue()) {
+        double force = request.force() * scale;
+        NativeForces.pointForce(request.cart(), request.point(), new Vector3d(request.direction()).mul(force), dt);
+        module.absorbHeat(Math.max(0, -DriveMath.incrementalWork(request.energyMass(), request.speed(), force, dt)));
       }
     }
     history.values().removeIf(h -> h.step() < step - 2);

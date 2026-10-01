@@ -14,16 +14,20 @@ public final class NativeForces {
   private NativeForces() {}
 
   public static double mass(ServerLevel level, MotionVehicle vehicle) {
+    return mass(level, vehicle.bodies());
+  }
+
+  public static double mass(ServerLevel level, java.util.List<java.util.UUID> bodies) {
     var container = SubLevelContainer.getContainer(level);
     if (container == null) return 0;
     double result = 0;
-    for (var id : vehicle.bodies()) {
+    for (var id : bodies) {
       if (!(container.getSubLevel(id) instanceof ServerSubLevel body) || body.isRemoved()) return 0;
       var tracker = body.getMassTracker();
       if (tracker.isInvalid() || !Double.isFinite(tracker.getMass()) || tracker.getMass() <= 0) return 0;
       result += tracker.getMass();
     }
-    return result;
+    return Double.isFinite(result) ? result : 0;
   }
 
   public static void pointForce(ServerSubLevel chassis, Vector3dc plotPoint, Vector3dc worldForce,

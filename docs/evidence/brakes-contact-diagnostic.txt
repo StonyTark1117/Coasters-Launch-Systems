@@ -1,0 +1,30 @@
+Pre-fix native slope diagnostic; NOT a passing artifact. Extrapolated contact reached unchecked curve distance.
+[20:56:54] [Server thread/ERROR] [ne.ne.bu.EventBus/EVENTBUS]: Exception caught during firing event: Parameter outside curve
+	Index: 4
+	Listeners:
+		0: dev.silvergold.simulatedcoasters.SimulatedCoasters$$Lambda/0x00007f8640cf3a98@48073d73
+		1: dev.silvergold.simulatedcoasters.SimulatedCoasters$$Lambda/0x00007f8640cfc000@50eed76
+		2: dev.silvergold.simulatedcoasters.SimulatedCoasters$$Lambda/0x00007f8640cfc438@20cad0c4
+		3: dev.silvergold.simulatedcoasters.SimulatedCoasters$$Lambda/0x00007f8640cfceb8@5461fdb8
+		4: dev.coasterslaunchsystems.LaunchSystems$$Lambda/0x00007f864109aa58@67ba24d1
+		5: dev.coasterslaunchsystems.gametest.FinEquipmentGameTests$$Lambda/0x00007f86414cd948@466f905e
+		6: dev.coasterslaunchsystems.gametest.NativeForceGameTests$$Lambda/0x00007f8641502c08@668a1570
+		7: dev.coasterslaunchsystems.gametest.FinConstraintGameTests$$Lambda/0x00007f864152f250@7566e397
+		8: dev.coasterslaunchsystems.gametest.EddyEquipmentGameTests$$Lambda/0x00007f8641537850@693b7b72
+java.lang.IllegalArgumentException: Parameter outside curve
+	at TRANSFORMER/coasterslaunchsystems@0.0.1-dev.6/dev.coasterslaunchsystems.math.ArcLengthTable.distance(ArcLengthTable.java:38)
+	at TRANSFORMER/coasterslaunchsystems@0.0.1-dev.6/dev.coasterslaunchsystems.track.DirectedTrack.distance(DirectedTrack.java:62)
+	at TRANSFORMER/coasterslaunchsystems@0.0.1-dev.6/dev.coasterslaunchsystems.runtime.EquipmentRuntime.physics(EquipmentRuntime.java:80)
+	at MC-BOOTSTRAP/net.neoforged.bus/net.neoforged.bus.ConsumerEventHandler.invoke(ConsumerEventHandler.java:27)
+	at MC-BOOTSTRAP/net.neoforged.bus/net.neoforged.bus.EventBus.post(EventBus.java:360)
+	at MC-BOOTSTRAP/net.neoforged.bus/net.neoforged.bus.EventBus.post(EventBus.java:328)
+	at TRANSFORMER/sable@2.0.3/dev.ryanhcode.sable.neoforge.platform.SableEventPublishPlatformImpl.prePhysicsTick(SableEventPublishPlatformImpl.java:35)
+	at TRANSFORMER/sable@2.0.3/dev.ryanhcode.sable.sublevel.system.SubLevelPhysicsSystem.tickPipelinePhysics(SubLevelPhysicsSystem.java:270)
+	at TRANSFORMER/sable@2.0.3/dev.ryanhcode.sable.sublevel.system.SubLevelPhysicsSystem.tick(SubLevelPhysicsSystem.java:237)
+	at TRANSFORMER/sable@2.0.3/dev.ryanhcode.sable.api.sublevel.SubLevelContainer.lambda$tick$0(SubLevelContainer.java:147)
+	at MC-BOOTSTRAP/it.unimi.dsi.fastutil@8.5.12/it.unimi.dsi.fastutil.objects.ReferenceArrayList.forEach(ReferenceArrayList.java:719)
+	at TRANSFORMER/sable@2.0.3/dev.ryanhcode.sable.api.sublevel.SubLevelContainer.tick(SubLevelContainer.java:147)
+	at TRANSFORMER/sable@2.0.3/dev.ryanhcode.sable.api.sublevel.ServerSubLevelContainer.tick(ServerSubLevelContainer.java:90)
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ServerLevel.handler$zhp000$sable$tickPlotContainer(ServerLevel.java:7023)
+
+Fixed by rejecting unsupported native contact parameters; packaged slope and explicit invalid-parameter checks now pass.
