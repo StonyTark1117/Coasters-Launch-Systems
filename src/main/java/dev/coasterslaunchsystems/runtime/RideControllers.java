@@ -52,7 +52,7 @@ public final class RideControllers {
     return controller != null && controller.reservation().isEmpty() && !controller.armed();
   }
   public static boolean occupiedEquipment(ServerLevel level, BlockPos pos) {
-    if (level.getBlockEntity(pos) instanceof EquipmentCabinetEntity module && !editingAllowed(level, module)) return true;
+    if (level.getBlockEntity(pos) instanceof EquipmentCabinetEntity module && (module.cableInUse() || !editingAllowed(level, module))) return true;
     if (level.getBlockEntity(pos) instanceof RideControllerEntity controller && (!controller.reservation().isEmpty() || !controller.modules().isEmpty())) return true;
     return CONTROLLERS.getOrDefault(level, Map.of()).values().stream().map(Entry::controller)
         .anyMatch(c -> !c.reservation().isEmpty() && c.endpoint(pos));

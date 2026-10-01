@@ -35,12 +35,11 @@ public final class CableRigGameTests {
     final RideControllerGameTests.Scene ride;
     final String mode;
     final List<NativeFinClamp> preparation = new ArrayList<>(), stopping = new ArrayList<>();
-    final FlywheelStore store = new FlywheelStore(4, 50, 0);
     final BlockPos charger, motor;
     NativeCableRig rig;
     ServerSubLevel lead;
     double charged, drawn, work, heat, returnWork, shaftWork, peakSpeed, peakCatchForce, peakTrainTraction, beforeMomentum, maxSocketError, maxGuideError, maxJointError, maxCouplerError;
-    double beginEnergy, beginOmega, releaseOmega, releaseDistance, maxAccountingError, homeDistance, interruptionDraw;
+    double beginEnergy, beginOmega, releaseOmega, releaseDistance, maxAccountingError, homeDistance, interruptionDraw, interruptionEnergy;
     int pullSteps, returnSteps, releases;
     boolean active, released, stopped, closed, rejected, engageRequested, pullRequested, sampleTraction;
     String failure = "";
@@ -51,6 +50,8 @@ public final class CableRigGameTests {
       ride.base.level.setBlockAndUpdate(motor, AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalBlock.FACING, Direction.EAST));
       ((CreativeMotorBlockEntity) ride.base.level.getBlockEntity(motor)).generatedSpeed.setValue(64);
     }
+    EquipmentCabinetEntity cabinet() { return (EquipmentCabinetEntity) ride.base.level.getBlockEntity(charger); }
+    FlywheelStore store() { return cabinet().flywheel(); }
     void at(int tick, Runnable action) { ride.base.helper.runAtTickTime(tick + (ride.fourthDimension ? 120 : 0), () -> { try { action.run(); } catch (RuntimeException e) { System.err.println("LS_CABLE_FAILURE mode=" + mode + " tick=" + tick); e.printStackTrace(); cleanup(); throw e; } }); }
     void cleanup() {
       if (closed) return; closed = true; SCENES.remove(this);
@@ -77,23 +78,26 @@ public final class CableRigGameTests {
             r.base.helper.assertTrue(rejected && s.rig.phase() == NativeCableRig.Phase.HOME && s.rig.consist().isEmpty(), "Uncertified/misaligned catch was engaged");
             System.out.println("LS_CABLE_REJECT mode=" + s.mode + " phase=" + s.rig.phase()); s.rejected = true; continue;
           }
-          if (s.mode.equals("depleted")) s.store.draw(s.store.energy());
-          s.rig.engage(s.lead.getUniqueId());
+          if (s.mode.equals("depleted")) s.cabinet().consumeFlywheel(s.store().energy());
+          s.cabinet().engageCable(s.rig, s.lead.getUniqueId());
           r.base.helper.assertTrue(s.rig.consist().equals(r.base.parents.stream().map(ServerSubLevel::getUniqueId).collect(java.util.stream.Collectors.toSet())), "Catch omitted a native consist member");
-          s.beginEnergy = s.store.energy(); s.beginOmega = s.store.omega();
+          s.beginEnergy = s.store().energy(); s.beginOmega = s.store().omega();
         }
         if (s.pullRequested) {
           s.pullRequested = false; s.rig.beginPull(); s.preparation.forEach(NativeFinClamp::close); s.preparation.clear(); s.active = true;
         }
-        double dt = event.getTimeStep(); double input = 8 * Math.abs(((EquipmentCabinetEntity) r.base.level.getBlockEntity(s.charger)).getSpeed()) * 2 * Math.PI / 60 * dt;
-        double oldEnergy = s.store.energy(); var phase = s.rig.phase();
+        double dt = event.getTimeStep();
+        double oldEnergy = s.store().energy(); var phase = s.rig.phase();
         NativeCableRig.Step step = new NativeCableRig.Step(0, 0, 0, 0, false);
+        double acceptedCharge = 0, shaftBudget = 0;
         if (s.active) {
           s.peakCatchForce = Math.max(s.peakCatchForce, s.rig.catchForce(dt));
           s.maxSocketError = Math.max(s.maxSocketError, s.rig.socketError()); s.maxGuideError = Math.max(s.maxGuideError, s.rig.guideError());
-          step = s.rig.step(s.store, 3, input * .9, dt);
+          var result = s.cabinet().stepCable(s.rig, dt);
+          step = result.motion(); acceptedCharge = result.charged(); shaftBudget = result.shaftBudget();
           if (phase == NativeCableRig.Phase.PULLING) s.pullSteps++;
           if (phase == NativeCableRig.Phase.RETURNING) s.returnSteps++;
+          if (s.rig.phase() == NativeCableRig.Phase.HOME) s.active = false;
         }
         s.sampleTraction = phase == NativeCableRig.Phase.PULLING && s.rig.phase() == NativeCableRig.Phase.PULLING && Math.abs(step.force()) > 0;
         if (s.sampleTraction) s.beforeMomentum = trainMomentum(s);
@@ -106,15 +110,12 @@ public final class CableRigGameTests {
         double actualWork = velocity.dot(impulse) + angular.dot(torque) + .5 * carriage.getMassTracker().getInverseMass() * impulse.lengthSquared()
             + .5 * torque.dot(carriage.getMassTracker().getInverseInertiaTensor().transform(new Vector3d(torque)));
         double error = Math.abs(actualWork - step.work()); s.maxAccountingError = Math.max(s.maxAccountingError, error);
-        r.base.helper.assertTrue(error < 1e-8 && Math.abs(oldEnergy - s.store.energy() - step.storeDraw()) < 1e-8, "Native carriage impulse did not reconcile with finite cable work");
+        r.base.helper.assertTrue(error < 1e-8 && Math.abs(oldEnergy + acceptedCharge - s.store().energy() - step.storeDraw()) < 1e-8, "Native carriage impulse did not reconcile with cabinet flywheel work");
         s.drawn += step.storeDraw(); s.heat += step.heat();
         if (phase == NativeCableRig.Phase.PULLING) s.work += step.work();
-        if (step.returning()) { s.returnWork += Math.max(0, step.work()); s.shaftWork += input * .9; }
-        if (phase != NativeCableRig.Phase.PULLING && phase != NativeCableRig.Phase.ENGAGED && !(s.mode.equals("depleted") && s.active)) {
-          // A return impulse spends the shaft budget first; only its unused share charges the flywheel.
-          double accepted = s.store.charge(Math.max(0, input * .9 - Math.max(0, step.work()))); s.charged += accepted;
-        }
-        if (!s.released && s.rig.phase() == NativeCableRig.Phase.RELEASING) { s.released = true; s.releases++; s.releaseDistance = s.rig.travel(); s.releaseOmega = s.store.omega(); }
+        if (step.returning()) { s.returnWork += Math.max(0, step.work()); s.shaftWork += shaftBudget; }
+        s.charged += acceptedCharge;
+        if (!s.released && s.rig.phase() == NativeCableRig.Phase.RELEASING) { s.released = true; s.releases++; s.releaseDistance = s.rig.travel(); s.releaseOmega = s.store().omega(); }
         for (var body : r.base.parents) {
           var contact = EngagedContacts.current(r.base.level, body).orElseThrow();
           r.base.helper.assertTrue(r.track.matches(contact.hit()), "Cable train lost native rail contact");
@@ -157,7 +158,7 @@ public final class CableRigGameTests {
     }
   }
   @GameTestGenerator public static List<TestFunction> mechanics() {
-    var modes = new ArrayList<>(List.of("single_forward", "linked_forward", "linked_reverse", "misaligned", "depleted", "power_loss", "early_reset", "guide_edited", "guide_removed", "mass_changed"));
+    var modes = new ArrayList<>(List.of("single_forward", "linked_forward", "linked_reverse", "misaligned", "depleted", "power_loss", "reload_active", "early_reset", "guide_edited", "guide_removed", "mass_changed"));
     if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of("arrow_forward", "arrow_linked_forward", "arrow_linked_reverse", "free_spin_reject"));
     var tests = new ArrayList<TestFunction>(); int slot = 0;
     for (String mode : modes) { int selected = slot++; tests.add(new TestFunction("launchsystems_cable_mechanics", "coasterslaunchsystems_cable." + mode,
@@ -191,7 +192,7 @@ public final class CableRigGameTests {
       r.base.helper.assertTrue(cabinet.flywheel().energy() > 750 && cabinet.flywheel().energy() <= 5000
           && cabinet.flywheel().omega() > 0 && cabinet.calculateStressApplied() == 16,
           "Placed kinetic flywheel did not charge within its work and speed ratings");
-      r.base.helper.assertTrue(s.failure.isEmpty() && s.rig.phase() == NativeCableRig.Phase.HOME && Math.abs(s.rig.speed()) < .03 && s.store.energy() > 750, "Cable carriage/shaft charging did not settle: " + s.failure);
+      r.base.helper.assertTrue(s.failure.isEmpty() && s.rig.phase() == NativeCableRig.Phase.HOME && Math.abs(s.rig.speed()) < .03 && s.store().energy() > 750, "Cable carriage/shaft charging did not settle: " + s.failure);
       System.out.println("LS_CABLE_HOME mode=" + s.mode + " travel=" + s.rig.travel() + " speed=" + s.rig.speed() + " guide_error=" + s.rig.guideError()
           + " socket=" + NativeCableRig.worldPoint(s.lead, VehicleInterfaces.catchPoint(s.lead)).toString(java.text.NumberFormat.getNumberInstance(java.util.Locale.ROOT))
           + " carriage=" + s.rig.carriagePoint().toString(java.text.NumberFormat.getNumberInstance(java.util.Locale.ROOT)));
@@ -204,7 +205,21 @@ public final class CableRigGameTests {
     });
     s.at(460, () -> {
       s.interruptionDraw = s.drawn;
+      s.interruptionEnergy = s.store().energy();
       if (s.mode.equals("power_loss")) s.rig.emergencyHold("Shaft release power lost");
+      if (s.mode.equals("reload_active")) {
+        var cabinet = s.cabinet();
+        double energy = cabinet.flywheel().energy();
+        cabinet.loadWithComponents(cabinet.saveWithFullMetadata(r.base.level.registryAccess()), r.base.level.registryAccess());
+        r.base.helper.assertTrue(cabinet.cableInUse() && !cabinet.armed() && cabinet.fault().contains("inspected recovery")
+            && Math.abs(cabinet.flywheel().energy() - energy) < 1e-8,
+            "Reload did not retain the cable journal, energy and inspection fault");
+        boolean bindingDenied = false, linkingDenied = false;
+        try { cabinet.bind(r.base.level, r.base.from, r.base.to); } catch (IllegalArgumentException expected) { bindingDenied = true; }
+        try { cabinet.linkController(r.base.from, UUID.randomUUID()); } catch (IllegalArgumentException expected) { linkingDenied = true; }
+        r.base.helper.assertTrue(bindingDenied && linkingDenied && RideControllers.occupiedEquipment(r.base.level, s.charger),
+            "Retained cable catch allowed rebinding, relinking or block removal");
+      }
       if (s.mode.equals("early_reset")) {
         boolean denied = false; try { s.rig.engage(s.lead.getUniqueId()); } catch (IllegalStateException expected) { denied = true; }
         r.base.helper.assertTrue(denied && s.rig.phase() == NativeCableRig.Phase.PULLING && !s.rig.consist().isEmpty(), "Early reset changed the active catch owner");
@@ -224,13 +239,15 @@ public final class CableRigGameTests {
       try {
         r.base.helper.assertTrue(s.failure.isEmpty(), "Native cable sensor failed: " + s.failure);
         if (s.mode.equals("depleted")) {
-          r.base.helper.assertTrue(s.store.energy() < 1e-8 && s.drawn <= s.beginEnergy + 1e-8 && !s.released && s.rig.phase() == NativeCableRig.Phase.PULLING, "Empty flywheel created a launch/reset");
+          r.base.helper.assertTrue(s.store().energy() < 1e-8 && s.drawn <= s.beginEnergy + 1e-8 && !s.released && s.rig.phase() == NativeCableRig.Phase.PULLING, "Empty flywheel created a launch/reset");
           r.base.helper.assertTrue(Math.abs(s.rig.travel()) < .03 && s.peakSpeed < .03 && s.drawn == 0, "Empty flywheel moved its catch/train");
           s.rig.emergencyHold("Depleted cable needs inspection");
-        } else if (s.mode.equals("power_loss") || s.mode.equals("guide_edited") || s.mode.equals("guide_removed")) {
+        } else if (s.mode.equals("power_loss") || s.mode.equals("reload_active") || s.mode.equals("guide_edited") || s.mode.equals("guide_removed")) {
           r.base.helper.assertTrue(s.rig.phase() == NativeCableRig.Phase.FAULT && !s.released && !s.rig.consist().isEmpty()
               && !s.rig.fault().isEmpty() && Math.abs(s.drawn - s.interruptionDraw) < 1e-8
-              && r.base.parents.stream().allMatch(b -> Math.abs(r.base.speed(b)) < .03), "Cable interruption hold lost its physical catch/train or added launch work");
+              && Math.abs(s.store().energy() - s.interruptionEnergy) < 1e-8
+              && s.cabinet().cableInUse() && r.base.parents.stream().allMatch(b -> Math.abs(r.base.speed(b)) < .03),
+              "Cable interruption hold lost its physical catch/train or added launch work");
         } else {
           r.base.helper.assertTrue(s.releases == 1 && s.releaseDistance >= 12 && s.releaseDistance < 12.2 && s.rig.phase() == NativeCableRig.Phase.HOME
               && Math.abs(s.rig.travel()) < .03 && Math.abs(s.rig.speed()) < .03 && s.rig.consist().isEmpty(), "Physical cable release/return failed: " + s.rig.phase() + " travel=" + s.rig.travel() + " released=" + s.releases);
@@ -246,7 +263,7 @@ public final class CableRigGameTests {
           var saved = cabinet.saveWithFullMetadata(r.base.level.registryAccess());
           double energy = cabinet.flywheel().energy();
           cabinet.loadWithComponents(saved, r.base.level.registryAccess());
-          r.base.helper.assertTrue(!cabinet.armed() && Math.abs(cabinet.flywheel().energy() - energy) < 1e-8,
+          r.base.helper.assertTrue(!cabinet.armed() && !cabinet.cableInUse() && Math.abs(cabinet.flywheel().energy() - energy) < 1e-8,
               "Flywheel reload lost its finite work or rearmed the clutch");
           boolean denied = false;
           try { cabinet.setArmed(true); } catch (IllegalArgumentException expected) { denied = true; }

@@ -53,6 +53,8 @@ Dev.14 adds a [native cable-mechanics prototype](docs/CABLE-MECHANICS.md): a rea
 
 Dev.15 adds a craftable world cable-guide bed and a kinetic flywheel cabinet with a finite saved store. Rig creation and every physics step validate continuous guide placement. Removing a bed during pull causes a retained fault and ends resource draw. The flywheel cabinet charges from Create shaft RPM and reloads disarmed; its clutch cannot yet arm because controller/catch integration and inspected recovery are still required. The fixture still drives its own cable store and stopping clamps, so this is not a playable launch system.
 
+Dev.16 feeds the native catch from the placed cabinet's actual saved flywheel store. Active catch ownership pauses background charging; shaft work first funds physical carriage return and only the remainder recharges the store. A persisted active-catch journal blocks automatic restart, binding edits and equipment removal after an interrupted reload. Test fixtures still request engagement/dispatch and provide final train stopping, so player controller/clutch integration and inspected recovery remain open.
+
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |
 | LS301 | Shared cable guide, catch socket, carriage and release/reset machine | 0.2. Real constrained pull, rated guide/end clearance, physical return and misalignment handling. No teleport, one-shot impulse or prescribed train path. |

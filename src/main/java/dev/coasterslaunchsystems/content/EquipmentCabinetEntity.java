@@ -3,6 +3,7 @@ package dev.coasterslaunchsystems.content;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import dev.coasterslaunchsystems.math.Mechanism;
 import dev.coasterslaunchsystems.math.SpanInterval;
+import dev.coasterslaunchsystems.runtime.NativeCableRig;
 import dev.coasterslaunchsystems.track.DirectedTrack;
 import dev.silvergold.simulatedcoasters.track.graph.CoasterPathGraphManager;
 import dev.silvergold.simulatedcoasters.track.graph.CoasterPathTrackFrame;
@@ -33,6 +34,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   private dev.coasterslaunchsystems.math.BrakeHeat heat = new dev.coasterslaunchsystems.math.BrakeHeat(4096, 8, 0);
   private dev.coasterslaunchsystems.math.EnergyBuffer buffer = new dev.coasterslaunchsystems.math.EnergyBuffer(dev.coasterslaunchsystems.math.LinearMotor.CAPACITY, 0);
   private dev.coasterslaunchsystems.math.FlywheelStore flywheel = new dev.coasterslaunchsystems.math.FlywheelStore(4, 50, 0);
+  private boolean cableInUse;
   private double target = 3, accelerationLimit = 2, jerkLimit = 4;
 
   public EquipmentCabinetEntity(BlockPos pos, BlockState state) { super(EquipmentContent.ENTITY.get(), pos, state); }
@@ -46,6 +48,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   public BlockPos controllerPosition() { return controllerPosition; }
   public UUID controllerIdentity() { return controllerIdentity; }
   public void linkController(BlockPos position, UUID id) {
+    if (cableInUse) throw new IllegalArgumentException("Inspect the retained cable catch before changing its controller");
     if (controllerIdentity != null && (!controllerIdentity.equals(id) || !controllerPosition.equals(position)))
       throw new IllegalArgumentException("Module already belongs to another controller");
     controllerPosition = position.immutable(); controllerIdentity = id; changed();
@@ -56,7 +59,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     controllerPosition = target.getBlockPos().immutable(); controllerIdentity = target.identity(); changed();
   }
   public void unlinkController(ServerLevel level) {
-    if (armed || !dev.coasterslaunchsystems.runtime.RideControllers.editingAllowed(level, this))
+    if (armed || cableInUse || !dev.coasterslaunchsystems.runtime.RideControllers.editingAllowed(level, this))
       throw new IllegalArgumentException("Disarm an empty controller and module before unlinking");
     controllerPosition = null; controllerIdentity = null; changed();
   }
@@ -75,9 +78,42 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     if (mechanism() != Mechanism.FLYWHEEL) throw new IllegalStateException("This cabinet is not a flywheel");
     return flywheel;
   }
+  public boolean cableInUse() { return cableInUse; }
   public void chargeFlywheel(double dt) {
-    if (mechanism() == Mechanism.FLYWHEEL
+    if (mechanism() == Mechanism.FLYWHEEL && !cableInUse
         && flywheel.charge(dev.coasterslaunchsystems.math.LinearMotor.chargingWork(getSpeed(), dt)) > 0) setChanged();
+  }
+  /** The physical catch owns this cabinet's store until it returns home or enters inspection. */
+  public void engageCable(NativeCableRig rig, UUID chassis) {
+    if (mechanism() != Mechanism.FLYWHEEL || cableInUse || !fault.isEmpty())
+      throw new IllegalStateException("Flywheel is unavailable or awaiting cable inspection");
+    rig.engage(chassis);
+    cableInUse = true; changed();
+  }
+  public void consumeFlywheel(double work) {
+    if (mechanism() != Mechanism.FLYWHEEL || work > flywheel.energy() + 1e-8)
+      throw new IllegalArgumentException("Flywheel cannot fund this work");
+    if (flywheel.draw(work) > 0) setChanged();
+  }
+  public record CableStep(NativeCableRig.Step motion, double charged, double shaftBudget) {}
+  public CableStep stepCable(NativeCableRig rig, double dt) {
+    if (mechanism() != Mechanism.FLYWHEEL || !cableInUse)
+      throw new IllegalStateException("No flywheel cable catch is engaged");
+    if (!fault.isEmpty()) {
+      rig.emergencyHold(fault);
+      return new CableStep(new NativeCableRig.Step(0, 0, 0, 0, false), 0, 0);
+    }
+    double shaft = dev.coasterslaunchsystems.math.LinearMotor.chargingWork(getSpeed(), dt);
+    double before = flywheel.energy();
+    var phase = rig.phase();
+    var motion = rig.step(flywheel, target, shaft, dt);
+    double charged = 0;
+    if (phase != NativeCableRig.Phase.ENGAGED && phase != NativeCableRig.Phase.PULLING
+        && rig.phase() != NativeCableRig.Phase.FAULT)
+      charged = flywheel.charge(Math.max(0, shaft - Math.max(0, motion.work())));
+    if (rig.phase() == NativeCableRig.Phase.HOME) cableInUse = false;
+    if (before != flywheel.energy() || !cableInUse) setChanged();
+    return new CableStep(motion, charged, shaft);
   }
   public double targetSpeed() { return target; }
   public double accelerationLimit() { return accelerationLimit; }
@@ -111,7 +147,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   }
 
   public void bind(ServerLevel level, BlockPos first, BlockPos second) {
-    if (armed) throw new IllegalArgumentException("Disarm the module before rebinding");
+    if (armed || cableInUse) throw new IllegalArgumentException("Disarm and inspect the cable catch before rebinding");
     if (!dev.coasterslaunchsystems.runtime.RideControllers.editingAllowed(level, this))
       throw new IllegalArgumentException("Occupied or unavailable controller owns this binding");
     for (var pos : new BlockPos[] {worldPosition, first, second})
@@ -186,7 +222,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   private String padStatus() {
     if (mechanism() == Mechanism.FLYWHEEL)
       return "Flywheel " + Math.round(flywheel.energy()) + "/5000 work; " + Math.round(flywheel.omega())
-          + " rad/s. Cable launch control is awaiting its catch/controller connection. ";
+          + " rad/s. " + (cableInUse ? "Catch retained for physical return or inspection. " : "Cable launch control is awaiting its catch/controller connection. ");
     if (mechanism().linear()) return "Target " + target + " blocks/s; acceleration " + accelerationLimit + ", jerk " + jerkLimit
         + ". Buffer " + Math.round(energy()) + "/2048; heat " + Math.round(heat.heat()) + "/4096. "
         + "Disarm; span tool + offhand clock changes target, iron nugget changes acceleration, gold nugget changes jerk. ";
@@ -201,7 +237,9 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   @Override protected void write(CompoundTag tag, HolderLookup.Provider registries, boolean client) {
     super.write(tag, registries, client);
     tag.putInt("ls_schema", 5);
-    if (mechanism() == Mechanism.FLYWHEEL) tag.putDouble("ls_flywheel_energy", flywheel.energy());
+    if (mechanism() == Mechanism.FLYWHEEL) {
+      tag.putDouble("ls_flywheel_energy", flywheel.energy()); tag.putBoolean("ls_cable_in_use", cableInUse);
+    }
     if (mechanism().linear()) {
       tag.putDouble("ls_energy", energy()); tag.putDouble("ls_target", target);
       tag.putDouble("ls_acceleration", accelerationLimit); tag.putDouble("ls_jerk", jerkLimit);
@@ -230,7 +268,11 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
       if (!Double.isFinite(stored) || stored < 0 || stored > 5000)
         throw new IllegalArgumentException("Invalid saved flywheel energy");
       flywheel = new dev.coasterslaunchsystems.math.FlywheelStore(4, 50, Math.sqrt(stored / 2));
-      if (!client) armed = false;
+      cableInUse = tag.getBoolean("ls_cable_in_use");
+      if (!client) {
+        armed = false;
+        if (cableInUse && fault.isEmpty()) fault = "Cable catch needs inspected recovery after reload";
+      }
     }
     if (mechanism().linear()) {
       buffer = new dev.coasterslaunchsystems.math.EnergyBuffer(dev.coasterslaunchsystems.math.LinearMotor.CAPACITY, tag.getInt("ls_schema") >= 4 ? tag.getDouble("ls_energy") : 0);

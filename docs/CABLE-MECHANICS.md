@@ -1,6 +1,6 @@
-# Native cable mechanics — dev.15
+# Native cable mechanics — dev.16
 
-This is partial LS301–LS303 implementation toward the requested 0.4.0 release. `NativeCableRig` is an internal native-physics prototype exercised by GameTests. The socket, carriage and guide bed have registered models and recipes. A kinetic flywheel cabinet charges a separate finite store and persists it, but cannot arm a launch until the catch/controller connection, clutch/drum control and inspected recovery are implemented.
+This is partial LS301–LS303 implementation toward the requested 0.4.0 release. `NativeCableRig` is an internal native-physics prototype exercised by GameTests. The socket, carriage and guide bed have registered models and recipes. A kinetic flywheel cabinet now supplies the native catch from its own persisted finite store. Test fixtures still initiate engagement and provide final train stopping; player controller/clutch control and inspected recovery remain required.
 
 ## Physical connection
 
@@ -18,17 +18,17 @@ The catch releases at configured travel. A bounded brake stops the carriage, the
 
 ## Finite work
 
-The fixture's `FlywheelStore` has inertia 4, maximum angular speed 50 and capacity 5,000 native work units. Angular speed is `sqrt(2E/I)`. Drum speed is `0.2 × angular speed`, capped by target 3 blocks/second. Bounded clutch demand follows carriage slip and live provider mass/force limits; rising acceleration ramps at 4 blocks/second³. An empty store cannot synthesize launch speed.
+The placed cabinet's `FlywheelStore` has inertia 4, maximum angular speed 50 and capacity 5,000 native work units. Angular speed is `sqrt(2E/I)`. Drum speed is `0.2 × angular speed`, capped by target 3 blocks/second. Bounded clutch demand follows carriage slip and live provider mass/force limits; rising acceleration ramps at 4 blocks/second³. An empty store cannot synthesize launch speed.
 
 The interface's translational/angular lever response bounds affordable force. Positive pre-constraint free-body impulse work spends `work / 0.85`. Conversion loss and negative work become heat, without energy credit. Paid work may subsequently dissipate through guides and joints.
 
-Charging reads actual Create RPM from a placed flywheel cabinet: `0.9 × 8 × |RPM| × 2π/60 × dt`. Its own store has the same 5,000-work-unit capacity and persists across block-entity load, disarming on server load. The test fixture still uses a separate store for the cable rig: charging pauses while engaged/pulling, and return spends that step's shaft budget before unused work charges storage. Connecting the cabinet's store and clutch to the rig and ride controller remains open.
+Charging reads actual Create RPM from the placed flywheel cabinet: `0.9 × 8 × |RPM| × 2π/60 × dt`. Engagement journals an active catch and pauses background charging. The same saved store funds each carriage impulse; return spends the step's shaft budget first and charges only from the remainder. Physical return home clears the active journal. Loading an active journal keeps the cabinet disarmed and faulted, blocks charging and edits, and makes the live catch enter a retained emergency hold in the reload fixture. This is a safe denial, not inspected recovery after a real server restart. Player controller/clutch control remains open.
 
 ## Evidence and limitations
 
-The native suite includes ten standalone cases and four additional Fourth Dimension cases: occupied ordinary single/coupled forward/reverse, misalignment, empty storage, external power-loss hold, premature reset, handle-only edit, removed guide bed, increased load, occupied Arrow single/coupled forward/reverse and unsupported Free Spin rejection. Positive cases reach fixture whole-train hold and actual carriage return. Riders, native contacts/joints/couplers and per-step impulse/work reconciliation are checked.
+The native suite includes eleven standalone cases and four additional Fourth Dimension cases: occupied ordinary single/coupled forward/reverse, misalignment, empty storage, external power-loss hold, active reload denial, premature reset, handle-only edit, removed guide bed, increased load, occupied Arrow single/coupled forward/reverse and unsupported Free Spin rejection. Positive cases reach fixture whole-train hold and actual carriage return. Riders, native contacts/joints/couplers and per-step impulse/work reconciliation are checked.
 
-Focused ordinary single/coupled peaks are about 2.95/2.74 blocks/second; Arrow about 2.89/2.73. Flywheel speed falls from about 20.39 to 13.64–15.42 by release. Catch separation stays below 0.0013 block, guide error below 0.000009, Arrow carrier separation below 0.000192 and coupled error below 0.000062. Per-step accounting error stays below `2e-15` native work units. Exact final evidence is in [validation status](VALIDATION.md).
+Focused ordinary single/coupled peaks are about 2.95/2.93 blocks/second; Arrow about 2.89/2.73. The cabinet flywheel speed falls from about 22.47 to 15.60–17.80 radians/second by release in the ordinary cases. Catch separation stays below 0.0013 block, guide error below 0.000009, Arrow carrier separation below 0.000192 and coupled error below 0.000062. Per-step accounting error stays below `2e-15` native work units. Exact final evidence is in [validation status](VALIDATION.md).
 
 The native joint getter reports zero for this motor constraint; that is diagnostic data, not proof of absent or bounded load. Whole-train longitudinal momentum change, counting each body once, measures net pull traction around 20–40 native force units below the configured cap. It is not a substep motor-load or complete drum certification.
 
@@ -43,4 +43,4 @@ JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew build runGameTestServer -PlsPac
 JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew build runGameTestServer -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_cable -PlsFourthDimensionJar=/absolute/path/to/verified-schema4.jar --no-daemon --max-workers=2
 ```
 
-Standalone has ten cable cases; the exact Fourth Dimension binary adds four. The default full suite includes this namespace. Upstream pin: SHA-256 `027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16`, source `a881e3d34415edd691baa166668f4f97d3a4a7e8`. The active Fourth Dimension checkout/processes are untouched.
+Standalone has eleven cable cases; the exact Fourth Dimension binary adds four. The default full suite includes this namespace. Upstream pin: SHA-256 `027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16`, source `a881e3d34415edd691baa166668f4f97d3a4a7e8`. The active Fourth Dimension checkout/processes are untouched.
