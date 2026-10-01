@@ -61,6 +61,8 @@ Dev.18 records the installed native carriage UUID and accepted rail home in the 
 
 Dev.19 adds a cabinet-addressed loading ticket and a passive guide/brake reconstructed for an idle carriage on world startup. A separate two-process packaged GameTest saves and reopens the same world, confirms the carriage stays at home through repeated restarts, then retires it under explicit empty-track inspection and confirms the retired journal persists. This closes the idle-carriage restart/reclamation slice; active catches, legacy UUID-only ticket stabilization, real chunk/multiplayer/rendered service and the remaining mechanism gates are still open.
 
+Dev.20 journals the captured chassis and force-loads captured native bodies while the catch is engaged. The carriage now uses a mass-centred pose pivot so Sable's saved pose preserves its world position. A real occupied home catch survives a separate server restart with both bodies present, the socket aligned, a passive carriage guide/brake and the cabinet disarmed; the earlier idle restart/inspection path still passes. Reconstructing the active catch joint and an inspected operator release, mid-pull/return restarts, articulated-body saved-world coverage, chunk/multiplayer/rendered service and the remaining mechanism gates are still open.
+
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |
 | LS301 | Shared cable guide, catch socket, carriage and release/reset machine | 0.2. Real constrained pull, rated guide/end clearance, physical return and misalignment handling. No teleport, one-shot impulse or prescribed train path. |

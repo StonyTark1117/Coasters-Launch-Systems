@@ -37,6 +37,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   private boolean cableInUse;
   private boolean cableInstalled;
   private UUID cableCarriage;
+  private UUID cableChassis;
   private double cableHome;
   private double target = 3, accelerationLimit = 2, jerkLimit = 4;
 
@@ -84,6 +85,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   public boolean cableInUse() { return cableInUse; }
   public boolean cableInstalled() { return cableInstalled; }
   public UUID cableCarriage() { return cableCarriage; }
+  public UUID cableChassis() { return cableChassis; }
   public double cableHome() { return cableHome; }
   /** Journal native carriage allocation before the controller can dispatch a catch. */
   public void installCable(NativeCableRig rig) {
@@ -91,20 +93,20 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
       throw new IllegalStateException("Cable carriage is already installed or awaiting inspection");
     if (rig.phase() != NativeCableRig.Phase.HOME || rig.carriage().isRemoved())
       throw new IllegalStateException("Only an available home carriage can be installed");
-    cableCarriage = rig.carriage().getUniqueId(); cableHome = rig.homeDistance(); cableInstalled = true; changed();
+    cableCarriage = rig.carriage().getUniqueId(); cableChassis = null; cableHome = rig.homeDistance(); cableInstalled = true; changed();
   }
   public void retireCable(NativeCableRig rig) {
     if (mechanism() != Mechanism.FLYWHEEL || !cableInstalled || cableInUse || rig.phase() != NativeCableRig.Phase.HOME
         || !rig.carriage().getUniqueId().equals(cableCarriage) || Math.abs(rig.homeDistance() - cableHome) > 1e-6
         || Math.abs(rig.travel()) >= .03 || Math.abs(rig.speed()) >= .03)
       throw new IllegalStateException("Only a physically home, unlatched cable carriage can be retired");
-    rig.close(); cableInstalled = false; cableCarriage = null; cableHome = 0; changed();
+    rig.close(); cableInstalled = false; cableCarriage = null; cableChassis = null; cableHome = 0; changed();
   }
   public void finishInspectedCableRetirement(UUID carriage) {
     if (mechanism() != Mechanism.FLYWHEEL || !cableInstalled || cableInUse || armed
         || cableCarriage == null || !cableCarriage.equals(carriage) || fault.isEmpty())
       throw new IllegalStateException("Saved cable installation changed during inspected retirement");
-    cableInstalled = false; cableCarriage = null; cableHome = 0;
+    cableInstalled = false; cableCarriage = null; cableChassis = null; cableHome = 0;
     fault = "Idle carriage reclaimed by inspection; verify and rebind the guide before arming"; changed();
   }
   public void chargeFlywheel(double dt) {
@@ -116,7 +118,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     if (mechanism() != Mechanism.FLYWHEEL || cableInUse || !fault.isEmpty())
       throw new IllegalStateException("Flywheel is unavailable or awaiting cable inspection");
     rig.engage(chassis);
-    cableInUse = true; changed();
+    cableChassis = chassis; cableInUse = true; changed();
   }
   public void consumeFlywheel(double work) {
     if (mechanism() != Mechanism.FLYWHEEL || work > flywheel.energy() + 1e-8)
@@ -139,7 +141,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     if (phase != NativeCableRig.Phase.ENGAGED && phase != NativeCableRig.Phase.PULLING
         && rig.phase() != NativeCableRig.Phase.FAULT)
       charged = flywheel.charge(Math.max(0, shaft - Math.max(0, motion.work())));
-    if (rig.phase() == NativeCableRig.Phase.HOME) cableInUse = false;
+    if (rig.phase() == NativeCableRig.Phase.HOME) { cableInUse = false; cableChassis = null; }
     if (before != flywheel.energy() || !cableInUse) setChanged();
     return new CableStep(motion, charged, shaft);
   }
@@ -268,13 +270,14 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   private void changed() { setChanged(); sendData(); }
   @Override protected void write(CompoundTag tag, HolderLookup.Provider registries, boolean client) {
     super.write(tag, registries, client);
-    tag.putInt("ls_schema", 6);
+    tag.putInt("ls_schema", 7);
     if (mechanism() == Mechanism.FLYWHEEL) {
       tag.putDouble("ls_flywheel_energy", flywheel.energy()); tag.putBoolean("ls_cable_in_use", cableInUse);
       tag.putBoolean("ls_cable_installed", cableInstalled);
       if (cableInstalled && cableCarriage != null) {
         tag.putUUID("ls_cable_carriage", cableCarriage); tag.putDouble("ls_cable_home", cableHome);
       }
+      if (cableInUse && cableChassis != null) tag.putUUID("ls_cable_chassis", cableChassis);
     }
     if (mechanism().linear()) {
       tag.putDouble("ls_energy", energy()); tag.putDouble("ls_target", target);
@@ -290,7 +293,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   }
   @Override protected void read(CompoundTag tag, HolderLookup.Provider registries, boolean client) {
     super.read(tag, registries, client);
-    if (tag.contains("ls_schema") && (tag.getInt("ls_schema") < 1 || tag.getInt("ls_schema") > 6)) throw new IllegalArgumentException("Unsupported equipment schema");
+    if (tag.contains("ls_schema") && (tag.getInt("ls_schema") < 1 || tag.getInt("ls_schema") > 7)) throw new IllegalArgumentException("Unsupported equipment schema");
     heat = new dev.coasterslaunchsystems.math.BrakeHeat(4096, 8, tag.getInt("ls_schema") >= 2 ? tag.getDouble("ls_heat") : 0);
     controllerIdentity = tag.hasUUID("ls_controller") ? tag.getUUID("ls_controller") : null;
     controllerPosition = controllerIdentity == null ? null : BlockPos.of(tag.getLong("ls_controller_pos"));
@@ -307,6 +310,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
       cableInUse = tag.getBoolean("ls_cable_in_use");
       cableInstalled = tag.getBoolean("ls_cable_installed");
       cableCarriage = cableInstalled && tag.hasUUID("ls_cable_carriage") ? tag.getUUID("ls_cable_carriage") : null;
+      cableChassis = cableInUse && tag.hasUUID("ls_cable_chassis") ? tag.getUUID("ls_cable_chassis") : null;
       cableHome = cableInstalled && tag.contains("ls_cable_home") ? tag.getDouble("ls_cable_home") : 0;
       if (!Double.isFinite(cableHome) || cableHome < 0 || cableHome > 1024)
         throw new IllegalArgumentException("Invalid saved cable home distance");
@@ -314,7 +318,9 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
         armed = false;
         if ((cableInUse || cableInstalled) && fault.isEmpty()) fault = cableInstalled && cableCarriage == null
             ? "Legacy cable installation needs inspected recovery after reload"
-            : "Cable catch needs inspected recovery after reload";
+            : cableInUse && cableChassis == null && cableInstalled
+                ? "Legacy active cable catch needs inspected recovery after reload"
+                : "Cable catch needs inspected recovery after reload";
       }
     }
     if (mechanism().linear()) {

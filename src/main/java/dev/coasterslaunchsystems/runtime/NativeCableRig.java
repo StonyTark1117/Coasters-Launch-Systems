@@ -36,6 +36,7 @@ public final class NativeCableRig implements AutoCloseable {
   private ServerSubLevel caught;
   private Set<UUID> consist = Set.of();
   private Set<UUID> loadedBodies = Set.of();
+  private Set<UUID> ticketedBodies = Set.of();
   private String provider = "";
   private double loadedMass, maximumForce, previousAcceleration;
   private Phase phase = Phase.HOME;
@@ -81,7 +82,11 @@ public final class NativeCableRig implements AutoCloseable {
     for (var cell : List.of(BlockPos.ZERO.east().below(2), BlockPos.ZERO.west().below(2), BlockPos.ZERO.north().below(2), BlockPos.ZERO.south().below(2)))
       if (!embedded.setBlock(cell, net.minecraft.world.level.block.Blocks.IRON_BLOCK.defaultBlockState(), 3)) throw new IllegalStateException("Carriage ballast did not install");
     var center = plot.getCenterBlock().getCenter(); point = new Vector3d(center.x, center.y, center.z);
-    carriage.logicalPose().rotationPoint().set(point); carriage.logicalPose().position().set(home);
+    // Rapier locates this body at its mass centre. Keep Sable's pose pivot there
+    // too, while placing the physical catch point at the rail-aligned home.
+    var centerOfMass = carriage.getMassTracker().getCenterOfMass();
+    carriage.logicalPose().rotationPoint().set(centerOfMass);
+    carriage.logicalPose().position().set(new Vector3d(home).sub(new Vector3d(point).sub(centerOfMass)));
     carriage.updateLastPose(); pipeline.onStatsChanged(carriage);
     var frame = new Quaterniond().rotationTo(new Vector3d(1, 0, 0), direction);
     guide = pipeline.addConstraint(null, carriage, new GenericConstraintConfiguration(home, point, frame, frame,
@@ -150,6 +155,25 @@ public final class NativeCableRig implements AutoCloseable {
     if (catchJoint == null || !catchJoint.isValid()) throw new IllegalStateException("Native catch unavailable");
     catchJoint.setContactsEnabled(false);
     catchJoint.setMotor(ConstraintJointAxis.LINEAR_X, 0, 100_000, 10_000, true, 256);
+    if (cabinetPosition != null) {
+      var ticketed = new HashSet<UUID>();
+      var key = new CableTickets.Key(carriage.getUniqueId(), cabinetPosition);
+      try {
+        for (var id : bodies) {
+          if (!(container.getSubLevel(id) instanceof ServerSubLevel body)
+              || !container.addForceLoadTicket(body, CableTickets.CAPTURED_BODY, key))
+            throw new IllegalStateException("Captured native body loading ticket was not installed");
+          ticketed.add(id);
+        }
+      } catch (RuntimeException failure) {
+        for (var id : ticketed)
+          if (container.getSubLevel(id) instanceof ServerSubLevel body)
+            container.removeForceLoadTicket(body, CableTickets.CAPTURED_BODY, key);
+        catchJoint.remove(); catchJoint = null;
+        throw failure;
+      }
+      ticketedBodies = Set.copyOf(ticketed);
+    }
     caught = cart; consist = Set.copyOf(motion.consist()); loadedBodies = Set.copyOf(bodies); provider = motion.provider(); loadedMass = mass; maximumForce = force; phase = Phase.ENGAGED;
   }
   public void beginPull() {
@@ -214,6 +238,7 @@ public final class NativeCableRig implements AutoCloseable {
         throw new IllegalStateException("Native catch/guide alignment failed");
       if (travel() >= releaseTravel) {
         catchJoint.remove(); catchJoint = null; caught = null; previousAcceleration = 0;
+        releaseCapturedTickets();
         phase = Phase.RELEASING; holding.setForce(256); return new Step(0, 0, 0, 0, false);
       }
       double mass = loadedMass + NativeForces.mass(level, List.of(carriage.getUniqueId()));
@@ -250,12 +275,22 @@ public final class NativeCableRig implements AutoCloseable {
     fault = reason == null || reason.isBlank() ? "Cable operation needs inspection" : reason;
     phase = Phase.FAULT; if (holding.valid()) holding.setForce(256); previousAcceleration = 0;
   }
+  private void releaseCapturedTickets() {
+    var container = SubLevelContainer.getContainer(level);
+    if (container == null || cabinetPosition == null || ticketedBodies.isEmpty()) return;
+    var key = new CableTickets.Key(carriage.getUniqueId(), cabinetPosition);
+    for (var id : ticketedBodies)
+      if (container.getSubLevel(id) instanceof ServerSubLevel body)
+        container.removeForceLoadTicket(body, CableTickets.CAPTURED_BODY, key);
+    ticketedBodies = Set.of();
+  }
   public static Vector3d worldPoint(ServerSubLevel body, Vector3d plotPoint) {
     if (plotPoint == null) throw new IllegalStateException("Native interface removed");
     return new Vector3d(plotPoint).sub(body.getMassTracker().getCenterOfMass()).rotate(body.logicalPose().orientation()).add(body.logicalPose().position());
   }
   @Override public void close() {
     if (catchJoint != null && catchJoint.isValid()) catchJoint.remove();
+    releaseCapturedTickets();
     holding.close(); if (guide.isValid()) guide.remove();
     var container = SubLevelContainer.getContainer(level);
     if (container != null) {

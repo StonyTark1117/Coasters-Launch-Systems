@@ -21,6 +21,9 @@ public final class CableTickets {
   /** The cabinet address lets startup restore the passive guide before a falling body drifts. */
   public static final SubLevelLoadingTicketType<Key> CARRIAGE = SubLevelLoadingTicketType.create(
       ResourceLocation.fromNamespaceAndPath(LaunchSystems.ID, "cable_carriage_v2"), KEY_CODEC);
+  /** Holds every captured native body through an interrupted catch until physical release. */
+  public static final SubLevelLoadingTicketType<Key> CAPTURED_BODY = SubLevelLoadingTicketType.create(
+      ResourceLocation.fromNamespaceAndPath(LaunchSystems.ID, "cable_captured_body"), KEY_CODEC);
   private CableTickets() {}
   public static void bootstrap() { /* Force static registration before Sable reads world tickets. */ }
 }

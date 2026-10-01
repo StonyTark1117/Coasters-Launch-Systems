@@ -57,16 +57,16 @@ public final class CableRecovery {
     }
     for (var cabinet : candidates) {
       if (cabinet.isRemoved() || cabinet.mechanism() != Mechanism.FLYWHEEL || !cabinet.cableInstalled()
-          || cabinet.cableInUse() || cabinet.cableCarriage() == null || cabinet.fault().isEmpty()
+          || cabinet.cableCarriage() == null || cabinet.fault().isEmpty()
           || CableControllers.hasLiveCarriage(level, cabinet.cableCarriage())
           || retained.containsKey(cabinet.cableCarriage())) continue;
       try {
-        var hold = restoreIdle(level, cabinet);
+        var hold = restorePassive(level, cabinet);
         if (hold != null) { retained.put(cabinet.cableCarriage(), hold); WARNED.computeIfAbsent(level, ignored -> new HashSet<>()).remove(cabinet.cableCarriage()); }
       } catch (RuntimeException failure) {
         // A mismatched carriage is never pulled toward the guide or made operable.
         if (WARNED.computeIfAbsent(level, ignored -> new HashSet<>()).add(cabinet.cableCarriage()))
-          LogUtils.getLogger().warn("Idle cable carriage {} remains unrestrained pending inspection: {}",
+          LogUtils.getLogger().warn("Cable carriage {} remains unrestrained pending inspection: {}",
               cabinet.cableCarriage(), failure.getMessage());
       }
     }
@@ -138,7 +138,7 @@ public final class CableRecovery {
 
   public static void unload(ServerLevel level) { HOLDS.remove(level); WARNED.remove(level); }
 
-  private static Hold restoreIdle(ServerLevel level, EquipmentCabinetEntity cabinet) {
+  private static Hold restorePassive(ServerLevel level, EquipmentCabinetEntity cabinet) {
     var container = SubLevelContainer.getContainer(level);
     if (container == null) return null;
     var id = cabinet.cableCarriage();
@@ -147,6 +147,15 @@ public final class CableRecovery {
         && new CableTickets.Key(id, cabinet.getBlockPos()).equals(entry.getKey())
         || entry.getType() == CableTickets.LEGACY_CARRIAGE && id.equals(entry.getKey()))) return null;
     if (!(container.getSubLevel(id) instanceof ServerSubLevel carriage) || carriage.isRemoved()) return null;
+    if (cabinet.cableInUse()) {
+      var chassis = cabinet.cableChassis();
+      var body = chassis == null ? null : container.getSubLevel(chassis);
+      var info = chassis == null ? null : container.getAllTickets().get(chassis);
+      var key = new CableTickets.Key(id, cabinet.getBlockPos());
+      if (!(body instanceof ServerSubLevel) || info == null || info.tickets().stream().noneMatch(
+          entry -> entry.getType() == CableTickets.CAPTURED_BODY && key.equals(entry.getKey())))
+        throw new IllegalStateException("Saved captured train body or its native loading ticket is unavailable");
+    }
     var track = cabinet.resolve(level);
     if (track == null || cabinet.cableHome() + 20 > track.length()) return null;
     var hit = track.hitAtDistance(level, cabinet.cableHome());

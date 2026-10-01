@@ -1,0 +1,26 @@
+Dev.20 local validation, 2026-10-01, Java 21, NeoForge GameTest server.
+
+Artifact: coasters-launch-systems-0.0.1-dev.20.jar
+SHA-256: 9df49399c7b35afec152db2b520a55c7eeffb91f002d9620568ca07ceb46f0e8
+Pinned Fourth Dimension schema-4 binary SHA-256:
+027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16
+
+Packaged standalone full suite: 114/114 required GameTests passed; Gradle build successful.
+Packaged combined cable suite with pinned Fourth Dimension: 17/17 required passed.
+JUnit: 27 tests passed, no failures or skips.
+
+Idle saved-world sequence, four separate processes retaining one Gradle GameTest world:
+prepare 13/13; verify 13/13; reclaim 13/13; verifyRetired 13/13.
+The original carriage UUID survived until inspected retirement; the cleared journal
+persisted across the last restart.
+
+Occupied home-catch saved-world sequence, two separate processes:
+prepareActive 13/13; verifyActive 13/13.
+Same carriage UUID: 91a033c8-4246-4ab6-9357-af8d7df073f5.
+Same captured chassis UUID: b5b76a40-e245-4500-bdaf-f0bc4bc216a6.
+At restart: socket/carriage separation 0.000061411 block, both native bodies loaded,
+passive carriage guide/brake present, cabinet disarmed and faulted for inspection.
+
+These checks prove the engaged home-state passive hold, not reconstruction of its
+catch joint, inspected active release, moving-catch restart, chunk/multiplayer
+service or complete 0.4.0 acceptance.
