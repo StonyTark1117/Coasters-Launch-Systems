@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": ["ISI", "IRI"],
+  "key": {"I": {"item": "create:iron_sheet"}, "S": {"item": "create:shaft"}, "R": {"item": "minecraft:redstone"}},
+  "result": {"id": "coasterslaunchsystems:cable_guide", "count": 4}
+}

@@ -1,6 +1,6 @@
 # Coasters: Launch Systems implementation plan
 
-Current checkpoint: `0.0.1-dev.13` adds original finite-energy linear equipment and scoped local sections. See [equipment and limits](docs/LINEAR-MOTORS.md) and [verified evidence](docs/VALIDATION.md). Earlier inspected receiver recovery remains available. This is partial implementation toward the complete planned 0.4.0 scope below; the full release goal remains active.
+Current checkpoint: `0.0.1-dev.15` adds a placed cable-guide bed and a shaft-charged flywheel cabinet to the native catch prototype. See [cable mechanics and limits](docs/CABLE-MECHANICS.md) and [verified evidence](docs/VALIDATION.md). This is partial implementation toward the complete planned 0.4.0 scope below; the full release goal remains active.
 
 Plan dated September 30, 2026. Build a standalone Create: Coasters Simulated addon with distinct launch and braking mechanisms inspired by real coaster equipment. The user selected a standalone core with optional integrations. Match the Fourth Dimension project's development stack, support its vehicle families through explicit adapters, and reuse installed operating addons where their behavior and interfaces fit.
 

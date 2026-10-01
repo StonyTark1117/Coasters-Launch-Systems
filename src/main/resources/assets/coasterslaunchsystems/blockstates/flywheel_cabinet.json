@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "coasterslaunchsystems:block/flywheel_cabinet"
+    },
+    "axis=z": {
+      "model": "coasterslaunchsystems:block/flywheel_cabinet",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "coasterslaunchsystems:block/flywheel_cabinet",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

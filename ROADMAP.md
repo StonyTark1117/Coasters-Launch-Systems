@@ -51,6 +51,8 @@ Dev.13 adds original LSM/LIM cabinets, matching chassis plates, finite kinetic c
 
 Dev.14 adds a [native cable-mechanics prototype](docs/CABLE-MECHANICS.md): a real constrained carriage pulls a separate chassis socket, releases, brakes and physically returns. Finite flywheel work, loaded ordinary/coupled/Arrow motion, misalignment and unsupported-family denial, external interruption hold, early reset denial, handle edits and changing mass pass scoped fixtures. This remains internal mechanics: playable guide/flywheel/drum controls, shared controller ownership, journals/restart/recovery, removed support and rendered/lifecycle acceptance remain open.
 
+Dev.15 adds a craftable world cable-guide bed and a kinetic flywheel cabinet with a finite saved store. Rig creation and every physics step validate continuous guide placement. Removing a bed during pull causes a retained fault and ends resource draw. The flywheel cabinet charges from Create shaft RPM and reloads disarmed; its clutch cannot yet arm because controller/catch integration and inspected recovery are still required. The fixture still drives its own cable store and stopping clamps, so this is not a playable launch system.
+
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |
 | LS301 | Shared cable guide, catch socket, carriage and release/reset machine | 0.2. Real constrained pull, rated guide/end clearance, physical return and misalignment handling. No teleport, one-shot impulse or prescribed train path. |

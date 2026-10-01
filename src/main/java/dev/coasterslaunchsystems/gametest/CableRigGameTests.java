@@ -47,7 +47,7 @@ public final class CableRigGameTests {
     Scene(GameTestHelper helper, int slot, String mode) {
       this.mode = mode; ride = new RideControllerGameTests.Scene(helper, slot, mode, 224);
       charger = ride.base.from.offset(5, -2, 8); motor = charger.west();
-      ride.base.level.setBlockAndUpdate(charger, EquipmentContent.TIRE.get().defaultBlockState().setValue(RotatedPillarBlock.AXIS, Direction.Axis.X));
+      ride.base.level.setBlockAndUpdate(charger, EquipmentContent.FLYWHEEL.get().defaultBlockState().setValue(RotatedPillarBlock.AXIS, Direction.Axis.X));
       ride.base.level.setBlockAndUpdate(motor, AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalBlock.FACING, Direction.EAST));
       ((CreativeMotorBlockEntity) ride.base.level.getBlockEntity(motor)).generatedSpeed.setValue(64);
     }
@@ -157,7 +157,7 @@ public final class CableRigGameTests {
     }
   }
   @GameTestGenerator public static List<TestFunction> mechanics() {
-    var modes = new ArrayList<>(List.of("single_forward", "linked_forward", "linked_reverse", "misaligned", "depleted", "power_loss", "early_reset", "guide_edited", "mass_changed"));
+    var modes = new ArrayList<>(List.of("single_forward", "linked_forward", "linked_reverse", "misaligned", "depleted", "power_loss", "early_reset", "guide_edited", "guide_removed", "mass_changed"));
     if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of("arrow_forward", "arrow_linked_forward", "arrow_linked_reverse", "free_spin_reject"));
     var tests = new ArrayList<TestFunction>(); int slot = 0;
     for (String mode : modes) { int selected = slot++; tests.add(new TestFunction("launchsystems_cable_mechanics", "coasterslaunchsystems_cable." + mode,
@@ -169,6 +169,11 @@ public final class CableRigGameTests {
     if (!registered) { NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, CableRigGameTests::physics); NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, CableRigGameTests::after); registered = true; }
     s.at(40, () -> { if (r.fourthDimension) r.boardFourthDimension(); else for (var cart : r.base.parents) for (int seat = 0; seat < 4; seat++) r.base.board(cart, seat); });
     s.at(25, () -> {
+      var installedGuide = DirectedTrack.resolve(r.base.level, r.reverse ? r.base.to : r.base.from, r.reverse ? r.base.from : r.base.to).orElseThrow();
+      for (int step = 0; step <= 128; step++) {
+        var bed = NativeCableRig.guideBlockAt(r.base.level, installedGuide, installedGuide.length() * step / 128);
+        r.base.level.setBlockAndUpdate(bed, EquipmentContent.CABLE_GUIDE.get().defaultBlockState());
+      }
       for (var cart : r.base.parents) {
         var plot = cart.getPlot().getEmbeddedLevelAccessor(); r.base.helper.assertTrue(plot.getBlockState(BlockPos.ZERO.below(2)).isAir(), "Socket would replace family hardware");
         plot.setBlock(BlockPos.ZERO.below(2), EquipmentContent.CATCH_SOCKET.get().defaultBlockState(), 3);
@@ -182,6 +187,10 @@ public final class CableRigGameTests {
     });
     s.at(75, () -> SCENES.add(s));
     s.at(420, () -> {
+      var cabinet = (EquipmentCabinetEntity) r.base.level.getBlockEntity(s.charger);
+      r.base.helper.assertTrue(cabinet.flywheel().energy() > 750 && cabinet.flywheel().energy() <= 5000
+          && cabinet.flywheel().omega() > 0 && cabinet.calculateStressApplied() == 16,
+          "Placed kinetic flywheel did not charge within its work and speed ratings");
       r.base.helper.assertTrue(s.failure.isEmpty() && s.rig.phase() == NativeCableRig.Phase.HOME && Math.abs(s.rig.speed()) < .03 && s.store.energy() > 750, "Cable carriage/shaft charging did not settle: " + s.failure);
       System.out.println("LS_CABLE_HOME mode=" + s.mode + " travel=" + s.rig.travel() + " speed=" + s.rig.speed() + " guide_error=" + s.rig.guideError()
           + " socket=" + NativeCableRig.worldPoint(s.lead, VehicleInterfaces.catchPoint(s.lead)).toString(java.text.NumberFormat.getNumberInstance(java.util.Locale.ROOT))
@@ -205,6 +214,8 @@ public final class CableRigGameTests {
         dev.silvergold.simulatedcoasters.track.CoasterPeerCurveHandleLengths.putCanonical(r.track.edge().bezier(), 12, 12);
         r.base.helper.assertTrue(dev.silvergold.simulatedcoasters.track.graph.CoasterPathGraphManager.get(r.base.level).revision() == revision, "Guide handle edit unexpectedly rebuilt the graph");
       }
+      if (s.mode.equals("guide_removed"))
+        r.base.level.removeBlock(NativeCableRig.guideBlockAt(r.base.level, r.track, s.homeDistance + 4), false);
       if (s.mode.equals("mass_changed")) for (int x = 2; x <= 5; x++)
         r.base.helper.assertTrue(s.lead.getPlot().getEmbeddedLevelAccessor().setBlock(new BlockPos(x, 0, 0), Blocks.IRON_BLOCK.defaultBlockState(), 3), "Cable load extension did not install");
     });
@@ -216,7 +227,7 @@ public final class CableRigGameTests {
           r.base.helper.assertTrue(s.store.energy() < 1e-8 && s.drawn <= s.beginEnergy + 1e-8 && !s.released && s.rig.phase() == NativeCableRig.Phase.PULLING, "Empty flywheel created a launch/reset");
           r.base.helper.assertTrue(Math.abs(s.rig.travel()) < .03 && s.peakSpeed < .03 && s.drawn == 0, "Empty flywheel moved its catch/train");
           s.rig.emergencyHold("Depleted cable needs inspection");
-        } else if (s.mode.equals("power_loss") || s.mode.equals("guide_edited")) {
+        } else if (s.mode.equals("power_loss") || s.mode.equals("guide_edited") || s.mode.equals("guide_removed")) {
           r.base.helper.assertTrue(s.rig.phase() == NativeCableRig.Phase.FAULT && !s.released && !s.rig.consist().isEmpty()
               && !s.rig.fault().isEmpty() && Math.abs(s.drawn - s.interruptionDraw) < 1e-8
               && r.base.parents.stream().allMatch(b -> Math.abs(r.base.speed(b)) < .03), "Cable interruption hold lost its physical catch/train or added launch work");
@@ -229,6 +240,17 @@ public final class CableRigGameTests {
           r.base.helper.assertTrue(s.maxSocketError < .1 && s.maxGuideError < .03 && s.maxJointError < .05 && s.maxCouplerError < .05 && s.peakCatchForce <= 256.01,
               "Cable catch/guide or native train joint exceeded its rating");
           r.base.helper.assertTrue(s.peakTrainTraction > 1 && s.peakTrainTraction <= 256.01, "Native catch traction was absent or exceeded its configured rating");
+        }
+        if (s.mode.equals("single_forward")) {
+          var cabinet = (EquipmentCabinetEntity) r.base.level.getBlockEntity(s.charger);
+          var saved = cabinet.saveWithFullMetadata(r.base.level.registryAccess());
+          double energy = cabinet.flywheel().energy();
+          cabinet.loadWithComponents(saved, r.base.level.registryAccess());
+          r.base.helper.assertTrue(!cabinet.armed() && Math.abs(cabinet.flywheel().energy() - energy) < 1e-8,
+              "Flywheel reload lost its finite work or rearmed the clutch");
+          boolean denied = false;
+          try { cabinet.setArmed(true); } catch (IllegalArgumentException expected) { denied = true; }
+          r.base.helper.assertTrue(denied, "Unconnected flywheel armed without a cable controller");
         }
         System.out.println("LS_CABLE mode=" + s.mode + " phase=" + s.rig.phase() + " cars=" + r.base.parents.size() + " riders=" + r.base.riders.size() + " begin_energy=" + s.beginEnergy
             + " drawn=" + s.drawn + " work=" + s.work + " heat=" + s.heat + " return_work=" + s.returnWork + " shaft_work=" + s.shaftWork + " peak_speed=" + s.peakSpeed

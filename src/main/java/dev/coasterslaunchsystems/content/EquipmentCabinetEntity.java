@@ -32,6 +32,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   private long handleRevision = Long.MIN_VALUE;
   private dev.coasterslaunchsystems.math.BrakeHeat heat = new dev.coasterslaunchsystems.math.BrakeHeat(4096, 8, 0);
   private dev.coasterslaunchsystems.math.EnergyBuffer buffer = new dev.coasterslaunchsystems.math.EnergyBuffer(dev.coasterslaunchsystems.math.LinearMotor.CAPACITY, 0);
+  private dev.coasterslaunchsystems.math.FlywheelStore flywheel = new dev.coasterslaunchsystems.math.FlywheelStore(4, 50, 0);
   private double target = 3, accelerationLimit = 2, jerkLimit = 4;
 
   public EquipmentCabinetEntity(BlockPos pos, BlockState state) { super(EquipmentContent.ENTITY.get(), pos, state); }
@@ -39,7 +40,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     super.tick();
     if (level instanceof ServerLevel server) {
       dev.coasterslaunchsystems.runtime.EquipmentRuntime.register(server, this);
-      if ((mechanism() == Mechanism.EDDY_BRAKE || mechanism().linear()) && server.getGameTime() % 20 == 0) sendData();
+      if ((mechanism() == Mechanism.EDDY_BRAKE || mechanism().linear() || mechanism() == Mechanism.FLYWHEEL) && server.getGameTime() % 20 == 0) sendData();
     }
   }
   public BlockPos controllerPosition() { return controllerPosition; }
@@ -68,8 +69,16 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   public double thermalFraction() { return heat.forceFraction(); }
   public void absorbHeat(double work) { if (work > 0) { heat.absorb(work); setChanged(); } }
   public void cool(double dt) { if (heat.heat() > 0) { heat.cool(dt); setChanged(); } }
-  @Override public float calculateStressApplied() { return lastStressApplied = mechanism().drive() ? 16 : 0; }
+  @Override public float calculateStressApplied() { return lastStressApplied = mechanism().drive() || mechanism() == Mechanism.FLYWHEEL ? 16 : 0; }
   public double energy() { return buffer.energy(); }
+  public dev.coasterslaunchsystems.math.FlywheelStore flywheel() {
+    if (mechanism() != Mechanism.FLYWHEEL) throw new IllegalStateException("This cabinet is not a flywheel");
+    return flywheel;
+  }
+  public void chargeFlywheel(double dt) {
+    if (mechanism() == Mechanism.FLYWHEEL
+        && flywheel.charge(dev.coasterslaunchsystems.math.LinearMotor.chargingWork(getSpeed(), dt)) > 0) setChanged();
+  }
   public double targetSpeed() { return target; }
   public double accelerationLimit() { return accelerationLimit; }
   public double jerkLimit() { return jerkLimit; }
@@ -92,6 +101,8 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   }
 
   public void setArmed(boolean value) {
+    if (value && mechanism() == Mechanism.FLYWHEEL)
+      throw new IllegalArgumentException("Cable launch controls require a connected catch and controller");
     if (value && from == null) throw new IllegalArgumentException("Use the span tool to bind this module first");
     if (value && !fault.isEmpty()) throw new IllegalArgumentException("Inspect and rebind the faulted module before arming");
     if (!value && level instanceof ServerLevel server && !dev.coasterslaunchsystems.runtime.RideControllers.editingAllowed(server, this))
@@ -173,6 +184,9 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
         + (fault.isEmpty() ? "" : " " + fault);
   }
   private String padStatus() {
+    if (mechanism() == Mechanism.FLYWHEEL)
+      return "Flywheel " + Math.round(flywheel.energy()) + "/5000 work; " + Math.round(flywheel.omega())
+          + " rad/s. Cable launch control is awaiting its catch/controller connection. ";
     if (mechanism().linear()) return "Target " + target + " blocks/s; acceleration " + accelerationLimit + ", jerk " + jerkLimit
         + ". Buffer " + Math.round(energy()) + "/2048; heat " + Math.round(heat.heat()) + "/4096. "
         + "Disarm; span tool + offhand clock changes target, iron nugget changes acceleration, gold nugget changes jerk. ";
@@ -186,7 +200,8 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   private void changed() { setChanged(); sendData(); }
   @Override protected void write(CompoundTag tag, HolderLookup.Provider registries, boolean client) {
     super.write(tag, registries, client);
-    tag.putInt("ls_schema", 4);
+    tag.putInt("ls_schema", 5);
+    if (mechanism() == Mechanism.FLYWHEEL) tag.putDouble("ls_flywheel_energy", flywheel.energy());
     if (mechanism().linear()) {
       tag.putDouble("ls_energy", energy()); tag.putDouble("ls_target", target);
       tag.putDouble("ls_acceleration", accelerationLimit); tag.putDouble("ls_jerk", jerkLimit);
@@ -201,7 +216,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   }
   @Override protected void read(CompoundTag tag, HolderLookup.Provider registries, boolean client) {
     super.read(tag, registries, client);
-    if (tag.contains("ls_schema") && (tag.getInt("ls_schema") < 1 || tag.getInt("ls_schema") > 4)) throw new IllegalArgumentException("Unsupported equipment schema");
+    if (tag.contains("ls_schema") && (tag.getInt("ls_schema") < 1 || tag.getInt("ls_schema") > 5)) throw new IllegalArgumentException("Unsupported equipment schema");
     heat = new dev.coasterslaunchsystems.math.BrakeHeat(4096, 8, tag.getInt("ls_schema") >= 2 ? tag.getDouble("ls_heat") : 0);
     controllerIdentity = tag.hasUUID("ls_controller") ? tag.getUUID("ls_controller") : null;
     controllerPosition = controllerIdentity == null ? null : BlockPos.of(tag.getLong("ls_controller_pos"));
@@ -210,6 +225,13 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     to = tag.contains("ls_to") ? BlockPos.of(tag.getLong("ls_to")) : null;
     geometry = tag.getLong("ls_geometry"); start = tag.getDouble("ls_start"); end = tag.getDouble("ls_end");
     fault = tag.getString("ls_fault"); armed = tag.getBoolean("ls_armed");
+    if (mechanism() == Mechanism.FLYWHEEL) {
+      double stored = tag.getInt("ls_schema") >= 5 ? tag.getDouble("ls_flywheel_energy") : 0;
+      if (!Double.isFinite(stored) || stored < 0 || stored > 5000)
+        throw new IllegalArgumentException("Invalid saved flywheel energy");
+      flywheel = new dev.coasterslaunchsystems.math.FlywheelStore(4, 50, Math.sqrt(stored / 2));
+      if (!client) armed = false;
+    }
     if (mechanism().linear()) {
       buffer = new dev.coasterslaunchsystems.math.EnergyBuffer(dev.coasterslaunchsystems.math.LinearMotor.CAPACITY, tag.getInt("ls_schema") >= 4 ? tag.getDouble("ls_energy") : 0);
       double speed = tag.getInt("ls_schema") >= 4 ? tag.getDouble("ls_target") : 3;

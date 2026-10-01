@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "steel": "minecraft:block/iron_block",
+    "rail": "minecraft:block/polished_andesite",
+    "particle": "minecraft:block/iron_block"
+  },
+  "elements": [
+    {"from": [0, 0, 0], "to": [16, 3, 16], "faces": {"up": {"texture": "#steel"}, "down": {"texture": "#steel"}, "north": {"texture": "#steel"}, "south": {"texture": "#steel"}, "east": {"texture": "#steel"}, "west": {"texture": "#steel"}}},
+    {"from": [0, 3, 0], "to": [2, 5, 16], "faces": {"up": {"texture": "#rail"}, "north": {"texture": "#rail"}, "south": {"texture": "#rail"}, "east": {"texture": "#rail"}, "west": {"texture": "#rail"}}},
+    {"from": [14, 3, 0], "to": [16, 5, 16], "faces": {"up": {"texture": "#rail"}, "north": {"texture": "#rail"}, "south": {"texture": "#rail"}, "east": {"texture": "#rail"}, "west": {"texture": "#rail"}}}
+  ]
+}

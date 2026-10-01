@@ -1,0 +1,1 @@
+Dev.15 Gradle test XML: 6 suites, 27 tests, 0 skipped, 0 failures, 0 errors. The full packaged combined Gradle build passed.

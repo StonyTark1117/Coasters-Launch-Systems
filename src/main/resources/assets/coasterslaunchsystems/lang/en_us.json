@@ -12,5 +12,7 @@
   "block.coasterslaunchsystems.lsm_reaction_plate": "LSM Magnet Reaction Plate",
   "block.coasterslaunchsystems.lim_reaction_plate": "LIM Conductive Reaction Plate",
   "block.coasterslaunchsystems.catch_socket": "Cable Catch Socket",
-  "block.coasterslaunchsystems.catch_carriage": "Cable Catch Carriage"
+  "block.coasterslaunchsystems.catch_carriage": "Cable Catch Carriage",
+  "block.coasterslaunchsystems.cable_guide": "Cable Carriage Guide",
+  "block.coasterslaunchsystems.flywheel_cabinet": "Flywheel Launch Cabinet"
 }

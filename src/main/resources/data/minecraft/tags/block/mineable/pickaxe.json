@@ -13,6 +13,8 @@
     "coasterslaunchsystems:lsm_reaction_plate",
     "coasterslaunchsystems:lim_reaction_plate",
     "coasterslaunchsystems:catch_socket",
-    "coasterslaunchsystems:catch_carriage"
+    "coasterslaunchsystems:catch_carriage",
+    "coasterslaunchsystems:cable_guide",
+    "coasterslaunchsystems:flywheel_cabinet"
   ]
 }

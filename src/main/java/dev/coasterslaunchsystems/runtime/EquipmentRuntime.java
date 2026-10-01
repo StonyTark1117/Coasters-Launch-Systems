@@ -96,6 +96,8 @@ public final class EquipmentRuntime {
       var module = entry.module();
       module.cool(dt);
       module.chargeLinear(dt);
+      module.chargeFlywheel(dt);
+      if (module.mechanism() == Mechanism.FLYWHEEL) continue;
       if (!module.armed() || !module.fault().isEmpty()) continue;
       if (ModList.get().isLoaded("coastersengineered") || ModList.get().isLoaded("coasterfins")) {
         module.fail("An installed drive addon needs an ownership adapter"); continue;

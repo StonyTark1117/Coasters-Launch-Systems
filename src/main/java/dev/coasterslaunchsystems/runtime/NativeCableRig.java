@@ -52,6 +52,9 @@ public final class NativeCableRig implements AutoCloseable {
       var tangent = track.forward(level, sample); var basis = CoasterPathTrackFrame.trackBasisAtHit(level, sample);
       if (Math.abs(tangent.y) > .001 || tangent.dot(forward) < .999999 || basis.up().y < .999999)
         throw new IllegalArgumentException("Cable guide requires fixed straight level unbanked rail");
+      var bed = guideBlockAt(level, track, homeDistance + guideTravel * i / 64);
+      if (!level.hasChunkAt(bed) || !level.getBlockState(bed).is(dev.coasterslaunchsystems.content.EquipmentContent.CABLE_GUIDE.get()))
+        throw new IllegalArgumentException("Cable guide bed must be placed continuously beneath its full travel");
     }
     // Accepted native bearing centres use the rail's 5/16-block track-up offset,
     // rather than the half-block plot-origin placement offset.
@@ -83,6 +86,12 @@ public final class NativeCableRig implements AutoCloseable {
     holding = new NativeFinClamp(pipeline, carriage, point, direction, 256);
   }
   public Phase phase() { return phase; }
+  /** Bed top stays below the carriage's lowest steel ballast block. */
+  public static BlockPos guideBlockAt(ServerLevel level, DirectedTrack track, double distance) {
+    var hit = track.hitAtDistance(level, distance);
+    var up = CoasterPathTrackFrame.trackBasisAtHit(level, hit).up();
+    return BlockPos.containing(hit.point().add(up.scale(.3125 - 5)));
+  }
   public String fault() { return fault; }
   public ServerSubLevel carriage() { return carriage; }
   public Vector3d carriagePoint() { return worldPoint(carriage, point); }
@@ -170,8 +179,9 @@ public final class NativeCableRig implements AutoCloseable {
     var fresh = DirectedTrack.resolve(level, track.edge().from(), track.edge().to()).orElseThrow(() -> new IllegalStateException("Cable rail is unavailable"));
     if (fresh.fingerprint() != track.fingerprint()) throw new IllegalStateException("Cable guide geometry changed");
     for (int i = 0; i <= 64; i++) {
-      var sample = track.hitAtDistance(level, homeDistance + guideTravel * i / 64);
-      if (!level.hasChunkAt(BlockPos.containing(sample.point()))) throw new IllegalStateException("Cable guide chunk is unavailable");
+      var bed = guideBlockAt(level, track, homeDistance + guideTravel * i / 64);
+      if (!level.hasChunkAt(bed) || !level.getBlockState(bed).is(dev.coasterslaunchsystems.content.EquipmentContent.CABLE_GUIDE.get()))
+        throw new IllegalStateException("Cable guide bed is unavailable or broken");
     }
   }
   /** A bounded motor force acts only on the carriage. The native catch pulls the train. */
