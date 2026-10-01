@@ -43,3 +43,5 @@ JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer -PlsPackaged 
 ```
 
 Run sequentially; each recreates the disposable native test world. Complete controller, stopping envelopes, ordinary passengers, rendered client/multiplayer lifecycle, Ponder and remaining launch mechanisms stay on the [roadmap](../ROADMAP.md).
+
+Implementation commit `458672920af165ea57cc056709ca09c33cd28389` was pushed to the private remote. [CI run 36815560966](https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36815560966) passed a clean build, twenty unit checks and all twenty-seven packaged standalone native tests. Its downloaded JAR exactly matched local SHA-256 `89eb76642bc9e3b188d683611bf018c90d5b5fe7d0a341ca167464d2e411b079`. [CI evidence](evidence/brakes-ci.txt) records the source and artifact verification. Combined evidence remains local against the copied pinned Fourth Dimension JAR. The full 0.4.0 release goal remains active.
