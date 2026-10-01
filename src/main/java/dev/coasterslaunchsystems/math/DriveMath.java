@@ -48,6 +48,14 @@ public final class DriveMath {
     return Numbers.clamp(requested, previous - step, previous + step);
   }
 
+  /** Ramp tire demand upward, but immediately respect a reduced traction/slip envelope. */
+  public static double tireAccelerationStep(double previous, double requested, double ramp, double dt) {
+    double candidate = accelerationStep(previous, requested, ramp, dt);
+    // Stored actuator history cannot push against the direction of physical wheel slip.
+    if (candidate * requested <= 0) return 0;
+    return Math.copySign(Math.min(Math.abs(candidate), Math.abs(requested)), requested);
+  }
+
   public static double incrementalWork(double mass, double speed, double force, double dt) {
     Numbers.positive(mass, "mass"); Numbers.finite(speed, "speed");
     Numbers.finite(force, "force"); Numbers.positive(dt, "dt");

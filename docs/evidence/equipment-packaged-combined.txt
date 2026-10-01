@@ -1,0 +1,46 @@
+Command: JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer -PlsPackaged -PlsFourthDimensionJar=/tmp/coasterslaunchsystems-validation/dependencies/fourthdimension-schema4.jar --no-daemon --max-workers=2
+
+[19:14:30] [modloading-worker-0/INFO] [de.fo.FourthDimension/]: Coasters: Fourth Dimension loaded from union:/tmp/coasterslaunchsystems-validation/dependencies/fourthdimension-schema4.jar%23128!/
+[19:14:30] [modloading-worker-0/INFO] [de.co.LaunchSystems/]: Coasters: Launch Systems loaded from union:/tmp/coasterslaunchsystems-22eeb619/build/libs/coasters-launch-systems-0.0.1-dev.3.jar%23127!/
+LS_EQUIPMENT_PLACEMENT rpm=64.0 contact=SpanInterval[start=7.000000453561613, end=9.000000453561613] identity=2338ba2b-1fd7-441c-8e73-5f961d2ecb2c support_fault=Track geometry changed; inspect and rebind
+LS_NATIVE_POINT_FORCE phase=launch speed=3.991027593612671 seconds=1.999999999999997 impulse=3.999999999999994 mass=1.0 moved=4.0499725341796875
+LS_TIRE_EQUIPMENT fixture=MISSING_STRIP mass=1.0 rpm=64.0 speed=0.0 moved=0.0 fault=Vehicle has no certified tire interface
+LS_TIRE_EQUIPMENT fixture=REVERSE_SHAFT mass=2.0 rpm=-64.0 speed=-2.1701302528381348 moved=3.785888671875 fault=
+LS_TIRE_EQUIPMENT fixture=LOADED mass=26.0 rpm=64.0 speed=1.81930673122406 moved=2.26318359375 fault=
+LS_TIRE_EQUIPMENT fixture=FORWARD mass=2.0 rpm=64.0 speed=2.674377679824829 moved=4.3209228515625 fault=
+LS_TIRE_EQUIPMENT fixture=REVERSE mass=2.0 rpm=64.0 speed=-2.1701302528381348 moved=3.785888671875 fault=
+LS_TIRE_EQUIPMENT fixture=CONFLICT mass=2.0 rpm=64.0 speed=0.0 moved=0.0 fault=Overlapping modules claim this consist; separate their contact zones
+LS_NATIVE_POINT_FORCE phase=stop speed=2.0130879420321435E-5 impulse=-3.191891195797325E-16
+LS_NATIVE_CONTACT phase=reverse speed=-3.991006374359131 moved=4.0499725341796875
+LS_NATIVE_CONTACT phase=complete speed=-1.8000624063879217E-16 contact_steps=320 missing_steps=0
+LS_4D_BASELINE family=ARROW separation=1.035873173392259E-4
+LS_4D_BASELINE family=ARROW separation=5.4477548683911396E-5
+LS_4D_BASELINE family=LEGACY separation=1.41627323071632E-4
+LS_4D_BASELINE family=LEGACY separation=5.0623861583788194E-5
+LS_4D_BASELINE family=FREE_SPIN separation=6.027187137005734E-5
+LS_4D_BASELINE family=FREE_SPIN separation=8.679597149485319E-5
+LS_4D_BASELINE family=FREE_SPIN separation=1.5664852214616328E-5
+LS_4D_BASELINE family=FREE_SPIN separation=3.906618901460595E-5
+LS_4D_BASELINE family=REVISED separation=4.0220525186865674E-5
+LS_4D_BASELINE family=REVISED separation=8.033606450526376E-5
+LS_4D_BASELINE family=REVISED separation=1.4573862328024697E-5
+LS_4D_BASELINE family=REVISED separation=3.41717444275482E-5
+LS_4D_PAX exclusive_owner=fourthdimension:pax_winch
+LS_4D_FORCE family=ARROW phase=launch speed=3.798652172088623 group_mass=15.8 impulse=63.199999999999946 missing=0 veto=0
+LS_4D_FORCE family=LEGACY phase=launch speed=3.389012575149536 group_mass=19.8 impulse=79.19999999999996 missing=0 veto=0
+LS_4D_FORCE family=FREE_SPIN phase=launch speed=3.801727056503296 group_mass=37.8 impulse=151.19999999999985 missing=0 veto=0
+LS_4D_FORCE family=REVISED phase=launch speed=3.832935333251953 group_mass=39.8 impulse=159.2 missing=0 veto=0
+LS_4D_FORCE family=ARROW phase=stop speed=-1.5867870388319716E-5
+LS_4D_FORCE family=LEGACY phase=stop speed=-0.014819382689893246
+LS_4D_FORCE family=FREE_SPIN phase=stop speed=-0.0019857019651681185
+LS_4D_FORCE family=REVISED phase=stop speed=4.2714705341495574E-4
+LS_4D_FORCE family=ARROW phase=reverse speed=-3.8005433082580566
+LS_4D_FORCE family=LEGACY phase=reverse speed=-3.1612424850463867
+LS_4D_FORCE family=FREE_SPIN phase=reverse speed=-3.72240948677063
+LS_4D_FORCE family=REVISED phase=reverse speed=-3.796781539916992
+LS_4D_FORCE family=ARROW phase=complete speed=-2.719088297453709E-5 max_joint_error=1.7284466495443948E-4 max_rotor_excursion=6.084383113495878E-4 max_group_difference=1.1199316348919935E-4 rider_retained=true carrier_angles=[-3.7148620184565854E-4, -4.83099094669178E-4]
+LS_4D_FORCE family=LEGACY phase=complete speed=0.0072142593562603 max_joint_error=2.139879098833506E-4 max_rotor_excursion=0.8649060272848199 max_group_difference=0.2730868846019747 rider_retained=true carrier_angles=[-0.15089820488674527, -0.05246052643011174]
+LS_4D_FORCE family=FREE_SPIN phase=complete speed=0.004475514870136976 max_joint_error=1.3688120887802332E-4 max_rotor_excursion=0.4132586154861913 max_group_difference=0.02581532046163819 rider_retained=true carrier_angles=[0.10739291935704316, 0.10960114229364219, 0.109542550949973, 0.10946941634790015]
+LS_4D_FORCE family=REVISED phase=complete speed=0.00170009711291641 max_joint_error=1.2951582947358207E-4 max_rotor_excursion=0.40931024949084954 max_group_difference=0.2604125189744744 rider_retained=true carrier_angles=[0.16354912811960262, 0.07123904852941111, 0.07115983868386554, 0.071241193980541]
+[19:14:37] [Server thread/INFO] [minecraft/GameTestServer]: All 13 required tests passed :)
+BUILD SUCCESSFUL in 17s

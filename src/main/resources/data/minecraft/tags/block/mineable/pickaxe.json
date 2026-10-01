@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "coasterslaunchsystems:tire_drive",
+    "coasterslaunchsystems:fin_brake",
+    "coasterslaunchsystems:eddy_brake",
+    "coasterslaunchsystems:tire_surface"
+  ]
+}

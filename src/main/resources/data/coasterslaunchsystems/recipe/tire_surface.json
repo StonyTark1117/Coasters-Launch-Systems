@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "BIB"
+  ],
+  "key": {
+    "B": {
+      "item": "create:belt_connector"
+    },
+    "I": {
+      "item": "create:iron_sheet"
+    }
+  },
+  "result": {
+    "id": "coasterslaunchsystems:tire_surface",
+    "count": 2
+  }
+}

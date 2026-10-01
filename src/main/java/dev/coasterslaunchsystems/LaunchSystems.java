@@ -13,6 +13,10 @@ public final class LaunchSystems {
   public static final String ID = "coasterslaunchsystems";
 
   public LaunchSystems(IEventBus bus) {
+    dev.coasterslaunchsystems.content.EquipmentContent.register(bus);
+    net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST,
+        dev.coasterslaunchsystems.runtime.EquipmentRuntime::physics);
+    net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(dev.coasterslaunchsystems.runtime.EquipmentRuntime::unload);
     MotionProviders.registerOrdinaryFallback(new OrdinaryMotionProvider());
     if (ModList.get().isLoaded("fourthdimension"))
       MotionProviders.register(new FourthDimensionMotionProvider());

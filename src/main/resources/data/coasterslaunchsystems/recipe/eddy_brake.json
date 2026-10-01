@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "IPI",
+    "SCS",
+    "IRI"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "P": {
+      "item": "create:iron_sheet"
+    },
+    "S": {
+      "item": "create:shaft"
+    },
+    "C": {
+      "item": "create:andesite_casing"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "id": "coasterslaunchsystems:eddy_brake",
+    "count": 1
+  }
+}

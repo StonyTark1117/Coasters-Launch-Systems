@@ -22,7 +22,8 @@ public final class OrdinaryMotionProvider implements VehicleMotionProvider {
   @Override public Optional<MotionVehicle> resolve(ServerLevel level, UUID chassis) {
     var body = CoasterCartResolve.findCartById(level, chassis);
     var container = SubLevelContainer.getContainer(level);
-    if (body == null || body.isRemoved() || container == null) return Optional.empty();
+    if (body == null || body.isRemoved() || container == null || !CoasterCartResolve.isCartSubLevel(body))
+      return Optional.empty();
     var bodies = new LinkedHashSet<UUID>();
     bodies.add(chassis);
     boolean changed;
@@ -38,8 +39,10 @@ public final class OrdinaryMotionProvider implements VehicleMotionProvider {
     } while (changed);
     var consist = new LinkedHashSet<>(CoasterCartTrainLinkConstraint.getTrainLinkedCartIds(body));
     consist.add(chassis);
-    // Reaction surfaces are separately installed and certified by equipment placement.
+    // A real installed drive strip is required. Fin, magnet and catch surfaces are separate.
+    var interfaces = VehicleInterfaces.tirePoint(body) == null ? Set.<dev.coasterslaunchsystems.math.Mechanism>of()
+        : Set.of(dev.coasterslaunchsystems.math.Mechanism.TIRE);
     return Optional.of(new MotionVehicle(id(), chassis, new ArrayList<>(bodies),
-        new ArrayList<>(consist), Set.of(), true, true, "", 2, 256));
+        new ArrayList<>(consist), interfaces, true, true, "", 2, 256));
   }
 }

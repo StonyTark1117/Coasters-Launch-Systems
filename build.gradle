@@ -96,6 +96,12 @@ tasks.named('jar') {
 tasks.named('runGameTestServer') {
     doFirst { delete layout.buildDirectory.dir('runs/gametest/world') }
 }
+if (project.hasProperty('lsPackaged')) {
+    // Packaged runs consume our binary and must build it even when invoked directly.
+    ['runClient', 'runObserver', 'runServer', 'runGameTestServer'].each { runTask ->
+        tasks.named(runTask) { dependsOn tasks.named('jar') }
+    }
+}
 tasks.named('processResources') {
     inputs.property 'version', project.version
     filesMatching('META-INF/neoforge.mods.toml') { expand version: project.version }

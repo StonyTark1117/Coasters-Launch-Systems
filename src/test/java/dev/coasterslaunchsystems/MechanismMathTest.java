@@ -51,6 +51,17 @@ class MechanismMathTest {
     assertEquals(4, coarse, 1e-10); assertEquals(coarse, fine, 1e-10);
   }
 
+  @Test void tireActuatorHistoryCannotExceedTractionOrPushAgainstSlip() {
+    for (double previous : new double[] {-2, -.1, 0, .1, 2})
+      for (double request : new double[] {-2, -.01, 0, .01, 2}) {
+        double result = DriveMath.tireAccelerationStep(previous, request, 4, .025);
+        assertTrue(result * request >= 0);
+        assertTrue(Math.abs(result) <= Math.abs(request));
+      }
+    assertEquals(0, DriveMath.tireAccelerationStep(2, -.01, 4, .025));
+    assertEquals(.1, DriveMath.tireAccelerationStep(0, 2, 4, .025), 1e-12);
+  }
+
   @Test void overheatedBrakeDeratesAndCoolsWithoutCreatingEnergy() {
     var heat = new BrakeHeat(100, 10, 0);
     heat.absorb(150); assertTrue(heat.overheated()); assertEquals(.5, heat.forceFraction());

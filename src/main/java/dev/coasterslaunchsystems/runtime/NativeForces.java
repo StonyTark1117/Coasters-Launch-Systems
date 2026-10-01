@@ -2,6 +2,7 @@ package dev.coasterslaunchsystems.runtime;
 
 import dev.coasterslaunchsystems.api.MotionVehicle;
 import dev.ryanhcode.sable.api.physics.force.ForceGroups;
+import dev.ryanhcode.sable.api.physics.PhysicsPipeline;
 import dev.ryanhcode.sable.api.sublevel.SubLevelContainer;
 import dev.ryanhcode.sable.sublevel.ServerSubLevel;
 import net.minecraft.server.level.ServerLevel;
@@ -33,5 +34,24 @@ public final class NativeForces {
     // Sable 2.0.3 QueuedForceGroup stores impulse totals; it does not multiply by dt later.
     chassis.getOrCreateQueuedForceGroup(ForceGroups.PROPULSION.get())
         .applyAndRecordPointForce(plotPoint, localImpulse);
+  }
+
+  public record PointDynamics(double speed, double effectiveMass) {}
+
+  /** Point speed and free-body impulse work include the strip's angular lever arm. */
+  public static PointDynamics pointDynamics(ServerSubLevel chassis, PhysicsPipeline pipeline,
+      Vector3dc plotPoint, Vector3dc worldDirection) {
+    var tracker = chassis.getMassTracker();
+    var arm = new Vector3d(plotPoint).sub(tracker.getCenterOfMass());
+    var direction = chassis.logicalPose().transformNormalInverse(new Vector3d(worldDirection));
+    var lever = new Vector3d(arm).cross(direction);
+    double inverseMass = tracker.getInverseMass()
+        + lever.dot(tracker.getInverseInertiaTensor().transform(new Vector3d(lever)));
+    dev.coasterslaunchsystems.math.Numbers.positive(inverseMass, "point inverse mass");
+    var worldArm = arm.rotate(chassis.logicalPose().orientation());
+    var velocity = pipeline.getAngularVelocity(chassis, new Vector3d()).cross(worldArm)
+        .add(pipeline.getLinearVelocity(chassis, new Vector3d()));
+    return new PointDynamics(dev.coasterslaunchsystems.math.Numbers.finite(velocity.dot(worldDirection), "point speed"),
+        1 / inverseMass);
   }
 }

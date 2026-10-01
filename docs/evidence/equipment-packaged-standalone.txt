@@ -1,0 +1,16 @@
+Command: JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew build runGameTestServer -PlsPackaged --no-daemon --max-workers=2
+
+[19:13:33] [modloading-worker-0/INFO] [de.co.LaunchSystems/]: Coasters: Launch Systems loaded from union:/tmp/coasterslaunchsystems-22eeb619/build/libs/coasters-launch-systems-0.0.1-dev.3.jar%23127!/
+LS_EQUIPMENT_PLACEMENT rpm=64.0 contact=SpanInterval[start=7.000000453561613, end=9.000000453561613] identity=2883e4b4-8308-4c0c-88e1-770e78c511cf support_fault=Track geometry changed; inspect and rebind
+LS_NATIVE_POINT_FORCE phase=launch speed=3.991027593612671 seconds=1.999999999999997 impulse=3.999999999999994 mass=1.0 moved=4.0499725341796875
+LS_TIRE_EQUIPMENT fixture=REVERSE_SHAFT mass=2.0 rpm=-64.0 speed=-2.1701302528381348 moved=3.785888671875 fault=
+LS_TIRE_EQUIPMENT fixture=MISSING_STRIP mass=1.0 rpm=64.0 speed=0.0 moved=0.0 fault=Vehicle has no certified tire interface
+LS_TIRE_EQUIPMENT fixture=LOADED mass=26.0 rpm=64.0 speed=1.81930673122406 moved=2.26318359375 fault=
+LS_TIRE_EQUIPMENT fixture=REVERSE mass=2.0 rpm=64.0 speed=-2.1701302528381348 moved=3.785888671875 fault=
+LS_TIRE_EQUIPMENT fixture=CONFLICT mass=2.0 rpm=64.0 speed=0.0 moved=0.0 fault=Overlapping modules claim this consist; separate their contact zones
+LS_TIRE_EQUIPMENT fixture=FORWARD mass=2.0 rpm=64.0 speed=2.674377679824829 moved=4.3209228515625 fault=
+LS_NATIVE_POINT_FORCE phase=stop speed=2.0130879420321435E-5 impulse=-3.191891195797325E-16
+LS_NATIVE_CONTACT phase=reverse speed=-3.991006374359131 moved=4.0499725341796875
+LS_NATIVE_CONTACT phase=complete speed=-1.8000624063879217E-16 contact_steps=320 missing_steps=0
+[19:13:38] [Server thread/INFO] [minecraft/GameTestServer]: All 8 required tests passed :)
+BUILD SUCCESSFUL in 18s

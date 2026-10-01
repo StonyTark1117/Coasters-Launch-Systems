@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "coasterslaunchsystems:block/tire_drive"
+    },
+    "axis=z": {
+      "model": "coasterslaunchsystems:block/tire_drive",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "coasterslaunchsystems:block/tire_drive",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

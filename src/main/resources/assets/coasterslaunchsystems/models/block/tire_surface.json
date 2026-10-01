@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "rubber": "minecraft:block/black_concrete",
+    "particle": "minecraft:block/black_concrete"
+  },
+  "elements": [
+    {
+      "from": [
+        1,
+        14,
+        1
+      ],
+      "to": [
+        15,
+        16,
+        15
+      ],
+      "faces": {
+        "up": {
+          "texture": "#rubber"
+        },
+        "down": {
+          "texture": "#rubber"
+        },
+        "north": {
+          "texture": "#rubber"
+        },
+        "south": {
+          "texture": "#rubber"
+        },
+        "east": {
+          "texture": "#rubber"
+        },
+        "west": {
+          "texture": "#rubber"
+        }
+      }
+    }
+  ]
+}

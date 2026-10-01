@@ -5,18 +5,18 @@ Updated September 30, 2026. The goal is a complete 0.4.0 release validated and p
 | Requirement | Current state |
 | --- | --- |
 | Pinned standalone project and build | Build and packaged native test-server passed; rendered client and normal dedicated-server gameplay checks remain |
-| Force, brake, heat, energy and distance math | 17 unit tests passed; gameplay integration remains |
+| Force, brake, heat, energy and distance math | 18 unit tests passed, including tire demand/traction-envelope regression; further gameplay integration remains |
 | Native point-force launch and friction stop | Forward/reverse ordinary and single-rider 4D fixtures passed; native contact and joint separation verified |
 | Versioned provider contract | Ordinary fallback and read-only schema-4 Fourth Dimension adapter registered; stable facade, certified equipment interfaces and lifecycle validation remain |
-| Directed contact and span occupancy | Native accepted-contact invalidation and distance/footprint foundations tested; placement, adjacent edges and train reservations pending |
-| Tire modules and passive/friction brakes | Pending |
+| Directed contact and span occupancy | Actual span-tool placement, persisted two-block binding, level/shaft checks and support invalidation tested; obstruction envelopes, adjacent edges and train reservations pending |
+| Tire modules and passive/friction brakes | Ordinary-cart tire prototype passed empty/ballasted, forward/reverse, negative RPM and power-loss fixtures; complete tire gate and brakes pending |
 | Local control, signals, conflict ownership and occupancy | Pending |
 | Original LIM and LSM equipment and swing launches | Pending |
 | Skid brakes and gameplay heat limits | Pending |
 | Physical guide, catch, release, reset and flywheel launch | Pending |
 | Hydraulic/pneumatic gameplay equipment | Pending |
 | Loaded ordinary and all eligible 4D mechanisms | Four single-rider family force prototypes passed; loaded ordinary, linked Arrow, profile traversal and actual equipment mechanisms pending |
-| Recipes, models, tutorials and Ponder scenes | Pending |
+| Recipes, models, tutorials and Ponder scenes | Original cabinet/drive-strip models and five recipes added; rendered QA, complete mechanisms, tutorials and Ponder remain |
 | Packaged client, dedicated server, multiplayer and interrupted saves | Pending |
 | 0.4.0 artifact, commit and verified private remote push | Pending |
 
@@ -37,3 +37,9 @@ Seventeen unit tests passed, followed by the native ordinary fixture without Fou
 The packaged loaded results recorded maximum joint separations of 0.000173 blocks (Arrow), 0.000214 (legacy), 0.000137 (Free Spin), and 0.000130 (revised). The three free families retained different carrier angles under asymmetric loading. These are straight-rail chassis-force prototypes, not completed tire/linear/catch equipment, full loads, controlled Arrow profile traversal, or multiplayer acceptance.
 
 See [provider/contact scope and reproduction](FOUNDATION-PROVIDERS.md), [unit results](evidence/contact-unit.txt), [standalone native results](evidence/contact-standalone.txt), [packaged standalone results](evidence/contact-packaged-standalone.txt), [packaged combined results](evidence/contact-packaged-combined.txt), and [both artifact checksums](evidence/contact-artifacts.sha256). The adapter was tested against the copied artifact identified there; the same development version string alone does not prove an upstream rebuild matches it. No Fourth Dimension checkout or process was changed.
+
+## Equipment checkpoint: 0.0.1-dev.3
+
+The actual shaft-powered cabinet moved native ordinary chassis in both directions through an installed tire drive strip. The empty equipment fixture had native mass 2; six iron ballast blocks raised native mass to 26. Negative shaft RPM and reversed anchor selection each reversed motion. Missing drive strips and overlapping owners faulted without propelling the cart. The placement fixture used the real item interaction, verified Create RPM/stress and recipe loading, reconstructed persisted module identity, and invalidated removed support.
+
+This is partial LS005/LS101 progress. The complete release gates require Fourth Dimension tire certification, linked/occupied equipment, rolling entry, obstructed envelopes, controllers, brakes and interruption/multiplayer tests. Fin and magnetic cabinets currently reject operation. See [equipment scope and reproduction](EQUIPMENT-PROTOTYPE.md).

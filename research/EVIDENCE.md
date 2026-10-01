@@ -1,6 +1,6 @@
 # Launch Systems research evidence
 
-Reviewed September 30, 2026. Distinguish published features, inspected implementation, and proposed compatibility. No Launch Systems code or runtime fixtures exist yet.
+Research reviewed September 30, 2026. Distinguish published features, inspected implementation, and proposed compatibility. The original research preceded implementation; subsequent Launch Systems code and native fixture evidence are tracked in [validation status](../docs/VALIDATION.md).
 
 ## Local project evidence
 
@@ -57,4 +57,4 @@ Use the following primary sources for mechanism concepts. Detailed force curves,
 | [Patent JP2016506223A](https://patents.google.com/patent/JP2016506223A/en) | Background describes friction fin and skid braking; not a brake calibration dataset. |
 | [NeoForge documentation](https://docs.neoforged.net/) | Official loader reference consulted; use the appropriate 1.21.1 documentation during implementation rather than assuming latest APIs match. |
 
-No third-party code, binaries, models or sounds were added to this workspace. Implementation should independently author mechanisms and record licenses for any permitted code reuse separately from installed-mod compatibility.
+The initial research added no third-party code, binaries, models or sounds. The implementation independently authors mechanism logic and equipment geometry, references installed vanilla textures, and resolves declared dependencies through Gradle. Dependency provenance and terms are recorded in [THIRD_PARTY.md](../THIRD_PARTY.md).

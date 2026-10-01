@@ -48,8 +48,14 @@ public final class DirectedTrack {
   }
 
   public double length() { return distances.length(); }
+  public CoasterPathEdge edge() { return edge; }
   public long fingerprint() { return fingerprint; }
   public boolean matches(GraphHit hit) { return hit != null && edge.equals(hit.edge()); }
+
+  public GraphHit hitAtDistance(ServerLevel level, double distance) {
+    double t = distances.parameter(reversed ? length() - distance : distance);
+    return new GraphHit(CoasterPathGraphManager.sampleEdgePositionPlotLocal(level, edge, t), edge, t);
+  }
 
   public double distance(GraphHit hit) {
     if (!matches(hit)) throw new IllegalArgumentException("Contact is on another rail");
