@@ -1,0 +1,6 @@
+Date: October 1, 2026
+Source implementation: 3277f3fc83422ae322ec34541465ec9fe5fa284c
+JAR: coasters-launch-systems-0.0.1-dev.12.jar
+JAR SHA-256: 5efd5d45b16c625cde18d3d87fe4367c16381cc77b1401ecafd8903b73892da4
+JUnit XML totals: {'tests': 23, 'failures': 0, 'errors': 0, 'skipped': 0}
+Math/API regression scope is unchanged; Minecraft controller/ownership/repair validation uses real packaged native fixtures instead of mocked Minecraft unit classes. CI HTML independently records 23 tests, 0 failures and 0 skipped.

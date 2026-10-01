@@ -1,5 +1,7 @@
 # Coasters: Launch Systems implementation plan
 
+Current checkpoint: `0.0.1-dev.12` adds inspected recovery of a receiving controller removed during a reserved native transfer. See [operator workflow and exact limits](docs/RECEIVER-RECOVERY.md) and [verified evidence](docs/VALIDATION.md). This is partial implementation toward the complete planned 0.4.0 scope below; the full release goal remains active.
+
 Plan dated September 30, 2026. Build a standalone Create: Coasters Simulated addon with distinct launch and braking mechanisms inspired by real coaster equipment. The user selected a standalone core with optional integrations. Match the Fourth Dimension project's development stack, support its vehicle families through explicit adapters, and reuse installed operating addons where their behavior and interfaces fit.
 
 Web research, the dependency audit, released Engineered bytecode and Fourth Dimension source informed this original scope. Implementation is now underway: development checkpoints include native tire/fin/magnetic equipment, provider API 5 and scoped loaded ordinary/Fourth Dimension validation. The release gates below remain the full implementation targets; checkpoints do not establish the requested 0.4.0 release. See [validation status](docs/VALIDATION.md) for current evidence, [ROADMAP.md](ROADMAP.md) for addressable work and [research/EVIDENCE.md](research/EVIDENCE.md) for provenance.

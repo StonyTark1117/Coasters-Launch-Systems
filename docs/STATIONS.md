@@ -1,5 +1,7 @@
 # Provider-owned station capture: 0.0.1-dev.11
 
+This page records the dev.11 station checkpoint. See [dev.12 receiver recovery](RECEIVER-RECOVERY.md) for schema-5 equipment journals, inspected controller replacement and final scoped evidence.
+
 A station controller returns an actually held train to its vehicle owner for alignment and boarding. This is partial LS004/LS104/LS105 progress. Ordinary carts remain physically held by their fins; Fourth Dimension capture and rotor alignment use its pinned public vehicle operations.
 
 ## Operator setup
