@@ -25,6 +25,7 @@ import dev.silvergold.simulatedcoasters.track.anchor.CoasterAnchorpointBlockEnti
 import dev.silvergold.simulatedcoasters.track.cart.CoasterCartSpawner;
 import dev.silvergold.simulatedcoasters.track.cart.CoasterCartTrackSnap;
 import dev.silvergold.simulatedcoasters.track.graph.CoasterPathEdge;
+import dev.silvergold.simulatedcoasters.track.graph.CoasterPathGraphManager;
 import dev.silvergold.simulatedcoasters.track.graph.CoasterPathTrackFrame;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ import org.joml.Vector3d;
 /** Observe actual magnetic cabinet impulses before adding the fixture's physical entry/disturbance force. */
 @GameTestHolder("coasterslaunchsystems")
 public final class EddyEquipmentGameTests {
-  private enum Fixture { FORWARD, REVERSE, FULL_LOAD, AT_REST, SLOPE, MISSING_FIN, CONFLICT, HOT, POWER_LOSS }
+  private enum Fixture { FORWARD, REVERSE, FULL_LOAD, AT_REST, SLOPE, MISSING_FIN, CONFLICT, HOT, POWER_LOSS, GRAPH_CHANGE }
   private static final List<Scene> SCENES = new ArrayList<>();
   private static boolean registered;
   private static final class Scene {
@@ -63,7 +64,10 @@ public final class EddyEquipmentGameTests {
     NativeFinClamp preparationHold;
     double externalForce, impulse, dissipated, expectedHeat, peakForce, minimumSpeed = Double.POSITIVE_INFINITY;
     double entryDistance, lastDistance;
-    int brakingContactSteps, availableSteps;
+    int brakingContactSteps, availableSteps, missingContactSteps, mismatchedEdgeSteps;
+    int mutationRevision, mutationContactSteps;
+    double mutationImpulse;
+    boolean graphEdited, graphRemoved;
     String failure = "";
     boolean braking, closed, boundsVerified, entryVerified;
     Scene(GameTestHelper helper, ServerSubLevel body, Fixture fixture, BlockPos from, BlockPos to, BlockPos module) {
@@ -86,8 +90,14 @@ public final class EddyEquipmentGameTests {
       if (closed) return; closed = true; SCENES.remove(this);
       if (preparationHold != null) preparationHold.close();
       SubLevelContainer.getContainer(level).removeSubLevel(body, SubLevelRemovalReason.REMOVED);
+      if (fixture == Fixture.GRAPH_CHANGE) removeUnrelatedTrack();
       if (level.getBlockEntity(from) instanceof CoasterAnchorpointBlockEntity anchor) anchor.removeAnchorPeerCurve(level, to);
       for (var pos : List.of(module, motor, tire, tireMotor, from, to)) level.removeBlock(pos, false);
+    }
+    void removeUnrelatedTrack() {
+      var otherFrom = from.west(16); var otherTo = to.west(16);
+      if (level.getBlockEntity(otherFrom) instanceof CoasterAnchorpointBlockEntity anchor) anchor.removeAnchorPeerCurve(level, otherTo);
+      level.removeBlock(otherFrom, false); level.removeBlock(otherTo, false);
     }
   }
   private static void physics(ForgeSablePrePhysicsTickEvent event) {
@@ -95,7 +105,8 @@ public final class EddyEquipmentGameTests {
       if (s.level != event.getPhysicsSystem().getLevel() || s.body.isRemoved()) continue;
       try {
         var contact = EngagedContacts.current(s.level, s.body).orElse(null);
-        if (contact == null || !s.track.matches(contact.hit())) continue;
+        if (contact == null) { if (s.braking) s.missingContactSteps++; continue; }
+        if (!s.track.matches(contact.hit())) { if (s.braking) s.mismatchedEdgeSteps++; continue; }
         s.lastDistance = s.track.distance(contact.hit());
         if (s.braking) {
           if (!s.entryVerified) {
@@ -107,6 +118,7 @@ public final class EddyEquipmentGameTests {
           }
           if (s.cabinet().interval().intersects(s.lastDistance, s.lastDistance, .6)) s.brakingContactSteps++;
           if (EquipmentRuntime.available(s.level, s.cabinet())) s.availableSteps++;
+          if (s.graphEdited) s.mutationContactSteps++;
         }
         if (s.fixture == Fixture.AT_REST && s.braking && !s.boundsVerified) {
           for (double invalid : new double[] {-.01, 1.01, Double.NaN, Double.POSITIVE_INFINITY}) {
@@ -143,7 +155,7 @@ public final class EddyEquipmentGameTests {
         if (s.braking && s.fixture != Fixture.SLOPE) s.minimumSpeed = Math.min(s.minimumSpeed, speed * (s.fixture == Fixture.REVERSE ? -1 : 1));
         if (s.externalForce != 0) NativeForces.pointForce(s.body, s.body.getMassTracker().getCenterOfMass(),
             direction.mul(s.externalForce), event.getTimeStep());
-      } catch (RuntimeException error) { s.failure = error.toString(); }
+      } catch (RuntimeException error) { if (s.failure.isEmpty()) s.failure = error.toString(); }
     }
   }
   @GameTestGenerator
@@ -210,6 +222,27 @@ public final class EddyEquipmentGameTests {
         scene.cabinet().loadWithComponents(tag, level.registryAccess()); scene.expectedHeat = 8192;
       }
     });
+    if (fixture == Fixture.GRAPH_CHANGE) {
+      scene.at(65, () -> {
+        int revision = CoasterPathGraphManager.get(level).revision();
+        var otherFrom = from.west(16); var otherTo = to.west(16);
+        for (var pos : List.of(otherFrom, otherTo)) level.setBlockAndUpdate(pos, SimulatedCoastersBlocks.COASTER_ANCHORPOINT.get().defaultBlockState());
+        var otherCurve = new BezierConnection(Couple.create(otherFrom, otherTo),
+            Couple.create(CoasterAnchorpointBlockEntity.worldCenter(level, otherFrom), CoasterAnchorpointBlockEntity.worldCenter(level, otherTo)),
+            Couple.create(tangent, tangent.scale(-1)), Couple.create(up, up), true, false, CoasterTrackMaterials.COASTER);
+        ((CoasterAnchorpointBlockEntity) level.getBlockEntity(otherFrom)).putAnchorPeerCurve(level, otherTo, otherCurve);
+        scene.mutationRevision = revision; scene.mutationImpulse = scene.impulse; scene.graphEdited = true;
+      });
+      scene.at(75, () -> {
+        helper.assertTrue(CoasterPathGraphManager.get(level).revision() != scene.mutationRevision, "Unrelated track addition did not revise the native graph");
+        helper.assertTrue(DirectedTrack.resolve(level, from.west(16), to.west(16)).isPresent(), "Unrelated track addition did not create a native edge");
+        helper.assertTrue(scene.mutationContactSteps > 0 && scene.impulse > scene.mutationImpulse + 1, "Magnetic braking lost contact/work after unrelated track addition");
+        helper.assertTrue(DirectedTrack.resolve(level, from, to).orElseThrow().fingerprint() == scene.track.fingerprint(), "Unrelated track addition changed the occupied rail geometry");
+        scene.mutationRevision = CoasterPathGraphManager.get(level).revision();
+        scene.mutationImpulse = scene.impulse; scene.mutationContactSteps = 0;
+        scene.removeUnrelatedTrack(); scene.graphRemoved = true;
+      });
+    }
     scene.at(100, () -> {
       double speed = scene.speed(); var cabinet = scene.cabinet();
       helper.assertTrue(scene.failure.isEmpty(), "Native magnetic observer failed: " + scene.failure);
@@ -217,7 +250,15 @@ public final class EddyEquipmentGameTests {
       System.out.println("LS_EDDY_EQUIPMENT fixture=" + fixture + " mass=" + body.getMassTracker().getMass() + " initial=" + initial[0]
           + " speed=" + speed + " impulse=" + scene.impulse + " peak_force=" + scene.peakForce + " work=" + scene.dissipated + " heat=" + cabinet.heat() + " fault=" + cabinet.fault());
       System.out.println("LS_EDDY_CONTACT fixture=" + fixture + " entry=" + scene.entryDistance + " last=" + scene.lastDistance + " interval=" + cabinet.interval()
-          + " contact_steps=" + scene.brakingContactSteps + " available_steps=" + scene.availableSteps + " armed=" + cabinet.armed());
+          + " contact_steps=" + scene.brakingContactSteps + " available_steps=" + scene.availableSteps + " armed=" + cabinet.armed()
+          + " missing_contact_steps=" + scene.missingContactSteps + " mismatched_edge_steps=" + scene.mismatchedEdgeSteps);
+      if (fixture == Fixture.GRAPH_CHANGE) {
+        helper.assertTrue(scene.graphRemoved && CoasterPathGraphManager.get(level).revision() != scene.mutationRevision, "Unrelated track removal did not revise the native graph");
+        helper.assertTrue(DirectedTrack.resolve(level, from.west(16), to.west(16)).isEmpty(), "Unrelated track removal left its native edge");
+        helper.assertTrue(scene.mutationContactSteps > 0 && scene.impulse > scene.mutationImpulse + 1, "Magnetic braking lost contact/work after unrelated track removal");
+        helper.assertTrue(scene.missingContactSteps == 0 && scene.mismatchedEdgeSteps == 0, "Unrelated graph edits interrupted accepted contact");
+        helper.assertTrue(DirectedTrack.resolve(level, from, to).orElseThrow().fingerprint() == scene.track.fingerprint(), "Unrelated track removal changed the occupied rail geometry");
+      }
       if (fixture == Fixture.MISSING_FIN || fixture == Fixture.CONFLICT) {
         helper.assertTrue(cabinet.fault().contains(fixture == Fixture.CONFLICT ? "Overlapping" : "conductive fin"), "Magnetic rejection lost its cause");
         helper.assertTrue(scene.impulse < 1e-9 && Math.abs(speed) > 1.5, "A rejected magnet or owner applied partial force");
