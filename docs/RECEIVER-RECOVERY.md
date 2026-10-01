@@ -24,7 +24,9 @@ Inspection requests are transient and consumed once in the native physics phase;
 
 ## Validation
 
-Native acceptance and artifact evidence are recorded in [validation status](VALIDATION.md). The recovery suite uses real span-tool/compass interactions, loaded ordinary coupled trains and eligible pinned Fourth Dimension vehicles. Recovery is followed by separate arming and a fresh redstone departure; the native train must complete its tail handoff and final hold with passengers and joints retained. Adverse inspections retain ownership and add no tire work.
+Native acceptance and artifact evidence are recorded in [validation status](VALIDATION.md). The recovery suite uses separate rail positions at y=288 (the earlier circuit suite uses y=304), real span-tool/compass interactions, loaded ordinary coupled trains and eligible pinned Fourth Dimension vehicles. Recovery is followed by separate arming and a fresh redstone departure; the native train must complete its tail handoff and final hold with passengers and joints retained. Adverse inspections retain ownership and add no tire work. A queued inspection cancelled by NBT load cannot replay. The ordinary reverse recovery fixture also preserves an enabled receiving station setting.
+
+An initial combined run reused y=304 and produced three ordinary start failures at the exact positions previously used for Arrow/Free Spin circuits. The pinned upstream `EligibilityHooks` consults persisted rail records by anchor positions and rejects an ordinary cart without matching gear; native rail removal does not erase those records. The new fixtures use distinct positions rather than clearing upstream metadata or weakening eligibility. This is fixture isolation, not a runtime eligibility bypass.
 
 Focused reproduction:
 

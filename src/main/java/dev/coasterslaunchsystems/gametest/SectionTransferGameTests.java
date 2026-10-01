@@ -64,7 +64,8 @@ public final class SectionTransferGameTests {
       // Adverse ordinary modes still use a fully occupied native coupled pair.
       if (mode.equals("power_loss") || mode.equals("rollback") || mode.startsWith("reload") || mode.equals("occupied_destination") || mode.equals("short_destination") || mode.equals("missing_destination")) design = "linked_forward";
       if (mode.equals("arrow_missing_carrier")) design = "arrow_linked_forward";
-      source = new RideControllerGameTests.Scene(helper, slot, design, mode.contains("_repair") ? 304 : 272);
+      // Circuit fixtures at y=304 retain upstream family profiles after rail removal; use separate inspected rail positions.
+      source = new RideControllerGameTests.Scene(helper, slot, design, mode.contains("_repair") ? 288 : 272);
       otherEnd = source.reverse ? source.base.from.offset(0, 0, -64) : source.base.to.offset(0, 0, 64);
       var joint = source.reverse ? source.base.from : source.base.to; receiverPos = joint.offset(4, -2, source.reverse ? -8 : 8);
       for (int x = Math.floorDiv(joint.getX(), 16) - 1; x <= Math.floorDiv(joint.getX(), 16) + 1; x++)
