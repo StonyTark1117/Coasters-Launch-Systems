@@ -168,12 +168,21 @@ public final class RideControllers {
     if (container == null) { controller.fail("Native physics unavailable"); return; }
     var modules = new ArrayList<EquipmentCabinetEntity>();
     for (var linked : controller.modules()) {
-      if (!level.hasChunkAt(linked.position()) || !(level.getBlockEntity(linked.position()) instanceof EquipmentCabinetEntity module)
-          || !linked.identity().equals(module.identity()) || owner(level, module) != controller
-          || !EquipmentRuntime.available(level, module) || !module.armed() || !module.fault().isEmpty() || module.resolve(level) == null) {
-        controller.fail("A linked module is unavailable, disarmed, replaced or faulted"); return;
+      if (!level.hasChunkAt(linked.position())) { controller.fail("Linked module chunk unavailable at " + linked.position()); return; }
+      if (!(level.getBlockEntity(linked.position()) instanceof EquipmentCabinetEntity module)) {
+        controller.fail("Linked module missing or replaced at " + linked.position()); return;
+      }
+      if (!linked.identity().equals(module.identity()) || owner(level, module) != controller) {
+        controller.fail("Linked module identity or controller ownership changed at " + linked.position()); return;
+      }
+      if (!EquipmentRuntime.available(level, module)) {
+        controller.fail("Linked module has no current physics registration at " + linked.position()); return;
+      }
+      if (!module.armed() || !module.fault().isEmpty()) {
+        controller.fail("Linked module disarmed or faulted at " + linked.position() + ": " + module.fault()); return;
       }
       var moduleTrack = module.resolve(level);
+      if (moduleTrack == null) { controller.fail("Linked module binding invalid at " + linked.position() + ": " + module.fault()); return; }
       if (!moduleTrack.edge().equals(track.edge()) || moduleTrack.forward(level, moduleTrack.hitAtDistance(level, 0))
           .dot(track.forward(level, track.hitAtDistance(level, 0))) < .99) {
         controller.fail("A linked module changed its rail section or direction"); return;

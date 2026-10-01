@@ -167,9 +167,11 @@ public final class FinEquipmentGameTests {
       helper.assertTrue(creep<.01&&Math.abs(scene.speed())<.03,"Placed spring fin did not maintain its rated hold");
       if(slope)scene.rpm(64);
     });
-    scene.at(310,()->{
+    scene.at(305,()->{
       if(scene.closed)return;
-      if(slope){System.out.println("LS_FIN_EQUIPMENT fixture=SLOPE phase=powered_release speed="+scene.speed()+" rpm="+scene.cabinet().getSpeed()+" distance="+scene.distance);helper.assertTrue(scene.speed()<-.4,"Shaft power did not release the fin clamp");scene.rpm(0);}
+      if(slope){System.out.println("LS_FIN_EQUIPMENT fixture=SLOPE phase=powered_release speed="+scene.speed()+" rpm="+scene.cabinet().getSpeed()+" distance="+scene.distance);
+        helper.assertTrue(scene.speed()<-.3 && scene.cabinet().interval().intersects(scene.distance, scene.distance, .6),
+            "Shaft power did not release the fin clamp while its fin remained over the pad");scene.rpm(0);}
     });
     scene.at(330,()->{
       if(scene.closed)return;

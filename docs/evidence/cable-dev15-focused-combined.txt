@@ -1,4 +1,4 @@
-Dev.15 packaged cable suite with verified schema-4 Fourth Dimension binary.
+Pre-final dev.15 packaged cable suite with verified schema-4 Fourth Dimension binary. The final full combined run repeats all fourteen cable cases after the unrelated slope-fixture and module-diagnostic corrections.
 LS_CABLE_HOME mode=single_forward travel=0.0 speed=0.0 guide_error=8.54492185453637E-6 socket=(32.5 223.125 -888) carriage=(32.5 223.125 -888)
 LS_CABLE_HOME mode=linked_forward travel=0.0 speed=0.0 guide_error=8.54492185453637E-6 socket=(80.5 223.125 -882) carriage=(80.5 223.125 -882)
 LS_CABLE_HOME mode=linked_reverse travel=-0.0 speed=-0.0 guide_error=8.54492185453637E-6 socket=(128.5 223.125 -846) carriage=(128.5 223.125 -846)

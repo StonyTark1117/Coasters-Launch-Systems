@@ -1,0 +1,11 @@
+First clean CI attempt for implementation 78a0f39; same JAR hash as the local passing combined run. This run failed two existing standalone fixtures and is not acceptance evidence.
+2026-10-01T18:59:24.6277304Z LS_FIN_EQUIPMENT fixture=SLOPE phase=hold creep=0.0 distance=5.993413624500502 interval=SpanInterval[start=5.730363852747704, end=7.730363852747704]
+2026-10-01T18:59:24.7203462Z LS_FIN_EQUIPMENT fixture=SLOPE phase=powered_release speed=-1.2947492599487305 rpm=-64.0 distance=5.720871896900979
+2026-10-01T18:59:24.7224478Z LS_FIN_EQUIPMENT fixture=SLOPE phase=reapply speed=-1.6508450508117676 rpm=0.0 fault= drift=1.369188655552935 distance=4.706264299376822
+2026-10-01T18:59:24.7232122Z [18:59:24] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems.fin_slope failed at 2185091, -60, -6033671! Power loss did not reapply the spring fin clamp
+2026-10-01T18:59:28.0236932Z LS_FIN_CONSTRAINT fixture=SLOPE phase=hold creep=0.0 missing=0
+2026-10-01T19:03:18.2205600Z LS_CONTROLLER_FAILURE mode=single_forward tick=80 Ride controller: FAULT, reserved chassis 0, required brake length 0.00/0.00, transfer false, station capture false, boarding ready false. A linked module is unavailable, disarmed, replaced or faulted
+2026-10-01T19:03:18.2209586Z [19:03:18] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_linear.lsm_section_single_forward failed at 2185043, -60, -6033608! Partial linear charge released a loaded train: Ride controller: FAULT, reserved chassis 0, required brake length 0.00/0.00, transfer false, station capture false, boarding ready false. A linked module is unavailable, disarmed, replaced or faulted
+2026-10-01T19:04:09.7277570Z [19:04:09] [Server thread/INFO] [minecraft/GameTestServer]: ========= 112 GAME TESTS COMPLETE IN 8.144 min ======================
+2026-10-01T19:04:09.7297136Z [19:04:09] [Server thread/INFO] [minecraft/GameTestServer]: 2 required tests failed :(
+2026-10-01T19:04:11.9312733Z BUILD FAILED in 9m 18s
