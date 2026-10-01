@@ -1,6 +1,7 @@
 package dev.coasterslaunchsystems.content;
 
 import dev.coasterslaunchsystems.track.DirectedTrack;
+import dev.coasterslaunchsystems.track.DirectedRoute;
 import dev.coasterslaunchsystems.runtime.RideControllers;
 import java.util.*;
 import net.minecraft.core.BlockPos;
@@ -22,11 +23,17 @@ public final class RideControllerEntity extends BlockEntity {
   public record Peer(BlockPos position, UUID identity) {}
   private Peer destination, incoming;
   private boolean transferring;
+  private final List<DirectedRoute.Span> transferSpans = new ArrayList<>();
+  private DirectedRoute cachedTransfer;
+  private int transferRevision = Integer.MIN_VALUE;
+  private long transferHandleRevision = Long.MIN_VALUE;
+  private double transferSpeedLimit;
   private UUID identity = UUID.randomUUID();
   private BlockPos from, to;
   private long geometry;
   private DirectedTrack cachedTrack;
   private int graphRevision = Integer.MIN_VALUE;
+  private long handleRevision = Long.MIN_VALUE;
   private final Set<BlockPos> routeChunks = new LinkedHashSet<>();
   private final List<Module> modules = new ArrayList<>();
   private final Set<UUID> reservation = new LinkedHashSet<>();
@@ -49,6 +56,31 @@ public final class RideControllerEntity extends BlockEntity {
   public Peer destination() { return destination; }
   public Peer incoming() { return incoming; }
   public boolean transferring() { return transferring; }
+  public double transferSpeedLimit() { return transferSpeedLimit; }
+  public List<DirectedRoute.Span> claimedSpans() {
+    if (from == null) return List.of();
+    return transferring && !reservation.isEmpty() && !transferSpans.isEmpty() ? List.copyOf(transferSpans)
+        : List.of(new DirectedRoute.Span(from, to, geometry));
+  }
+  public DirectedRoute transferRoute(ServerLevel server, RideControllerEntity target) {
+    if (destination == null || !destination.identity().equals(target.identity()) || resolve(server) == null || target.resolve(server) == null)
+      throw new IllegalStateException("Transfer route endpoints are unavailable");
+    if (!transferSpans.isEmpty() && (!transferSpans.getLast().from().equals(target.from()) || !transferSpans.getLast().to().equals(target.to())))
+      throw new IllegalStateException("Transfer receiver binding changed");
+    int revision = dev.silvergold.simulatedcoasters.track.graph.CoasterPathGraphManager.get(server).revision();
+    long handles = dev.silvergold.simulatedcoasters.track.CoasterPeerCurveHandleLengths.revision();
+    if (cachedTransfer == null || transferRevision != revision || transferHandleRevision != handles) {
+      var route = DirectedRoute.between(server, from, to, target.from(), target.to());
+      // Old saves only described an adjacent pair; migration cannot silently acquire a longer route.
+      if (transferSpans.isEmpty()) {
+        if (!to.equals(target.from())) throw new IllegalStateException("Legacy destination requires inspected route relinking");
+        transferSpans.addAll(route.spans()); changed();
+      }
+      if (!transferSpans.equals(route.spans())) throw new IllegalStateException("Reserved transfer route geometry changed");
+      cachedTransfer = route; transferRevision = revision; transferHandleRevision = handles;
+    }
+    cachedTransfer.requireLoaded(server); return cachedTransfer;
+  }
   public boolean exitDrive(EquipmentCabinetEntity module) {
     return modules.stream().anyMatch(m -> m.position().equals(module.getBlockPos()) && m.identity().equals(module.identity()) && m.exitDrive());
   }
@@ -56,28 +88,25 @@ public final class RideControllerEntity extends BlockEntity {
     if (armed || !reservation.isEmpty() || incoming != null || transferring)
       throw new IllegalArgumentException("Disarm an empty source controller before linking its destination");
     if (target == this || target.getLevel() != level || !(level instanceof ServerLevel server)) throw new IllegalArgumentException("Select another controller in this dimension");
-    var first = resolve(server); var second = target.resolve(server);
-    if (first == null || second == null || !to.equals(target.from()) || first.forward(server, first.hitAtDistance(server, first.length()))
-        .dot(second.forward(server, second.hitAtDistance(server, 0))) < .99999)
-      throw new IllegalArgumentException("Destination must continue from this section's directed end");
-    long degree = dev.silvergold.simulatedcoasters.track.graph.CoasterPathGraphManager.get(server).edges().stream()
-        .filter(e -> e.from().equals(to) || e.to().equals(to)).count();
-    if (degree != 2) throw new IllegalArgumentException("Section transfer requires an unbranched rail joint");
-    destination = new Peer(target.getBlockPos(), target.identity()); changed();
+    if (resolve(server) == null || target.resolve(server) == null) throw new IllegalArgumentException("Both sections must be supported");
+    var route = DirectedRoute.between(server, from, to, target.from(), target.to());
+    destination = new Peer(target.getBlockPos(), target.identity());
+    transferSpans.clear(); transferSpans.addAll(route.spans()); cachedTransfer = null; transferRevision = Integer.MIN_VALUE; changed();
   }
-  public void beginTransfer(RideControllerEntity target) {
+  public void beginTransfer(RideControllerEntity target, double speedLimit) {
     if (destination == null || !destination.identity().equals(target.identity()) || reservation.isEmpty())
       throw new IllegalArgumentException("No reserved destination configured");
+    dev.coasterslaunchsystems.math.Numbers.positive(speedLimit, "transfer speed limit");
     target.reserve(reservation()); target.incoming = new Peer(worldPosition, identity); target.phase = State.RECEIVING; target.changed();
-    transferring = true; phase = State.EXITING; changed();
+    transferSpeedLimit = speedLimit; transferring = true; phase = State.EXITING; changed();
   }
   public void finishTransfer(RideControllerEntity target) {
     if (!transferring || target.incoming == null || !identity.equals(target.incoming.identity()) || !reservation().equals(target.reservation()))
       throw new IllegalArgumentException("Transfer ownership changed before tail clearance");
     target.incoming = null; target.phase = State.RUNNING; target.changed();
-    transferring = false; clearVerifiedReservation();
+    transferring = false; transferSpeedLimit = 0; clearVerifiedReservation();
   }
-  public boolean endpoint(BlockPos pos) { return pos.equals(from) || pos.equals(to); }
+  public boolean endpoint(BlockPos pos) { return claimedSpans().stream().anyMatch(s -> pos.equals(s.from()) || pos.equals(s.to())); }
   public UUID identity() { return identity; }
   public List<Module> modules() { return List.copyOf(modules); }
   public Set<UUID> reservation() { return Set.copyOf(reservation); }
@@ -106,13 +135,15 @@ public final class RideControllerEntity extends BlockEntity {
     }
     from = first.immutable(); to = second.immutable(); geometry = track.fingerprint();
     cachedTrack = null; graphRevision = Integer.MIN_VALUE; routeChunks.clear();
-    modules.clear(); destination = null; incoming = null; transferring = false; phase = State.INSPECTION; fault = ""; changed();
+    modules.clear(); destination = null; incoming = null; transferring = false; transferSpans.clear(); cachedTransfer = null;
+    transferRevision = Integer.MIN_VALUE; transferSpeedLimit = 0; phase = State.INSPECTION; fault = ""; changed();
   }
   public DirectedTrack resolve(ServerLevel level) {
     if (from == null || to == null) return null;
     if (dev.silvergold.simulatedcoasters.track.cart.CoasterCartResolve.findSubLevelAt(level, worldPosition) != null) { fail("Controller lost fixed support"); return null; }
     int current = dev.silvergold.simulatedcoasters.track.graph.CoasterPathGraphManager.get(level).revision();
-    if (cachedTrack == null || graphRevision != current) {
+    long handles = dev.silvergold.simulatedcoasters.track.CoasterPeerCurveHandleLengths.revision();
+    if (cachedTrack == null || graphRevision != current || handleRevision != handles) {
       var track = DirectedTrack.resolve(level, from, to).orElse(null);
       if (track == null || track.fingerprint() != geometry) { fail("Reserved rail support or geometry changed"); return null; }
       routeChunks.clear(); routeChunks.add(from); routeChunks.add(to);
@@ -120,7 +151,7 @@ public final class RideControllerEntity extends BlockEntity {
         var pos = BlockPos.containing(track.hitAtDistance(level, s).point());
         routeChunks.add(new BlockPos(Math.floorDiv(pos.getX(), 16) * 16, pos.getY(), Math.floorDiv(pos.getZ(), 16) * 16));
       }
-      cachedTrack = track; graphRevision = current;
+      cachedTrack = track; graphRevision = current; handleRevision = handles;
     }
     for (var pos : routeChunks) if (!level.hasChunkAt(pos)) { fail("Reserved route chunk is unavailable"); return null; }
     return cachedTrack;
@@ -180,7 +211,10 @@ public final class RideControllerEntity extends BlockEntity {
   @Override public CompoundTag getUpdateTag(HolderLookup.Provider registries) { return saveWithoutMetadata(registries); }
   @Override protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     super.saveAdditional(tag, registries);
-    tag.putInt("ls_controller_schema", 2);
+    tag.putInt("ls_controller_schema", 3);
+    var route = new ListTag();
+    for (var span : transferSpans) { var entry = new CompoundTag(); entry.putLong("from", span.from().asLong()); entry.putLong("to", span.to().asLong()); entry.putLong("geometry", span.geometry()); route.add(entry); }
+    tag.put("transfer_route", route); tag.putDouble("transfer_speed_limit", transferSpeedLimit);
     writePeer(tag, "destination", destination); writePeer(tag, "incoming", incoming); tag.putBoolean("transferring", transferring); tag.putUUID("identity", identity); tag.putString("phase", phase.name()); tag.putString("fault", fault);
     tag.putBoolean("armed", armed); tag.putDouble("required", required); tag.putDouble("available", available);
     if (from != null) { tag.putLong("from", from.asLong()); tag.putLong("to", to.asLong()); tag.putLong("geometry", geometry); }
@@ -200,10 +234,15 @@ public final class RideControllerEntity extends BlockEntity {
   }
   @Override protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     super.loadAdditional(tag, registries);
-    if (tag.getInt("ls_controller_schema") != 1 && tag.getInt("ls_controller_schema") != 2) throw new IllegalArgumentException("Unsupported controller schema");
+    if (tag.getInt("ls_controller_schema") < 1 || tag.getInt("ls_controller_schema") > 3) throw new IllegalArgumentException("Unsupported controller schema");
     identity = tag.getUUID("identity"); from = tag.contains("from") ? BlockPos.of(tag.getLong("from")) : null;
     to = tag.contains("to") ? BlockPos.of(tag.getLong("to")) : null; geometry = tag.getLong("geometry");
     destination = readPeer(tag, "destination"); incoming = readPeer(tag, "incoming"); transferring = tag.getBoolean("transferring");
+    transferSpans.clear();
+    for (var entry : tag.getList("transfer_route", 10)) { var span = (CompoundTag) entry; transferSpans.add(new DirectedRoute.Span(BlockPos.of(span.getLong("from")), BlockPos.of(span.getLong("to")), span.getLong("geometry"))); }
+    if (transferSpans.size() > 128) throw new IllegalArgumentException("Saved transfer route is too long");
+    transferSpeedLimit = tag.getDouble("transfer_speed_limit");
+    if (!Double.isFinite(transferSpeedLimit) || transferSpeedLimit < 0) throw new IllegalArgumentException("Invalid saved transfer speed limit");
     if (transferring && destination == null) throw new IllegalArgumentException("Transferred reservation lacks a destination");
     modules.clear(); for (var entry : tag.getList("modules", 10)) { var e = (CompoundTag) entry; modules.add(new Module(BlockPos.of(e.getLong("pos")), e.getUUID("id"), e.getBoolean("exit_drive"))); }
     reservation.clear(); for (var entry : tag.getList("reservation", 10)) reservation.add(((CompoundTag) entry).getUUID("id"));
@@ -213,6 +252,7 @@ public final class RideControllerEntity extends BlockEntity {
     armed = client && tag.getBoolean("armed"); phase = client ? State.valueOf(tag.getString("phase")) : State.INSPECTION;
     fault = client ? tag.getString("fault") : "Reloaded controller requires inspection; reservation retained";
     cachedTrack = null; graphRevision = Integer.MIN_VALUE; routeChunks.clear();
+    cachedTransfer = null; transferRevision = Integer.MIN_VALUE;
     high = false; inputObserved = false; launchRequested = false;
   }
 }

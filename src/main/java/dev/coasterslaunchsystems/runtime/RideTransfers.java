@@ -9,6 +9,7 @@ import dev.coasterslaunchsystems.math.DriveMath;
 import dev.coasterslaunchsystems.math.Mechanism;
 import dev.coasterslaunchsystems.math.StoppingEnvelope;
 import dev.coasterslaunchsystems.track.DirectedTrack;
+import dev.coasterslaunchsystems.track.DirectedRoute;
 import dev.coasterslaunchsystems.track.EngagedContacts;
 import dev.ryanhcode.sable.api.sublevel.SubLevelContainer;
 import dev.ryanhcode.sable.sublevel.ServerSubLevel;
@@ -72,12 +73,7 @@ public final class RideTransfers {
   }
   private static RideControllerEntity destination(ServerLevel level, RideControllerEntity source) {
     var target = RideControllers.controller(level, source.destination());
-    if (target == null || !source.to().equals(target.from())) return null;
-    var a = source.resolve(level); var b = target.resolve(level);
-    if (a == null || b == null || a.forward(level, a.hitAtDistance(level, a.length())).dot(b.forward(level, b.hitAtDistance(level, 0))) < .99999) return null;
-    long degree = dev.silvergold.simulatedcoasters.track.graph.CoasterPathGraphManager.get(level).edges().stream()
-        .filter(e -> e.from().equals(source.to()) || e.to().equals(source.to())).count();
-    return degree == 2 ? target : null;
+    return target;
   }
   private static boolean paired(RideControllerEntity source, RideControllerEntity target) {
     return source.transferring() && target.incoming() != null && target.incoming().identity().equals(source.identity())
@@ -86,16 +82,15 @@ public final class RideTransfers {
   private static void failPair(RideControllerEntity source, RideControllerEntity target, String reason) {
     source.fail(reason); if (target != null && paired(source, target)) target.fail(reason);
   }
-  private static boolean occupied(ServerLevel level, Section section, Set<UUID> allowed) {
+  private static boolean occupied(ServerLevel level, DirectedRoute route, Set<UUID> allowed) {
     for (var cart : SubLevelContainer.getContainer(level).getAllSubLevels()) {
       var contact = EngagedContacts.current(level, cart).orElse(null);
-      if (contact != null && section.track().matches(contact.hit()) && !allowed.contains(cart.getUniqueId())) return true;
+      if (contact != null && route.matches(contact.hit()) && !allowed.contains(cart.getUniqueId())) return true;
     }
     return false;
   }
-  private static Train train(ServerLevel level, RideControllerEntity source, Section first, Section second) {
+  private static Train train(ServerLevel level, RideControllerEntity source, DirectedRoute route) {
     var container = SubLevelContainer.getContainer(level); var rows = new ArrayList<Row>(); var bodies = new HashSet<UUID>();
-    var axis = first.track().forward(level, first.track().hitAtDistance(level, 0)); var direction = new Vector3d(axis.x, axis.y, axis.z);
     double mass = 0, force = 256, speed = 0, minimum = Double.POSITIVE_INFINITY, maximum = Double.NEGATIVE_INFINITY, largestRadius = 0;
     for (var id : source.reservation()) {
       if (!(container.getSubLevel(id) instanceof ServerSubLevel cart) || cart.isRemoved()) throw new IllegalStateException("Reserved transfer chassis unavailable");
@@ -103,23 +98,24 @@ public final class RideTransfers {
       if (motion == null || contact == null || !Set.copyOf(motion.consist()).equals(source.reservation()) || !motion.exclusiveOperator().isEmpty()
           || !motion.interfaces().containsAll(Set.of(Mechanism.TIRE, Mechanism.FIN_BRAKE)) || motion.maximumBrakeForce() <= 0)
         throw new IllegalStateException("Transfer vehicle support, ownership or interfaces changed");
-      if (!first.track().matches(contact.hit()) && !second.track().matches(contact.hit())) throw new IllegalStateException("Reserved train left the paired route");
+      if (!route.matches(contact.hit())) throw new IllegalStateException("Reserved train left the paired route");
       if (ChainLiftSpanQuery.findAtGraphHit(level, contact.hit(), 0) != null) throw new IllegalStateException("Native chain owns the transfer train");
       double loaded = NativeForces.mass(level, motion); if (loaded <= 0) throw new IllegalStateException("Transfer native mass unavailable");
       for (var body : motion.bodies()) if (!bodies.add(body)) throw new IllegalStateException("Duplicate body in transfer consist");
       mass += loaded; force = Math.min(force, motion.maximumBrakeForce());
       double radius = radius(level, motion); largestRadius = Math.max(largestRadius, radius);
-      var point = bearing(cart); double position = point.dot(direction); minimum = Math.min(minimum, position); maximum = Math.max(maximum, position);
+      double position = route.distance(contact.hit()); minimum = Math.min(minimum, position); maximum = Math.max(maximum, position);
+      var axis = route.forward(level, contact.hit()); var direction = new Vector3d(axis.x, axis.y, axis.z);
       double velocity = NativeForces.pointDynamics(cart, container.physicsSystem().getPipeline(), VehicleInterfaces.tirePoint(cart), direction).speed();
       speed = Math.max(speed, Math.abs(velocity));
-      double distance = first.track().matches(contact.hit()) ? first.track().distance(contact.hit()) : first.track().length() + second.track().distance(contact.hit());
+      double distance = position;
       rows.add(new Row(cart, motion, contact, distance, velocity, radius));
     }
     if (rows.isEmpty() || mass > 64) throw new IllegalStateException("Transfer consist exceeds the supported fin rating");
     return new Train(rows, mass, force, maximum - minimum + 2 * largestRadius, speed);
   }
-  private static boolean certificate(ServerLevel level, Section first, Section second, Train train) {
-    double speed = Math.max(train.speed(), Math.max(first.ceiling(first.exit()), second.ceiling(second.launch()))), gravity = 0;
+  private static boolean certificate(ServerLevel level, Section first, Section second, DirectedRoute route, Train train) {
+    double speed = speedBound(level, first, second, route, train), gravity = 0;
     var nativeGravity = dev.ryanhcode.sable.physics.config.dimension_physics.DimensionPhysicsData.getGravity(level);
     for (var section : List.of(first, second)) for (int sample = 0; sample <= 64; sample++) {
       var tangent = section.track().forward(level, section.track().hitAtDistance(level, section.track().length() * sample / 64));
@@ -128,6 +124,27 @@ public final class RideTransfers {
     var envelope = new StoppingEnvelope(train.mass(), speed, train.force(), gravity, .1, train.length());
     first.controller().envelope(envelope.requiredLength(), second.brakeEnd() - second.brakeStart());
     return envelope.fits(second.brakeEnd() - second.brakeStart());
+  }
+  private static double speedBound(ServerLevel level, Section first, Section second, DirectedRoute route, Train train) {
+    double base = Math.max(train.speed(), Math.max(first.ceiling(first.exit()), second.ceiling(second.launch())));
+    var gravity = dev.ryanhcode.sable.physics.config.dimension_physics.DimensionPhysicsData.getGravity(level);
+    double lowestPotential = train.rows().stream().mapToDouble(r -> {
+      var p = r.contact().hit().point(); return gravity.dot(new Vector3d(p.x, p.y, p.z));
+    }).min().orElseThrow();
+    double remainingStart = train.rows().stream().mapToDouble(Row::distance).min().orElseThrow();
+    double gain = 0;
+    for (var hit : route.samples()) if (route.distance(hit) >= remainingStart) {
+      var p = hit.point(); gain = Math.max(gain, gravity.dot(new Vector3d(p.x, p.y, p.z)) - lowestPotential);
+    }
+    // Samples are at most one arc block apart. Nonlevel routes receive a full gravity-vector margin.
+    double projected = 0;
+    for (var hit : route.samples()) {
+      var t = route.forward(level, hit); projected = Math.max(projected, Math.abs(gravity.dot(new Vector3d(t.x, t.y, t.z))));
+    }
+    return Math.sqrt(base * base + 2 * Math.max(0, gain + (projected > 1e-6 ? gravity.length() : 0)));
+  }
+  private static boolean chainOnRoute(ServerLevel level, DirectedRoute route) {
+    return route.samples().stream().anyMatch(hit -> ChainLiftSpanQuery.findAtGraphHit(level, hit, 0) != null);
   }
 
   /** Called before ordinary local decisions; receiver commands are suppressed while another section owns its lease. */
@@ -149,17 +166,18 @@ public final class RideTransfers {
       if (!target.armed() && target.phase() == State.INSPECTION && (controller.phase() == State.HOLD || controller.phase() == State.READY_EXIT)) {
         controller.state(State.HOLD); controller.consumeRequest(); return true;
       }
-      var first = section(level, controller, track); var second = section(level, target, target.resolve(level)); var train = train(level, controller, first, second);
-      if (occupied(level, first, controller.reservation()) || occupied(level, second, controller.reservation())) throw new IllegalStateException("Another train entered the reserved transfer");
+      var first = section(level, controller, track); var second = section(level, target, target.resolve(level)); var route = controller.transferRoute(level, target); var train = train(level, controller, route);
+      if (occupied(level, route, controller.reservation()) || !RideControllers.routeAvailable(level, controller, target, route)) throw new IllegalStateException("Another train entered the reserved transfer");
       if (controller.phase() != State.EXITING && controller.phase() != State.TRANSFER_BRAKING) {
-        prepare(level, controller, target, first, second, train); return true;
+        prepare(level, controller, target, first, second, route, train); return true;
       }
+      if (chainOnRoute(level, route)) throw new IllegalStateException("Native chain entered the reserved transfer route");
       if (!train.released()) throw new IllegalStateException("Vehicle provider withdrew transfer motion authority");
-      if (!certificate(level, first, second, train)) throw new IllegalStateException("Loaded transfer stopping certificate no longer fits");
+      if (!certificate(level, first, second, route, train)) throw new IllegalStateException("Loaded transfer stopping certificate no longer fits");
       if (train.rows().stream().anyMatch(r -> r.speed() < -.1)) throw new IllegalStateException("Rollback during transfer; both sections remain reserved");
       if (!first.powered(first.exit()) || !first.releasePowered(true) || !second.powered(second.launch()) || !second.releasePowered(false))
         throw new IllegalStateException("Transfer release power lost; spring pads apply");
-      double ceiling = Math.max(first.ceiling(first.exit()), second.ceiling(second.launch()));
+      double ceiling = controller.transferSpeedLimit();
       if (train.speed() > ceiling + .1) throw new IllegalStateException("Transfer exceeded certified speed");
       boolean clear = train.rows().stream().allMatch(r -> second.track().matches(r.contact().hit())
           && second.track().distance(r.contact().hit()) > r.radius() + 1);
@@ -173,27 +191,27 @@ public final class RideTransfers {
     if (!held || controller.modules().stream().noneMatch(RideControllerEntity.Module::exitDrive)) return false;
     var target = destination(level, controller); if (target == null) return false;
     try {
-      var first = section(level, controller, track); var second = section(level, target, target.resolve(level)); var train = train(level, controller, first, second);
+      var first = section(level, controller, track); var second = section(level, target, target.resolve(level)); var route = controller.transferRoute(level, target); var train = train(level, controller, route);
       boolean atExit = train.rows().stream().allMatch(r -> first.track().matches(r.contact().hit()) && first.contact(first.exit(), r.distance()));
       if (!atExit) return false;
-      prepare(level, controller, target, first, second, train); return true;
+      prepare(level, controller, target, first, second, route, train); return true;
     } catch (IllegalArgumentException | IllegalStateException blocked) {
       controller.state(State.HOLD); controller.consumeRequest(); return true;
     }
   }
-  private static void prepare(ServerLevel level, RideControllerEntity source, RideControllerEntity target, Section first, Section second, Train train) {
+  private static void prepare(ServerLevel level, RideControllerEntity source, RideControllerEntity target, Section first, Section second, DirectedRoute route, Train train) {
     boolean ready = train.held(level) && train.releasable() && first.powered(first.exit()) && first.releasePowered(true)
-        && second.powered(second.launch()) && second.releasePowered(false) && certificate(level, first, second, train)
-        && (target.reservation().isEmpty() || paired(source, target)) && !occupied(level, second, source.reservation());
+        && second.powered(second.launch()) && second.releasePowered(false) && certificate(level, first, second, route, train)
+        && (target.reservation().isEmpty() || paired(source, target)) && !occupied(level, route, source.reservation()) && RideControllers.routeAvailable(level, source, target, route) && !chainOnRoute(level, route);
     if (!ready) { source.state(State.HOLD); source.consumeRequest(); return; }
     source.state(State.READY_EXIT);
     if (!source.consumeRequest()) return;
     // Claim both sections before any provider release or pad retraction.
-    source.beginTransfer(target);
+    source.beginTransfer(target, speedBound(level, first, second, route, train));
     if (!train.released() && !MotionProviders.requestDispatch(level, source.reservation().iterator().next())) {
       failPair(source, target, "Vehicle provider rejected transfer dispatch"); return;
     }
-    var released = train(level, source, first, second);
+    var released = train(level, source, route);
     if (!released.released()) failPair(source, target, "Vehicle provider did not grant transfer motion authority");
   }
   private static Vector3d bearing(ServerSubLevel body) {

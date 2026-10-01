@@ -9,6 +9,7 @@ import dev.coasterslaunchsystems.math.DriveMath;
 import dev.coasterslaunchsystems.math.Mechanism;
 import dev.coasterslaunchsystems.math.StoppingEnvelope;
 import dev.coasterslaunchsystems.track.DirectedTrack;
+import dev.coasterslaunchsystems.track.DirectedRoute;
 import dev.coasterslaunchsystems.track.EngagedContacts;
 import dev.ryanhcode.sable.api.sublevel.SubLevelContainer;
 import dev.ryanhcode.sable.sublevel.ServerSubLevel;
@@ -66,7 +67,21 @@ public final class RideControllers {
         && occupiedEquipment(level, event.getPos())) event.setCanceled(true);
   }
   public static Object ownership(ServerLevel level, EquipmentCabinetEntity module) {
-    var owner = owner(level, module); return owner == null ? module : owner.incoming() == null ? owner.identity() : owner.incoming().identity();
+    var owner = owner(level, module); return owner == null ? module : leaseOwner(level, owner);
+  }
+  private static UUID leaseOwner(ServerLevel level, RideControllerEntity controller) {
+    var source = controller(level, controller.incoming());
+    return source != null && source.transferring() && source.destination() != null
+        && source.destination().identity().equals(controller.identity()) && source.destination().position().equals(controller.getBlockPos())
+        && source.reservation().equals(controller.reservation()) ? source.identity() : controller.identity();
+  }
+  public static boolean routeAvailable(ServerLevel level, RideControllerEntity source, RideControllerEntity target, DirectedRoute route) {
+    for (var entry : CONTROLLERS.getOrDefault(level, Map.of()).values()) {
+      var other = entry.controller();
+      if (other == source || other == target || !other.armed() && other.reservation().isEmpty()) continue;
+      if (other.claimedSpans().stream().anyMatch(s -> route.spans().stream().anyMatch(r -> r.sameRail(s.from(), s.to())))) return false;
+    }
+    return !EquipmentRuntime.foreignRouteEquipment(level, source, target, route);
   }
   public static boolean permitsDrive(ServerLevel level, EquipmentCabinetEntity module, UUID chassis) {
     if (module.controllerIdentity() == null) return true;
@@ -109,9 +124,11 @@ public final class RideControllers {
       var track = controller.resolve(level); if (track != null) tracks.put(controller, track);
     }
     // Section claims arbitrate together. Callback order never selects a winner.
-    for (var a : tracks.keySet()) for (var b : tracks.keySet())
-      if (a != b && tracks.get(a).edge().equals(tracks.get(b).edge())) {
-        a.fail("Another controller claims this rail section"); b.fail("Another controller claims this rail section");
+    for (var a : controllers) for (var b : controllers)
+      if (a != b && (a.armed() || !a.reservation().isEmpty()) && (b.armed() || !b.reservation().isEmpty())
+          && !leaseOwner(level, a).equals(leaseOwner(level, b))
+          && a.claimedSpans().stream().anyMatch(s -> b.claimedSpans().stream().anyMatch(r -> r.sameRail(s.from(), s.to())))) {
+        a.fail("Another controller claims this reserved route"); b.fail("Another controller claims this reserved route");
       }
     for (var controller : controllers) {
       if (!controller.armed() || controller.phase() == State.FAULT) { controller.consumeRequest(); continue; }

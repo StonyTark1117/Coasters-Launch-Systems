@@ -29,6 +29,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   private String fault = "";
   private DirectedTrack track;
   private int revision = Integer.MIN_VALUE;
+  private long handleRevision = Long.MIN_VALUE;
   private dev.coasterslaunchsystems.math.BrakeHeat heat = new dev.coasterslaunchsystems.math.BrakeHeat(4096, 8, 0);
 
   public EquipmentCabinetEntity(BlockPos pos, BlockState state) { super(EquipmentContent.ENTITY.get(), pos, state); }
@@ -109,7 +110,8 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     from = first.immutable(); to = second.immutable(); geometry = resolved.fingerprint();
     start = beginning; end = ending; track = resolved;
     boundAxis = shaftAxis;
-    revision = CoasterPathGraphManager.get(level).revision(); fault = ""; changed();
+    revision = CoasterPathGraphManager.get(level).revision();
+    handleRevision = dev.silvergold.simulatedcoasters.track.CoasterPeerCurveHandleLengths.revision(); fault = ""; changed();
   }
 
   public DirectedTrack resolve(ServerLevel level) {
@@ -121,12 +123,13 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
       fail("Track support unavailable"); return null;
     }
     int current = CoasterPathGraphManager.get(level).revision();
-    if (track == null || revision != current) {
+    long handles = dev.silvergold.simulatedcoasters.track.CoasterPeerCurveHandleLengths.revision();
+    if (track == null || revision != current || handleRevision != handles) {
       var resolved = DirectedTrack.resolve(level, from, to).orElse(null);
       if (resolved == null || resolved.fingerprint() != geometry || end > resolved.length()) {
         fail("Track geometry changed; inspect and rebind"); return null;
       }
-      track = resolved; revision = current;
+      track = resolved; revision = current; handleRevision = handles;
     }
     return track;
   }
@@ -177,6 +180,6 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
         || (from != null && (from.equals(to) || end - start > 2.001)))
       throw new IllegalArgumentException("Invalid equipment binding");
     if (from != null) interval();
-    track = null; revision = Integer.MIN_VALUE;
+    track = null; revision = Integer.MIN_VALUE; handleRevision = Long.MIN_VALUE;
   }
 }

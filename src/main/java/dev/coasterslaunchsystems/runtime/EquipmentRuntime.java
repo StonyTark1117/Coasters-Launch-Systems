@@ -39,6 +39,20 @@ public final class EquipmentRuntime {
     var entry = MODULES.getOrDefault(level, Map.of()).get(module.getBlockPos());
     return entry != null && entry.module() == module && !module.isRemoved() && entry.tick() >= level.getGameTime() - 1;
   }
+  public static boolean foreignRouteEquipment(ServerLevel level, dev.coasterslaunchsystems.content.RideControllerEntity source,
+      dev.coasterslaunchsystems.content.RideControllerEntity target, dev.coasterslaunchsystems.track.DirectedRoute route) {
+    for (var entry : List.copyOf(MODULES.getOrDefault(level, Map.of()).values())) {
+      var module = entry.module();
+      if (!available(level, module) || !module.armed() || !module.fault().isEmpty()) continue;
+      var track = module.resolve(level);
+      if (track != null && route.contains(track.edge()) && ownerOutsidePair(level, module, source, target)) return true;
+    }
+    return false;
+  }
+  private static boolean ownerOutsidePair(ServerLevel level, EquipmentCabinetEntity module,
+      dev.coasterslaunchsystems.content.RideControllerEntity source, dev.coasterslaunchsystems.content.RideControllerEntity target) {
+    var owner = RideControllers.owner(level, module); return owner != source && owner != target;
+  }
   /** Read-only native contact diagnostics; no saved or caller-owned constraint handles. */
   public static int activeFinClamps(ServerLevel level, UUID chassis) {
     var clamps = CLAMPS.get(level);

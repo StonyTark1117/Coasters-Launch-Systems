@@ -53,7 +53,7 @@ neoForge {
         gameTestServer {
             type = 'gameTestServer'
             gameDirectory = layout.buildDirectory.dir('runs/gametest').get().asFile
-            systemProperty 'neoforge.enabledGameTestNamespaces', 'coasterslaunchsystems'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.findProperty('lsTestNamespaces') ?: 'coasterslaunchsystems,coasterslaunchsystems_routes'
         }
         configureEach {
             logLevel = org.slf4j.event.Level.INFO
