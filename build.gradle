@@ -67,6 +67,8 @@ neoForge {
 }
 
 dependencies {
+    // Local integration validation uses a copied, hashed upstream artifact, never its active checkout.
+    if (project.hasProperty('lsFourthDimensionJar')) runtimeOnly files(project.property('lsFourthDimensionJar'))
     if (project.hasProperty('lsPackaged')) packagedRuntimeOnly files(layout.buildDirectory.file("libs/coasters-launch-systems-${mod_version}.jar"))
     implementation('com.simibubi.create:create-1.21.1:6.0.10-280:slim') { transitive = false }
     implementation 'net.createmod.ponder:ponder-neoforge:1.0.82+mc1.21.1'

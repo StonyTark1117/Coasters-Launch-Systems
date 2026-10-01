@@ -1,6 +1,6 @@
 # Coasters: Launch Systems release roadmap
 
-Implementation started September 30, 2026 toward the user's goal of a validated 0.4.0 release in its own private GitHub repository. LS001–LS004 are in progress; other packages remain planned. Track actual acceptance in [validation status](docs/VALIDATION.md). Stable LS identifiers allow later requests to name a concrete scope. Completing a package requires its evidence; version numbers do not establish completion. The user approved a standalone core with optional integrations.
+Implementation started September 30, 2026 toward the user's goal of a validated 0.4.0 release in its own private GitHub repository. LS001–LS005 are in progress; other packages remain planned. Track actual acceptance in [validation status](docs/VALIDATION.md). Stable LS identifiers allow later requests to name a concrete scope. Completing a package requires its evidence; version numbers do not establish completion. The user approved a standalone core with optional integrations.
 
 ## Foundation
 

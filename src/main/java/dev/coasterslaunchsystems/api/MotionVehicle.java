@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+/** Bodies belong to this articulated cart; consist lists every coupled chassis, including this one. */
 public record MotionVehicle(String provider, UUID chassis, List<UUID> bodies, List<UUID> consist,
     Set<Mechanism> interfaces, boolean dispatchReady, boolean propulsionAllowed,
     String exclusiveOperator, double maximumAcceleration, double maximumForce) {

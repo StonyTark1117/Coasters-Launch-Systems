@@ -1,0 +1,7 @@
+[18:31:15] [modloading-worker-0/INFO] [de.co.LaunchSystems/]: Coasters: Launch Systems loaded from union:/tmp/coasterslaunchsystems-22eeb619/build/classes/java/main/%23127!/
+LS_NATIVE_POINT_FORCE phase=launch speed=3.991027593612671 seconds=1.999999999999997 impulse=3.999999999999994 mass=1.0 moved=4.0499725341796875
+LS_NATIVE_POINT_FORCE phase=stop speed=2.0130879420321435E-5 impulse=-3.191891195797325E-16
+LS_NATIVE_CONTACT phase=reverse speed=-3.991006374359131 moved=4.0499725341796875
+LS_NATIVE_CONTACT phase=complete speed=-1.8000624063879217E-16 contact_steps=320 missing_steps=0
+[18:31:19] [Server thread/INFO] [minecraft/GameTestServer]: All 1 required tests passed :)
+BUILD SUCCESSFUL in 53s

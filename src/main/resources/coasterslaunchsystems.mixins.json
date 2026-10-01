@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.coasterslaunchsystems.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["EngagedContactMixin", "EngagedFrameAccessor"],
+  "injectors": {"defaultRequire": 1}
+}

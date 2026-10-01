@@ -2,7 +2,7 @@
 
 A standalone Create: Coasters Simulated addon in development toward **0.4.0**. The planned release includes tire, LIM, LSM, flywheel, hydraulic and pneumatic launches, distinct friction/skid/magnetic brakes, local ride control and explicit compatibility with Fourth Dimension vehicles.
 
-The current `0.0.1-dev.1` foundation is not the requested 0.4.0 release. It provides tested mechanism mathematics, finite energy stores, a versioned vehicle-provider contract and a native point-force prototype. Player equipment and the full release validation remain in progress. See [release roadmap](ROADMAP.md), [design](PLAN.md), and [validation status](docs/VALIDATION.md).
+The current `0.0.1-dev.2` foundation is not the requested 0.4.0 release. It provides tested mechanism mathematics, finite energy stores, accepted-contact and distance foundations, ordinary/4D motion providers and native point-force prototypes. Player equipment and the full release validation remain in progress. See [release roadmap](ROADMAP.md), [design](PLAN.md), [provider checkpoint](docs/FOUNDATION-PROVIDERS.md), and [validation status](docs/VALIDATION.md).
 
 ## Development stack
 

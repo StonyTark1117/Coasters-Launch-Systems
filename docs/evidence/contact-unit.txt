@@ -1,0 +1,3 @@
+dev.coasterslaunchsystems.MechanismMathTest: tests=8 failures=0 errors=0 skipped=0
+dev.coasterslaunchsystems.StoredEnergyTest: tests=4 failures=0 errors=0 skipped=0
+dev.coasterslaunchsystems.TrackDistanceTest: tests=5 failures=0 errors=0 skipped=0
