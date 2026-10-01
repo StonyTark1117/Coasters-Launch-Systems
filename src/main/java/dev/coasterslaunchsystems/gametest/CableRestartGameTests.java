@@ -2,6 +2,7 @@ package dev.coasterslaunchsystems.gametest;
 
 import dev.coasterslaunchsystems.content.EquipmentCabinetEntity;
 import dev.coasterslaunchsystems.content.EquipmentContent;
+import dev.coasterslaunchsystems.math.FlywheelStore;
 import dev.coasterslaunchsystems.runtime.CableTickets;
 import dev.coasterslaunchsystems.runtime.CableRecovery;
 import dev.coasterslaunchsystems.runtime.NativeFinClamp;
@@ -39,11 +40,14 @@ public final class CableRestartGameTests {
     final EquipmentCabinetEntity cabinet;
     final ServerSubLevel cart;
     final DirectedTrack track;
+    final NativeFinClamp preparation;
+    final FlywheelStore pullStore = new FlywheelStore(4, 50, 23);
     NativeCableRig rig;
-    boolean engageRequested;
+    boolean engageRequested, pullRequested, pulling;
     String failure = "";
-    ActiveFixture(net.minecraft.server.level.ServerLevel level, EquipmentCabinetEntity cabinet, ServerSubLevel cart, DirectedTrack track) {
-      this.level = level; this.cabinet = cabinet; this.cart = cart; this.track = track;
+    ActiveFixture(net.minecraft.server.level.ServerLevel level, EquipmentCabinetEntity cabinet, ServerSubLevel cart,
+        DirectedTrack track, NativeFinClamp preparation) {
+      this.level = level; this.cabinet = cabinet; this.cart = cart; this.track = track; this.preparation = preparation;
     }
   }
   private CableRestartGameTests() {}
@@ -64,6 +68,17 @@ public final class CableRestartGameTests {
           fixture.engageRequested = false;
           fixture.cabinet.engageCable(fixture.rig, fixture.cart.getUniqueId());
         }
+        if (fixture.pullRequested && fixture.rig != null) {
+          fixture.pullRequested = false;
+          fixture.preparation.close();
+          fixture.rig.beginPull(); fixture.pulling = true;
+        }
+        if (fixture.pulling) {
+          fixture.rig.step(fixture.pullStore, 3, 0, event.getTimeStep());
+          if (fixture.rig.travel() >= 5) {
+            fixture.rig.emergencyHold("Saved-world interrupted pull fixture"); fixture.pulling = false;
+          }
+        }
       } catch (RuntimeException failure) { fixture.failure = failure.toString(); failure.printStackTrace(); }
     }
   }
@@ -72,7 +87,8 @@ public final class CableRestartGameTests {
     String phase = System.getProperty("coasterslaunchsystems.cableRestartPhase", "");
     if (phase.isEmpty()) return List.of();
     return List.of(new TestFunction("launchsystems_cable_restart", "coasterslaunchsystems_cable.saved_carriage_restart",
-        "coasterslaunchsystems_cable:empty", phase.startsWith("prepareActive") ? 500 : 140, 0, true, CableRestartGameTests::run));
+        "coasterslaunchsystems_cable:empty", phase.startsWith("prepareActiveMidGuide") ? 1000
+            : phase.startsWith("prepareActive") ? 500 : 140, 0, true, CableRestartGameTests::run));
   }
 
   private static void run(GameTestHelper helper) {
@@ -80,18 +96,25 @@ public final class CableRestartGameTests {
     helper.assertTrue(phase.equals("prepare") || phase.equals("verify") || phase.equals("reclaim")
         || phase.equals("verifyRetired") || phase.equals("prepareActive") || phase.equals("verifyActive")
         || phase.equals("prepareActiveMissingSocket") || phase.equals("verifyActiveMissingSocket")
-        || phase.equals("prepareActiveArrow") || phase.equals("verifyActiveArrow"),
+        || phase.equals("prepareActiveArrow") || phase.equals("verifyActiveArrow")
+        || phase.equals("prepareActiveMidGuide") || phase.equals("verifyActiveMidGuide")
+        || phase.equals("prepareActiveMidGuideArrow") || phase.equals("verifyActiveMidGuideArrow"),
         "Set lsCableRestartPhase to an idle or active restart phase");
     if (phase.equals("prepare")) prepare(helper);
-    else if (phase.equals("prepareActive") || phase.equals("prepareActiveMissingSocket") || phase.equals("prepareActiveArrow"))
-      prepareActive(helper, phase.equals("prepareActiveMissingSocket"), phase.equals("prepareActiveArrow"));
-    else if (phase.equals("verifyActive") || phase.equals("verifyActiveArrow")) verifyActive(helper);
+    else if (phase.equals("prepareActive") || phase.equals("prepareActiveMissingSocket") || phase.equals("prepareActiveArrow")
+        || phase.equals("prepareActiveMidGuide") || phase.equals("prepareActiveMidGuideArrow"))
+      prepareActive(helper, phase.equals("prepareActiveMissingSocket"),
+          phase.equals("prepareActiveArrow") || phase.equals("prepareActiveMidGuideArrow"),
+          phase.equals("prepareActiveMidGuide") || phase.equals("prepareActiveMidGuideArrow"));
+    else if (phase.equals("verifyActive") || phase.equals("verifyActiveArrow") || phase.equals("verifyActiveMidGuide")
+        || phase.equals("verifyActiveMidGuideArrow"))
+      verifyActive(helper, phase.startsWith("verifyActiveMidGuide"));
     else if (phase.equals("verifyActiveMissingSocket")) verifyActiveMissingSocket(helper);
     else if (phase.equals("verifyRetired")) verifyRetired(helper);
     else verify(helper, phase.equals("reclaim"));
   }
 
-  private static void prepareActive(GameTestHelper helper, boolean missingSocket, boolean arrow) {
+  private static void prepareActive(GameTestHelper helper, boolean missingSocket, boolean arrow, boolean midGuide) {
     helper.assertTrue(!arrow || net.neoforged.fml.ModList.get().isLoaded("fourthdimension"),
         "The Arrow saved-world fixture requires the pinned Fourth Dimension provider");
     var ride = arrow ? new RideControllerGameTests.Scene(helper, SLOT, "arrow_controller_dispatch", 224) : null;
@@ -125,7 +148,7 @@ public final class CableRestartGameTests {
     helper.runAtTickTime(75, () -> {
       var track = DirectedTrack.resolve(level, scene.from, scene.to).orElseThrow();
       var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(FLYWHEEL);
-      fixture[0] = new ActiveFixture(level, cabinet, cart[0], track); ACTIVE.add(fixture[0]);
+      fixture[0] = new ActiveFixture(level, cabinet, cart[0], track, preparation[0]); ACTIVE.add(fixture[0]);
     });
     helper.runAtTickTime(420, () -> {
       var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(FLYWHEEL);
@@ -141,6 +164,7 @@ public final class CableRestartGameTests {
           && fixture[0].rig.phase() == NativeCableRig.Phase.ENGAGED && scene.riders.stream().allMatch(pig -> pig.isPassenger())
           && fixture[0].failure.isEmpty(),
           "Occupied active cable journal or native catch was not established: " + fixture[0].failure);
+      if (midGuide) { fixture[0].pullRequested = true; return; }
       System.out.println("LS_CABLE_ACTIVE_RESTART prepared carriage=" + cabinet.cableCarriage()
           + " chassis=" + cabinet.cableChassis() + " socket_error=" + fixture[0].rig.socketError()
           + " guide_error=" + fixture[0].rig.guideError() + " removed_socket=" + missingSocket + " arrow=" + arrow);
@@ -149,6 +173,20 @@ public final class CableRestartGameTests {
           "Captured socket could not be removed before saved-world negative case");
       ACTIVE.remove(fixture[0]);
       helper.succeed();
+    });
+    if (midGuide) helper.runAtTickTime(820, () -> {
+      var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(FLYWHEEL);
+      helper.assertTrue(fixture[0].failure.isEmpty() && !fixture[0].pulling
+          && fixture[0].rig.phase() == NativeCableRig.Phase.FAULT
+          && fixture[0].rig.travel() > 3 && fixture[0].rig.travel() < 12
+          && Math.abs(fixture[0].rig.speed()) < .1 && fixture[0].rig.socketError() < .03
+          && cabinet.cableInstalled() && cabinet.cableInUse(),
+          "Interrupted cable pull did not settle at a retained mid-guide catch: travel="
+              + fixture[0].rig.travel() + " speed=" + fixture[0].rig.speed()
+              + " socket=" + fixture[0].rig.socketError() + " failure=" + fixture[0].failure);
+      System.out.println("LS_CABLE_MID_GUIDE prepared carriage=" + cabinet.cableCarriage()
+          + " chassis=" + cabinet.cableChassis() + " travel=" + fixture[0].rig.travel());
+      ACTIVE.remove(fixture[0]); helper.succeed();
     });
   }
 
@@ -179,7 +217,7 @@ public final class CableRestartGameTests {
     });
   }
 
-  private static void verifyActive(GameTestHelper helper) {
+  private static void verifyActive(GameTestHelper helper, boolean midGuide) {
     var level = helper.getLevel();
     helper.runAtTickTime(40, () -> {
       helper.assertTrue(level.getBlockEntity(FLYWHEEL) instanceof EquipmentCabinetEntity,
@@ -204,6 +242,16 @@ public final class CableRestartGameTests {
       var center = carriage.getPlot().getCenterBlock().getCenter();
       var point = NativeCableRig.worldPoint(carriage, new Vector3d(center.x, center.y, center.z));
       var socket = NativeCableRig.worldPoint(chassis, VehicleInterfaces.catchPoint(chassis));
+      if (midGuide) {
+        var track = DirectedTrack.resolve(level, FROM, FROM.offset(0, 0, 64)).orElseThrow();
+        var homeHit = track.hitAtDistance(level, cabinet.cableHome());
+        var up = CoasterPathTrackFrame.trackBasisAtHit(level, homeHit).up();
+        var homePoint = homeHit.point().add(up.scale(.3125 - 2));
+        var forward = track.forward(level, homeHit);
+        double travel = new Vector3d(point).sub(homePoint.x, homePoint.y, homePoint.z)
+            .dot(new Vector3d(forward.x, forward.y, forward.z));
+        helper.assertTrue(travel > 3 && travel < 12, "Reloaded catch did not retain mid-guide travel: " + travel);
+      }
       helper.assertTrue(point.distance(socket) < .03,
           "Reloaded occupied catch socket separated from its passively held carriage");
       System.out.println("LS_CABLE_ACTIVE_RESTART verified carriage=" + cabinet.cableCarriage()
@@ -214,7 +262,7 @@ public final class CableRestartGameTests {
         var captured = NativeCableRig.worldPoint(chassis, VehicleInterfaces.catchPoint(chassis));
         helper.assertTrue(CableRecovery.catchRestored(level, cabinet.cableCarriage(), cabinet.cableChassis())
             && CableRecovery.stabilized(level, cabinet.cableCarriage()) && held.distance(captured) < .03
-            && !cabinet.armed(),
+            && (!midGuide || held.distance(point) < .15) && !cabinet.armed(),
             "Reconstructed catch joint or passive hold did not survive startup inspection");
         helper.succeed();
       });

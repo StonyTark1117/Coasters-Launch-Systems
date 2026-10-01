@@ -65,6 +65,8 @@ Dev.20 journals the captured chassis and force-loads captured native bodies whil
 
 Dev.21 reconstructs a bounded zero-target native catch joint after a saved home catch reopens. The passive carriage guide remains in place while startup verifies current provider/consist identity, every captured native body and its ticket, the socket and settled pose. Separate-process occupied ordinary and pinned Fourth Dimension Arrow fixtures check that the joint and alignment survive startup. A removed-socket fixture retains the passive carriage hold but denies joint reconstruction. The cabinet stays disarmed; active operator release, moving catches, actual chunk/multiplayer/rendered operation and the other release gates remain open.
 
+Dev.22 extends that fail-closed native hold to a catch stopped partway along its verified guide after an interrupted pull. A real physics-driven fixture reaches roughly 5–6 blocks of travel, faults and settles before saving. Separate-process ordinary and pinned Arrow restarts keep the same body identities, guide position, socket alignment and reconstructed catch joint without resuming drive. Idle carriages still require home. This does not cover saving while moving, active operator release, support-loss repair or broader service acceptance.
+
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |
 | LS301 | Shared cable guide, catch socket, carriage and release/reset machine | 0.2. Real constrained pull, rated guide/end clearance, physical return and misalignment handling. No teleport, one-shot impulse or prescribed train path. |

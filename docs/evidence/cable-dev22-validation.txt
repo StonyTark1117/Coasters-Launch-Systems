@@ -1,0 +1,38 @@
+Dev.22 local validation, 2026-10-01, Java 21, NeoForge GameTest server.
+
+Artifact: coasters-launch-systems-0.0.1-dev.22.jar
+SHA-256: efba7196ddf2b87480344c87ec5a80e0e071672ee3cdf3b4bd725f8ddb086d3b
+Pinned Fourth Dimension schema-4 binary SHA-256:
+027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16
+
+JUnit: 27 passed, no failures, errors or skips.
+Packaged standalone full suite: 114/114 required GameTests passed.
+Packaged combined cable suite with pinned Fourth Dimension: 17/17 passed.
+
+Idle saved-world regression, four separate processes retaining one world:
+prepare 13/13; verify 13/13; reclaim 13/13; verifyRetired 13/13.
+The idle carriage remained home until inspected retirement, and the cleared
+journal survived another restart.
+
+Occupied ordinary stopped mid-guide catch, three separate processes retaining one world:
+prepareActiveMidGuide 13/13; verifyActiveMidGuide 13/13; repeated verify 13/13.
+The fixture used a finite flywheel store and native cable step, stopped the real pull
+at travel 5.839172363 blocks, invoked emergency hold and saved after it settled.
+The same carriage UUID a6a761d3-36da-40c3-9942-82d83e011ff6 and captured chassis
+UUID 10509901-01e7-44dc-a36e-36f40d3825ec survived both restarts. The passive
+guide, zero-target catch joint and disarmed cabinet persisted through delayed startup;
+socket separation was 0.000086578 block on both restarts.
+
+Occupied pinned Arrow stopped mid-guide catch, three separate processes:
+prepareActiveMidGuideArrow 18/18; verifyActiveMidGuideArrow 18/18; repeated verify 18/18.
+Travel when stopped: 5.624634325 blocks. Same carriage UUID
+04557c07-9c54-46a5-809d-f77ba74361bf and captured chassis UUID
+6b3140ca-cedc-407f-8249-47a4b543d5f5 survived both restarts. Provider-declared
+articulated bodies matched their native tickets. The guide and joint held through
+delayed startup, socket separation was 0.001771678 then 0.001895050 block,
+and the cabinet remained disarmed and faulted for inspection.
+
+The fixture supplies its own finite pull store and calls emergency hold directly.
+These checks establish stationary interrupted-catch recovery along the verified
+guide, not a saved moving catch, placed-cabinet interruption acceptance, inspected
+active release, actual chunk unload/multiplayer/rendered service, or complete 0.4.0.

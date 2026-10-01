@@ -213,8 +213,9 @@ public final class CableRecovery {
     double lateral = displacement.sub(new Vector3d(direction).mul(travel)).length();
     double linear = pipeline.getLinearVelocity(carriage, new Vector3d()).length();
     double angular = pipeline.getAngularVelocity(carriage, new Vector3d()).length();
-    if (Math.abs(travel) > .15 || lateral > .15 || linear > .5 || angular > .1)
-      throw new IllegalStateException("Saved idle carriage moved from home: travel=" + travel + " lateral=" + lateral
+    boolean withinGuide = cabinet.cableInUse() ? travel >= -.15 && travel <= 20.15 : Math.abs(travel) <= .15;
+    if (!withinGuide || lateral > .15 || linear > .5 || angular > .1)
+      throw new IllegalStateException("Saved cable carriage moved outside its recoverable guide: travel=" + travel + " lateral=" + lateral
           + " linear=" + linear + " angular=" + angular);
     var frame = new Quaterniond().rotationTo(new Vector3d(1, 0, 0), direction);
     var guide = pipeline.addConstraint(null, carriage, new GenericConstraintConfiguration(home, point, frame, frame,
