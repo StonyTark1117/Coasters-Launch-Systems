@@ -1,0 +1,41 @@
+Launch Systems dev.51 Ponder operating-guide checkpoint
+
+Source checkout:
+  /home/braydon/Documents/Coasters: Launch Systems
+
+Packaged client registration command:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runClient --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsValidation
+
+Observed packaged-client log:
+  Coasters: Launch Systems 0.0.1-dev.51 loaded from the packaged JAR.
+  PonderIndex: Registering Ponder Scenes took 52.51 ms.
+  PonderIndex: Registering Ponder Tags took 2.267 ms.
+  The Mod List includes Ponder 1.0.82+mc1.21.1.
+
+The initial explicit dependency metadata used an exact-looking [1.0.82] range.
+NeoForge rejected Ponder's qualified 1.0.82+mc1.21.1 version. The committed
+metadata uses Create's compatible [1.0.82,) range; the command above then
+reached normal Ponder scene/tag registration. The client window is not
+available through this host's automation bridge, so this is startup/registration
+validation, not a rendered scene walkthrough.
+
+Schematic resource check:
+  jar tf build/libs/coasters-launch-systems-0.0.1-dev.51.jar
+  contains all four assets/coasterslaunchsystems/ponder/*.nbt schematics.
+  Each source schematic is a gzip NBT root compound with only this addon's
+  registered block IDs in its palette:
+    controller_binding.nbt
+    linear_motors.nbt
+    brake_hardware.nbt
+    cable_launch.nbt
+
+Full packaged standalone command:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew test classes runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged
+
+Result:
+  27 JUnit tests passed.
+  125 GAME TESTS COMPLETE IN 3.709 min.
+  All 125 required tests passed.
+
+Artifact:
+  e5072620b63fed4c3ab3129ffcd10decf114101f2bbc80281d12783ba0f3721a  coasters-launch-systems-0.0.1-dev.51.jar
