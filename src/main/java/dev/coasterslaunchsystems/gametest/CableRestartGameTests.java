@@ -50,6 +50,7 @@ public final class CableRestartGameTests {
     final FlywheelStore pullStore = new FlywheelStore(4, 50, 23);
     NativeCableRig rig;
     boolean engageRequested, pullRequested, pulling, saveMoving;
+    double interruptionTravel = 5;
     String failure = "";
     ActiveFixture(net.minecraft.server.level.ServerLevel level, EquipmentCabinetEntity cabinet, ServerSubLevel cart,
         DirectedTrack track, NativeFinClamp preparation) {
@@ -82,7 +83,7 @@ public final class CableRestartGameTests {
         if (fixture.pulling) {
           fixture.rig.step(fixture.pullStore, 3, 0, event.getTimeStep());
           fixture.cabinet.observeCableMotion(fixture.rig);
-          if (fixture.rig.travel() >= 5) {
+          if (fixture.rig.travel() >= fixture.interruptionTravel) {
             if (!fixture.saveMoving) fixture.rig.emergencyHold("Saved-world interrupted pull fixture");
             fixture.pulling = false;
           }
@@ -109,20 +110,21 @@ public final class CableRestartGameTests {
         || phase.equals("prepareActiveMidGuide") || phase.equals("verifyActiveMidGuide")
         || phase.equals("prepareActiveMidGuideArrow") || phase.equals("verifyActiveMidGuideArrow")
         || phase.equals("prepareActiveRelease") || phase.equals("verifyActiveRelease") || phase.equals("verifyActiveReleased")
-        || phase.equals("prepareActiveMoving") || phase.equals("verifyActiveMoving"),
+        || phase.equals("prepareActiveMoving") || phase.equals("verifyActiveMoving")
+        || phase.equals("prepareActiveMovingArrow") || phase.equals("verifyActiveMovingArrow"),
         "Set lsCableRestartPhase to an idle or active restart phase");
     if (phase.equals("prepare")) prepare(helper);
     else if (phase.equals("prepareActive") || phase.equals("prepareActiveMissingSocket") || phase.equals("prepareActiveArrow")
         || phase.equals("prepareActiveMidGuide") || phase.equals("prepareActiveMidGuideArrow") || phase.equals("prepareActiveRelease")
-        || phase.equals("prepareActiveMoving"))
+        || phase.equals("prepareActiveMoving") || phase.equals("prepareActiveMovingArrow"))
       prepareActive(helper, phase.equals("prepareActiveMissingSocket"),
-          phase.equals("prepareActiveArrow") || phase.equals("prepareActiveMidGuideArrow"),
+          phase.equals("prepareActiveArrow") || phase.equals("prepareActiveMidGuideArrow") || phase.equals("prepareActiveMovingArrow"),
           phase.equals("prepareActiveMidGuide") || phase.equals("prepareActiveMidGuideArrow"),
-          phase.equals("prepareActiveRelease"), phase.equals("prepareActiveMoving"));
+          phase.equals("prepareActiveRelease"), phase.equals("prepareActiveMoving") || phase.equals("prepareActiveMovingArrow"));
     else if (phase.equals("verifyActive") || phase.equals("verifyActiveArrow") || phase.equals("verifyActiveMidGuide")
         || phase.equals("verifyActiveMidGuideArrow"))
       verifyActive(helper, phase.startsWith("verifyActiveMidGuide"), false);
-    else if (phase.equals("verifyActiveMoving")) verifyActive(helper, false, true);
+    else if (phase.equals("verifyActiveMoving") || phase.equals("verifyActiveMovingArrow")) verifyActive(helper, false, true);
     else if (phase.equals("verifyActiveRelease")) verifyActiveRelease(helper);
     else if (phase.equals("verifyActiveReleased")) verifyActiveReleased(helper);
     else if (phase.equals("verifyActiveMissingSocket")) verifyActiveMissingSocket(helper);
@@ -178,6 +180,7 @@ public final class CableRestartGameTests {
       var track = DirectedTrack.resolve(level, scene.from, scene.to).orElseThrow();
       var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(FLYWHEEL);
       fixture[0] = new ActiveFixture(level, cabinet, cart[0], track, preparation[0]); ACTIVE.add(fixture[0]);
+      if (moving && arrow) fixture[0].interruptionTravel = 4;
     });
     helper.runAtTickTime(420, () -> {
       var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(FLYWHEEL);
@@ -235,7 +238,7 @@ public final class CableRestartGameTests {
               + " failure=" + fixture[0].failure);
       System.out.println("LS_CABLE_MOVING_RESTART prepared carriage=" + cabinet.cableCarriage()
           + " chassis=" + cabinet.cableChassis() + " travel=" + fixture[0].rig.travel()
-          + " speed=" + fixture[0].rig.speed() + " journal_moving=" + cabinet.cableMoving());
+          + " speed=" + fixture[0].rig.speed() + " journal_moving=" + cabinet.cableMoving() + " arrow=" + arrow);
       ACTIVE.remove(fixture[0]); helper.succeed();
     });
   }

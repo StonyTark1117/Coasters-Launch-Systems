@@ -297,3 +297,11 @@ The final `0.0.1-dev.24` JAR passed **27 unit tests**, **114/114 packaged standa
 Clean [GitHub CI run 36952154089](https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36952154089) built implementation commit `1f936259bc324a117ce694b214104012595e7358`, passed **all 114 packaged standalone GameTests** and uploaded a JAR matching the local dev.24 artifact hash. [CI evidence](evidence/cable-dev24-ci.txt) records the run and hash.
 
 The positive moving fixture is ordinary-cart only and drives the finite native fixture store while using the cabinet's production movement-journal observer. Arrow moving restart, a placed-cabinet shaft interruption, Arrow active release, actual chunk unload/multiplayer/rendered setup, repeated service and the remaining mechanisms remain open. **The complete 0.4.0 goal remains active.**
+
+## Bounded Fourth Dimension Arrow moving-catch restart checkpoint — dev.25
+
+The existing schema-8 moving journal now has saved-world coverage for the pinned Fourth Dimension schema-4 Arrow provider. The fixture interrupts a live Arrow pull at a four-block threshold, inside the same 3–12-block guide window used by ordinary recovery. Restart reconstructs only a passive guide/brake and the zero-target catch joint while retaining the cabinet fault and disarm. The recovery inspection continues to require the exact provider, whole consist, every native body and every captured-body ticket before attaching that joint; after strict alignment and low speed return, the movement marker clears.
+
+The final `0.0.1-dev.25` JAR passed **27 unit tests**, **114/114 packaged standalone GameTests**, and **17/17 packaged combined cable cases** with the pinned Fourth Dimension schema-4 binary. The two-process Arrow saved-world sequence passed 18 cable cases in each process. See [local evidence](evidence/cable-dev25-validation.txt) and [artifact hashes](evidence/cable-dev25-artifacts.sha256). The JAR SHA-256 is `14e98623e692821f2adb0831104420ff261ff2acb211c5836ccf6fb1bb47ad3c`.
+
+This proves the provider-owned Arrow moving restart path, not a placed-cabinet shaft interruption or player-facing Arrow staging/release workflow. Arrow active release, actual chunk unload/multiplayer/rendered setup, repeated service and the remaining mechanisms remain open. **The complete 0.4.0 goal remains active.**

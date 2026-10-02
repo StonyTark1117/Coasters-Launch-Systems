@@ -1,0 +1,22 @@
+Dev.25 local validation, 2026-10-02, Java 21, NeoForge GameTest server.
+
+Artifact: coasters-launch-systems-0.0.1-dev.25.jar
+SHA-256: 14e98623e692821f2adb0831104420ff261ff2acb211c5836ccf6fb1bb47ad3c
+Pinned Fourth Dimension schema-4 binary SHA-256:
+027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16
+
+JUnit: 27 passed, no failures, errors or skips.
+Packaged standalone full suite: 114/114 required GameTests passed.
+Packaged combined cable suite with pinned Fourth Dimension: 17/17 passed.
+
+Pinned Fourth Dimension Arrow moving active-catch restart, two separate processes retaining one world:
+prepareActiveMovingArrow 18/18; verifyActiveMovingArrow 18/18. The preparation uses a
+four-block interruption threshold so the live Arrow pull remains in the existing 3–12-block
+bounded recovery window. Reload reconstructed the passive guide/brake and native catch joint
+while the cabinet stayed disarmed, then cleared the persisted movement journal after the
+Arrow train settled. Core recovery revalidated the provider, exact consist, every native body
+and every captured-body ticket before rebuilding the joint.
+
+The Arrow fixture drives the finite native fixture store and invokes the cabinet's production
+motion-journal observer. It does not demonstrate a placed-cabinet shaft interruption, Arrow
+active release, chunk unload, multiplayer/rendered service or complete 0.4.0 acceptance.
