@@ -1,0 +1,42 @@
+# Packaged multiplayer and late-join session — dev.65
+
+Date: 2026-10-02
+
+## Packaged artifact
+
+- Launch Systems JAR: `coasters-launch-systems-0.0.1-dev.65.jar`
+- SHA-256: `59838444fd7e74d0bc51f2d65449c5ef96755afddf36bed1942a25cc5e4901ef`
+- The dedicated server, primary client and observer client each logged this exact packaged JAR as their Launch Systems source.
+
+## Session procedure
+
+1. Created a local packaged dedicated-server run directory, accepted its EULA, and started the normal packaged server task:
+
+   ```sh
+   JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runServer -PlsPackaged --offline --console=plain --no-daemon --max-workers=2
+   ```
+
+   The server listened on port 25565 and reported `Done (2.860s)! For help, type "help"`.
+2. Started the normal packaged client task under a local Xvfb display:
+
+   ```sh
+   JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runClient -PlsPackaged -PlsValidation --offline --console=plain --no-daemon --max-workers=2
+   ```
+
+   Used its normal title-screen Multiplayer flow and entered `127.0.0.1:25565` through Direct Connection. The dedicated-server log recorded `Dev joined the game` at 09:46:48; the primary client reached the spawned world.
+3. Kept Dev connected. Started the separate packaged observer task under a second Xvfb display:
+
+   ```sh
+   JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runObserver -PlsPackaged -PlsValidation --offline --console=plain --no-daemon --max-workers=2
+   ```
+
+   Used the same normal Multiplayer → Direct Connection flow. The server recorded `Observer joined the game` at 09:48:00, while no departure was recorded for Dev. The observer reached the spawned world.
+
+## Rendered records
+
+- `multiplayer-dev65/primary-joined.png` — first packaged client connected: `3482dbcf951396f239c4492498f434f48a52c07ff3f0d18ac9c2c91792893074`
+- `multiplayer-dev65/observer-late-joined.png` — separately profiled packaged observer late-joined: `a411a3b895f7d97aa483727338cb4b72598c24c7d31b4fc1897eb4e679a4bbc6`
+
+## Scope
+
+This validates a real normal-UI packaged dedicated-server connection and a second-client late join while the primary connection remains live. It does not yet exercise a launch or brake ride over that session, vehicle ownership after disconnect/reconnect, a controller interruption, or active vehicle chunk unavailability.
