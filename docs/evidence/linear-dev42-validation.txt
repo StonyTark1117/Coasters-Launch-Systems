@@ -1,0 +1,14 @@
+Launch Systems dev.42 focused Fourth Dimension PAX linear-veto validation
+
+Pinned optional provider:
+  /home/braydon/.cache/coasterslaunchsystems-validation/fd-provider-36775040079/libs/coasters-fourth-dimension-0.9.0-dev.1.jar
+  SHA-256 027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16
+
+Required commands:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew test classes --offline --console=plain --no-daemon --max-workers=2
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsFourthDimensionJar=/home/braydon/.cache/coasterslaunchsystems-validation/fd-provider-36775040079/libs/coasters-fourth-dimension-0.9.0-dev.1.jar -PlsTestNamespaces=coasterslaunchsystems_linear
+
+Result: BUILD SUCCESSFUL; 27 JUnit tests passed. The packaged run passed all 39 selected GameTests in 1.020 minutes. The selected namespace includes a PAX case for each motor. Each case requires controller FAULT, no recorded linear-field steps and a non-empty fault before it succeeds; PAX stays under `fourthdimension:pax_winch` ownership.
+
+Artifact: coasters-launch-systems-0.0.1-dev.42.jar
+SHA-256: fd7916ede8f17868fa11b3ef7bd8988697478a2768f495902d810c73a1fc1eaa

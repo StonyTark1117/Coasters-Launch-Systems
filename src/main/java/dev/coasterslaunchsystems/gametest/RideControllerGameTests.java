@@ -54,7 +54,7 @@ public final class RideControllerGameTests {
     Scene(GameTestHelper helper, int slot, String mode) { this(helper, slot, mode, 240); }
     Scene(GameTestHelper helper, int slot, String mode, int height) {
       base = new OrdinaryPassengerGameTests.Scene(helper, slot, height, -896); this.mode = mode;
-      reverse = mode.contains("reverse"); linked = mode.contains("linked"); fourthDimension = mode.startsWith("arrow") || mode.startsWith("legacy") || mode.startsWith("free_spin") || mode.startsWith("revised"); controllerPosition = base.from.offset(4, -2, 8);
+      reverse = mode.contains("reverse"); linked = mode.contains("linked"); fourthDimension = mode.startsWith("arrow") || mode.startsWith("legacy") || mode.startsWith("free_spin") || mode.startsWith("revised") || mode.startsWith("pax"); controllerPosition = base.from.offset(4, -2, 8);
       if (!fourthDimension) { base.cart(reverse ? 56 : 8); if (linked) base.cart(reverse ? 50 : 14); }
       else prepareFourthDimension();
     }
@@ -63,7 +63,7 @@ public final class RideControllerGameTests {
       ((dev.silvergold.simulatedcoasters.track.anchor.CoasterAnchorpointBlockEntity) level.getBlockEntity(base.from)).removeAnchorPeerCurve(level, base.to);
       var designType = type("dev.fourthdimension.track.TrackDesign");
       String designName = mode.startsWith("arrow") ? "ARROW" : mode.startsWith("legacy") ? "LEGACY"
-          : mode.startsWith("free_spin") ? "FREE_SPIN" : "REVISED";
+          : mode.startsWith("free_spin") ? "FREE_SPIN" : mode.startsWith("pax") ? "PAX" : "REVISED";
       Object design = Arrays.stream(designType.getEnumConstants()).filter(v -> ((Enum<?>) v).name().equals(designName)).findFirst().orElseThrow();
       var player = net.neoforged.neoforge.common.util.FakePlayerFactory.get(level,
           new com.mojang.authlib.GameProfile(UUID.randomUUID(), "LSController4D"));

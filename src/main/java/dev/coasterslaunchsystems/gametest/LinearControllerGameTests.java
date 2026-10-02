@@ -96,7 +96,7 @@ public final class LinearControllerGameTests {
       var modes = new ArrayList<>(List.of("single_forward", "linked_forward", "linked_reverse", "power_loss"));
       if (mechanism == Mechanism.LSM) modes.add("mixed_forward");
       if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of(
-          "arrow_forward", "arrow_linked_reverse", "legacy_forward", "free_spin_forward", "revised_forward"));
+          "arrow_forward", "arrow_linked_reverse", "legacy_forward", "free_spin_forward", "revised_forward", "pax_veto"));
       for (String mode : modes) {
         int selected = slot++;
         tests.add(new TestFunction("launchsystems_linear_sections", "coasterslaunchsystems_linear." + mechanism.name().toLowerCase(Locale.ROOT) + "_section_" + mode,
@@ -129,7 +129,14 @@ public final class LinearControllerGameTests {
       for (int distance = 21; distance <= 61; distance += 2) r.module(distance, true);
       r.controller.setArmed(true); s.snapshot(); SCENES.add(s);
     });
-    r.at(80, () -> { r.base.helper.assertTrue(r.controller.phase() == RideControllerEntity.State.HOLD && s.steps == 0, "Partial linear charge released a loaded train: " + r.controller.status()); r.high(true); });
+    r.at(80, () -> {
+      if (r.mode.equals("pax_veto")) {
+        r.base.helper.assertTrue(r.controller.phase() == RideControllerEntity.State.FAULT && s.steps == 0 && !r.controller.fault().isEmpty(),
+            "PAX winch ownership allowed a linear reservation or field impulse: " + r.controller.status());
+        r.cleanup(); r.base.helper.succeed(); return;
+      }
+      r.base.helper.assertTrue(r.controller.phase() == RideControllerEntity.State.HOLD && s.steps == 0, "Partial linear charge released a loaded train: " + r.controller.status()); r.high(true);
+    });
     r.at(500, () -> {
       r.base.helper.assertTrue(s.failure.isEmpty() && r.controller.phase() == RideControllerEntity.State.READY && s.steps == 0, "Charged linear section did not wait for a fresh request: " + r.controller.status() + " " + s.failure);
       for (var vehicle : r.vehicles) for (var carrier : (List<?>) read(vehicle, "carriers")) r.initialAngles.add(((Number) read(carrier, "angle")).doubleValue());
