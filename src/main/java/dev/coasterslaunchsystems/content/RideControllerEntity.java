@@ -40,6 +40,9 @@ public final class RideControllerEntity extends BlockEntity {
   private final List<Module> modules = new ArrayList<>();
   private final Set<UUID> reservation = new LinkedHashSet<>();
   private boolean stationCapture, boardingReady;
+  private boolean swingProgram;
+  private int completedSwingPasses;
+  private boolean forwardTailClear, backwardTailClear;
   private boolean armed, high, inputObserved, launchRequested;
   private State phase = State.INSPECTION;
   private String fault = "";
@@ -160,6 +163,29 @@ public final class RideControllerEntity extends BlockEntity {
   public State phase() { return phase; }
   public boolean armed() { return armed; }
   public boolean stationCapture() { return stationCapture; }
+  public boolean swingProgram() { return swingProgram; }
+  /** Zero-based active pass: forward (0), backward (1), then forward (2). */
+  public int swingPassIndex() { return completedSwingPasses; }
+  public dev.coasterslaunchsystems.math.SwingLaunchProgram.Direction swingDirection() {
+    if (!swingProgram) throw new IllegalStateException("This controller has no swing-launch program");
+    return dev.coasterslaunchsystems.math.SwingLaunchProgram.direction(completedSwingPasses);
+  }
+  public void setSwingProgram(boolean value) {
+    if (armed || !reservation.isEmpty() || transferring || incoming != null || from == null)
+      throw new IllegalArgumentException("Disarm an empty bound controller before changing its launch program");
+    swingProgram = value; completedSwingPasses = 0; forwardTailClear = false; backwardTailClear = false; changed();
+  }
+  public void observeSwingTailClear(boolean clear) {
+    if (!swingProgram || !clear) return;
+    if (swingDirection() == dev.coasterslaunchsystems.math.SwingLaunchProgram.Direction.FORWARD) forwardTailClear = true;
+    else backwardTailClear = true;
+  }
+  public void advanceSwingPass() {
+    if (!swingProgram) throw new IllegalStateException("This controller has no swing-launch program");
+    boolean clear = swingDirection() == dev.coasterslaunchsystems.math.SwingLaunchProgram.Direction.FORWARD ? forwardTailClear : backwardTailClear;
+    completedSwingPasses = dev.coasterslaunchsystems.math.SwingLaunchProgram.advance(completedSwingPasses, clear);
+    changed();
+  }
   public boolean boardingReady() { return boardingReady; }
   public void boardingReady(boolean value) { if (boardingReady != value) { boardingReady = value; changed(); } }
   public void setStationCapture(boolean value) {
@@ -175,6 +201,7 @@ public final class RideControllerEntity extends BlockEntity {
     if (!value && level instanceof ServerLevel server && modules.stream().anyMatch(m -> server.getBlockEntity(m.position()) instanceof EquipmentCabinetEntity cabinet && cabinet.cableInUse()))
       throw new IllegalArgumentException("Retained cable catch requires physical return or inspected recovery");
     requestedRepair = null; armed = value; boardingReady = false; launchRequested = false; inputObserved = false; fault = "";
+    if (value) { completedSwingPasses = 0; forwardTailClear = false; backwardTailClear = false; }
     phase = value ? State.HOLD : State.INSPECTION; changed();
   }
   public void bind(ServerLevel level, BlockPos first, BlockPos second) {
@@ -193,6 +220,7 @@ public final class RideControllerEntity extends BlockEntity {
     from = first.immutable(); to = second.immutable(); geometry = track.fingerprint();
     cachedTrack = null; graphRevision = Integer.MIN_VALUE; routeChunks.clear();
     modules.clear(); destination = null; incoming = null; transferring = false; transferSpans.clear(); receiverManifest.clear(); receiverStationCapture = false; cachedTransfer = null;
+    swingProgram = false; completedSwingPasses = 0; forwardTailClear = false; backwardTailClear = false;
     transferRevision = Integer.MIN_VALUE; transferSpeedLimit = 0; phase = State.INSPECTION; fault = ""; changed();
   }
   public DirectedTrack resolve(ServerLevel level) {
@@ -242,7 +270,7 @@ public final class RideControllerEntity extends BlockEntity {
     if (!reservation.isEmpty() && !reservation.equals(members)) throw new IllegalArgumentException("Reservation belongs to another consist");
     if (reservation.isEmpty()) { reservation.addAll(members); changed(); }
   }
-  public void clearVerifiedReservation() { reservation.clear(); boardingReady = false; phase = State.HOLD; changed(); }
+  public void clearVerifiedReservation() { reservation.clear(); boardingReady = false; phase = State.HOLD; completedSwingPasses = 0; forwardTailClear = false; backwardTailClear = false; changed(); }
   public void state(State next) { if (phase != next) { phase = next; if (next == State.RUNNING || next == State.BRAKING || next == State.EXITING || next == State.RECEIVING || next == State.FAULT || next == State.INSPECTION) boardingReady = false; changed(); } }
   public void envelope(double needed, double usable) { required = needed; available = usable; }
   public void fail(String reason) {
@@ -261,7 +289,8 @@ public final class RideControllerEntity extends BlockEntity {
     };
   }
   public String status() { return "Ride controller: " + phase + ", reserved chassis " + reservation.size()
-      + ", required brake length " + String.format(java.util.Locale.ROOT, "%.2f/%.2f", required, available) + ", transfer " + transferring + ", station capture " + stationCapture + ", boarding ready " + boardingReady + ". " + fault; }
+      + ", required brake length " + String.format(java.util.Locale.ROOT, "%.2f/%.2f", required, available) + ", transfer " + transferring + ", station capture " + stationCapture
+      + ", swing " + (swingProgram ? ((completedSwingPasses + 1) + "/3 " + swingDirection()) : "off") + ", boarding ready " + boardingReady + ". " + fault; }
   private void changed() {
     setChanged();
     if (level != null) { level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3); level.updateNeighborsAt(worldPosition, getBlockState().getBlock()); }
@@ -270,7 +299,9 @@ public final class RideControllerEntity extends BlockEntity {
   @Override public CompoundTag getUpdateTag(HolderLookup.Provider registries) { return saveWithoutMetadata(registries); }
   @Override protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     super.saveAdditional(tag, registries);
-    tag.putInt("ls_controller_schema", 5);
+    tag.putInt("ls_controller_schema", 6);
+    tag.putBoolean("swing_program", swingProgram); tag.putInt("swing_pass", completedSwingPasses);
+    tag.putBoolean("swing_forward_tail_clear", forwardTailClear); tag.putBoolean("swing_backward_tail_clear", backwardTailClear);
     tag.putBoolean("receiver_station_capture", receiverStationCapture);
     tag.put("receiver_manifest", writeModules(receiverManifest));
     tag.putBoolean("station_capture", stationCapture); tag.putBoolean("boarding_ready", boardingReady);
@@ -308,7 +339,7 @@ public final class RideControllerEntity extends BlockEntity {
   }
   @Override protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
     super.loadAdditional(tag, registries);
-    if (tag.getInt("ls_controller_schema") < 1 || tag.getInt("ls_controller_schema") > 5) throw new IllegalArgumentException("Unsupported controller schema");
+    if (tag.getInt("ls_controller_schema") < 1 || tag.getInt("ls_controller_schema") > 6) throw new IllegalArgumentException("Unsupported controller schema");
     identity = tag.getUUID("identity"); from = tag.contains("from") ? BlockPos.of(tag.getLong("from")) : null;
     to = tag.contains("to") ? BlockPos.of(tag.getLong("to")) : null; geometry = tag.getLong("geometry");
     destination = readPeer(tag, "destination"); incoming = readPeer(tag, "incoming"); transferring = tag.getBoolean("transferring");
@@ -326,6 +357,11 @@ public final class RideControllerEntity extends BlockEntity {
     // Client packets display authoritative state. Server loads always require deliberate inspection.
     boolean client = level != null && level.isClientSide;
     stationCapture = tag.getBoolean("station_capture"); boardingReady = client && tag.getBoolean("boarding_ready");
+    swingProgram = tag.getInt("ls_controller_schema") >= 6 && tag.getBoolean("swing_program");
+    completedSwingPasses = swingProgram ? tag.getInt("swing_pass") : 0;
+    if (completedSwingPasses < 0 || completedSwingPasses >= dev.coasterslaunchsystems.math.SwingLaunchProgram.PASSES) completedSwingPasses = 0;
+    forwardTailClear = swingProgram && tag.getBoolean("swing_forward_tail_clear");
+    backwardTailClear = swingProgram && tag.getBoolean("swing_backward_tail_clear");
     armed = client && tag.getBoolean("armed"); phase = client ? State.valueOf(tag.getString("phase")) : State.INSPECTION;
     fault = client ? tag.getString("fault") : "Reloaded controller requires inspection; reservation retained";
     cachedTrack = null; graphRevision = Integer.MIN_VALUE; routeChunks.clear();

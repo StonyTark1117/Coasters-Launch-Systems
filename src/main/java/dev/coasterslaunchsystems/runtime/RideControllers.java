@@ -143,11 +143,21 @@ public final class RideControllers {
     return source != null && source.armed() && source.phase() == State.EXITING && source.transferring()
         && source.reservation().equals(controller.reservation());
   }
+  /** A swing controller changes the field command, never the cabinet's persisted operator tuning. */
+  public static double linearTarget(ServerLevel level, EquipmentCabinetEntity module) {
+    if (!module.mechanism().linear()) return module.targetSpeed();
+    var controller = owner(level, module);
+    if (controller == null || !controller.swingProgram() || controller.phase() != State.RUNNING) return module.targetSpeed();
+    return Math.copySign(Math.abs(module.targetSpeed()), controller.swingDirection().sign());
+  }
   public static boolean finReleased(ServerLevel level, EquipmentCabinetEntity module) {
     if (Math.abs(module.getSpeed()) < 32) return false;
     if (module.controllerIdentity() == null) return true;
     var controller = owner(level, module);
     if (controller == null || !controller.armed()) return false;
+    // The bounded swing controller releases its two end banks only while it owns the whole
+    // section and is actively driving between them.
+    if (controller.swingProgram()) return controller.phase() == State.RUNNING;
     if (controller.phase() == State.EXITING) return true;
     boolean running = controller.phase() == State.RUNNING;
     if (controller.phase() == State.RECEIVING) {
@@ -228,15 +238,34 @@ public final class RideControllers {
     registrationReady(level, controller);
     var drives = modules.stream().filter(m -> m.mechanism().drive() && !controller.exitDrive(m)).toList();
     if (drives.isEmpty()) { controller.fail("No linked drive"); return; }
+    if (controller.swingProgram() && (controller.destination() != null || controller.stationCapture() || drives.stream().anyMatch(m -> m.mechanism() != Mechanism.LSM))) {
+      controller.fail("Swing launch requires one local LSM section without transfer or station capture"); return;
+    }
     var driveInterfaces = drives.stream().map(EquipmentCabinetEntity::mechanism).collect(java.util.stream.Collectors.toSet());
     double launchEnd = drives.stream().mapToDouble(m -> m.interval().end()).max().orElseThrow();
-    var stops = modules.stream().filter(m -> m.mechanism() == Mechanism.FIN_BRAKE && m.interval().start() > launchEnd)
+    // A swing field deliberately reaches both end banks so it can restart a stopped train in the
+    // opposite direction. Directional tail clearance is measured at the fixed section midpoint.
+    double swingBoundary = track.length() / 2;
+    var forwardStops = modules.stream().filter(m -> m.mechanism() == Mechanism.FIN_BRAKE
+        && (controller.swingProgram() ? (m.interval().start() + m.interval().end()) / 2 > swingBoundary : m.interval().start() > launchEnd))
         .sorted(Comparator.comparingDouble(m -> m.interval().start())).toList();
-    if (stops.isEmpty()) { controller.fail("A downstream friction-fin bank is required"); return; }
-    double stopStart = stops.getFirst().interval().start(), stopEnd = stops.getFirst().interval().end();
-    for (var stop : stops.subList(1, stops.size())) {
-      if (stop.interval().start() > stopEnd + 1e-6) { controller.fail("Downstream friction-fin coverage has a gap"); return; }
-      stopEnd = Math.max(stopEnd, stop.interval().end());
+    if (forwardStops.isEmpty()) { controller.fail("A downstream friction-fin bank is required"); return; }
+    double forwardStopStart = forwardStops.getFirst().interval().start(), forwardStopEnd = forwardStops.getFirst().interval().end();
+    for (var stop : forwardStops.subList(1, forwardStops.size())) {
+      if (stop.interval().start() > forwardStopEnd + 1e-6) { controller.fail("Downstream friction-fin coverage has a gap"); return; }
+      forwardStopEnd = Math.max(forwardStopEnd, stop.interval().end());
+    }
+    var backwardStops = controller.swingProgram() ? modules.stream()
+        .filter(m -> m.mechanism() == Mechanism.FIN_BRAKE && (m.interval().start() + m.interval().end()) / 2 < swingBoundary)
+        .sorted(Comparator.comparingDouble(m -> m.interval().start())).toList() : List.<EquipmentCabinetEntity>of();
+    double backwardStopStart = 0, backwardStopEnd = 0;
+    if (controller.swingProgram()) {
+      if (backwardStops.isEmpty()) { controller.fail("Swing launch requires a continuous upstream friction-fin bank"); return; }
+      backwardStopStart = backwardStops.getFirst().interval().start(); backwardStopEnd = backwardStops.getFirst().interval().end();
+      for (var stop : backwardStops.subList(1, backwardStops.size())) {
+        if (stop.interval().start() > backwardStopEnd + 1e-6) { controller.fail("Upstream friction-fin coverage has a gap"); return; }
+        backwardStopEnd = Math.max(backwardStopEnd, stop.interval().end());
+      }
     }
     // Identify every actual native cart on this section, including a second train in the stopping region.
     var occupying = new LinkedHashMap<UUID, MotionVehicle>();
@@ -301,25 +330,38 @@ public final class RideControllers {
       adverseGravity = Math.max(adverseGravity, Math.abs(gravity.dot(new Vector3d(tangent.x, tangent.y, tangent.z))));
     }
     var envelope = new StoppingEnvelope(mass, Math.max(maximumSpeed, ceiling), minimumForce, adverseGravity, .1, largest - smallest + 2 * radius);
-    controller.envelope(envelope.requiredLength(), stopEnd - stopStart);
-    if (!envelope.fits(stopEnd - stopStart)) { controller.fail("Downstream fin bank is too short for this loaded train and speed"); return; }
+    double availableBrake = controller.swingProgram() ? Math.min(forwardStopEnd - forwardStopStart, backwardStopEnd - backwardStopStart) : forwardStopEnd - forwardStopStart;
+    controller.envelope(envelope.requiredLength(), availableBrake);
+    if (!envelope.fits(availableBrake)) { controller.fail(controller.swingProgram() ? "A swing end fin bank is too short for this loaded train and speed" : "Downstream fin bank is too short for this loaded train and speed"); return; }
     if (running) {
       if (controller.phase() == State.RUNNING && drives.stream().anyMatch(m -> m.mechanism().linear() && m.thermalFraction() < 1 - 1e-8)) {
         controller.fail("Linear cabinet thermal capacity exceeded; spring pads apply"); return;
       }
       if (!powered && controller.phase() == State.RUNNING) { controller.fail("Launch release power lost; spring pads apply"); return; }
       if (maximumSpeed > ceiling + .1 && controller.phase() == State.RUNNING) { controller.fail("Reserved train exceeded the certified launch speed"); return; }
-      if (largest >= stopStart - .6) controller.state(State.BRAKING);
+      if (controller.swingProgram()) {
+        boolean forward = controller.swingDirection().sign() > 0;
+        controller.observeSwingTailClear(forward ? smallest > swingBoundary : largest < swingBoundary);
+        if (forward ? largest >= forwardStopStart - .6 : smallest <= backwardStopEnd + .6) controller.state(State.BRAKING);
+      } else if (largest >= forwardStopStart - .6) controller.state(State.BRAKING);
       // Stop-bank arrival ends propulsion, while ownership remains until every native tail is clear.
-      if (held && maximumSpeed < .03 && controller.phase() == State.BRAKING) controller.state(State.HOLD);
+      if (held && maximumSpeed < .03 && controller.phase() == State.BRAKING) {
+        if (controller.swingProgram() && controller.swingPassIndex() < dev.coasterslaunchsystems.math.SwingLaunchProgram.PASSES - 1) {
+          controller.advanceSwingPass(); controller.state(State.RUNNING);
+        } else controller.state(State.HOLD);
+      }
       controller.consumeRequest(); return;
     }
     if (StationCapture.evaluate(level, controller, held)) return;
     if (RideTransfers.departure(level, controller, track, held)) return;
     double launchMass = mass;
     boolean charged = drives.stream().filter(m -> m.mechanism().linear()).allMatch(m -> m.targetSpeed() > 0
-        && m.energy() >= dev.coasterslaunchsystems.math.LinearMotor.launchReserve(m.mechanism(), launchMass, m.targetSpeed(), m.accelerationLimit(), m.jerkLimit()));
-    controller.state(held && ready && powered && charged && largest + radius < stopStart ? State.READY : State.HOLD);
+        && m.energy() >= (controller.swingProgram() ? dev.coasterslaunchsystems.math.SwingLaunchProgram.reserve(
+            dev.coasterslaunchsystems.math.LinearMotor.launchReserve(m.mechanism(), launchMass, m.targetSpeed(), m.accelerationLimit(), m.jerkLimit()))
+            : dev.coasterslaunchsystems.math.LinearMotor.launchReserve(m.mechanism(), launchMass, m.targetSpeed(), m.accelerationLimit(), m.jerkLimit())));
+    // A swing may stage on its upstream end bank; holding there is the required starting pose.
+    boolean clearOfForward = largest + radius < forwardStopStart;
+    controller.state(held && ready && powered && charged && clearOfForward ? State.READY : State.HOLD);
     if (!controller.consumeRequest() || controller.phase() != State.READY) return;
     // The route has already been reserved. Delegate release to the uniquely resolved vehicle owner.
     if (!MotionProviders.requestDispatch(level, members.iterator().next())) { controller.fail("Vehicle provider rejected dispatch"); return; }

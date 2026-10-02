@@ -55,7 +55,7 @@ public final class RideControllerGameTests {
     Scene(GameTestHelper helper, int slot, String mode, int height) {
       base = new OrdinaryPassengerGameTests.Scene(helper, slot, height, -896); this.mode = mode;
       reverse = mode.contains("reverse"); linked = mode.contains("linked"); fourthDimension = mode.startsWith("arrow") || mode.startsWith("legacy") || mode.startsWith("free_spin") || mode.startsWith("revised") || mode.startsWith("pax"); controllerPosition = base.from.offset(4, -2, 8);
-      if (!fourthDimension) { base.cart(reverse ? 56 : 8); if (linked) base.cart(reverse ? 50 : 14); }
+      if (!fourthDimension) { base.cart(mode.contains("swing_") ? 14 : reverse ? 56 : 8); if (linked) base.cart(reverse ? 50 : 14); }
       else prepareFourthDimension();
     }
     void prepareFourthDimension() {
@@ -75,7 +75,7 @@ public final class RideControllerGameTests {
       base.helper.runAtTickTime(15, () -> {
         var track = DirectedTrack.resolve(level, base.from, base.to).orElseThrow();
         for (int car = 0; car < (linked ? 2 : 1); car++) {
-        var hit = track.hitAtDistance(level, reverse ? 56 - car * 6 : 8 + car * 6);
+        var hit = track.hitAtDistance(level, reverse ? 56 - car * 6 : mode.contains("swing_") ? 14 + car * 6 : 8 + car * 6);
         var vehicle = invoke("dev.fourthdimension.vehicle.VehicleFactory", "create",
             new Class<?>[] {net.minecraft.server.level.ServerLevel.class, designType, dev.silvergold.simulatedcoasters.track.graph.CoasterPathTrackFrame.GraphHit.class}, level, design, hit);
         vehicles.add(vehicle);
@@ -120,7 +120,10 @@ public final class RideControllerGameTests {
       level.setBlockAndUpdate(motor, AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalBlock.FACING, fin ? Direction.WEST : Direction.EAST));
       ((CreativeMotorBlockEntity) level.getBlockEntity(motor)).generatedSpeed.setValue(64);
       var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(pos);
-      cabinet.bind(level, reverse ? base.to : base.from, reverse ? base.from : base.to); controller.link(cabinet, exit); cabinet.setArmed(true);
+      cabinet.bind(level, reverse ? base.to : base.from, reverse ? base.from : base.to);
+      if (mode.contains("swing_") && cabinet.mechanism().linear()) cabinet.tuneLinear(1.5, cabinet.accelerationLimit(), cabinet.jerkLimit());
+      controller.link(cabinet, exit);
+      cabinet.setArmed(true);
     }
     void at(int tick, Runnable action) {
       base.helper.runAtTickTime(tick + (fourthDimension ? 120 : 0), () -> { try { action.run(); }

@@ -12,7 +12,7 @@ public final class DriveEquipment {
         ? module.targetSpeed() : DriveMath.wheelSpeed(module.getSpeed(), .4);
   }
   public static boolean forwardPowered(EquipmentCabinetEntity module) {
-    return module.mechanism().linear() ? module.linearPowered() && module.targetSpeed() > 0
+    return module.mechanism().linear() ? module.linearPowered()
         : module.getSpeed() >= 1 && module.getSpeed() <= 128;
   }
 }

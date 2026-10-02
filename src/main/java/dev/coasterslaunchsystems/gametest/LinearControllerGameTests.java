@@ -24,6 +24,9 @@ import org.joml.Vector3d;
 public final class LinearControllerGameTests {
   private static final List<Scene> SCENES = new ArrayList<>();
   private static boolean registered;
+  private static boolean swing(String mode) {
+    return mode.equals("swing_forward") || mode.equals("swing_power_loss") || mode.equals("arrow_swing_forward");
+  }
   private static final class Scene {
     final RideControllerGameTests.Scene ride;
     final Mechanism mechanism;
@@ -31,6 +34,7 @@ public final class LinearControllerGameTests {
     double work, spent, thermal, peakSpeed, maxError, maxJoint, maxCoupler, rotorResponse;
     int steps;
     int interruptedSteps;
+    boolean interrupted, restored;
     String failure = "";
     Scene(GameTestHelper helper, int slot, String mode, Mechanism mechanism) {
       ride = new RideControllerGameTests.Scene(helper, slot, mode, 192); this.mechanism = mechanism; ride.driveMechanism = mechanism;
@@ -43,6 +47,14 @@ public final class LinearControllerGameTests {
     for (var s : List.copyOf(SCENES)) {
       var r = s.ride; if (r.closed || r.base.level != event.getPhysicsSystem().getLevel()) continue;
       try {
+        // Interrupt the return leg only after the first end-bank reversal has become live. This
+        // proves a swing program cannot silently replay after authority is restored.
+        if (r.mode.equals("swing_power_loss") && !s.interrupted && r.controller.swingPassIndex() == 1
+            && r.controller.phase() == RideControllerEntity.State.RUNNING && s.steps > 150) {
+          for (var p : r.motors)
+            ((com.simibubi.create.content.kinetics.motor.CreativeMotorBlockEntity) r.base.level.getBlockEntity(p)).generatedSpeed.setValue(0);
+          s.interrupted = true;
+        }
         double work = 0, spent = 0, heat = 0; double dt = event.getTimeStep();
         for (var body : r.base.parents) {
           var motion = MotionProviders.resolve(r.base.level, body.getUniqueId()).orElseThrow();
@@ -75,6 +87,12 @@ public final class LinearControllerGameTests {
         r.base.helper.assertTrue(s.maxError < 1e-7, "Coordinated linear bank duplicated native work/resources: " + s.maxError);
         s.work += work; s.spent += spent; s.thermal += heat; s.snapshot();
         r.base.helper.assertTrue(r.base.riders.stream().allMatch(net.minecraft.world.entity.animal.Pig::isPassenger), "Linear launch lost a passenger");
+        if (r.mode.equals("swing_power_loss") && s.interrupted && !s.restored && r.controller.phase() == RideControllerEntity.State.FAULT) {
+          s.interruptedSteps = s.steps;
+          for (var p : r.motors)
+            ((com.simibubi.create.content.kinetics.motor.CreativeMotorBlockEntity) r.base.level.getBlockEntity(p)).generatedSpeed.setValue(64);
+          s.restored = true;
+        }
       } catch (RuntimeException failure) { if (s.failure.isEmpty()) s.failure = failure.toString(); s.snapshot(); }
     }
   }
@@ -96,9 +114,10 @@ public final class LinearControllerGameTests {
     var tests = new ArrayList<TestFunction>(); int slot = 0, fourthDimensionSlot = 0;
     for (var mechanism : List.of(Mechanism.LSM, Mechanism.LIM)) {
       var modes = new ArrayList<>(List.of("single_forward", "linked_forward", "linked_reverse", "power_loss", "thermal_loss"));
-      if (mechanism == Mechanism.LSM) modes.add("mixed_forward");
+      if (mechanism == Mechanism.LSM) modes.addAll(List.of("mixed_forward", "swing_forward", "swing_power_loss"));
       if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of(
           "arrow_forward", "arrow_linked_reverse", "arrow_plate_loss", "legacy_forward", "free_spin_forward", "revised_forward", "pax_veto"));
+      if (mechanism == Mechanism.LSM && net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.add("arrow_swing_forward");
       for (String mode : modes) {
         int selected = slot++;
         boolean fourthDimension = mode.startsWith("arrow") || mode.startsWith("legacy") || mode.startsWith("free_spin")
@@ -109,7 +128,7 @@ public final class LinearControllerGameTests {
         String namespace = fourthDimension ? "coasterslaunchsystems_4d_linear"
             : mode.equals("thermal_loss") ? "coasterslaunchsystems_thermal_linear" : "coasterslaunchsystems_linear";
         tests.add(new TestFunction(namespace + "_sections", namespace + "." + mechanism.name().toLowerCase(Locale.ROOT) + "_section_" + mode,
-            namespace + ":empty", 1600, 0, true, helper -> run(new Scene(helper, fixtureSlot, mode, mechanism))));
+            namespace + ":empty", swing(mode) ? 8000 : 1600, 0, true, helper -> run(new Scene(helper, fixtureSlot, mode, mechanism))));
       }
     }
     return tests;
@@ -131,14 +150,24 @@ public final class LinearControllerGameTests {
       r.controller = (RideControllerEntity) r.base.level.getBlockEntity(r.controllerPosition);
       r.controller.bind(r.base.level, r.reverse ? r.base.to : r.base.from, r.reverse ? r.base.from : r.base.to);
       r.track = DirectedTrack.resolve(r.base.level, r.reverse ? r.base.to : r.base.from, r.reverse ? r.base.from : r.base.to).orElseThrow();
-      for (int distance = 8; distance <= 16; distance += 2) {
-        if (r.mode.equals("mixed_forward")) r.driveMechanism = distance % 4 == 0 ? Mechanism.LSM : Mechanism.LIM;
-        r.module(distance, false); r.module(distance, true);
+      if (swing(r.mode)) {
+        // The full field is available between two independent spring-fin end banks. The first
+        // field direction is forward; the controller reverses it only after each native tail clears.
+        for (int distance = 14; distance <= 60; distance += 2) r.module(distance, false);
+        for (int distance = 2; distance <= 16; distance += 2) r.module(distance, true);
+        for (int distance = 50; distance <= 62; distance += 2) r.module(distance, true);
+        r.controller.setSwingProgram(true);
+      } else {
+        for (int distance = 8; distance <= 16; distance += 2) {
+          if (r.mode.equals("mixed_forward")) r.driveMechanism = distance % 4 == 0 ? Mechanism.LSM : Mechanism.LIM;
+          r.module(distance, false); r.module(distance, true);
+        }
+        for (int distance = 21; distance <= 61; distance += 2) r.module(distance, true);
       }
-      for (int distance = 21; distance <= 61; distance += 2) r.module(distance, true);
       r.controller.setArmed(true); s.snapshot(); SCENES.add(s);
     });
     r.at(80, () -> {
+      if (swing(r.mode)) return;
       if (r.mode.equals("pax_veto")) {
         r.base.helper.assertTrue(r.controller.phase() == RideControllerEntity.State.FAULT && s.steps == 0 && !r.controller.fault().isEmpty(),
             "PAX winch ownership allowed a linear reservation or field impulse: " + r.controller.status());
@@ -146,12 +175,13 @@ public final class LinearControllerGameTests {
       }
       r.base.helper.assertTrue(r.controller.phase() == RideControllerEntity.State.HOLD && s.steps == 0, "Partial linear charge released a loaded train: " + r.controller.status()); r.high(true);
     });
-    r.at(500, () -> {
+    int readyTick = 500;
+    r.at(readyTick, () -> {
       r.base.helper.assertTrue(s.failure.isEmpty() && r.controller.phase() == RideControllerEntity.State.READY && s.steps == 0, "Charged linear section did not wait for a fresh request: " + r.controller.status() + " " + s.failure);
       for (var vehicle : r.vehicles) for (var carrier : (List<?>) read(vehicle, "carriers")) r.initialAngles.add(((Number) read(carrier, "angle")).doubleValue());
       r.high(false);
     });
-    r.at(510, () -> { r.launched = true; r.high(true); });
+    r.at(readyTick + 10, () -> { r.launched = true; r.high(true); });
     r.at(550, () -> {
       if (!r.mode.equals("power_loss") && !r.mode.equals("arrow_plate_loss") && !r.mode.equals("thermal_loss")) return;
       r.base.helper.assertTrue(s.steps > 10, "Interrupted linear fixture never launched");
@@ -170,17 +200,20 @@ public final class LinearControllerGameTests {
       if (r.mode.equals("power_loss"))
         for (var p : r.motors) ((com.simibubi.create.content.kinetics.motor.CreativeMotorBlockEntity) r.base.level.getBlockEntity(p)).generatedSpeed.setValue(64);
     });
-    r.at(1250, () -> {
+    r.at(swing(r.mode) ? 7600 : 1250, () -> {
       try {
-        if (r.mode.equals("power_loss") || r.mode.equals("arrow_plate_loss") || r.mode.equals("thermal_loss")) {
+        if (r.mode.equals("power_loss") || r.mode.equals("arrow_plate_loss") || r.mode.equals("thermal_loss") || r.mode.equals("swing_power_loss")) {
           r.base.helper.assertTrue(s.failure.isEmpty() && r.controller.phase() == RideControllerEntity.State.FAULT && s.steps == s.interruptedSteps
               && r.controller.reservation().size() == 1 && s.drives().stream().allMatch(c -> c.energy() > 0)
-              && r.base.parents.stream().allMatch(b -> Math.abs(r.base.speed(b)) < .03 && EquipmentRuntime.activeFinClamps(r.base.level, b.getUniqueId()) > 0), "Interrupted linear field replayed a launch: " + s.failure);
+              && r.base.parents.stream().allMatch(b -> Math.abs(r.base.speed(b)) < .03 && EquipmentRuntime.activeFinClamps(r.base.level, b.getUniqueId()) > 0)
+              && (!r.mode.equals("swing_power_loss") || s.interrupted && s.restored), "Interrupted linear field replayed a launch: " + s.failure);
           System.out.println("LS_LINEAR_INTERRUPTION mechanism=" + s.mechanism + " mode=" + r.mode + " phase=" + r.controller.phase() + " lease=" + r.controller.reservation().size()
               + " steps=" + s.steps + " spent=" + s.spent + " work=" + s.work + " accounting_error=" + s.maxError);
           r.base.helper.succeed(); return;
         }
         r.base.helper.assertTrue(s.failure.isEmpty() && r.controller.fault().isEmpty() && r.controller.phase() == RideControllerEntity.State.HOLD, "Linear section did not stop in its reserved fin bank: " + r.controller.status() + " " + s.failure);
+        if (swing(r.mode)) r.base.helper.assertTrue(r.controller.swingPassIndex() == 2,
+            "Swing launch did not complete its forward/backward/forward program: " + r.controller.status());
         r.base.helper.assertTrue(s.steps > 20 && s.work > 1 && s.spent > s.work && s.thermal > 0 && s.peakSpeed > .5 && s.peakSpeed <= 3.1,
             "Loaded linear launch lacked bounded native work: steps=" + s.steps + " speed=" + s.peakSpeed);
         r.base.helper.assertTrue(r.controller.reservation().equals(r.base.parents.stream().map(b -> b.getUniqueId()).collect(java.util.stream.Collectors.toSet()))

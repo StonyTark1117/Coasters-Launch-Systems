@@ -28,7 +28,7 @@ public final class EquipmentRuntime {
   private static final double FIN_FORCE = 256, FIN_MASS = 64, SKID_FORCE = 192, EDDY_FORCE = 128;
   private static final Map<ServerLevel, Map<Key, Clamp>> CLAMPS = new HashMap<>();
   private record Request(EquipmentCabinetEntity module, ServerSubLevel cart,
-      double mass, double energyMass, double speed, Vector3d direction, Vector3d point, double force, Key key, double distance) {}
+      double mass, double energyMass, double speed, double target, Vector3d direction, Vector3d point, double force, Key key, double distance) {}
   private static final Map<ServerLevel, Map<BlockPos, Entry>> MODULES = new HashMap<>();
   private static final Map<ServerLevel, Map<Key, History>> HISTORY = new HashMap<>();
   private static final Map<ServerLevel, Map<DriveKey, History>> DRIVE_HISTORY = new HashMap<>();
@@ -190,7 +190,7 @@ public final class EquipmentRuntime {
             }
             UUID consist = motion.consist().stream().min(UUID::compareTo).orElseThrow();
             groups.computeIfAbsent(consist, ignored -> new ArrayList<>()).add(new Request(module, cart, mass,
-                dynamics.effectiveMass(), speed, direction, point, Math.min(FIN_FORCE, motion.maximumBrakeForce()), key, distance));
+                dynamics.effectiveMass(), speed, 0, direction, point, Math.min(FIN_FORCE, motion.maximumBrakeForce()), key, distance));
             continue;
           }
           if (mechanism == Mechanism.EDDY_BRAKE) {
@@ -199,7 +199,7 @@ public final class EquipmentRuntime {
             double force = Numbers.clamp(DriveMath.eddyForce(speed, 64, 4) * module.thermalFraction(), -limit, limit);
             UUID consist = motion.consist().stream().min(UUID::compareTo).orElseThrow();
             groups.computeIfAbsent(consist, ignored -> new ArrayList<>()).add(new Request(module, cart, mass,
-                dynamics.effectiveMass(), speed, direction, point, force, key, distance));
+                dynamics.effectiveMass(), speed, 0, direction, point, force, key, distance));
             continue;
           }
           if (mechanism == Mechanism.SKID_BRAKE) {
@@ -208,10 +208,10 @@ public final class EquipmentRuntime {
             double force = DriveMath.brakeForce(speed, dynamics.effectiveMass(), limit, dt);
             UUID consist = motion.consist().stream().min(UUID::compareTo).orElseThrow();
             groups.computeIfAbsent(consist, ignored -> new ArrayList<>()).add(new Request(module, cart, mass,
-                dynamics.effectiveMass(), speed, direction, point, force, key, distance));
+                dynamics.effectiveMass(), speed, 0, direction, point, force, key, distance));
             continue;
           }
-          double target = mechanism.linear() ? module.targetSpeed() : DriveMath.wheelSpeed(module.getSpeed(), .4);
+          double target = mechanism.linear() ? RideControllers.linearTarget(level, module) : DriveMath.wheelSpeed(module.getSpeed(), .4);
           double requested = mechanism.linear() ? LinearMotor.force(mechanism, speed, target, 20) * module.thermalFraction()
               : DriveMath.tireForce(speed, target, 20, 8, .4);
           double authority = mechanism.linear() && requested * speed < 0 ? motion.maximumBrakeForce() : motion.maximumForce();
@@ -219,7 +219,7 @@ public final class EquipmentRuntime {
               dynamics.effectiveMass() * Math.abs(target - speed) / dt);
           requested = Numbers.clamp(requested, -limit, limit);
           double acceleration = mechanism.linear() ? requested / mass : DriveMath.tireAccelerationStep(oldAcceleration, requested / mass, 4, dt);
-          var request = new Request(module, cart, mass, dynamics.effectiveMass(), speed,
+          var request = new Request(module, cart, mass, dynamics.effectiveMass(), speed, target,
               direction, point, acceleration * mass, key, distance);
           UUID consist = motion.consist().stream().min(UUID::compareTo).orElseThrow();
           groups.computeIfAbsent(consist, ignored -> new ArrayList<>()).add(request);
@@ -270,7 +270,7 @@ public final class EquipmentRuntime {
         double demand = tireDemand.get(r.cart().getUniqueId());
         double scale = Math.min(demand > 0 ? Math.min(1, tireLimits.get(r.cart().getUniqueId()) / demand) : 1,
             jerkScales.getOrDefault(r.cart().getUniqueId(), 1.0));
-        return new Request(r.module(), r.cart(), r.mass(), r.energyMass(), r.speed(), r.direction(), r.point(), r.force() * scale, r.key(), r.distance());
+        return new Request(r.module(), r.cart(), r.mass(), r.energyMass(), r.speed(), r.target(), r.direction(), r.point(), r.force() * scale, r.key(), r.distance());
       }).toList());
     }
     var clamps = CLAMPS.computeIfAbsent(level, ignored -> new HashMap<>());
@@ -353,7 +353,7 @@ public final class EquipmentRuntime {
           for (var r : allocation.getValue()) {
             double force = r.force() * scale;
             double work = force * (r.speed() + .5 * responses.get(r.key()) * scale * dt) * dt;
-            demand += module.mechanism().linear() ? LinearMotor.transfer(module.mechanism(), r.speed(), module.targetSpeed(), force, work, dt).energy() : Math.max(0, work);
+            demand += module.mechanism().linear() ? LinearMotor.transfer(module.mechanism(), r.speed(), r.target(), force, work, dt).energy() : Math.max(0, work);
           }
           if (demand > budget) { fits = false; break; }
         }
@@ -365,7 +365,7 @@ public final class EquipmentRuntime {
         for (var r : allocation.getValue()) {
           double force = r.force() * lower;
           double work = force * (r.speed() + .5 * responses.get(r.key()) * lower * dt) * dt;
-          var transfer = LinearMotor.transfer(module.mechanism(), r.speed(), module.targetSpeed(), force, work, dt);
+          var transfer = LinearMotor.transfer(module.mechanism(), r.speed(), r.target(), force, work, dt);
           energy += transfer.energy(); heat += transfer.heat();
         }
         module.spendLinear(energy); module.absorbHeat(heat);

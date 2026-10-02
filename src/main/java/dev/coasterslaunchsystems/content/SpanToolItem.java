@@ -76,6 +76,13 @@ public final class SpanToolItem extends Item {
           source.connectDestination(controller); stack.remove(EquipmentContent.CONTROLLER_SELECTION.get());
           player.displayClientMessage(Component.literal("Source linked to downstream stopping section."), true); return InteractionResult.SUCCESS;
         }
+        if (player.getOffhandItem().is(net.minecraft.world.item.Items.COMPASS)) {
+          controller.setSwingProgram(!controller.swingProgram());
+          player.displayClientMessage(Component.literal(controller.swingProgram()
+              ? "Bound forward/backward/forward linear swing program. Install matched end fin banks before arming."
+              : "Single forward launch program selected."), true);
+          return InteractionResult.SUCCESS;
+        }
         if (from == null || to == null || !from.dimension().equals(level.dimension()) || !to.dimension().equals(level.dimension()))
           throw new IllegalArgumentException("Select two section anchors first; shift-use selects a bound controller for module linking");
         if (!level.mayInteract(player, from.pos()) || !level.mayInteract(player, to.pos())) throw new IllegalArgumentException("Track endpoints are protected");
