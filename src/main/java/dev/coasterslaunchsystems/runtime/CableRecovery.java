@@ -317,7 +317,10 @@ public final class CableRecovery {
     boolean withinGuide = cabinet.cableInUse() ? travel >= -.15 && travel <= 20.15 : Math.abs(travel) <= .15;
     boolean boundedMoving = cabinet.cableInUse() && cabinet.cableMoving()
         && Math.abs(longitudinal) <= 3 && transverse <= .15;
-    boolean recoverableSpeed = cabinet.cableInUse() && (boundedMoving || !cabinet.cableMoving() && linear <= .5);
+    // An inspected release is no longer an active catch; its carriage must nevertheless reopen at rest.
+    boolean recoverableSpeed = cabinet.cableInUse()
+        ? boundedMoving || !cabinet.cableMoving() && linear <= .5
+        : linear <= .5;
     if (!withinGuide || lateral > .15 || angular > .1 || !recoverableSpeed)
       throw new IllegalStateException("Saved cable carriage moved outside its recoverable guide: travel=" + travel + " lateral=" + lateral
           + " linear=" + linear + " longitudinal=" + longitudinal + " transverse=" + transverse + " angular=" + angular);
