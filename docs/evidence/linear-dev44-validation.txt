@@ -1,0 +1,14 @@
+Launch Systems dev.44 standalone linear hot-store validation
+
+Command:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew test classes runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_linear_motors
+
+Result: BUILD SUCCESSFUL; 27 JUnit tests and all 20 selected packaged motor GameTests passed. This isolated namespace contains the complete existing LSM/LIM motor matrix plus the two hot-store cases.
+
+Hot-store observations after heating each cabinet to 8192 units (twice the 4096-unit capacity):
+  LSM: peak_force=1.9999999999999984, speed=0.20501931011676788, work=0.6179013857038212, accounting_error=4.599250667813859E-13
+  LIM: peak_force=0.9688312191046545, speed=0.09787796437740326, work=0.14083017006487344, accounting_error=4.537921687725044E-13
+
+The fixtures require the declared 10% thermal fraction at arm and completion, a force no greater than 2.000001, positive travel/work and per-step conservation of queued free-body work with buffer spend and heat.
+
+Artifact SHA-256: af2fd034cb32baca81aa03a86df033b3fcdc380395e540a8c6487ebecd5b7813  coasters-launch-systems-0.0.1-dev.44.jar

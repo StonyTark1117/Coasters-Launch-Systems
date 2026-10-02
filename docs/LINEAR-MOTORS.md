@@ -37,7 +37,7 @@ Positive point-impulse work consumes `work / efficiency`. Copper losses are `0.0
 
 The allocator includes translation, angular lever arms and cross-work between different points on one native chassis. Each cabinet independently funds its requests before any impulse is queued. Sensors reconcile queued free-body impulse work before native constraints with spent energy and added heat. Native guides/couplers remain responsible for constrained motion; this is not a claim that all input work survives joint/friction losses as kinetic energy.
 
-Heat uses the existing 4096-unit store and 8 units/s cooling, with force derating above capacity. Linear hot-store gameplay/restart acceptance remains an additional gate. Real resources, settings and geometry persist in equipment schema 4. Legacy schemas load linear buffers empty. Server loading always disables the field; buffer energy cannot replay a launch. Native handles, drive history and requests are not saved.
+Heat uses the existing 4096-unit store and 8 units/s cooling, with force derating above capacity and a 10% force floor. The isolated native motor suite heats real LSM/LIM cabinets to twice capacity and verifies their reduced authority, physical travel and impulse-work accounting. Controller hot-store interruption, restart and gameplay acceptance remain additional gates. Real resources, settings and geometry persist in equipment schema 4. Legacy schemas load linear buffers empty. Server loading always disables the field; buffer energy cannot replay a launch. Native handles, drive history and requests are not saved.
 
 ## Local sections and Fourth Dimension
 

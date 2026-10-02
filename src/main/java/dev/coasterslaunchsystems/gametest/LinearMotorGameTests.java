@@ -31,7 +31,7 @@ import net.neoforged.neoforge.gametest.GameTestHolder;
 import org.joml.Vector3d;
 
 /** Actual occupied chassis, placed motors and shaft networks. Sensors run before fixture entry forces. */
-@GameTestHolder("coasterslaunchsystems_linear")
+@GameTestHolder("coasterslaunchsystems_linear_motors")
 public final class LinearMotorGameTests {
   private static final List<Scene> SCENES = new ArrayList<>();
   private static boolean registered;
@@ -119,10 +119,10 @@ public final class LinearMotorGameTests {
   }
   @GameTestGenerator public static List<TestFunction> motors() {
     var tests = new ArrayList<TestFunction>(); int slot = 0;
-    for (var mechanism : List.of(Mechanism.LSM, Mechanism.LIM)) for (String mode : List.of("empty", "full", "reverse", "rolling", "brake", "depleted", "missing", "conflict", "reload")) {
+    for (var mechanism : List.of(Mechanism.LSM, Mechanism.LIM)) for (String mode : List.of("empty", "full", "reverse", "rolling", "brake", "depleted", "hot", "missing", "conflict", "reload")) {
       int selected = slot++;
-      tests.add(new TestFunction("launchsystems_linear", "coasterslaunchsystems_linear." + mechanism.name().toLowerCase(Locale.ROOT) + "_" + mode,
-          "coasterslaunchsystems_linear:empty", 240, 0, true, helper -> run(new Scene(helper, selected, mechanism, mode))));
+      tests.add(new TestFunction("launchsystems_linear", "coasterslaunchsystems_linear_motors." + mechanism.name().toLowerCase(Locale.ROOT) + "_" + mode,
+          "coasterslaunchsystems_linear_motors:empty", 240, 0, true, helper -> run(new Scene(helper, selected, mechanism, mode))));
     }
     return tests;
   }
@@ -133,6 +133,7 @@ public final class LinearMotorGameTests {
       for (var pos : s.modules) {
         var cabinet = (EquipmentCabinetEntity) s.base.level.getBlockEntity(pos); cabinet.bind(s.base.level, s.base.from, s.base.to);
         cabinet.tuneLinear(s.mode.equals("reverse") ? -3 : s.mode.equals("brake") ? 0 : 3, 2, 4);
+        if (s.mode.equals("hot")) cabinet.absorbHeat(8192);
       }
       var snapshot = MotionProviders.resolve(s.base.level, s.base.parents.getFirst().getUniqueId()).orElseThrow();
       s.base.helper.assertTrue(snapshot.interfaces().contains(s.mechanism) != s.mode.equals("missing"), "Wrong reaction hardware received a motor certificate");
@@ -151,6 +152,8 @@ public final class LinearMotorGameTests {
       for (var pos : s.modules) {
         var cabinet = (EquipmentCabinetEntity) s.base.level.getBlockEntity(pos);
         if (s.mode.equals("depleted")) { s.base.helper.assertTrue(Math.abs(cabinet.getSpeed()) == 1, "Limited supply did not settle before depletion"); cabinet.spendLinear(cabinet.energy()); }
+        if (s.mode.equals("hot")) s.base.helper.assertTrue(cabinet.thermalFraction() <= .1000001,
+            "Overheated linear store did not reach its declared minimum authority");
         cabinet.setArmed(true);
       }
       s.snapshot(); s.observe = true; s.lastAcceleration = 0;
@@ -181,6 +184,8 @@ public final class LinearMotorGameTests {
         if (s.mode.equals("brake")) s.base.helper.assertTrue(speed < s.initialSpeed - .2 && s.work < 0 && s.heat > s.spent, "Active motor brake did not dissipate work");
         else if (s.mode.equals("reload")) s.base.helper.assertTrue(!s.cabinet().armed() && Math.abs(s.impulse - s.cutImpulse) < 1e-8, "Load reenabled the motor");
         else if (s.mode.equals("depleted")) s.base.helper.assertTrue(s.depletedSteps > 10 && s.peakForce < 5, "Depleted store did not limit native demand");
+        else if (s.mode.equals("hot")) s.base.helper.assertTrue(s.cabinet().thermalFraction() <= .1000001 && s.peakForce <= 2.000001
+            && speed > .08 && s.work > .1, "Hot linear store did not apply its bounded derated authority");
         else s.base.helper.assertTrue(speed * (s.mode.equals("reverse") ? -1 : 1) > (s.mode.equals("rolling") ? s.initialSpeed + .05 : .2) && s.work > 0, "Linear motor did not physically propel its loaded chassis: " + speed);
       }
       s.cutImpulse = s.impulse;
