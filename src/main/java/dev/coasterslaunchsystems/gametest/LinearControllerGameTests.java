@@ -24,10 +24,8 @@ import org.joml.Vector3d;
 public final class LinearControllerGameTests {
   private static final List<Scene> SCENES = new ArrayList<>();
   private static boolean registered;
-  private static boolean swing(String mode) {
-    return mode.equals("swing_forward") || mode.equals("swing_power_loss") || mode.equals("arrow_swing_forward") || mode.equals("arrow_swing_power_loss");
-  }
-  private static boolean swingPowerLoss(String mode) { return mode.equals("swing_power_loss") || mode.equals("arrow_swing_power_loss"); }
+  private static boolean swing(String mode) { return mode.equals("swing_forward") || mode.equals("swing_power_loss") || mode.contains("_swing_"); }
+  private static boolean swingPowerLoss(String mode) { return mode.equals("swing_power_loss") || mode.endsWith("_swing_power_loss"); }
   private static final class Scene {
     final RideControllerGameTests.Scene ride;
     final Mechanism mechanism;
@@ -112,25 +110,31 @@ public final class LinearControllerGameTests {
     }
   }
   @GameTestGenerator public static List<TestFunction> sections() {
-    var tests = new ArrayList<TestFunction>(); int slot = 0, fourthDimensionSlot = 0;
+    var tests = new ArrayList<TestFunction>(); int slot = 0, fourthDimensionSlot = 0, fourthDimensionSwingSlot = 0;
     for (var mechanism : List.of(Mechanism.LSM, Mechanism.LIM)) {
       var modes = new ArrayList<>(List.of("single_forward", "linked_forward", "linked_reverse", "power_loss", "thermal_loss"));
       if (mechanism == Mechanism.LSM) modes.add("mixed_forward");
       modes.addAll(List.of("swing_forward", "swing_power_loss"));
       if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of(
           "arrow_forward", "arrow_linked_reverse", "arrow_plate_loss", "legacy_forward", "free_spin_forward", "revised_forward", "pax_veto"));
-      if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of("arrow_swing_forward", "arrow_swing_power_loss"));
+      if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of(
+          "arrow_swing_forward", "arrow_swing_power_loss",
+          "legacy_swing_forward", "legacy_swing_power_loss",
+          "free_spin_swing_forward", "free_spin_swing_power_loss",
+          "revised_swing_forward", "revised_swing_power_loss"));
       for (String mode : modes) {
         boolean fourthDimension = mode.startsWith("arrow") || mode.startsWith("legacy") || mode.startsWith("free_spin")
             || mode.startsWith("revised") || mode.startsWith("pax");
         // Optional-provider fixtures have their own compact lane; do not let an added provider
         // case move an ordinary fixture beyond the native near-origin equipment bound.
-        int fixtureSlot = fourthDimension ? -1 - fourthDimensionSlot++ : slot++;
-        // Sable's native world coordinates are bounded. Keep all 4D sections in a compact,
-        // negative near-origin lane so their upstream rail records never overlap ordinary fixtures.
+        boolean familySwing = swing(mode) && (mode.startsWith("legacy") || mode.startsWith("free_spin") || mode.startsWith("revised"));
+        int fixtureSlot = fourthDimension ? -1 - (familySwing ? fourthDimensionSwingSlot++ : fourthDimensionSlot++) : slot++;
+        // Sable's native world coordinates are bounded. Family swings execute in a separate batch
+        // and reuse the compact negative lane after the Arrow batch has cleaned up its fixtures.
         String namespace = fourthDimension ? "coasterslaunchsystems_4d_linear"
             : mode.equals("thermal_loss") ? "coasterslaunchsystems_thermal_linear" : "coasterslaunchsystems_linear";
-        tests.add(new TestFunction(namespace + "_sections", namespace + "." + mechanism.name().toLowerCase(Locale.ROOT) + "_section_" + mode,
+        String batch = familySwing ? "coasterslaunchsystems_4d_swing_linear_sections" : namespace + "_sections";
+        tests.add(new TestFunction(batch, namespace + "." + mechanism.name().toLowerCase(Locale.ROOT) + "_section_" + mode,
             namespace + ":empty", swing(mode) ? 8000 : 1600, 0, true, helper -> run(new Scene(helper, fixtureSlot, mode, mechanism))));
       }
     }
@@ -157,8 +161,10 @@ public final class LinearControllerGameTests {
         // The full field is available between two independent spring-fin end banks. The first
         // field direction is forward; the controller reverses it only after each native tail clears.
         for (int distance = 14; distance <= 60; distance += 2) r.module(distance, false);
-        for (int distance = 2; distance <= 16; distance += 2) r.module(distance, true);
-        for (int distance = 50; distance <= 62; distance += 2) r.module(distance, true);
+        // Free Spin and Revised provider vehicles need slightly more than the original
+        // 14-block bank; use matched 16-block end banks for every swing fixture.
+        for (int distance = 2; distance <= 18; distance += 2) r.module(distance, true);
+        for (int distance = 48; distance <= 62; distance += 2) r.module(distance, true);
         r.controller.setSwingProgram(true);
       } else {
         for (int distance = 8; distance <= 16; distance += 2) {
