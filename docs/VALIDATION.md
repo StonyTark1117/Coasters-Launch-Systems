@@ -324,4 +324,6 @@ The staged pinned Fourth Dimension Arrow controller now has the same live shaft-
 
 The final `0.0.1-dev.27` JAR passed **27 unit tests**, **115/115 packaged standalone GameTests**, and **19/19 packaged combined cable cases** with the pinned Fourth Dimension schema-4 binary `027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16`. See [local evidence](evidence/cable-dev27-validation.txt) and [artifact hashes](evidence/cable-dev27-artifacts.sha256). The JAR SHA-256 is `b8146da3b1e050d63a98e91b498037911fa3a94d8538d9ea7c18444dda42a825`.
 
+Clean [GitHub CI run 36956592852](https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36956592852) built implementation commit `387a5ac18fafc58efb94a0e001b80e81898cf9ff`, passed **all 115 packaged standalone native GameTests** and uploaded a JAR matching the local dev.27 artifact hash. [CI evidence](evidence/cable-dev27-ci.txt) records the source, command and hash.
+
 This staged integration test does not establish Arrow active release, actual chunk unload/multiplayer/rendered setup, repeated service or the remaining mechanism families required for 0.4.0. **The complete release goal remains active.**
