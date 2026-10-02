@@ -21,6 +21,13 @@ public final class VehicleInterfaces {
     if (fin == null || !chassis.getLevel().getBlockState(fin).is(EquipmentContent.BRAKE_FIN.get())) return null;
     return new Vector3d(fin.getX() + .5, fin.getY() + .5, fin.getZ() + .5);
   }
+  /** A low-friction skid shoe is independently certified and cannot substitute for the held fin clamp. */
+  public static Vector3d skidPoint(ServerSubLevel chassis) {
+    var bearing = CoasterCartTrackSnap.representativeBearingPlotPos(chassis);
+    var shoe = bearing == null ? null : bearing.north().below();
+    if (shoe == null || !chassis.getLevel().getBlockState(shoe).is(EquipmentContent.SKID_SHOE.get())) return null;
+    return new Vector3d(shoe.getX() + .5, shoe.getY() + .25, shoe.getZ() + .5);
+  }
   /** Conductive hardware is distinct from the friction fin and from native seat magnets. */
   public static Vector3d conductivePoint(ServerSubLevel chassis) {
     var bearing = CoasterCartTrackSnap.representativeBearingPlotPos(chassis);

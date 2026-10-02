@@ -28,6 +28,7 @@ public final class EquipmentContent {
   public static final DeferredHolder<DataComponentType<?>, DataComponentType<GlobalPos>> CONTROLLER_SELECTION = selection("controller_selection");
   public static final DeferredBlock<EquipmentCabinetBlock> TIRE = cabinet("tire_drive", Mechanism.TIRE);
   public static final DeferredBlock<EquipmentCabinetBlock> FIN = cabinet("fin_brake", Mechanism.FIN_BRAKE);
+  public static final DeferredBlock<EquipmentCabinetBlock> SKID = cabinet("skid_brake", Mechanism.SKID_BRAKE);
   public static final DeferredBlock<EquipmentCabinetBlock> EDDY = cabinet("eddy_brake", Mechanism.EDDY_BRAKE);
   public static final DeferredBlock<EquipmentCabinetBlock> LSM = cabinet("lsm_drive", Mechanism.LSM);
   public static final DeferredBlock<EquipmentCabinetBlock> LIM = cabinet("lim_drive", Mechanism.LIM);
@@ -50,13 +51,17 @@ public final class EquipmentContent {
       () -> new BrakeFinBlock(BlockBehaviour.Properties.of().strength(3).noOcclusion()));
   public static final DeferredItem<BlockItem> BRAKE_FIN_ITEM = ITEMS.register("brake_fin",
       () -> new BlockItem(BRAKE_FIN.get(), new Item.Properties()));
+  public static final DeferredBlock<SkidShoeBlock> SKID_SHOE = BLOCKS.register("skid_shoe",
+      () -> new SkidShoeBlock(BlockBehaviour.Properties.of().strength(3).noOcclusion()));
+  public static final DeferredItem<BlockItem> SKID_SHOE_ITEM = ITEMS.register("skid_shoe",
+      () -> new BlockItem(SKID_SHOE.get(), new Item.Properties()));
   public static final DeferredBlock<ConductiveFinBlock> CONDUCTIVE_FIN = BLOCKS.register("conductive_fin",
       () -> new ConductiveFinBlock(BlockBehaviour.Properties.of().strength(3).noOcclusion()));
   public static final DeferredItem<BlockItem> CONDUCTIVE_FIN_ITEM = ITEMS.register("conductive_fin",
       () -> new BlockItem(CONDUCTIVE_FIN.get(), new Item.Properties()));
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EquipmentCabinetEntity>> ENTITY =
       ENTITIES.register("equipment_cabinet", () -> BlockEntityType.Builder.of(EquipmentCabinetEntity::new,
-          TIRE.get(), FIN.get(), EDDY.get(), LSM.get(), LIM.get(), FLYWHEEL.get(), HYDRAULIC.get(), PNEUMATIC.get()).build(null));
+          TIRE.get(), FIN.get(), SKID.get(), EDDY.get(), LSM.get(), LIM.get(), FLYWHEEL.get(), HYDRAULIC.get(), PNEUMATIC.get()).build(null));
   public static final DeferredHolder<DataComponentType<?>, DataComponentType<GlobalPos>> FROM = selection("span_from");
   public static final DeferredHolder<DataComponentType<?>, DataComponentType<GlobalPos>> TO = selection("span_to");
   public static final DeferredItem<SpanToolItem> TOOL = ITEMS.register("span_tool", () -> new SpanToolItem(new Item.Properties().stacksTo(1)));
@@ -81,7 +86,7 @@ public final class EquipmentContent {
     BLOCKS.register(bus); ITEMS.register(bus); ENTITIES.register(bus); COMPONENTS.register(bus);
     bus.addListener((net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent event) -> {
       if (event.getTabKey().equals(net.minecraft.world.item.CreativeModeTabs.REDSTONE_BLOCKS)) {
-        event.accept(CONTROLLER.get()); event.accept(TIRE.get()); event.accept(FIN.get()); event.accept(EDDY.get()); event.accept(TIRE_SURFACE.get()); event.accept(BRAKE_FIN.get()); event.accept(CONDUCTIVE_FIN.get());
+        event.accept(CONTROLLER.get()); event.accept(TIRE.get()); event.accept(FIN.get()); event.accept(SKID.get()); event.accept(EDDY.get()); event.accept(TIRE_SURFACE.get()); event.accept(BRAKE_FIN.get()); event.accept(SKID_SHOE.get()); event.accept(CONDUCTIVE_FIN.get());
         event.accept(LSM.get()); event.accept(LIM.get()); event.accept(FLYWHEEL.get()); event.accept(HYDRAULIC.get()); event.accept(PNEUMATIC.get()); event.accept(LSM_PLATE.get()); event.accept(LIM_PLATE.get());
         event.accept(CATCH_SOCKET.get()); event.accept(CATCH_CARRIAGE.get()); event.accept(CABLE_GUIDE.get());
       }

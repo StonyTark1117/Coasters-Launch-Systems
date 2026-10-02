@@ -102,6 +102,7 @@ public final class OrdinaryPassengerGameTests {
       var plot = body.getPlot().getEmbeddedLevelAccessor();
       plot.setBlock(BlockPos.ZERO.below(), EquipmentContent.TIRE_SURFACE.get().defaultBlockState(), 3);
       plot.setBlock(new BlockPos(1, -1, 0), EquipmentContent.BRAKE_FIN.get().defaultBlockState(), 3);
+      plot.setBlock(new BlockPos(0, -1, -1), EquipmentContent.SKID_SHOE.get().defaultBlockState(), 3);
       plot.setBlock(new BlockPos(-1, -1, 0), EquipmentContent.CONDUCTIVE_FIN.get().defaultBlockState(), 3);
       for (var bridge : List.of(new BlockPos(-1, 0, 0), new BlockPos(1, 0, 0), new BlockPos(0, 0, -1), new BlockPos(0, 0, 1)))
         helper.assertTrue(plot.setBlock(bridge, Blocks.OAK_PLANKS.defaultBlockState(), 3), "Continuous ordinary deck did not install");
@@ -159,7 +160,11 @@ public final class OrdinaryPassengerGameTests {
           double force = impulse.rotate(body.logicalPose().orientation()).dot(direction) / event.getTimeStep();
           totalForce += Math.abs(force); s.impulse += Math.abs(force) * event.getTimeStep();
           if (impulse.lengthSquared() > 1e-18) {
-            var point = s.mechanism == Mechanism.TIRE ? VehicleInterfaces.tirePoint(body) : VehicleInterfaces.conductivePoint(body);
+            var point = switch (s.mechanism) {
+              case TIRE -> VehicleInterfaces.tirePoint(body);
+              case SKID_BRAKE -> VehicleInterfaces.skidPoint(body);
+              default -> VehicleInterfaces.conductivePoint(body);
+            };
             var dynamics = NativeForces.pointDynamics(body, event.getPhysicsSystem().getPipeline(), point, direction);
             double work = DriveMath.incrementalWork(dynamics.effectiveMass(), dynamics.speed(), force, event.getTimeStep());
             if (s.mechanism == Mechanism.TIRE) { positiveWork += Math.max(0, work); s.work += Math.max(0, work); }
@@ -176,7 +181,8 @@ public final class OrdinaryPassengerGameTests {
         if (s.mechanism == Mechanism.TIRE) {
           double budget = 8 * Math.abs(s.cabinet().getSpeed()) * 2 * Math.PI / 60 * event.getTimeStep(); s.shaftWork += budget;
           s.helper.assertTrue(positiveWork <= budget + 1e-8, "Occupied consist duplicated its tire shaft work budget");
-        } else if (s.mechanism == Mechanism.EDDY_BRAKE) s.helper.assertTrue(totalForce <= 128 + 1e-8, "Occupied consist duplicated its magnetic force budget");
+        } else if (s.mechanism == Mechanism.EDDY_BRAKE || s.mechanism == Mechanism.SKID_BRAKE)
+          s.helper.assertTrue(totalForce <= (s.mechanism == Mechanism.SKID_BRAKE ? 192 : 128) + 1e-8, "Occupied consist duplicated its passive brake force budget");
         s.helper.assertTrue(s.riders.stream().allMatch(Pig::isPassenger), "Equipment lost an ordinary passenger");
       } catch (RuntimeException e) { s.failure = e.toString(); }
     }
@@ -192,7 +198,7 @@ public final class OrdinaryPassengerGameTests {
   @GameTestGenerator
   public static List<TestFunction> occupiedEquipment() {
     var tests = new ArrayList<TestFunction>(); int slot = 0;
-    for (var mechanism : List.of(Mechanism.TIRE, Mechanism.FIN_BRAKE, Mechanism.EDDY_BRAKE))
+    for (var mechanism : List.of(Mechanism.TIRE, Mechanism.FIN_BRAKE, Mechanism.SKID_BRAKE, Mechanism.EDDY_BRAKE))
       for (boolean linked : new boolean[] {false, true}) for (boolean reverse : new boolean[] {false, true}) {
         int selected = slot++;
         String name = mechanism.name().toLowerCase(java.util.Locale.ROOT) + (linked ? "_linked" : "_single") + (reverse ? "_reverse" : "_forward");
@@ -209,7 +215,8 @@ public final class OrdinaryPassengerGameTests {
     }
     s.mechanism = mechanism; s.reverse = reverse;
     s.cart(8); if (linked) s.cart(14);
-    var block = mechanism == Mechanism.TIRE ? EquipmentContent.TIRE : mechanism == Mechanism.FIN_BRAKE ? EquipmentContent.FIN : EquipmentContent.EDDY;
+    var block = mechanism == Mechanism.TIRE ? EquipmentContent.TIRE : mechanism == Mechanism.FIN_BRAKE ? EquipmentContent.FIN
+        : mechanism == Mechanism.SKID_BRAKE ? EquipmentContent.SKID : EquipmentContent.EDDY;
     s.module = s.from.offset(mechanism == Mechanism.EDDY_BRAKE ? -1 : 1, -2, reverse ? 7 : 9);
     s.motor = mechanism == Mechanism.TIRE ? s.module.west() : s.module.east();
     s.level.setBlockAndUpdate(s.module, block.get().defaultBlockState().setValue(RotatedPillarBlock.AXIS, Direction.Axis.X));
@@ -240,7 +247,7 @@ public final class OrdinaryPassengerGameTests {
       s.helper.assertTrue(s.cabinet().fault().isEmpty() && s.drivenSteps > 20, "Occupied equipment never acted or faulted: " + s.cabinet().fault());
       if (mechanism == Mechanism.TIRE) s.helper.assertTrue(speed * (reverse ? -1 : 1) > Math.abs(s.initialSpeed) + .1 && s.work > .1 && s.work <= s.shaftWork + 1e-8, "Loaded rolling-entry tire transport failed");
       else if (mechanism == Mechanism.FIN_BRAKE) s.helper.assertTrue(Math.abs(speed) < .03, "Occupied ordinary fin did not stop/hold");
-      else s.helper.assertTrue(Math.abs(speed) < Math.abs(s.initialSpeed) - .3 && s.work > 1, "Occupied ordinary magnetic trim failed");
+      else s.helper.assertTrue(Math.abs(speed) < Math.abs(s.initialSpeed) - .3 && s.work > 1, "Occupied ordinary passive trim failed");
       for (var body : s.parents) s.helper.assertTrue(!CoasterCartTrackSnap.isBearingDisengaged(body) && Math.abs(s.speed(body) - speed) < .1, "Occupied native consist lost support/common translation");
       s.helper.assertTrue(s.maxCouplerError < .05 && s.riders.stream().allMatch(Pig::isPassenger), "Occupied equipment lost coupler or riders");
       System.out.println("LS_ORDINARY_EQUIPMENT mechanism=" + mechanism + " reverse=" + reverse + " cars=" + s.parents.size()

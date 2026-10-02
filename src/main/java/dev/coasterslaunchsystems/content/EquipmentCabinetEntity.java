@@ -307,7 +307,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
       var frame = CoasterPathTrackFrame.trackBasisAtHit(level, sampleHit);
       var tangent = resolved.forward(level, sampleHit);
       var unbankedUp = new Vec3(0, 1, 0).subtract(tangent.scale(tangent.y)).normalize();
-      boolean slopeRated = mechanism() == Mechanism.FIN_BRAKE || mechanism() == Mechanism.EDDY_BRAKE;
+      boolean slopeRated = mechanism() == Mechanism.FIN_BRAKE || mechanism() == Mechanism.SKID_BRAKE || mechanism() == Mechanism.EDDY_BRAKE;
       double slopeLimit = slopeRated ? .243 : .01;
       if (frame.up().dot(unbankedUp) < .999 || Math.abs(tangent.y) > slopeLimit
           || Math.abs(shaft.dot(tangent)) > .01 || shaftAxis == Direction.Axis.Y)
@@ -362,6 +362,8 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     if (mechanism().linear()) return "Target " + target + " blocks/s; acceleration " + accelerationLimit + ", jerk " + jerkLimit
         + ". Buffer " + Math.round(energy()) + "/2048; heat " + Math.round(heat.heat()) + "/4096. "
         + "Disarm; span tool + offhand clock changes target, iron nugget changes acceleration, gold nugget changes jerk. ";
+    if (mechanism() == Mechanism.SKID_BRAKE) return "Passive skid friction; no static hold. Heat " + Math.round(heat.heat())
+        + "/4096. " + (heat.overheated() ? "Thermal force derated. " : "");
     if (mechanism() == Mechanism.EDDY_BRAKE) return "Passive magnets; no static hold. Heat " + Math.round(heat.heat())
         + "/4096. " + (heat.overheated() ? "Thermal force derated. " : "");
     if (mechanism() != Mechanism.FIN_BRAKE) return "";

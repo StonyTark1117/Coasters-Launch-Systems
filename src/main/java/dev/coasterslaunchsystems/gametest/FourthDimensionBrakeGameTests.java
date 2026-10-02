@@ -80,7 +80,7 @@ public final class FourthDimensionBrakeGameTests {
     Scene(GameTestHelper helper, String design, Mechanism mechanism, int slot, boolean reverse, boolean uneven) {
       this.helper = helper; level = helper.getLevel(); this.design = design; this.mechanism = mechanism;
       this.reverse = reverse; this.uneven = uneven; linked = slot >= 17;
-      from = new BlockPos(320 + slot * 32, 176, mechanism == Mechanism.FIN_BRAKE ? 576 : 768); to = from.offset(0, 0, 64);
+      from = new BlockPos(320 + slot * 32, 176, mechanism == Mechanism.FIN_BRAKE ? 576 : mechanism == Mechanism.SKID_BRAKE ? 768 : 960); to = from.offset(0, 0, 64);
       int contact = linked ? reverse ? 17 : 21 : reverse ? 18 : 20;
       module = from.offset(mechanism == Mechanism.FIN_BRAKE ? 1 : -1, -2, contact);
       motor = mechanism == Mechanism.FIN_BRAKE ? module.east() : module.west();
@@ -135,12 +135,12 @@ public final class FourthDimensionBrakeGameTests {
           var contact = EngagedContacts.current(s.level, parent).orElse(null);
           if (contact == null || !s.track.matches(contact.hit())) continue;
           var axis = s.track.forward(s.level, contact.hit()); var direction = new Vector3d(axis.x, axis.y, axis.z);
-          if (s.mechanism == Mechanism.EDDY_BRAKE) {
+          if (s.mechanism == Mechanism.EDDY_BRAKE || s.mechanism == Mechanism.SKID_BRAKE) {
             double force = impulse.rotate(parent.logicalPose().orientation()).dot(direction) / event.getTimeStep();
             totalForce += Math.abs(force); s.impulse += Math.abs(force) * event.getTimeStep();
             s.helper.assertTrue(Math.abs(force) <= motion.maximumBrakeForce() + 1e-8, "Magnetic force exceeded the provider brake rating");
             if (impulse.lengthSquared() > 1e-18) {
-              var point = VehicleInterfaces.conductivePoint(parent);
+              var point = s.mechanism == Mechanism.SKID_BRAKE ? VehicleInterfaces.skidPoint(parent) : VehicleInterfaces.conductivePoint(parent);
               var dynamics = NativeForces.pointDynamics(parent, event.getPhysicsSystem().getPipeline(), point, direction);
               double work = DriveMath.incrementalWork(dynamics.effectiveMass(), dynamics.speed(), force, event.getTimeStep());
               s.helper.assertTrue(force * dynamics.speed() <= 1e-8 && work <= 1e-8, "4D magnet added fin energy");
@@ -154,7 +154,7 @@ public final class FourthDimensionBrakeGameTests {
           }
         }
         s.peakForce = Math.max(s.peakForce, totalForce);
-        s.helper.assertTrue(totalForce <= 128 + 1e-8, "One magnetic cabinet duplicated its total force budget");
+        s.helper.assertTrue(totalForce <= (s.mechanism == Mechanism.SKID_BRAKE ? 192 : 128) + 1e-8, "One passive brake cabinet duplicated its total force budget");
       } catch (RuntimeException error) { s.failure = error.toString(); }
     }
   }
@@ -188,7 +188,7 @@ public final class FourthDimensionBrakeGameTests {
   public static List<TestFunction> equipmentTests() {
     if (!ModList.get().isLoaded("fourthdimension")) return List.of();
     var tests = new ArrayList<TestFunction>();
-    for (var mechanism : List.of(Mechanism.FIN_BRAKE, Mechanism.EDDY_BRAKE)) {
+    for (var mechanism : List.of(Mechanism.FIN_BRAKE, Mechanism.SKID_BRAKE, Mechanism.EDDY_BRAKE)) {
       var designs = List.of("ARROW", "LEGACY", "FREE_SPIN", "REVISED");
       for (int family = 0; family < designs.size(); family++) for (int mode = 0; mode < 4; mode++) {
         int slot = family * 4 + mode; boolean reverse = (mode & 1) != 0, uneven = (mode & 2) != 0;
@@ -223,7 +223,7 @@ public final class FourthDimensionBrakeGameTests {
     player.setItemInHand(InteractionHand.MAIN_HAND, trackItem.getDefaultInstance());
     invoke("dev.fourthdimension.track.TrackPlacement", "connect", new Class<?>[] {ServerLevel.class, BlockPos.class, BlockPos.class, designType, Player.class, ItemStack.class},
         level, s.from, s.to, design, player, player.getMainHandItem());
-    level.setBlockAndUpdate(s.module, (s.mechanism == Mechanism.FIN_BRAKE ? EquipmentContent.FIN : EquipmentContent.EDDY).get().defaultBlockState().setValue(RotatedPillarBlock.AXIS, Direction.Axis.X));
+    level.setBlockAndUpdate(s.module, (s.mechanism == Mechanism.FIN_BRAKE ? EquipmentContent.FIN : s.mechanism == Mechanism.SKID_BRAKE ? EquipmentContent.SKID : EquipmentContent.EDDY).get().defaultBlockState().setValue(RotatedPillarBlock.AXIS, Direction.Axis.X));
     level.setBlockAndUpdate(s.motor, AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalBlock.FACING, s.mechanism == Mechanism.FIN_BRAKE ? Direction.WEST : Direction.EAST)); s.rpm(0);
     var vehicleType = type("dev.fourthdimension.runtime.FoundationData$Vehicle");
     s.at(15, () -> {
@@ -234,10 +234,10 @@ public final class FourthDimensionBrakeGameTests {
         var vehicle = invoke("dev.fourthdimension.vehicle.VehicleFactory", "create", new Class<?>[] {ServerLevel.class, designType, GraphHit.class}, level, design, hit);
         var parent = (ServerSubLevel) SubLevelContainer.getContainer(level).getSubLevel((UUID) read(vehicle, "chassis"));
         s.vehicles.add(vehicle); s.parents.add(parent);
-        var cell = new BlockPos(s.mechanism == Mechanism.FIN_BRAKE ? 1 : -1, -1, 0);
+        var cell = s.mechanism == Mechanism.FIN_BRAKE ? new BlockPos(1, -1, 0) : s.mechanism == Mechanism.SKID_BRAKE ? new BlockPos(0, -1, -1) : new BlockPos(-1, -1, 0);
         var plot = parent.getPlot().getEmbeddedLevelAccessor();
         helper.assertTrue(plot.getBlockState(cell).isAir(), "Brake fin would replace existing Fourth Dimension hardware at " + cell);
-        helper.assertTrue(plot.setBlock(cell, (s.mechanism == Mechanism.FIN_BRAKE ? EquipmentContent.BRAKE_FIN : EquipmentContent.CONDUCTIVE_FIN).get().defaultBlockState(), 3), "4D brake fin installation failed");
+        helper.assertTrue(plot.setBlock(cell, (s.mechanism == Mechanism.FIN_BRAKE ? EquipmentContent.BRAKE_FIN : s.mechanism == Mechanism.SKID_BRAKE ? EquipmentContent.SKID_SHOE : EquipmentContent.CONDUCTIVE_FIN).get().defaultBlockState(), 3), "4D brake hardware installation failed");
       }
       s.track = DirectedTrack.resolve(level, s.reverse ? s.to : s.from, s.reverse ? s.from : s.to).orElseThrow(); SCENES.add(s);
     });

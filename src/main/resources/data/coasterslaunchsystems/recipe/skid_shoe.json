@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [ " I ", "PPP", " I " ],
+  "key": { "I": { "item": "create:iron_sheet" }, "P": { "item": "minecraft:polished_blackstone" } },
+  "result": { "id": "coasterslaunchsystems:skid_shoe", "count": 2 }
+}

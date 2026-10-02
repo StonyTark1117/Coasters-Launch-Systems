@@ -3,9 +3,11 @@
   "values": [
     "coasterslaunchsystems:tire_drive",
     "coasterslaunchsystems:fin_brake",
+    "coasterslaunchsystems:skid_brake",
     "coasterslaunchsystems:eddy_brake",
     "coasterslaunchsystems:tire_surface",
     "coasterslaunchsystems:brake_fin",
+    "coasterslaunchsystems:skid_shoe",
     "coasterslaunchsystems:conductive_fin",
     "coasterslaunchsystems:ride_controller",
     "coasterslaunchsystems:lsm_drive",

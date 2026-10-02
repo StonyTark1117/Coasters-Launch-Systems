@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": { "steel": "minecraft:block/iron_block", "pad": "minecraft:block/polished_blackstone", "particle": "minecraft:block/iron_block" },
+  "elements": [
+    { "from": [1, 0, 5], "to": [15, 3, 11], "faces": { "up": { "texture": "#steel" }, "down": { "texture": "#steel" }, "north": { "texture": "#steel" }, "south": { "texture": "#steel" }, "east": { "texture": "#steel" }, "west": { "texture": "#steel" } } },
+    { "from": [3, 3, 6], "to": [13, 5, 10], "faces": { "up": { "texture": "#pad" }, "down": { "texture": "#pad" }, "north": { "texture": "#pad" }, "south": { "texture": "#pad" }, "east": { "texture": "#pad" }, "west": { "texture": "#pad" } } }
+  ]
+}

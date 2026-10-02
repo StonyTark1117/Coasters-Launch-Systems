@@ -44,7 +44,7 @@ Dev.13 adds original LSM/LIM cabinets, matching chassis plates, finite kinetic c
 | LS201 | Original LSM drive, buffer, vehicle reaction interface and tuning | 0.1. Finite power, target/jerk limits, rolling entry, reverse propulsion and braking pass loaded tests. |
 | LS202 | Distinct LIM hardware and slip/loss curve | LS201. Force/resource behavior differs meaningfully from LSM under the same test load and configured supply. |
 | LS203 | Bounded swing-launch program and direction-aware block reservations | LS201–LS202. Forward/backward/forward passes advance only after correct tail clearance; rollback retains reservations. |
-| LS204 | Skid brake and heat/cooling limits | LS102–LS103. Contact rejects incompatible vehicles; brake work heats stores, overload changes behavior as documented, and recovery does not duplicate energy. |
+| LS204 | Skid brake and heat/cooling limits | LS102–LS103. A standalone skid cabinet, separately placed shoe, ordinary/4D adapters and bounded heat-derated force path are implemented. Focused optional-provider validation and saved-world interruption acceptance remain. |
 | LS205 | All eligible 4D family linear-drive/brake fixtures | LS004, LS201–LS204. Legacy, Free Spin and revised groups retain independent loaded rotation; Arrow retraces profiles in rollback. PAX remains under its declared restrictions. |
 
 ## Version 0.3 physical flywheel launch

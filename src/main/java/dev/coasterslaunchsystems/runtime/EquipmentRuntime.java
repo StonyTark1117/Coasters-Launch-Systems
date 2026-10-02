@@ -25,7 +25,7 @@ public final class EquipmentRuntime {
   private record History(long step, double distance, double acceleration) {}
   private record DriveKey(Object owner, UUID cart) {}
   private record Clamp(UUID identity, NativeFinClamp handle) {}
-  private static final double FIN_FORCE = 256, FIN_MASS = 64, EDDY_FORCE = 128;
+  private static final double FIN_FORCE = 256, FIN_MASS = 64, SKID_FORCE = 192, EDDY_FORCE = 128;
   private static final Map<ServerLevel, Map<Key, Clamp>> CLAMPS = new HashMap<>();
   private record Request(EquipmentCabinetEntity module, ServerSubLevel cart,
       double mass, double energyMass, double speed, Vector3d direction, Vector3d point, double force, Key key, double distance) {}
@@ -115,7 +115,8 @@ public final class EquipmentRuntime {
       }
       var track = module.resolve(level);
       if (track == null) continue;
-      if (!module.mechanism().drive() && module.mechanism() != Mechanism.FIN_BRAKE && module.mechanism() != Mechanism.EDDY_BRAKE) {
+      if (!module.mechanism().drive() && module.mechanism() != Mechanism.FIN_BRAKE
+          && module.mechanism() != Mechanism.SKID_BRAKE && module.mechanism() != Mechanism.EDDY_BRAKE) {
         module.fail("Matching brake reaction hardware is required"); continue;
       }
       var mechanism = module.mechanism();
@@ -141,6 +142,7 @@ public final class EquipmentRuntime {
             module.fail(switch (mechanism) {
               case TIRE -> "Vehicle has no certified tire interface";
               case FIN_BRAKE -> "Vehicle has no certified friction fin";
+              case SKID_BRAKE -> "Vehicle has no certified skid shoe";
               case LSM, LIM -> "Vehicle has no certified " + mechanism + " reaction plate";
               default -> "Vehicle has no certified conductive fin";
             }); continue;
@@ -170,6 +172,7 @@ public final class EquipmentRuntime {
           var point = switch (mechanism) {
             case TIRE -> VehicleInterfaces.tirePoint(cart);
             case FIN_BRAKE -> VehicleInterfaces.brakePoint(cart);
+            case SKID_BRAKE -> VehicleInterfaces.skidPoint(cart);
             case LSM, LIM -> VehicleInterfaces.linearPoint(cart, mechanism);
             default -> VehicleInterfaces.conductivePoint(cart);
           };
@@ -194,6 +197,15 @@ public final class EquipmentRuntime {
             // Half the free-body no-reversal impulse keeps the discrete curve asymptotic near rest.
             double limit = Math.min(Math.min(EDDY_FORCE, motion.maximumBrakeForce()), .5 * dynamics.effectiveMass() * Math.abs(speed) / dt);
             double force = Numbers.clamp(DriveMath.eddyForce(speed, 64, 4) * module.thermalFraction(), -limit, limit);
+            UUID consist = motion.consist().stream().min(UUID::compareTo).orElseThrow();
+            groups.computeIfAbsent(consist, ignored -> new ArrayList<>()).add(new Request(module, cart, mass,
+                dynamics.effectiveMass(), speed, direction, point, force, key, distance));
+            continue;
+          }
+          if (mechanism == Mechanism.SKID_BRAKE) {
+            // A shoe dissipates sliding work, never creates a static constraint, and clamps its own discrete impulse to no reversal.
+            double limit = Math.min(SKID_FORCE, motion.maximumBrakeForce()) * module.thermalFraction();
+            double force = DriveMath.brakeForce(speed, dynamics.effectiveMass(), limit, dt);
             UUID consist = motion.consist().stream().min(UUID::compareTo).orElseThrow();
             groups.computeIfAbsent(consist, ignored -> new ArrayList<>()).add(new Request(module, cart, mass,
                 dynamics.effectiveMass(), speed, direction, point, force, key, distance));
@@ -369,13 +381,15 @@ public final class EquipmentRuntime {
     }
     for (var allocation : allocated.entrySet()) {
       var module = allocation.getKey();
-      if (module.mechanism() != Mechanism.EDDY_BRAKE || !module.armed() || !module.fault().isEmpty()) continue;
+      if ((module.mechanism() != Mechanism.EDDY_BRAKE && module.mechanism() != Mechanism.SKID_BRAKE)
+          || !module.armed() || !module.fault().isEmpty()) continue;
       double demand = allocation.getValue().stream().mapToDouble(r -> Math.abs(r.force())).sum();
-      double scale = demand > EDDY_FORCE ? EDDY_FORCE / demand : 1;
+      double cap = module.mechanism() == Mechanism.SKID_BRAKE ? SKID_FORCE * module.thermalFraction() : EDDY_FORCE;
+      double scale = demand > cap ? cap / demand : 1;
       for (var request : allocation.getValue()) {
         double force = request.force() * scale;
         double work = DriveMath.incrementalWork(request.energyMass(), request.speed(), force, dt);
-        if (work > 1e-10) { module.fail("Passive magnetic request would add interface energy"); break; }
+        if (work > 1e-10) { module.fail("Passive brake request would add interface energy"); break; }
       }
       if (!module.armed() || !module.fault().isEmpty()) continue;
       for (var request : allocation.getValue()) {

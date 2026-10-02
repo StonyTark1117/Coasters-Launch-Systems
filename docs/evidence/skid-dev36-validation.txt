@@ -1,0 +1,10 @@
+Launch Systems dev.36 local validation
+Date: 2026-10-01
+
+JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew test classes --offline --console=plain --no-daemon --max-workers=2
+Result: BUILD SUCCESSFUL; 27 JUnit tests passed and production/test classes compiled.
+
+JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew build runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_cable
+Result: BUILD SUCCESSFUL; 27 JUnit tests and 15/15 required packaged standalone cable GameTests passed.
+
+The broader standalone 121-test run completed with the 16 occupied-equipment cases, including skid single/linked forward/reverse cases, passing. Five LSM section tests failed because their fixture controller was null; they do not exercise skid equipment. The optional Fourth Dimension provider is compiled into the skid adapter, but its full suite remains pending focused execution.

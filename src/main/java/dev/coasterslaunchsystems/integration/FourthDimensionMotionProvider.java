@@ -106,6 +106,7 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
       if (expected != null && expected.equals(variant.get(vehicle))) {
         if (VehicleInterfaces.tirePoint(body) != null) interfaces.add(Mechanism.TIRE);
         if (VehicleInterfaces.brakePoint(body) != null) interfaces.add(Mechanism.FIN_BRAKE);
+        if (VehicleInterfaces.skidPoint(body) != null) interfaces.add(Mechanism.SKID_BRAKE);
         if (VehicleInterfaces.conductivePoint(body) != null) interfaces.add(Mechanism.EDDY_BRAKE);
         for (var mechanism : List.of(Mechanism.LSM, Mechanism.LIM)) if (VehicleInterfaces.linearPoint(body, mechanism) != null) interfaces.add(mechanism);
         if (((Enum<?>) family.get(vehicle)).name().equals("ARROW") && VehicleInterfaces.catchPoint(body) != null)
@@ -113,7 +114,7 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
       }
       double loadedMass = dev.coasterslaunchsystems.runtime.NativeForces.mass(level, new ArrayList<>(bodies));
       dispatch &= loadedMass > 0; propel &= loadedMass > 0;
-      brake &= loadedMass > 0 && (interfaces.contains(Mechanism.FIN_BRAKE) || interfaces.contains(Mechanism.EDDY_BRAKE) || interfaces.contains(Mechanism.LSM) || interfaces.contains(Mechanism.LIM));
+      brake &= loadedMass > 0 && (interfaces.contains(Mechanism.FIN_BRAKE) || interfaces.contains(Mechanism.SKID_BRAKE) || interfaces.contains(Mechanism.EDDY_BRAKE) || interfaces.contains(Mechanism.LSM) || interfaces.contains(Mechanism.LIM));
       return Optional.of(new MotionVehicle(id(), chassis, new ArrayList<>(bodies),
           new ArrayList<>(consist), interfaces, dispatch, propel, brake, operator, 2, 256,
           Math.min(256, loadedMass * 2)));
