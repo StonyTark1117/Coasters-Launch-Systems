@@ -13,6 +13,7 @@ import dev.coasterslaunchsystems.runtime.CableTickets;
 import dev.coasterslaunchsystems.runtime.CableRecovery;
 import dev.coasterslaunchsystems.runtime.NativeFinClamp;
 import dev.coasterslaunchsystems.runtime.NativeCableRig;
+import dev.coasterslaunchsystems.runtime.OrdinaryMotionProvider;
 import dev.coasterslaunchsystems.runtime.VehicleInterfaces;
 import dev.coasterslaunchsystems.track.DirectedTrack;
 import dev.coasterslaunchsystems.track.EngagedContacts;
@@ -309,6 +310,7 @@ public final class CableRestartGameTests {
       var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(FLYWHEEL);
       helper.assertTrue(cabinet != null && cabinet.cableInstalled() && cabinet.cableInUse() && cabinet.cableReturning()
           && cabinet.cableCarriage() != null && cabinet.cableChassis() == null && !cabinet.armed() && !cabinet.fault().isEmpty()
+          && OrdinaryMotionProvider.ID.equals(cabinet.cableReturnProvider())
           && CableRecovery.stabilized(level, cabinet.cableCarriage()),
           "Saved released carriage did not reopen under its passive guide hold: " + (cabinet == null ? "missing" : cabinet.status()));
       level.setBlockAndUpdate(FLYWHEEL.west(), AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalBlock.FACING, Direction.EAST));

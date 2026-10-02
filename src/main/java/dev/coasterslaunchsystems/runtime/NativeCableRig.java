@@ -114,6 +114,8 @@ public final class NativeCableRig implements AutoCloseable {
   }
   public Phase phase() { return phase; }
   public Mechanism mechanism() { return mechanism; }
+  /** Provider identity remains available through release and physical return for restart journaling. */
+  public String provider() { return provider; }
   public double homeDistance() { return homeDistance; }
   /** Bed top stays below the carriage's lowest steel ballast block. */
   public static BlockPos guideBlockAt(ServerLevel level, DirectedTrack track, double distance) {

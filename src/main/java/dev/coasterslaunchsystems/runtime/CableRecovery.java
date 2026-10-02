@@ -155,6 +155,8 @@ public final class CableRecovery {
     if (!cabinet.mechanism().cable() || !cabinet.cableInstalled() || !cabinet.cableInUse() || !cabinet.cableReturning()
         || cabinet.armed() || cabinet.fault().isEmpty() || cabinet.cableCarriage() == null || cabinet.cableChassis() != null)
       throw new IllegalArgumentException("Only a disarmed, reloaded released carriage can resume its physical return");
+    if (!OrdinaryMotionProvider.ID.equals(cabinet.cableReturnProvider()))
+      throw new IllegalArgumentException("This provider's released-return recovery remains passively held pending a verified home-guide adapter");
     if (!DriveEquipment.forwardPowered(cabinet))
       throw new IllegalArgumentException("Restore the cabinet charging shaft before resuming its return");
     var hold = HOLDS.getOrDefault(level, Map.of()).get(cabinet.cableCarriage());

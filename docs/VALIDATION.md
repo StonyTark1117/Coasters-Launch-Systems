@@ -373,3 +373,11 @@ Schema 11 journals a released carriage separately from an active train catch. On
 Hydraulic and pneumatic separate-process preparation/verification pairs each passed **16/16** standalone cable GameTests per process. The normal dev.34 JAR passed **27 JUnit tests**, **15/15** focused packaged standalone cable GameTests, and **19/19** focused pinned Fourth Dimension cable GameTests. Its SHA-256 is `18eb494fd4db63f8702a2e492c68a4fe2373791dfe6490a49cc54a03970b04a8`; see [local validation](evidence/cable-dev34-validation.txt) and [artifact hashes](evidence/cable-dev34-artifacts.sha256).
 
 The pinned Arrow released-return fixture is retained passively after restart but does not yet resume: its home-guide correction needs provider-specific work. Active Arrow release, chunk/multiplayer/rendered operation and broader release gates remain open. **The complete release goal remains active.**
+
+## Released-return provider gate — dev.35
+
+Schema 12 records the motion-provider identity that owned the carriage until release. The inspected return action now accepts only the ordinary provider that has a measured home-guide recovery; every other provider stays under its reconstructed passive guide and brake. This prevents an unverified integration from applying partial recovery motion while preserving its saved carriage for later provider-specific repair.
+
+The ordinary hydraulic retained-world preparation and verification processes each passed **16/16** standalone cable GameTests with the provider identity persisted and checked before physical return. The normal `0.0.1-dev.35` JAR passed **27 JUnit tests**, **15/15** standalone cable GameTests, and **19/19** pinned Fourth Dimension cable GameTests. Its SHA-256 is `7c5fd638d2f104f055ca4df937a2bb25988bb551d35b0e41571dcdd68cdcfb86`; see [local validation](evidence/cable-dev35-validation.txt) and [artifact hashes](evidence/cable-dev35-artifacts.sha256).
+
+Fourth Dimension released-return recovery remains intentionally passive. **The complete release goal remains active.**
