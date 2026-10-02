@@ -18,7 +18,7 @@ Updated October 1, 2026. The goal is a complete 0.4.0 release validated and push
 | Loaded ordinary and all eligible 4D mechanisms | Full/uneven 4D tire/fin/magnetic loads and fully occupied native linked Arrow pairs passed; occupied ordinary single/coupled tire/brake fixtures now pass; profile traversal and other equipment mechanisms pending |
 | Recipes, models, tutorials and Ponder scenes | Twenty-one original recipes and models are present. Four Ponder scenes now cover controller binding, LSM/LIM hardware, brake interfaces, and cable launches; rendered walkthrough and three complete demonstration rides remain |
 | Packaged client and dedicated-server startup | Packaged client and dedicated-server startup passed; rendered scene/ride and multiplayer checks remain |
-| Native validation repeatability | An initial dev.9 CI run recorded zero impulse in the earlier passive-magnet forward fixture; physics-phase diagnostics and unrelated native graph addition/removal pass locally and in four CI runs; the original cause remains open before final release |
+| Native validation repeatability | Two fresh packaged full-matrix runs passed 125/125 with the dev.51 JAR; both passive-magnet directions recorded live physical contact, cabinet availability and nonzero braking work. The old dev.9 CI cause remains unknown, but did not recur in these independent disposable worlds. |
 | 0.4.0 artifact, commit and verified private remote push | Pending |
 
 The native force fixture does not prescribe cart velocity or teleport a train. It creates a near-origin Coasters track/cart, queues timestep-scaled forces on the real chassis, and verifies translation, retained engagement and final stop. It is foundation evidence only, not an occupied gameplay or articulated-vehicle acceptance test.
@@ -487,3 +487,10 @@ The packaged client startup and schematic-resource structure validation are reco
 A second normal `runServer` startup, after its development server properties and world had been created, loaded the packaged `0.0.1-dev.51` JAR, initialized the three Sable physics pipelines, and reached `Done (0.717s)!`. The server was deliberately stopped by a 30-second test timeout after startup; the timeout is expected and is not reported as a successful Gradle completion. The raw startup record is [packaged server evidence](evidence/packaged-server-dev51.txt).
 
 This establishes only standalone dedicated-server startup for the packaged binary. It does not exercise player connection, synchronization, late join, vehicle ownership after a reconnect, a rendered ride, or an active vehicle whose chunk becomes unavailable. **The complete 0.4.0 release goal remains active.**
+
+
+## Packaged native repeatability checkpoint — dev.51
+
+Two independent invocations of the full packaged command created fresh disposable GameTest worlds and each passed **27 JUnit tests** and **125/125 required GameTests**. The first completed its GameTest matrix in 3.847 minutes and the second in 3.896 minutes. The exact raw records are [run one](evidence/repeatability-dev51-run1.txt) and [run two](evidence/repeatability-dev51-run2.txt).
+
+The historical dev.9 intermittent forward eddy-brake case did not recur. In both runs, the forward and reverse cases each measured 80 physical-contact steps and 80 live-cabinet steps, with about 51.63 impulse, 42.53 work and 26.73 heat. This is stronger repeatability evidence for the instrumented packaged native matrix, not an explanation of the old CI incident. Rendered ride, multiplayer/late-join and active-vehicle chunk-unavailability acceptance remain required for 0.4.0.
