@@ -1,0 +1,25 @@
+# Controlled Survival-mode ordinary cart setup — dev.66
+
+Date: October 2, 2026
+Launch Systems source checkpoint: dd3cc73d8b8dde285740e526dc1ef526e3836912
+Packaged JAR: coasters-launch-systems-0.0.1-dev.66.jar
+JAR SHA-256: 812fb326d3c68cf29192ba0636ba755b66c7f2f7fc7cf05de740e4a58f981b07
+Frame: ordinary-track-cart.png
+Frame SHA-256: dcc45239a2a82a03d961a54b52697f23aa192bb5397146fe8f55931ebe53b249
+
+## Environment
+
+A packaged dev.66 client opened a new single-player world named Launch Survival Walkthrough in Survival game mode with commands enabled. Before construction, an operator issued /give commands for the materials and applied Resistance solely to avoid damage from camera-positioning teleports. This is a controlled setup kit, not a resource-gathering or recipe-crafting proof.
+
+## Native interaction record
+
+1. The operator placed two simulatedcoasters:coaster_anchorpoint blocks at (-10, 100, 0) and (10, 100, 0), both facing north.
+2. With simulatedcoasters:coaster_track selected, the operator used the normal right-click interaction on each anchor. The item count changed from 64 to 45 and rendered the connected rail.
+3. With simulatedcoasters:coaster_cart selected, the operator used the normal right-click interaction on the left anchor. The hotbar slot became empty and the native cart rendered on the rail.
+4. The final frame was captured in Survival mode after /time set day.
+
+The cart shape is visible at the left end of the rendered track in ordinary-track-cart.png. This record demonstrates ordinary Coasters Simulated anchor, track, and cart placement through the normal client UI against the packaged Launch Systems binary.
+
+## Scope limit
+
+No Launch Systems drive, brake, controller, power network, passenger, crafting, multiplayer, restart, or Fourth Dimension vehicle interaction was performed in this world. This does not close any of the three survival demonstration-ride or multiplayer ownership lifecycle gates.
