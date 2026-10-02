@@ -543,7 +543,7 @@ The bounded LSM/LIM swing fixture now runs the pinned provider’s eligible Arro
 
 The packaged `0.0.1-dev.57` JAR passed **29 JUnit tests** and **131/131 required GameTests** standalone in 4.505 minutes. The focused pinned family-linear suite passed **30/30** GameTests in 5.426 minutes. The full packaged run with pinned Fourth Dimension `0.9.0-dev.1` passed **29 JUnit tests** and **208/208 required GameTests** in 15.31 minutes. Each LSM/LIM normal case completed all three passes; each reversed-leg authority-loss case retained its lease and spring-fin hold without replay. Exact records: [standalone](evidence/standalone-dev57-full.txt), [focused pinned suite](evidence/linear-dev57-4d-swing.txt), [combined](evidence/combined-dev57-full.txt), and [artifact hashes](evidence/dev57-artifacts.sha256).
 
-This closes the scoped eligible-family portion of LS203 while extending LS205’s existing linear coverage. Linked Arrow normal and fault operation are added by the dev.58–59 checkpoints below; mixed-family swings, transfer/station operation, player-operated/rendered setup, restart/chunk/multiplayer behavior, and the broader 0.4.0 release gates remain open.
+This closes the scoped eligible-family portion of LS203 while extending LS205’s existing linear coverage. Linked Arrow normal and fault operation are added by the dev.58–59 checkpoints below; mixed-provider consists remain denied unless a provider publishes a joint-consist contract; transfer/station operation, player-operated/rendered setup, restart/chunk/multiplayer behavior, and the broader 0.4.0 release gates remain open.
 
 
 ## Linked Arrow swing-normal checkpoint — dev.58
