@@ -75,6 +75,8 @@ Dev.25 applies the same bounded moving-restart path to the pinned Fourth Dimensi
 
 Dev.26 adds an end-to-end ordinary placed-controller shaft interruption. The live controller dispatches through its placed cabinet, guide, catch and fin bank; the fixture then stops the actual Create creative motor. The controller’s production loss branch faults the cabinet and applies the retained native emergency hold, leaving the occupied train settled, loaded and ineligible for rearm. Arrow controller interruption, Arrow active release, actual chunk/multiplayer/rendered service and broader release gates remain open.
 
+Dev.27 applies that placed-controller interruption to the pinned Fourth Dimension Arrow provider. The Arrow uses its existing native preparation clamp only to establish safe engagement; after the controller starts its provider-owned pull, the fixture stops the actual cabinet motor. The production loss branch holds the loaded Arrow catch faulted and settled with its provider body tickets retained. Arrow active release, actual chunk/multiplayer/rendered service and broader release gates remain open.
+
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |
 | LS301 | Shared cable guide, catch socket, carriage and release/reset machine | 0.2. Real constrained pull, rated guide/end clearance, physical return and misalignment handling. No teleport, one-shot impulse or prescribed train path. |

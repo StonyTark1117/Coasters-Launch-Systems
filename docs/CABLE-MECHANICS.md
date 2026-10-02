@@ -1,4 +1,4 @@
-# Native cable mechanics — dev.26
+# Native cable mechanics — dev.27
 
 This is partial LS301–LS303 implementation toward the requested 0.4.0 release. The socket, carriage and guide bed have registered models and recipes. A kinetic flywheel cabinet supplies the native catch from its own persisted finite store. A placed ride controller installs and dispatches that catch for an occupied ordinary cart, then uses linked friction fins for the stop. The installed carriage has a registered Sable loading ticket and saved UUID/home journal. An idle carriage receives a passive guide/hold after a real world restart and can be retired by inspection. An occupied catch held at home or stopped partway along its verified guide preserves its native bodies and reconstructs a zero-target catch joint after restart without rearming. Ordinary and pinned Fourth Dimension Arrow catches saved while pulling can recover inside the measured, guide-aligned envelope, then return to strict inspection after they settle. A home catch can be released only onto verified, applied linked fin clamps. Broader gameplay acceptance remains required.
 
@@ -24,7 +24,7 @@ The controller rejects mixed drives, section transfers, missing or misplaced gui
 
 The ordinary-cart controller fixture uses only placed cabinet, guide, socket, fins and redstone for engagement, dispatch and whole-train stop. An occupied pinned Fourth Dimension Arrow controller fixture passes when an independent native preparation clamp has already settled the captured vehicle. That fixture proves provider-owned dispatch and native pull compatibility, but does not establish a player-operated Arrow staging brake. Unsupported Free Spin remains denied a cable certificate.
 
-The ordinary placed-controller interruption fixture cuts the flywheel's real Create motor after the controller begins its physical pull. The controller detects the missing shaft certificate, faults the cabinet and holds the loaded catch without removing its installation or captured-body tickets. It proves the controller path rather than the older direct-rig emergency-hold fixture. Arrow controller interruption still requires its own staged provider test.
+The ordinary and pinned Fourth Dimension Arrow placed-controller interruption fixtures cut the flywheel's real Create motor after the controller begins its physical pull. The controller detects the missing shaft certificate, faults the cabinet and holds the loaded catch without removing its installation or captured-body tickets. The Arrow fixture releases its existing native preparation clamp only after provider-owned dispatch begins. These prove the controller path rather than the older direct-rig emergency-hold fixture.
 
 ## Finite work
 

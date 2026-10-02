@@ -314,4 +314,14 @@ The placed ride-controller path now has an end-to-end ordinary-train shaft-loss 
 
 The final `0.0.1-dev.26` JAR passed **27 unit tests**, **115/115 packaged standalone GameTests**, and **18/18 packaged combined cable cases** with the pinned Fourth Dimension schema-4 binary `027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16`. The combined suite also rechecks ordinary and Arrow controller dispatch. See [local evidence](evidence/cable-dev26-validation.txt) and [artifact hashes](evidence/cable-dev26-artifacts.sha256). The JAR SHA-256 is `d0f4e17f838125c8203d5dd0a476d881a263d8407a9377ba3a26131c05c335fa`.
 
+Clean [GitHub CI run 36955800314](https://github.com/StonyTark1117/Coasters-Launch-Systems/actions/runs/36955800314) built implementation commit `1f9f9ba50df36e388cd8122fa33cadab98393043`, passed **all 115 packaged standalone native GameTests** and uploaded a JAR matching the local dev.26 artifact hash. [CI evidence](evidence/cable-dev26-ci.txt) records the source, command and hash.
+
 This covers an ordinary placed-controller loss of motive shaft only. Arrow controller interruption, Arrow active release, actual chunk unload/multiplayer/rendered setup, repeated service and the remaining mechanism families are still required before 0.4.0. **The complete release goal remains active.**
+
+## Fourth Dimension Arrow controller shaft-loss checkpoint — dev.27
+
+The staged pinned Fourth Dimension Arrow controller now has the same live shaft-loss coverage as the ordinary controller. Its native preparation clamp only settles the provider-owned train for catch engagement and is released when the controller enters its physical pull. The fixture then stops the actual Create creative-motor shaft. The production controller faults the cabinet and retains the native emergency hold, leaving the Arrow train settled in its loaded catch with the installation and captured-body tickets intact.
+
+The final `0.0.1-dev.27` JAR passed **27 unit tests**, **115/115 packaged standalone GameTests**, and **19/19 packaged combined cable cases** with the pinned Fourth Dimension schema-4 binary `027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16`. See [local evidence](evidence/cable-dev27-validation.txt) and [artifact hashes](evidence/cable-dev27-artifacts.sha256). The JAR SHA-256 is `b8146da3b1e050d63a98e91b498037911fa3a94d8538d9ea7c18444dda42a825`.
+
+This staged integration test does not establish Arrow active release, actual chunk unload/multiplayer/rendered setup, repeated service or the remaining mechanism families required for 0.4.0. **The complete release goal remains active.**
