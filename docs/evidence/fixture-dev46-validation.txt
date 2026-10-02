@@ -1,0 +1,22 @@
+Launch Systems dev.46 fixture-isolation validation
+
+Change:
+  Ordinary Passenger GameTests no longer add a skid shoe to every spawned cart.
+  The shoe is installed immediately after creation only for SKID_BRAKE cases.
+  This preserves the native geometry used by ordinary tire/controller and circuit-transfer fixtures.
+
+Commands:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew test classes runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems
+  Result: BUILD SUCCESSFUL; 27 JUnit tests and 66/66 packaged root-namespace GameTests passed.
+
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_routes
+  Result: BUILD SUCCESSFUL; 5/5 packaged curved-route/circuit GameTests passed.
+
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew test classes runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_linear_motors,coasterslaunchsystems_thermal_linear
+  Result: BUILD SUCCESSFUL; 27 JUnit tests and 22/22 packaged linear GameTests passed.
+
+The combined linear result includes both thermal-loss controller cases:
+  LSM: phase=FAULT, lease=1, steps=78, spent=56.9687529881935, work=29.896380439374155, accounting_error=1.8429702208777599E-13
+  LIM: phase=FAULT, lease=1, steps=78, spent=30.296298487500053, work=7.22098005987396, accounting_error=1.1257661469699087E-13
+
+Artifact SHA-256: 198013599bf14a8291c77a3f97db01e7c86cae3ed37b47eaea8d0078eec9bf39  coasters-launch-systems-0.0.1-dev.46.jar

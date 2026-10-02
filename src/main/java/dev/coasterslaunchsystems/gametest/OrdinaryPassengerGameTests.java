@@ -102,7 +102,6 @@ public final class OrdinaryPassengerGameTests {
       var plot = body.getPlot().getEmbeddedLevelAccessor();
       plot.setBlock(BlockPos.ZERO.below(), EquipmentContent.TIRE_SURFACE.get().defaultBlockState(), 3);
       plot.setBlock(new BlockPos(1, -1, 0), EquipmentContent.BRAKE_FIN.get().defaultBlockState(), 3);
-      plot.setBlock(new BlockPos(0, -2, -1), EquipmentContent.SKID_SHOE.get().defaultBlockState(), 3);
       plot.setBlock(new BlockPos(-1, -1, 0), EquipmentContent.CONDUCTIVE_FIN.get().defaultBlockState(), 3);
       for (var bridge : List.of(new BlockPos(-1, 0, 0), new BlockPos(1, 0, 0), new BlockPos(0, 0, -1), new BlockPos(0, 0, 1)))
         helper.assertTrue(plot.setBlock(bridge, Blocks.OAK_PLANKS.defaultBlockState(), 3), "Continuous ordinary deck did not install");
@@ -111,6 +110,9 @@ public final class OrdinaryPassengerGameTests {
         helper.assertTrue(plot.setBlock(seat, AllBlocks.SEATS.get(DyeColor.BLUE).getDefaultState(), 3), "Ordinary Create seat did not install");
       }
       return body;
+    }
+    void installSkidShoe(ServerSubLevel body) {
+      body.getPlot().getEmbeddedLevelAccessor().setBlock(new BlockPos(0, -2, -1), EquipmentContent.SKID_SHOE.get().defaultBlockState(), 3);
     }
     Pig board(ServerSubLevel body, int seat) {
       var pig = EntityType.PIG.create(level); pig.setNoAi(true); pig.setPos(from.getX(), from.getY() + 5, from.getZ() + 8);
@@ -215,6 +217,7 @@ public final class OrdinaryPassengerGameTests {
     }
     s.mechanism = mechanism; s.reverse = reverse;
     s.cart(8); if (linked) s.cart(14);
+    if (mechanism == Mechanism.SKID_BRAKE) s.parents.forEach(s::installSkidShoe);
     var block = mechanism == Mechanism.TIRE ? EquipmentContent.TIRE : mechanism == Mechanism.FIN_BRAKE ? EquipmentContent.FIN
         : mechanism == Mechanism.SKID_BRAKE ? EquipmentContent.SKID : EquipmentContent.EDDY;
     s.module = s.from.offset(mechanism == Mechanism.EDDY_BRAKE ? -1 : 1, -2, reverse ? 7 : 9);

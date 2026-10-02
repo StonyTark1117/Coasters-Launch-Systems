@@ -443,3 +443,9 @@ The `0.0.1-dev.44` JAR SHA-256 is `af2fd034cb32baca81aa03a86df033b3fcdc380395e54
 Dev.45 makes a running local controller fail closed once any participating LSM/LIM cabinet crosses the thermal derating threshold. The controller retains its whole-train lease, stops issuing field requests and lets the existing downstream spring-fin bank hold the train. The isolated ordinary-controller fixture injects twice-capacity heat only after actual launch work, resets its accounting observer at that external test input, then proves the retained fault and no-replay condition for both motor types.
 
 The `0.0.1-dev.45` JAR SHA-256 is `021821432a2f0574129a5efd12b9a6bcd32a1c308dcb52e8905d220e6a9dce4c`. The [focused evidence](evidence/linear-dev45-validation.txt) records the exact packaged command and measured interruption checkpoints. This closes focused controller hot-store interruption coverage; restart/chunk/multiplayer and rendered gameplay acceptance remain open. **The complete 0.4.0 release goal remains active.**
+
+## Fixture isolation regression checkpoint — dev.46
+
+The ordinary cart fixture now installs the skid shoe only in skid-brake cases. That keeps the shoe's required local interface coverage while preserving the mass and inertia profile required by the ordinary tire, controller and curved-transfer fixtures. The earlier universal fixture change made coupled circuit transfers roll back near their receiver, despite no production transfer fault; this isolation restores the intended covered vehicle profile without weakening the rollback safety check.
+
+The final `0.0.1-dev.46` JAR SHA-256 is recorded in the [validation evidence](evidence/fixture-dev46-validation.txt). The packaged root namespace passed 66/66 cases, the curved-route namespace passed 5/5, and the combined isolated linear namespaces passed 22/22 with 27 JUnit tests. The complete 0.4.0 release goal remains active.
