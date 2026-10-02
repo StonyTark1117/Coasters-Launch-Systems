@@ -335,3 +335,9 @@ Hydraulic and pneumatic cabinets are now placed Create equipment with their own 
 The final `0.0.1-dev.29` JAR passed **27 JUnit tests**, **15/15 packaged standalone cable GameTests** and **19/19 packaged cable GameTests** against the pinned Fourth Dimension schema-4 binary. Standalone coverage drives ordinary hydraulic and pneumatic launches; the pinned run drives the eligible Arrow with each pressure system. Both use the same verified Fourth Dimension JAR SHA-256 `027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16`. The Launch Systems JAR SHA-256 is `b72c47e738379e06db4a22a8e8d494a019001985e87fa83dd97057a32403c763`. See [local validation](evidence/cable-dev29-validation.txt) and [artifact hashes](evidence/cable-dev29-artifacts.sha256).
 
 This is partial LS401–LS402 progress. Pressure-launch interruption, saved active-catch reconstruction for pressure cabinets, active Arrow release, chunk/multiplayer/rendered operation, repeated service and broader 0.4.0 gates remain open. **The complete release goal remains active.**
+
+## Pressure charging-shaft interruption checkpoint — dev.30
+
+Pressure stores remain the launch power source after their Create charging shaft stops. New ordinary and pinned Arrow controller fixtures interrupt a hydraulic or pneumatic pull after the physical catch begins moving, prove the controller stays running without a cabinet fault or ownership loss, then restore the shaft for physical return. Both mechanisms retain their finite pressure-store behavior rather than applying the flywheel's immediate shaft-loss fault policy.
+
+The focused packaged cable suites passed **15/15** standalone and **19/19** with the same pinned Fourth Dimension artifact. The `0.0.1-dev.30` JAR SHA-256 is `ddb60e211b68f55c3dd5cb13bae383401389895fc6b3bfed79c316c85ca58a08`. Pressure-cabinet restart and interruption while the carriage is returning remain open. **The complete release goal remains active.**

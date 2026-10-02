@@ -82,8 +82,8 @@ public final class CableControllerGameTests {
     var modes = new ArrayList<>(List.of("ordinary_controller_dispatch", "ordinary_controller_power_loss"));
     if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension"))
       // The Arrow fixture has two native-coordinate-safe slots; use them for the new pressure adapters.
-      modes.addAll(List.of("arrow_hydraulic_controller_dispatch", "arrow_pneumatic_controller_dispatch"));
-    else modes.addAll(List.of("ordinary_hydraulic_controller_dispatch", "ordinary_pneumatic_controller_dispatch"));
+      modes.addAll(List.of("arrow_hydraulic_controller_shaft_loss", "arrow_pneumatic_controller_shaft_loss"));
+    else modes.addAll(List.of("ordinary_hydraulic_controller_shaft_loss", "ordinary_pneumatic_controller_shaft_loss"));
     // This shared server keeps upstream 4D rail metadata after a fixture closes.
     // Keep controller rails away from the cable-mechanics suite's slots 0..14.
     var tests = new ArrayList<TestFunction>(); int slot = 17;
@@ -180,6 +180,22 @@ public final class CableControllerGameTests {
         s.cleanup(); r.base.helper.succeed();
       });
       return;
+    }
+    if (s.mode.endsWith("_controller_shaft_loss")) {
+      s.at(470, () -> {
+        r.base.helper.assertTrue(s.running && s.cabinet().cableInUse(),
+            "Pressure cable controller did not begin a physical pull before its charging-shaft interruption");
+        ((CreativeMotorBlockEntity) level.getBlockEntity(s.motor)).generatedSpeed.setValue(0);
+        s.interrupted = true;
+      });
+      s.at(550, () -> {
+        r.base.helper.assertTrue(s.failure.isEmpty() && s.interrupted && s.cabinet().fault().isEmpty()
+            && (r.controller.phase() == RideControllerEntity.State.RUNNING || r.controller.phase() == RideControllerEntity.State.BRAKING)
+            && s.cabinet().cableInUse(),
+            "Stored pressure did not retain the physical pull after its charging shaft stopped: " + r.controller.status()
+                + " " + s.cabinet().status() + " " + s.failure);
+        ((CreativeMotorBlockEntity) level.getBlockEntity(s.motor)).generatedSpeed.setValue(64);
+      });
     }
     s.at(1120, () -> {
       r.base.helper.assertTrue(s.failure.isEmpty() && s.running && s.braking && s.peakSpeed > .5 && s.finalDistance > 21.5

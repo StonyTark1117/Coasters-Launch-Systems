@@ -1,0 +1,11 @@
+Launch Systems dev.30 local validation
+Date: 2026-10-01
+
+./gradlew build --offline --console=plain --no-daemon --max-workers=2
+Result: BUILD SUCCESSFUL; 27 JUnit tests passed.
+
+./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_cable
+Result: 15/15 required packaged cable GameTests passed, including ordinary hydraulic and pneumatic charging-shaft interruption during an active pressure-funded pull.
+
+./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_cable -PlsFourthDimensionJar=/home/braydon/.cache/coasterslaunchsystems-validation/fd-provider-36775040079/libs/coasters-fourth-dimension-0.9.0-dev.1.jar
+Result: 19/19 required packaged cable GameTests passed, including pinned Arrow hydraulic and pneumatic charging-shaft interruption.
