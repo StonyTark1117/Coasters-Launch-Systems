@@ -1,0 +1,11 @@
+Launch Systems dev.43 focused Fourth Dimension reaction-plate-loss validation
+
+Pinned provider SHA-256: 027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16
+
+Commands:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew test classes --offline --console=plain --no-daemon --max-workers=2
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsFourthDimensionJar=/home/braydon/.cache/coasterslaunchsystems-validation/fd-provider-36775040079/libs/coasters-fourth-dimension-0.9.0-dev.1.jar -PlsTestNamespaces=coasterslaunchsystems_4d_linear
+
+Result: BUILD SUCCESSFUL; 27 JUnit tests and both selected packaged Arrow plate-loss cases passed. Before its interface plate was removed, each mechanism recorded 78 field steps. After removal, it remained FAULT with lease=1 and did not replay: LSM spent 98.66407163273288 work units; LIM spent 52.1996842417293.
+
+Artifact SHA-256: 73521ff31b757bbd00d847fea54e056b751b4906c831fa752972fc3816f0a47f  coasters-launch-systems-0.0.1-dev.43.jar

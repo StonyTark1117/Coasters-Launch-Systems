@@ -62,7 +62,9 @@ public final class LinearControllerGameTests {
           var angular = body.logicalPose().transformNormalInverse(event.getPhysicsSystem().getPipeline().getAngularVelocity(body, new Vector3d()));
           work += velocity.dot(impulse) + angular.dot(torque) + .5 * body.getMassTracker().getInverseMass() * impulse.lengthSquared()
               + .5 * torque.dot(body.getMassTracker().getInverseInertiaTensor().transform(new Vector3d(torque)));
-          s.peakSpeed = Math.max(s.peakSpeed, Math.abs(NativeForces.pointDynamics(body, event.getPhysicsSystem().getPipeline(), VehicleInterfaces.linearPoint(body, s.mechanism), direction).speed()));
+          var point = VehicleInterfaces.linearPoint(body, s.mechanism);
+          if (point != null) s.peakSpeed = Math.max(s.peakSpeed,
+              Math.abs(NativeForces.pointDynamics(body, event.getPhysicsSystem().getPipeline(), point, direction).speed()));
         }
         for (var c : s.drives()) {
           boolean active = EquipmentRuntime.available(r.base.level, c);
@@ -96,11 +98,12 @@ public final class LinearControllerGameTests {
       var modes = new ArrayList<>(List.of("single_forward", "linked_forward", "linked_reverse", "power_loss"));
       if (mechanism == Mechanism.LSM) modes.add("mixed_forward");
       if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of(
-          "arrow_forward", "arrow_linked_reverse", "legacy_forward", "free_spin_forward", "revised_forward", "pax_veto"));
+          "arrow_forward", "arrow_linked_reverse", "arrow_plate_loss", "legacy_forward", "free_spin_forward", "revised_forward", "pax_veto"));
       for (String mode : modes) {
         int selected = slot++;
-        tests.add(new TestFunction("launchsystems_linear_sections", "coasterslaunchsystems_linear." + mechanism.name().toLowerCase(Locale.ROOT) + "_section_" + mode,
-            "coasterslaunchsystems_linear:empty", 1600, 0, true, helper -> run(new Scene(helper, selected, mode, mechanism))));
+        String namespace = mode.equals("arrow_plate_loss") ? "coasterslaunchsystems_4d_linear" : "coasterslaunchsystems_linear";
+        tests.add(new TestFunction("launchsystems_linear_sections", namespace + "." + mechanism.name().toLowerCase(Locale.ROOT) + "_section_" + mode,
+            namespace + ":empty", 1600, 0, true, helper -> run(new Scene(helper, selected, mode, mechanism))));
       }
     }
     return tests;
@@ -144,24 +147,29 @@ public final class LinearControllerGameTests {
     });
     r.at(510, () -> { r.launched = true; r.high(true); });
     r.at(550, () -> {
-      if (!r.mode.equals("power_loss")) return;
-      r.base.helper.assertTrue(s.steps > 10, "Power-loss fixture never launched");
-      for (var p : r.motors) ((com.simibubi.create.content.kinetics.motor.CreativeMotorBlockEntity) r.base.level.getBlockEntity(p)).generatedSpeed.setValue(0);
+      if (!r.mode.equals("power_loss") && !r.mode.equals("arrow_plate_loss")) return;
+      r.base.helper.assertTrue(s.steps > 10, "Interrupted linear fixture never launched");
+      if (r.mode.equals("power_loss"))
+        for (var p : r.motors) ((com.simibubi.create.content.kinetics.motor.CreativeMotorBlockEntity) r.base.level.getBlockEntity(p)).generatedSpeed.setValue(0);
+      else for (var body : r.base.parents) body.getPlot().getEmbeddedLevelAccessor().setBlock(LinearMotorGameTests.reactionPosition(s.mechanism),
+          net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 3);
     });
     r.at(610, () -> {
-      if (!r.mode.equals("power_loss")) return;
+      if (!r.mode.equals("power_loss") && !r.mode.equals("arrow_plate_loss")) return;
       r.base.helper.assertTrue(r.controller.phase() == RideControllerEntity.State.FAULT && r.controller.reservation().size() == 1
-          && r.base.parents.stream().allMatch(b -> Math.abs(r.base.speed(b)) < .03 && EquipmentRuntime.activeFinClamps(r.base.level, b.getUniqueId()) > 0), "Lost supply did not retain the held linear train");
+          && r.base.parents.stream().allMatch(b -> Math.abs(r.base.speed(b)) < .03 && EquipmentRuntime.activeFinClamps(r.base.level, b.getUniqueId()) > 0),
+          "Lost linear authority did not retain the held train");
       s.interruptedSteps = s.steps;
-      for (var p : r.motors) ((com.simibubi.create.content.kinetics.motor.CreativeMotorBlockEntity) r.base.level.getBlockEntity(p)).generatedSpeed.setValue(64);
+      if (r.mode.equals("power_loss"))
+        for (var p : r.motors) ((com.simibubi.create.content.kinetics.motor.CreativeMotorBlockEntity) r.base.level.getBlockEntity(p)).generatedSpeed.setValue(64);
     });
     r.at(1250, () -> {
       try {
-        if (r.mode.equals("power_loss")) {
+        if (r.mode.equals("power_loss") || r.mode.equals("arrow_plate_loss")) {
           r.base.helper.assertTrue(s.failure.isEmpty() && r.controller.phase() == RideControllerEntity.State.FAULT && s.steps == s.interruptedSteps
               && r.controller.reservation().size() == 1 && s.drives().stream().allMatch(c -> c.energy() > 0)
-              && r.base.parents.stream().allMatch(b -> Math.abs(r.base.speed(b)) < .03 && EquipmentRuntime.activeFinClamps(r.base.level, b.getUniqueId()) > 0), "Returning power/held-high input replayed a linear launch: " + s.failure);
-          System.out.println("LS_LINEAR_INTERRUPTION mechanism=" + s.mechanism + " phase=" + r.controller.phase() + " lease=" + r.controller.reservation().size()
+              && r.base.parents.stream().allMatch(b -> Math.abs(r.base.speed(b)) < .03 && EquipmentRuntime.activeFinClamps(r.base.level, b.getUniqueId()) > 0), "Interrupted linear field replayed a launch: " + s.failure);
+          System.out.println("LS_LINEAR_INTERRUPTION mechanism=" + s.mechanism + " mode=" + r.mode + " phase=" + r.controller.phase() + " lease=" + r.controller.reservation().size()
               + " steps=" + s.steps + " spent=" + s.spent + " work=" + s.work + " accounting_error=" + s.maxError);
           r.base.helper.succeed(); return;
         }
