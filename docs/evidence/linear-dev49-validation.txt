@@ -9,3 +9,7 @@ Pinned Arrow LIM: prepareArrowLIM then retained-world verifyArrowLIM with the pi
 
 Final artifact SHA-256:
   ceaf30c273d8554a488e48fc441591c4d65d7a053d7fc8fba3b90ae98d56ae61  coasters-launch-systems-0.0.1-dev.49.jar
+
+Complete packaged standalone matrix:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew test classes runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged
+  Result: BUILD SUCCESSFUL; 27 JUnit tests and all 125 required packaged standalone GameTests passed in 3.740 minutes.
