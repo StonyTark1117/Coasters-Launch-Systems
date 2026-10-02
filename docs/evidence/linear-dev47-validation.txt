@@ -1,0 +1,13 @@
+Launch Systems dev.47 ordinary linear saved-world interruption validation
+Date: 2026-10-02
+
+Preparation:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_linear_restart -PlsLinearRestartPhase=prepare
+  Result: BUILD SUCCESSFUL; 1/1 required packaged GameTest passed. A running one-car LSM local section retained one controller lease, five linked drives, 1143.363110584301 buffer energy and 9.396371442944996 heat in its first drive.
+
+Retained-world verification in a fresh server process:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsKeepGameTestWorld -PlsTestNamespaces=coasterslaunchsystems_linear_restart -PlsLinearRestartPhase=verify
+  Result: BUILD SUCCESSFUL; 1/1 required packaged GameTest passed. The same controller UUID a638f14d-53f2-4788-a8ed-e50ffd937cc1, one-car lease, 31-module manifest, five linked drive identities, energy and heat reopened. The controller remained in inspection and every linear cabinet was disarmed, so no saved field request replayed.
+
+Final artifact SHA-256:
+  af39d1f72241aa61e92f0ca2e87870da4336673ff0c2809dccd0312787ac52d0  coasters-launch-systems-0.0.1-dev.47.jar

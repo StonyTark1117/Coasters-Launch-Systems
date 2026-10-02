@@ -449,3 +449,9 @@ The `0.0.1-dev.45` JAR SHA-256 is `021821432a2f0574129a5efd12b9a6bcd32a1c308dcb5
 The ordinary cart fixture now installs the skid shoe only in skid-brake cases. That keeps the shoe's required local interface coverage while preserving the mass and inertia profile required by the ordinary tire, controller and curved-transfer fixtures. The earlier universal fixture change made coupled circuit transfers roll back near their receiver, despite no production transfer fault; this isolation restores the intended covered vehicle profile without weakening the rollback safety check.
 
 The final `0.0.1-dev.46` JAR SHA-256 is recorded in the [validation evidence](evidence/fixture-dev46-validation.txt). The packaged root namespace passed 66/66 cases, the curved-route namespace passed 5/5, and the combined isolated linear namespaces passed 22/22 with 27 JUnit tests. The complete 0.4.0 release goal remains active.
+
+## Linear saved-world interruption checkpoint — dev.47
+
+Dev.47 adds a retained-world restart fixture for a real running ordinary LSM local section. Preparation charges and launches the occupied cart with five linked LSM cabinets, then saves while the controller is `RUNNING` with its one-car lease. A fresh dedicated GameTest server process reopens the same controller and cabinets, preserves the linked cabinet identities, stored energy, heat and tuning, and proves the controller has returned to `INSPECTION` while every linear field is disarmed. No saved request can resume the launch.
+
+The final `0.0.1-dev.47` JAR SHA-256 is recorded in the [validation evidence](evidence/linear-dev47-validation.txt). The focused retained-world preparation and verification processes each passed **1/1** packaged GameTests. This closes the ordinary local linear restart checkpoint. Fourth Dimension restart, actual chunk unload/multiplayer behavior, rendered gameplay and the wider 0.4.0 release gates remain open. **The complete 0.4.0 release goal remains active.**
