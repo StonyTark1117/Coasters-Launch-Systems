@@ -17,7 +17,7 @@ Updated October 1, 2026. The goal is a complete 0.4.0 release validated and push
 | Hydraulic/pneumatic gameplay equipment | Craftable finite hydraulic/pneumatic cabinets now drive the physical cable catch through controller-owned ordinary and pinned Arrow dispatches; interruption, restart and service acceptance remain |
 | Loaded ordinary and all eligible 4D mechanisms | Full/uneven 4D tire/fin/magnetic loads and fully occupied native linked Arrow pairs passed; occupied ordinary single/coupled tire/brake fixtures now pass; profile traversal and other equipment mechanisms pending |
 | Recipes, models, tutorials and Ponder scenes | Twenty-one original recipes and models are present. Four Ponder scenes now cover controller binding, LSM/LIM hardware, brake interfaces, and cable launches; rendered walkthrough and three complete demonstration rides remain |
-| Packaged client, dedicated server, multiplayer and interrupted saves | Pending |
+| Packaged client and dedicated-server startup | Packaged client and dedicated-server startup passed; rendered scene/ride and multiplayer checks remain |
 | Native validation repeatability | An initial dev.9 CI run recorded zero impulse in the earlier passive-magnet forward fixture; physics-phase diagnostics and unrelated native graph addition/removal pass locally and in four CI runs; the original cause remains open before final release |
 | 0.4.0 artifact, commit and verified private remote push | Pending |
 
@@ -480,3 +480,10 @@ The `0.0.1-dev.50` JAR SHA-256 is `57051f2d2559768f1d8816b1e6a767d105973b827eb36
 Dev.51 adds a standalone Ponder category and four original schematics: controller/span-tool binding, distinct LSM/LIM reaction hardware, fin/eddy/skid brake interfaces, and flywheel/hydraulic/pneumatic cable-launch equipment. Each scene describes only the available binding, inspection and fail-closed workflow. In particular, it requires a downstream fin hold for linear/cable scenes and states that loaded controllers and cabinets are disarmed before reinspection. The optional Fourth Dimension adapter is not a Ponder dependency.
 
 The packaged client startup and schematic-resource structure validation are recorded in [Ponder evidence](evidence/ponder-dev51-validation.txt). Rendered scene walkthrough, survival demonstration rides, multiplayer and active-vehicle interruption acceptance remain open. **The complete 0.4.0 release goal remains active.**
+
+
+## Packaged dedicated-server startup checkpoint — dev.51
+
+A second normal `runServer` startup, after its development server properties and world had been created, loaded the packaged `0.0.1-dev.51` JAR, initialized the three Sable physics pipelines, and reached `Done (0.717s)!`. The server was deliberately stopped by a 30-second test timeout after startup; the timeout is expected and is not reported as a successful Gradle completion. The raw startup record is [packaged server evidence](evidence/packaged-server-dev51.txt).
+
+This establishes only standalone dedicated-server startup for the packaged binary. It does not exercise player connection, synchronization, late join, vehicle ownership after a reconnect, a rendered ride, or an active vehicle whose chunk becomes unavailable. **The complete 0.4.0 release goal remains active.**
