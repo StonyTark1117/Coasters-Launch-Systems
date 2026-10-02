@@ -115,10 +115,11 @@ public final class LinearControllerGameTests {
     var tests = new ArrayList<TestFunction>(); int slot = 0, fourthDimensionSlot = 0;
     for (var mechanism : List.of(Mechanism.LSM, Mechanism.LIM)) {
       var modes = new ArrayList<>(List.of("single_forward", "linked_forward", "linked_reverse", "power_loss", "thermal_loss"));
-      if (mechanism == Mechanism.LSM) modes.addAll(List.of("mixed_forward", "swing_forward", "swing_power_loss"));
+      if (mechanism == Mechanism.LSM) modes.add("mixed_forward");
+      modes.addAll(List.of("swing_forward", "swing_power_loss"));
       if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of(
           "arrow_forward", "arrow_linked_reverse", "arrow_plate_loss", "legacy_forward", "free_spin_forward", "revised_forward", "pax_veto"));
-      if (mechanism == Mechanism.LSM && net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of("arrow_swing_forward", "arrow_swing_power_loss"));
+      if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of("arrow_swing_forward", "arrow_swing_power_loss"));
       for (String mode : modes) {
         boolean fourthDimension = mode.startsWith("arrow") || mode.startsWith("legacy") || mode.startsWith("free_spin")
             || mode.startsWith("revised") || mode.startsWith("pax");

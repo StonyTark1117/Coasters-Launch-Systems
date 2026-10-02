@@ -238,8 +238,8 @@ public final class RideControllers {
     registrationReady(level, controller);
     var drives = modules.stream().filter(m -> m.mechanism().drive() && !controller.exitDrive(m)).toList();
     if (drives.isEmpty()) { controller.fail("No linked drive"); return; }
-    if (controller.swingProgram() && (controller.destination() != null || controller.stationCapture() || drives.stream().anyMatch(m -> m.mechanism() != Mechanism.LSM))) {
-      controller.fail("Swing launch requires one local LSM section without transfer or station capture"); return;
+    if (controller.swingProgram() && (controller.destination() != null || controller.stationCapture() || drives.stream().anyMatch(m -> !m.mechanism().linear()))) {
+      controller.fail("Swing launch requires one local linear section without transfer or station capture"); return;
     }
     var driveInterfaces = drives.stream().map(EquipmentCabinetEntity::mechanism).collect(java.util.stream.Collectors.toSet());
     double launchEnd = drives.stream().mapToDouble(m -> m.interval().end()).max().orElseThrow();

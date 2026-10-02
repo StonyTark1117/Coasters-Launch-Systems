@@ -1,7 +1,7 @@
 package dev.coasterslaunchsystems.math;
 
 /**
- * The bounded LSM shuttle sequence. A controller owns its whole fixed block for all three
+ * The bounded linear-motor shuttle sequence. A controller owns its whole fixed block for all three
  * passes, and may change direction only after the moving tail cleared the end it just reached.
  */
 public final class SwingLaunchProgram {
