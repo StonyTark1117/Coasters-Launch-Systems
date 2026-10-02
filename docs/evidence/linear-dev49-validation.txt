@@ -1,0 +1,11 @@
+Launch Systems dev.49 linear retained-world restart mechanism matrix
+Date: 2026-10-02
+Pinned Fourth Dimension artifact:
+  027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16  coasters-fourth-dimension-0.9.0-dev.1.jar
+
+Ordinary LIM: prepareLIM then retained-world verifyLIM. Each separate packaged server process passed 1/1 GameTests. The running section saved controller UUID 6233d99e-180c-481f-83f6-06dd00fffe6e, one-car lease, five LSM/LIM-bank drive identities, 1161.5988215432562 energy and 8.516969159973469 heat; verification preserved those values and reopened all fields disarmed in controller inspection.
+
+Pinned Arrow LIM: prepareArrowLIM then retained-world verifyArrowLIM with the pinned artifact. Each separate packaged server process passed 1/1 GameTests. The running Arrow section saved controller UUID 3aa9f020-bf0f-40b1-b027-883855fe8913, one-car lease, 31-module manifest, five LIM drive identities, 1153.4383619924079 energy and 13.147267986532714 heat; verification preserved them and reopened all fields disarmed in controller inspection.
+
+Final artifact SHA-256:
+  ceaf30c273d8554a488e48fc441591c4d65d7a053d7fc8fba3b90ae98d56ae61  coasters-launch-systems-0.0.1-dev.49.jar

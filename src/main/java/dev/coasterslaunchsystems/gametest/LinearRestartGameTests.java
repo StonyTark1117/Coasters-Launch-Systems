@@ -21,13 +21,16 @@ public final class LinearRestartGameTests {
   private static final BlockPos FROM = new BlockPos(32 + SLOT * 48, 192, -896);
   private static final BlockPos CONTROLLER = FROM.offset(4, -2, 8);
 
+  private record RestartCase(boolean arrow, Mechanism mechanism) {}
+
   private LinearRestartGameTests() {}
 
   @GameTestGenerator
   public static List<TestFunction> restart() {
     String phase = System.getProperty("coasterslaunchsystems.linearRestartPhase", "");
     if (phase.isEmpty()) return List.of();
-    if (phase.endsWith("Arrow") && !ModList.get().isLoaded("fourthdimension"))
+    var test = restartCase(phase);
+    if (test.arrow() && !ModList.get().isLoaded("fourthdimension"))
       throw new IllegalStateException("Arrow linear restart validation requires the pinned Fourth Dimension adapter");
     return List.of(new TestFunction("launchsystems_linear_restart", "coasterslaunchsystems_linear_restart.saved_linear_restart_" + phase.toLowerCase(),
         "coasterslaunchsystems_linear_restart:empty", 700, 0, true, LinearRestartGameTests::run));
@@ -35,20 +38,29 @@ public final class LinearRestartGameTests {
 
   private static void run(GameTestHelper helper) {
     String phase = System.getProperty("coasterslaunchsystems.linearRestartPhase", "");
-    helper.assertTrue(phase.equals("prepare") || phase.equals("verify") || phase.equals("prepareArrow") || phase.equals("verifyArrow"),
-        "Set lsLinearRestartPhase to prepare, verify, prepareArrow or verifyArrow");
-    if (phase.startsWith("prepare")) prepare(helper, phase.endsWith("Arrow")); else verify(helper, phase.endsWith("Arrow"));
+    var test = restartCase(phase);
+    if (phase.startsWith("prepare")) prepare(helper, test); else verify(helper, test);
   }
 
-  private static void prepare(GameTestHelper helper, boolean arrow) {
-    var scene = new RideControllerGameTests.Scene(helper, SLOT, arrow ? "arrow_forward" : "single_forward", 192);
-    scene.driveMechanism = Mechanism.LSM;
+  private static RestartCase restartCase(String phase) {
+    return switch (phase) {
+      case "prepare", "verify" -> new RestartCase(false, Mechanism.LSM);
+      case "prepareArrow", "verifyArrow" -> new RestartCase(true, Mechanism.LSM);
+      case "prepareLIM", "verifyLIM" -> new RestartCase(false, Mechanism.LIM);
+      case "prepareArrowLIM", "verifyArrowLIM" -> new RestartCase(true, Mechanism.LIM);
+      default -> throw new IllegalArgumentException("Set lsLinearRestartPhase to prepare/verify, prepareArrow/verifyArrow, prepareLIM/verifyLIM or prepareArrowLIM/verifyArrowLIM");
+    };
+  }
+
+  private static void prepare(GameTestHelper helper, RestartCase test) {
+    var scene = new RideControllerGameTests.Scene(helper, SLOT, test.arrow() ? "arrow_forward" : "single_forward", 192);
+    scene.driveMechanism = test.mechanism();
     scene.at(40, () -> {
-      if (arrow) scene.boardFourthDimension(); else for (int seat = 0; seat < 4; seat++) scene.base.board(scene.base.parents.getFirst(), seat);
+      if (test.arrow()) scene.boardFourthDimension(); else for (int seat = 0; seat < 4; seat++) scene.base.board(scene.base.parents.getFirst(), seat);
     });
     scene.at(55, () -> {
       for (var body : scene.base.parents) body.getPlot().getEmbeddedLevelAccessor().setBlock(
-          LinearMotorGameTests.reactionPosition(Mechanism.LSM), EquipmentContent.LSM_PLATE.get().defaultBlockState(), 3);
+          LinearMotorGameTests.reactionPosition(test.mechanism()), (test.mechanism() == Mechanism.LSM ? EquipmentContent.LSM_PLATE : EquipmentContent.LIM_PLATE).get().defaultBlockState(), 3);
       scene.base.level.setBlockAndUpdate(scene.controllerPosition, EquipmentContent.CONTROLLER.get().defaultBlockState());
       scene.controller = (RideControllerEntity) scene.base.level.getBlockEntity(scene.controllerPosition);
       scene.controller.bind(scene.base.level, scene.base.from, scene.base.to);
@@ -65,13 +77,13 @@ public final class LinearRestartGameTests {
       helper.assertTrue(scene.controller.phase() == RideControllerEntity.State.RUNNING && scene.controller.reservation().size() == 1
           && drives.size() == 5 && drives.stream().allMatch(cabinet -> cabinet.armed() && cabinet.energy() > 0 && cabinet.energy() < LinearMotor.CAPACITY),
           "Live linear section did not reach a persisted running state: " + scene.controller.status());
-      System.out.println("LS_LINEAR_RESTART mode=" + (arrow ? "arrow" : "ordinary") + " prepared controller=" + scene.controller.identity() + " lease=" + scene.controller.reservation().size()
+      System.out.println("LS_LINEAR_RESTART mode=" + (test.arrow() ? "arrow" : "ordinary") + " mechanism=" + test.mechanism() + " prepared controller=" + scene.controller.identity() + " lease=" + scene.controller.reservation().size()
           + " drives=" + drives.size() + " energy=" + drives.getFirst().energy() + " heat=" + drives.getFirst().heat());
       helper.succeed();
     });
   }
 
-  private static void verify(GameTestHelper helper, boolean arrow) {
+  private static void verify(GameTestHelper helper, RestartCase test) {
     helper.runAtTickTime(40, () -> {
       var controller = (RideControllerEntity) helper.getLevel().getBlockEntity(CONTROLLER);
       var drives = linearDrives(helper);
@@ -84,7 +96,7 @@ public final class LinearRestartGameTests {
                 && cabinet.energy() < LinearMotor.CAPACITY && cabinet.targetSpeed() == 3 && cabinet.accelerationLimit() == 2 && cabinet.jerkLimit() == 4),
             "Saved linear launch did not retain its lease/configuration while failing closed: "
                 + (controller == null ? "missing controller" : controller.status()));
-        System.out.println("LS_LINEAR_RESTART mode=" + (arrow ? "arrow" : "ordinary") + " verified controller=" + controller.identity() + " lease=" + controller.reservation().size()
+        System.out.println("LS_LINEAR_RESTART mode=" + (test.arrow() ? "arrow" : "ordinary") + " mechanism=" + test.mechanism() + " verified controller=" + controller.identity() + " lease=" + controller.reservation().size()
             + " drives=" + drives.size() + " energy=" + drives.getFirst().energy() + " heat=" + drives.getFirst().heat());
         helper.succeed();
       });
