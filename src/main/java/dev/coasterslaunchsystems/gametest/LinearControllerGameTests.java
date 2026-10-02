@@ -119,6 +119,7 @@ public final class LinearControllerGameTests {
           "arrow_forward", "arrow_linked_reverse", "arrow_plate_loss", "legacy_forward", "free_spin_forward", "revised_forward", "pax_veto"));
       if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of(
           "arrow_swing_forward", "arrow_swing_power_loss",
+          "arrow_linked_swing_forward",
           "legacy_swing_forward", "legacy_swing_power_loss",
           "free_spin_swing_forward", "free_spin_swing_power_loss",
           "revised_swing_forward", "revised_swing_power_loss"));
@@ -127,15 +128,16 @@ public final class LinearControllerGameTests {
             || mode.startsWith("revised") || mode.startsWith("pax");
         // Optional-provider fixtures have their own compact lane; do not let an added provider
         // case move an ordinary fixture beyond the native near-origin equipment bound.
-        boolean familySwing = swing(mode) && (mode.startsWith("legacy") || mode.startsWith("free_spin") || mode.startsWith("revised"));
+        boolean familySwing = fourthDimension && swing(mode);
         int fixtureSlot = fourthDimension ? -1 - (familySwing ? fourthDimensionSwingSlot++ : fourthDimensionSlot++) : slot++;
         // Sable's native world coordinates are bounded. Family swings execute in a separate batch
         // and reuse the compact negative lane after the Arrow batch has cleaned up its fixtures.
         String namespace = fourthDimension ? "coasterslaunchsystems_4d_linear"
             : mode.equals("thermal_loss") ? "coasterslaunchsystems_thermal_linear" : "coasterslaunchsystems_linear";
         String batch = familySwing ? "coasterslaunchsystems_4d_swing_linear_sections" : namespace + "_sections";
+        int timeout = swing(mode) ? (mode.contains("linked") ? 12000 : 8000) : 1600;
         tests.add(new TestFunction(batch, namespace + "." + mechanism.name().toLowerCase(Locale.ROOT) + "_section_" + mode,
-            namespace + ":empty", swing(mode) ? 8000 : 1600, 0, true, helper -> run(new Scene(helper, fixtureSlot, mode, mechanism))));
+            namespace + ":empty", timeout, 0, true, helper -> run(new Scene(helper, fixtureSlot, mode, mechanism))));
       }
     }
     return tests;
@@ -161,10 +163,11 @@ public final class LinearControllerGameTests {
         // The full field is available between two independent spring-fin end banks. The first
         // field direction is forward; the controller reverses it only after each native tail clears.
         for (int distance = 14; distance <= 60; distance += 2) r.module(distance, false);
-        // Free Spin and Revised provider vehicles need slightly more than the original
-        // 14-block bank; use matched 16-block end banks for every swing fixture.
-        for (int distance = 2; distance <= 18; distance += 2) r.module(distance, true);
-        for (int distance = 48; distance <= 62; distance += 2) r.module(distance, true);
+        // Free Spin and Revised need 16-block banks; a coupled Arrow needs overlapping
+        // 30-block end banks so both cars are physically clamped before reversal.
+        int bankStart = r.linked ? 30 : 18, bankEnd = r.linked ? 34 : 48;
+        for (int distance = 2; distance <= bankStart; distance += 2) r.module(distance, true);
+        for (int distance = bankEnd; distance <= 62; distance += 2) r.module(distance, true);
         r.controller.setSwingProgram(true);
       } else {
         for (int distance = 8; distance <= 16; distance += 2) {
@@ -202,18 +205,18 @@ public final class LinearControllerGameTests {
     });
     r.at(610, () -> {
       if (!r.mode.equals("power_loss") && !r.mode.equals("arrow_plate_loss") && !r.mode.equals("thermal_loss")) return;
-      r.base.helper.assertTrue(r.controller.phase() == RideControllerEntity.State.FAULT && r.controller.reservation().size() == 1
+      r.base.helper.assertTrue(r.controller.phase() == RideControllerEntity.State.FAULT && r.controller.reservation().size() == r.base.parents.size()
           && r.base.parents.stream().allMatch(b -> Math.abs(r.base.speed(b)) < .03 && EquipmentRuntime.activeFinClamps(r.base.level, b.getUniqueId()) > 0),
           "Lost linear authority did not retain the held train");
       s.interruptedSteps = s.steps;
       if (r.mode.equals("power_loss"))
         for (var p : r.motors) ((com.simibubi.create.content.kinetics.motor.CreativeMotorBlockEntity) r.base.level.getBlockEntity(p)).generatedSpeed.setValue(64);
     });
-    r.at(swing(r.mode) ? 7600 : 1250, () -> {
+    r.at(swing(r.mode) ? (r.linked ? 11000 : 7600) : 1250, () -> {
       try {
         if (r.mode.equals("power_loss") || r.mode.equals("arrow_plate_loss") || r.mode.equals("thermal_loss") || swingPowerLoss(r.mode)) {
           r.base.helper.assertTrue(s.failure.isEmpty() && r.controller.phase() == RideControllerEntity.State.FAULT && s.steps == s.interruptedSteps
-              && r.controller.reservation().size() == 1 && s.drives().stream().allMatch(c -> c.energy() > 0)
+              && r.controller.reservation().size() == r.base.parents.size() && s.drives().stream().allMatch(c -> c.energy() > 0)
               && r.base.parents.stream().allMatch(b -> Math.abs(r.base.speed(b)) < .03 && EquipmentRuntime.activeFinClamps(r.base.level, b.getUniqueId()) > 0)
               && (!swingPowerLoss(r.mode) || s.interrupted && s.restored), "Interrupted linear field replayed a launch: " + s.failure);
           System.out.println("LS_LINEAR_INTERRUPTION mechanism=" + s.mechanism + " mode=" + r.mode + " phase=" + r.controller.phase() + " lease=" + r.controller.reservation().size()

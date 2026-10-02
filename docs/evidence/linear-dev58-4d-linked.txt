@@ -1,0 +1,807 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.2.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :createMinecraftArtifacts UP-TO-DATE
+> Task :compileJava UP-TO-DATE
+> Task :compileApi4Fixture UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :jarJar NO-SOURCE
+> Task :jar
+> Task :compileTestJava UP-TO-DATE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test
+> Task :compilePackagedJava NO-SOURCE
+> Task :processPackagedResources NO-SOURCE
+> Task :packagedClasses UP-TO-DATE
+> Task :downloadAssets UP-TO-DATE
+> Task :writeGameTestServerLegacyClasspath UP-TO-DATE
+> Task :prepareGameTestServerRun UP-TO-DATE
+
+> Task :runGameTestServer
+WARN StatusConsoleListener Advanced terminal features are not available in this environment
+[04:21:10] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgeserverdev, --gameDir, ., --fml.fmlVersion, 4.0.43, --fml.mcVersion, 1.21.1, --fml.neoForgeVersion, 21.1.248, --fml.neoFormVersion, 20240808.144430]
+[04:21:10] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: JVM identified as Arch Linux OpenJDK 64-Bit Server VM 21.0.12.1+1
+[04:21:10] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: ModLauncher 11.0.5+main.901c6ea8 starting: java version 21.0.12.1 by Arch Linux; OS Linux arch amd64 version 7.2.7-zen1-1-zen
+[04:21:10] [main/INFO] [ne.ne.fm.lo.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgeserverdev
+[04:21:10] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=union:/home/braydon/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.2+mixin.0.8.7/2af2f021d8e02a0220dc27a7a72b4666d66d44ca/sponge-mixin-0.15.2+mixin.0.8.7.jar%2394!/ Service=ModLauncher Env=SERVER
+[04:21:10] [main/WARN] [ne.ne.ja.se.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: veil. Using Mod File: /home/braydon/.gradle/caches/modules-2/files-2.1/foundry.veil/veil-neoforge-1.21.1/4.1.4/642ec0bd02213ee087d86eda553d6d79c6a04d2b/veil-neoforge-1.21.1-4.1.4.jar
+[04:21:10] [main/WARN] [ne.ne.ja.se.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: sablecompanion. Using Mod File: /home/braydon/.gradle/caches/modules-2/files-2.1/dev.ryanhcode.sable-companion/sable-companion-common-1.21.1/1.6.0/370be7db705926176e05c0215ed676150c45daae/sable-companion-common-1.21.1-1.6.0.jar
+[04:21:10] [main/WARN] [ne.ne.ja.se.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: library:sable_rapier. Using Mod File: /home/braydon/.gradle/caches/modules-2/files-2.1/dev.ryanhcode.sable/sable-sable_rapier-1.21.1/2.0.3/a88c0860320890144b6b44c332a2a2db3a61e189/sable-sable_rapier-1.21.1-2.0.3.jar
+[04:21:10] [main/INFO] [ne.ne.fm.lo.mo.lo.JarInJarDependencyLocator/]: Found 4 dependencies adding them to mods collection
+[04:21:10] [main/INFO] [ne.ne.fm.lo.mo.ModDiscoverer/]:
+     Mod List:
+		Name Version (Mod Id)
+
+		Coasters: Fourth Dimension 0.9.0-dev.1 (fourthdimension)
+		Coasters: Launch Systems 0.0.1-dev.58 (coasterslaunchsystems)
+		Create 6.0.10 (create)
+		Create: Coasters Simulated 0.1.5 (simulatedcoasters)
+		Flywheel 1.0.6 (flywheel)
+		Minecraft 1.21.1 (minecraft)
+		NeoForge 21.1.248 (neoforge)
+		Ponder 1.0.82+mc1.21.1 (ponder)
+		Sable 2.0.3 (sable)
+		Sable Companion 1.6.0 (sablecompanion)
+		Veil 4.1.4 (veil)
+[04:21:11] [main/INFO] [mixin/]: Compatibility level set to JAVA_21
+[04:21:11] [main/INFO] [cp.mo.mo.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgeserverdev' with arguments [--gameDir, .]
+[04:21:11] [main/WARN] [mixin/]: Reference map 'ponder.refmap.json' for ponder-common.mixins.json could not be read. If this is a development environment you can ignore this message
+[04:21:11] [main/INFO] [de.ry.sa.mi.AbstractSableMixinPlugin/]: Using Vanilla renderer mixins
+[04:21:11] [main/INFO] [de.ry.sa.mi.AbstractSableMixinPlugin/]: Using Vanilla renderer mixins
+[04:21:11] [main/WARN] [mixin/]: Error loading class: dev/simulated_team/simulated/content/blocks/merging_glue/MergingGlueBlockEntity (java.lang.ClassNotFoundException: dev.simulated_team.simulated.content.blocks.merging_glue.MergingGlueBlockEntity)
+[04:21:11] [main/WARN] [mixin/]: @Mixin target dev.simulated_team.simulated.content.blocks.merging_glue.MergingGlueBlockEntity was not found simulatedcoasters.mixins.json:compat.MergingGlueBlockEntityRivetMixin from mod simulatedcoasters
+[04:21:11] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[04:21:11] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[04:21:11] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[04:21:11] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[04:21:11] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[04:21:11] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[04:21:11] [main/WARN] [mixin/]: Error loading class: org/jetbrains/annotations/ApiStatus$ScheduledForRemoval (java.lang.ClassNotFoundException: org.jetbrains.annotations.ApiStatus$ScheduledForRemoval)
+[04:21:11] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[04:21:11] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[04:21:11] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[04:21:11] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[04:21:11] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[04:21:11] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[04:21:11] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[04:21:11] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[04:21:11] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[04:21:11] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[04:21:11] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[04:21:11] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[04:21:11] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.3).
+[04:21:12] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[04:21:12] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[04:21:12] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[04:21:12] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[04:21:12] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[04:21:12] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[04:21:14] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[04:21:14] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[04:21:14] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[04:21:14] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[04:21:14] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[04:21:14] [modloading-worker-0/INFO] [Veil/]: Veil is initializing.
+[04:21:14] [modloading-worker-0/INFO] [ne.ne.ne.co.NeoForgeMod/NEOFORGE-MOD]: NeoForge mod loading, version 21.1.248, for MC 1.21.1
+[04:21:14] [modloading-worker-0/INFO] [co.si.cr.Create/]: Create 6.0.10 initializing! Commit hash: ac0c444d9828da3453ae8cc65338e8de063286fb
+[04:21:15] [modloading-worker-0/INFO] [de.ry.sa.Sable/]: Sable loaded!
+[04:21:15] [modloading-worker-0/INFO] [de.fo.FourthDimension/]: Coasters: Fourth Dimension loaded from union:/home/braydon/.cache/coasterslaunchsystems-validation/fd-provider-36775040079/libs/coasters-fourth-dimension-0.9.0-dev.1.jar%23128!/
+[04:21:15] [modloading-worker-0/INFO] [de.co.LaunchSystems/]: Coasters: Launch Systems loaded from union:/tmp/coasterslaunchsystems-22eeb619/build/libs/coasters-launch-systems-0.0.1-dev.58.jar%23127!/
+[04:21:16] [main/INFO] [mojang/YggdrasilAuthenticationService]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[04:21:16] [NeoForge Version Check/INFO] [ne.ne.fm.VersionChecker/]: [create] Starting version check at https://api.modrinth.com/updates/create/forge_updates.json?neoforge=only
+[04:21:16] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/tmp/coasterslaunchsystems-22eeb619/build/moddev/artifacts/neoforge-21.1.248.jar%23124!/assets/.mcassetsroot' uses unexpected schema
+[04:21:16] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/tmp/coasterslaunchsystems-22eeb619/build/moddev/artifacts/neoforge-21.1.248.jar%23124!/data/.mcassetsroot' uses unexpected schema
+[04:21:16] [main/INFO] [co.si.cr.Create/]: Created 157 recipes which will be injected into the game
+[04:21:16] [main/INFO] [co.si.cr.Create/]: Created 0 tags which will be injected into the game
+[04:21:16] [main/INFO] [ne.ne.ne.ga.GameTestHooks/]: Enabled Gametest Namespaces: [coasterslaunchsystems_4d_linear]
+[04:21:16] [main/INFO] [minecraft/RecipeManager]: Loaded 2857 recipes
+[04:21:17] [main/INFO] [minecraft/AdvancementTree]: Loaded 2507 advancements
+[04:21:17] [NeoForge Version Check/INFO] [ne.ne.fm.VersionChecker/]: [create] Found status: OUTDATED Current: 6.0.10 Target: 6.0.10+mc1.21.1
+[04:21:17] [Server thread/INFO] [de.ry.sa.Sable/]: Creating physics pipeline for ResourceKey[minecraft:dimension / minecraft:overworld] using RapierPhysicsPipelineProvider
+[2026-10-02T11:21:17.745952339Z] [[32mINFO[0m] (sable_rapier) Rapier scene initialized
+[04:21:17] [Server thread/INFO] [de.ry.sa.Sable/]: Creating physics pipeline for ResourceKey[minecraft:dimension / minecraft:the_nether] using RapierPhysicsPipelineProvider
+[2026-10-02T11:21:17.974983272Z] [[32mINFO[0m] (sable_rapier) Rapier scene initialized
+[04:21:17] [Server thread/INFO] [de.ry.sa.Sable/]: Creating physics pipeline for ResourceKey[minecraft:dimension / minecraft:the_end] using RapierPhysicsPipelineProvider
+[2026-10-02T11:21:17.985492551Z] [[32mINFO[0m] (sable_rapier) Rapier scene initialized
+[04:21:18] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing start region for dimension minecraft:overworld
+[04:21:18] [worldgen/INFO] [minecraft/LoggerChunkProgressListener]: Preparing spawn area: 2%
+[04:21:18] [Server thread/INFO] [minecraft/LoggerChunkProgressListener]: Time elapsed: 100 ms
+[04:21:18] [Server thread/INFO] [minecraft/GameTestServer]: Started game test server
+[04:21:18] [Server thread/INFO] [ne.ne.ne.se.pe.PermissionAPI/]: Successfully initialized permission handler neoforge:default_handler
+[04:21:18] [Server thread/INFO] [minecraft/GameTestServer]: 32 tests are now running at position -5882334, -59, -8002611!
+[04:21:18] [Server thread/INFO] [minecraft/GameTestRunner]: Running test batch 'coasterslaunchsystems_4d_swing_linear_sections:0' (18 tests)...
+[04:21:18] [Server thread/INFO] [minecraft/GameTestServer]: [                                ]
+[04:21:19] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:19] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:20] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:20] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:21] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:22] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:22] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:23] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:23] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts 05ffee16-8045-48f0-8ec2-1507e51d5112 <-> 9c63202e-6513-4ba8-840f-8182684078ed at distance 6.000
+[04:21:23] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:24] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts d4f9c88f-33f6-435f-8c31-6e20c97b2e98 <-> 6f5b3182-a4f8-4ba7-be9e-5718e12e40d2 at distance 6.000
+[04:21:25] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:26] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:27] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:28] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:29] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:30] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:31] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:32] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:33] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:34] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:35] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:36] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:37] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:38] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:39] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:40] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:41] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:41] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:42] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:43] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:44] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:45] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:46] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:48] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:49] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:50] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:51] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:52] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:53] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:54] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:54] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:55] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:56] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:57] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:58] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:21:59] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:01] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:02] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:03] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:04] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:05] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:06] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:07] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:08] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:09] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:10] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:11] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:12] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:12] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:13] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:14] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:15] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:16] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:17] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:18] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:19] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:20] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:20] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:21] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:22] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:23] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:24] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:25] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:26] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:26] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:27] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:28] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:29] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:30] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:31] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:32] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:33] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:33] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:34] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:35] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:36] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:37] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:38] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:39] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:40] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:40] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:41] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:42] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:43] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:44] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:45] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:46] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:47] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:47] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:48] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:49] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:50] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:51] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:52] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:53] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:54] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:55] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:55] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:56] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:57] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:58] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:22:59] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:00] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:01] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:02] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:03] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:03] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:04] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:05] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:06] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:07] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:08] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:09] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:10] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:10] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:11] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:12] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:13] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:14] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:15] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:16] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:17] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:18] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:18] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:19] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:20] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:21] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:22] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:23] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:24] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:25] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:26] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:26] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:27] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:28] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:29] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:30] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:31] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:32] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:33] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:33] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:34] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:35] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:36] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:37] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:38] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:39] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:40] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:41] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:41] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:42] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:43] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:44] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:45] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:46] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:47] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:48] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:48] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:49] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:50] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:51] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:52] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:53] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:54] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:55] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:56] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:57] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:58] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:23:59] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:00] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:01] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:02] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:03] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:04] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:05] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:06] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:07] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:08] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:09] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:10] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:11] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:12] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:13] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:14] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:15] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:16] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:16] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:17] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:18] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:19] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:20] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:21] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:22] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:23] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:23] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:24] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:25] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:26] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:27] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:28] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:29] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:30] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:31] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:32] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:33] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:34] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:35] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:36] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:37] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:38] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:39] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:40] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:41] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:42] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:43] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:45] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:46] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:47] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:48] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:49] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:50] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:51] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:52] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:53] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:54] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:55] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:56] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:57] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:57] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:58] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:24:59] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:00] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:01] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:02] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:03] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:04] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:05] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:06] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:07] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:08] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:09] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:10] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:11] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:12] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:13] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:14] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:15] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:17] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:18] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:19] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:20] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:21] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:22] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:23] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:24] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:25] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:26] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:27] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:28] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:29] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:30] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:31] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:32] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:33] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:34] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:35] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:35] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:36] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:37] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:38] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:39] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:40] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:41] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:42] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:43] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:44] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:45] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:46] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:47] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:49] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:50] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:51] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:52] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:53] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:54] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:55] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:56] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:57] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:58] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:25:59] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:overworld
+[04:26:00] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[04:26:00] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:the_end
+[04:26:00] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:01] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:02] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:03] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:04] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:05] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:06] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:07] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:08] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:09] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:10] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:10] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:11] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:12] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:13] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:14] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:15] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:16] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:17] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:18] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:19] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:20] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:21] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:22] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:24] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:25] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:26] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:27] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:28] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:29] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:30] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:31] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:32] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:33] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:34] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:35] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:36] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:37] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:38] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:39] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:40] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:41] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:42] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:43] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:44] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:45] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:46] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:47] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:48] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:49] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:50] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:51] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:52] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:53] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:54] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:55] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:56] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:57] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:58] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:26:59] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:00] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:01] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:02] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:03] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:04] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:05] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:05] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:06] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:07] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:08] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:09] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:10] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:11] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:12] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:12] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:13] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:14] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:15] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:16] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:17] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:18] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:19] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:19] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:20] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:21] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:22] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:23] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+[04:27:24] [Server thread/INFO] [minecraft/GameTestServer]: [__________________              ]
+LS_LINEAR_SECTION mechanism=LSM mode=arrow_swing_forward cars=1 riders=4 mass=21.2 work=205.77372618902626 spent=290.085972677663 heat=84.31224648864138 peak_speed=1.4906271166375804 steps=2424 accounting_error=2.2707530300536405E-13 joint_error=2.1705841767438798E-4 coupler_error=0.0 rotor_response=4.97876634488851E-4
+LS_LINEAR_INTERRUPTION mechanism=LSM mode=arrow_swing_power_loss phase=FAULT lease=1 steps=907 spent=102.42254938392102 work=73.01053395349402 accounting_error=2.2595814108683498E-13
+LS_LINEAR_SECTION mechanism=LSM mode=legacy_swing_forward cars=1 riders=8 mass=28.400000000000006 work=316.3667071072854 spent=457.72203492733206 heat=141.35532782004586 peak_speed=1.5225295745652543 steps=2452 accounting_error=2.2672141941626478E-13 joint_error=2.8075610038040874E-4 coupler_error=0.0 rotor_response=0.38783677935830885
+LS_LINEAR_INTERRUPTION mechanism=LSM mode=legacy_swing_power_loss phase=FAULT lease=1 steps=915 spent=163.73242048664315 work=115.0151996559365 accounting_error=2.2734591986761643E-13
+LS_LINEAR_SECTION mechanism=LSM mode=free_spin_swing_forward cars=1 riders=8 mass=46.400000000000006 work=404.5886466112978 spent=599.0903465534857 heat=194.50169994219345 peak_speed=1.4969459914766525 steps=2504 accounting_error=2.274014310188477E-13 joint_error=2.032658257706488E-4 coupler_error=0.0 rotor_response=0.2518292492195753
+LS_LINEAR_INTERRUPTION mechanism=LSM mode=free_spin_swing_power_loss phase=FAULT lease=1 steps=935 spent=211.8655446769626 work=146.1172448417211 accounting_error=2.267352972040726E-13
+LS_LINEAR_SECTION mechanism=LSM mode=revised_swing_forward cars=1 riders=8 mass=48.400000000000006 work=413.26137619149046 spent=609.5577168387476 heat=196.2963406472583 peak_speed=1.4814398333045358 steps=2502 accounting_error=2.2729040871638517E-13 joint_error=1.9282020175865645E-4 coupler_error=0.0 rotor_response=0.17273975844547257
+LS_LINEAR_INTERRUPTION mechanism=LSM mode=revised_swing_power_loss phase=FAULT lease=1 steps=937 spent=215.0714693855241 work=147.594922530028 accounting_error=2.2729040871638517E-13
+LS_LINEAR_SECTION mechanism=LIM mode=arrow_swing_forward cars=1 riders=4 mass=21.2 work=205.6036650906579 spent=403.1800766532376 heat=197.5764115625773 peak_speed=1.4936554979007028 steps=2452 accounting_error=2.2709611968707577E-13 joint_error=1.7722848062579584E-4 coupler_error=0.0 rotor_response=4.8363774001606777E-4
+LS_LINEAR_INTERRUPTION mechanism=LIM mode=arrow_swing_power_loss phase=FAULT lease=1 steps=923 spent=140.32679555484606 work=73.20628022051382 accounting_error=2.2656876375037882E-13
+LS_LINEAR_SECTION mechanism=LIM mode=legacy_swing_forward cars=1 riders=8 mass=28.400000000000006 work=309.63993804365856 spent=609.8447232202673 heat=300.2047851766057 peak_speed=1.5091482812031225 steps=2492 accounting_error=2.2736673654932815E-13 joint_error=2.856837698143787E-4 coupler_error=0.0 rotor_response=0.3629220493641849
+LS_LINEAR_INTERRUPTION mechanism=LIM mode=legacy_swing_power_loss phase=FAULT lease=1 steps=929 spent=219.16336298970418 work=113.27325787061338 accounting_error=2.2676305277968822E-13
+LS_LINEAR_SECTION mechanism=LIM mode=free_spin_swing_forward cars=1 riders=8 mass=46.400000000000006 work=405.9735028350934 spent=840.758446299516 heat=434.78494346441965 peak_speed=1.4992508646940323 steps=2578 accounting_error=2.2724877535296173E-13 joint_error=2.0864701110231943E-4 coupler_error=0.0 rotor_response=0.2509836272536842
+LS_LINEAR_INTERRUPTION mechanism=LIM mode=free_spin_swing_power_loss phase=FAULT lease=1 steps=961 spent=294.99149121806954 work=146.27594093208265 accounting_error=2.264577414479163E-13
+LS_LINEAR_SECTION mechanism=LIM mode=revised_swing_forward cars=1 riders=8 mass=48.400000000000006 work=412.7659603878838 spent=852.1104916514721 heat=439.34453126359057 peak_speed=1.4866448438602609 steps=2570 accounting_error=2.272210197773461E-13 joint_error=1.870003540546597E-4 coupler_error=0.0 rotor_response=0.16203212452040794
+LS_LINEAR_INTERRUPTION mechanism=LIM mode=revised_swing_power_loss phase=FAULT lease=1 steps=965 spent=298.8973570087651 work=147.64848116716493 accounting_error=2.272210197773461E-13
+[04:27:25] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:25] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:26] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:26] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:26] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:26] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:26] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:27] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:27] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:27] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:27] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:27] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:28] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:28] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:28] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:28] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:28] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:29] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:29] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:29] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:29] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:29] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:30] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:30] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:30] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:30] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:30] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:31] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:31] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:31] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:31] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:31] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:32] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:32] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:32] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:32] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:32] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:33] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:33] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:33] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:33] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:33] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:33] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:34] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:34] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:34] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:34] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:34] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:35] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:35] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:35] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:35] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:35] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:36] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:36] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:36] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:36] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:36] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:37] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:37] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:37] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:37] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:37] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:38] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:38] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:38] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:38] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:38] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:39] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:39] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:39] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:39] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:39] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:39] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:40] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:40] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:40] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:40] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:40] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:41] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:41] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:41] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:41] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:41] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:42] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:42] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:42] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:42] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:42] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:43] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:43] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:43] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:43] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:43] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:44] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:44] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:44] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:44] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:44] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:45] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:45] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:45] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:45] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:45] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:45] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:46] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:46] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:46] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:46] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:46] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:47] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:47] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:47] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:47] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:47] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:48] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:48] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:48] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:48] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:48] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:49] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:49] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:49] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:49] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:49] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:50] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:50] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:50] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:50] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:50] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:51] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:51] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:51] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:51] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:51] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:51] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:52] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:52] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:52] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:52] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:52] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:53] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:53] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:53] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:53] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:53] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:54] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:54] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:54] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:54] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:54] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:55] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:55] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:55] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:55] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:55] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:56] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:56] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:56] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:56] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:56] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:57] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:57] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:57] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:57] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:57] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:58] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:58] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:58] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+[04:27:58] [Server thread/INFO] [minecraft/GameTestServer]: [++_++++++++_++++++              ]
+LS_LINEAR_SECTION mechanism=LSM mode=arrow_linked_swing_forward cars=2 riders=8 mass=42.4 work=244.437560371201 spent=380.40281422451744 heat=135.96525385331282 peak_speed=1.4908656861201641 steps=1868 accounting_error=4.383160501220118E-13 joint_error=2.1707330182662755E-4 coupler_error=6.1010931859506456E-5 rotor_response=4.78717000717157E-4
+[04:27:58] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked 05ffee16-8045-48f0-8ec2-1507e51d5112 <-> 9c63202e-6513-4ba8-840f-8182684078ed
+LS_LINEAR_SECTION mechanism=LIM mode=arrow_linked_swing_forward cars=2 riders=8 mass=42.4 work=243.05170210092345 spent=563.5480891258376 heat=320.49638702491677 peak_speed=1.4929539025917744 steps=1924 accounting_error=4.4690640077504895E-13 joint_error=1.6177457971592723E-4 coupler_error=2.872718596336199E-7 rotor_response=4.129273166161679E-4
+[04:27:58] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked d4f9c88f-33f6-435f-8c31-6e20c97b2e98 <-> 6f5b3182-a4f8-4ba7-be9e-5718e12e40d2
+[04:27:58] [Server thread/INFO] [minecraft/GameTestRunner]: Running test batch 'coasterslaunchsystems_4d_linear_sections:0' (14 tests)...
+[04:27:59] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++              ]
+[04:27:59] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______________]
+[04:27:59] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______________]
+[04:28:00] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______________]
+[04:28:00] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______________]
+[04:28:00] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______________]
+[04:28:01] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______________]
+[04:28:01] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______________]
+[04:28:01] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______________]
+[04:28:02] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______________]
+[04:28:02] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts 99942c96-8ac0-46c2-a454-ec28044fab76 <-> d8e55300-af6f-4bb6-a38e-2468e147f17c at distance 6.000
+[04:28:02] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts 00f08720-4bee-4c94-8ba7-b1f5c7053bf3 <-> bcca6788-89d2-45b6-8e03-59f5c375b050 at distance 6.000
+[04:28:02] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______________]
+[04:28:03] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:04] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:05] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:05] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:06] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:06] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:07] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:07] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:08] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:09] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:09] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:10] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:10] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:11] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:11] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:12] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:13] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:13] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:14] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:14] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:15] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:15] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:16] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:17] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:17] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:18] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:19] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:19] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:20] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:21] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:21] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:22] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:overworld
+[04:28:22] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[04:28:22] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:the_end
+[04:28:22] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:22] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:23] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:24] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:24] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:25] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:25] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:26] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:27] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:27] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:28] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:29] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:29] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:30] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:31] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:32] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:32] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:33] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:34] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:34] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:35] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:36] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:36] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:37] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:38] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:39] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:39] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+[04:28:40] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++______+______+]
+LS_LINEAR_SECTION mechanism=LIM mode=arrow_forward cars=1 riders=4 mass=21.2 work=120.55349126840734 spent=263.5611257151086 heat=143.00763444670235 peak_speed=2.9702038966873605 steps=217 accounting_error=2.274846977456946E-13 joint_error=1.707822540721615E-4 coupler_error=0.0 rotor_response=4.1905602763170466E-4
+LS_LINEAR_SECTION mechanism=LSM mode=arrow_forward cars=1 riders=4 mass=21.2 work=123.53946190683128 spent=175.35189434782092 heat=51.81243244099068 peak_speed=2.9817540031337955 steps=189 accounting_error=2.2470914018413168E-13 joint_error=1.6877984390272662E-4 coupler_error=0.0 rotor_response=4.957772916412581E-4
+LS_LINEAR_SECTION mechanism=LSM mode=arrow_linked_reverse cars=2 riders=8 mass=42.4 work=219.16879781827518 spent=318.83018637249756 heat=99.66138855422234 peak_speed=2.9532389758112054 steps=229 accounting_error=3.772537837676282E-13 joint_error=2.0807112506145324E-4 coupler_error=1.6846581729623722E-7 rotor_response=3.997591004059981E-4
+[04:28:40] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked 99942c96-8ac0-46c2-a454-ec28044fab76 <-> d8e55300-af6f-4bb6-a38e-2468e147f17c
+LS_LINEAR_INTERRUPTION mechanism=LSM mode=arrow_plate_loss phase=FAULT lease=1 steps=78 spent=98.71821704969057 work=62.43558259472137 accounting_error=2.2248869413488137E-13
+LS_LINEAR_SECTION mechanism=LSM mode=legacy_forward cars=1 riders=8 mass=28.400000000000006 work=171.3992410926417 spent=244.43715131633803 heat=73.0379102236973 peak_speed=2.9684931103685797 steps=203 accounting_error=2.2104540420286867E-13 joint_error=2.759923804159175E-4 coupler_error=0.0 rotor_response=0.3896813418094819
+LS_LINEAR_SECTION mechanism=LIM mode=arrow_linked_reverse cars=2 riders=8 mass=42.4 work=204.6482982038433 spent=476.5890264371362 heat=271.9407282332952 peak_speed=2.8708287550124294 steps=279 accounting_error=4.014566457044566E-13 joint_error=1.5533038849814708E-4 coupler_error=6.1007974522908626E-5 rotor_response=4.113580655536E-4
+[04:28:40] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked 00f08720-4bee-4c94-8ba7-b1f5c7053bf3 <-> bcca6788-89d2-45b6-8e03-59f5c375b050
+LS_LINEAR_INTERRUPTION mechanism=LIM mode=arrow_plate_loss phase=FAULT lease=1 steps=78 spent=52.20544659166694 work=15.315866971762414 accounting_error=2.2576385205752558E-13
+LS_LINEAR_SECTION mechanism=LIM mode=legacy_forward cars=1 riders=8 mass=28.400000000000006 work=168.50540598940452 spent=370.1631313641351 heat=201.65772537473205 peak_speed=2.940050677526449 steps=237 accounting_error=2.2493118478905672E-13 joint_error=2.7304801085262324E-4 coupler_error=0.0 rotor_response=0.3348007913042379
+LS_LINEAR_SECTION mechanism=LIM mode=free_spin_forward cars=1 riders=8 mass=46.400000000000006 work=227.38567500609645 spent=536.1017697633772 heat=308.7160947572794 peak_speed=2.821443114351985 steps=299 accounting_error=2.2293278334473143E-13 joint_error=2.1170540394077408E-4 coupler_error=0.0 rotor_response=0.2891823884765966
+LS_LINEAR_SECTION mechanism=LSM mode=free_spin_forward cars=1 riders=8 mass=46.400000000000006 work=247.97882247936528 spent=364.624255347127 heat=116.64543286776298 peak_speed=2.9297846801092473 steps=239 accounting_error=2.1516122217235534E-13 joint_error=1.956979763781035E-4 coupler_error=0.0 rotor_response=0.28665393475618656
+LS_LINEAR_SECTION mechanism=LSM mode=revised_forward cars=1 riders=8 mass=48.400000000000006 work=252.0864864922499 spent=372.29398059383175 heat=120.20749410158312 peak_speed=2.9173061603520547 steps=243 accounting_error=2.282618538629322E-13 joint_error=2.0307781842713663E-4 coupler_error=0.0 rotor_response=0.2448568870404887
+LS_LINEAR_SECTION mechanism=LIM mode=revised_forward cars=1 riders=8 mass=48.400000000000006 work=230.20086544698327 spent=547.1821802664297 heat=316.9813148194462 peak_speed=2.802606544184654 steps=305 accounting_error=2.2737367544323206E-13 joint_error=2.0050681668002795E-4 coupler_error=0.0 rotor_response=0.24531093539933058
+[04:28:40] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++++++++++++++++]
+[04:28:40] [Server thread/INFO] [minecraft/GameTestServer]: ========= 32 GAME TESTS COMPLETE IN 7.377 min ======================
+[04:28:40] [Server thread/INFO] [minecraft/GameTestServer]: All 32 required tests passed :)
+[04:28:40] [Server thread/INFO] [minecraft/GameTestServer]: ====================================================
+[04:28:40] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server
+[04:28:40] [Server thread/INFO] [minecraft/MinecraftServer]: Saving players
+[04:28:40] [Server thread/INFO] [minecraft/MinecraftServer]: Saving worlds
+[04:28:41] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:overworld
+[04:28:41] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:overworld
+[04:28:41] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[04:28:41] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[04:28:41] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_end
+[04:28:41] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:the_end
+[04:28:41] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[04:28:41] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[04:28:41] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[04:28:41] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved
+[04:28:41] [Server thread/INFO] [minecraft/GameTestServer]: Game test server shutting down
+
+BUILD SUCCESSFUL in 7m 35s
+11 actionable tasks: 3 executed, 8 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.2.1/userguide/configuration_cache_enabling.html

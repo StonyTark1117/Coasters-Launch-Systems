@@ -341,8 +341,9 @@ public final class RideControllers {
       if (maximumSpeed > ceiling + .1 && controller.phase() == State.RUNNING) { controller.fail("Reserved train exceeded the certified launch speed"); return; }
       if (controller.swingProgram()) {
         boolean forward = controller.swingDirection().sign() > 0;
-        controller.observeSwingTailClear(forward ? smallest > swingBoundary : largest < swingBoundary);
-        if (forward ? largest >= forwardStopStart - .6 : smallest <= backwardStopEnd + .6) controller.state(State.BRAKING);
+        boolean tailClear = forward ? smallest > swingBoundary : largest < swingBoundary;
+        controller.observeSwingTailClear(tailClear);
+        if (tailClear && (forward ? largest >= forwardStopStart - .6 : smallest <= backwardStopEnd + .6)) controller.state(State.BRAKING);
       } else if (largest >= forwardStopStart - .6) controller.state(State.BRAKING);
       // Stop-bank arrival ends propulsion, while ownership remains until every native tail is clear.
       if (held && maximumSpeed < .03 && controller.phase() == State.BRAKING) {
