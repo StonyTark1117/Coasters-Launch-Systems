@@ -110,8 +110,8 @@ public final class EquipmentRuntime {
       module.chargePneumatic(dt);
       if (module.mechanism().cable()) continue;
       if (!module.armed() || !module.fault().isEmpty()) continue;
-      if (ModList.get().isLoaded("coastersengineered") || ModList.get().isLoaded("coasterfins")) {
-        module.fail("An installed drive addon needs an ownership adapter"); continue;
+      if (ModList.get().isLoaded("coasterfins")) {
+        module.fail("Create: Coasters Simulated Additions needs an ownership adapter"); continue;
       }
       var track = module.resolve(level);
       if (track == null) continue;
@@ -127,6 +127,10 @@ public final class EquipmentRuntime {
       for (var cart : container.getAllSubLevels()) {
         var contact = EngagedContacts.current(level, cart).orElse(null);
         if (contact == null || !track.matches(contact.hit())) continue;
+        if (ModList.get().isLoaded("coastersengineered")
+            && dev.coasterslaunchsystems.integration.engineered.EngineeredInterop.appliesForce(level, contact.hit())) {
+          module.fail("Coasters: Engineered owns active force at this rail contact"); continue;
+        }
         var key = new Key(module.getBlockPos(), cart.getUniqueId());
         double distance = track.distance(contact.hit());
         var previous = history.get(key);

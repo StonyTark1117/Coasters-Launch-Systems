@@ -78,6 +78,11 @@ dependencies {
         if (!upstream.isFile()) throw new GradleException("Fourth Dimension validation JAR is missing: ${upstream}")
         runtimeOnly files(upstream)
     }
+    if (project.hasProperty('lsEngineeredJar')) {
+        def engineered = file(project.property('lsEngineeredJar'))
+        if (!engineered.isFile()) throw new GradleException("Engineered integration JAR is missing: ${engineered}")
+        runtimeOnly files(engineered)
+    }
     if (project.hasProperty('lsPackaged')) packagedRuntimeOnly files(layout.buildDirectory.file("libs/coasters-launch-systems-${mod_version}.jar"))
     implementation('com.simibubi.create:create-1.21.1:6.0.10-280:slim') { transitive = false }
     implementation 'net.createmod.ponder:ponder-neoforge:1.0.82+mc1.21.1'
@@ -86,6 +91,8 @@ dependencies {
     implementation 'com.tterrag.registrate:Registrate:MC1.21-1.3.0+67'
     implementation 'dev.ryanhcode.sable:sable-neoforge-1.21.1:2.0.3'
     implementation 'curse.maven:create-coasters-simulated-1601871:8655742'
+    // Optional, compile-only public API for the fail-closed Engineered 1.1.1 overlap bridge.
+    compileOnly 'curse.maven:coasters-engineered-1643631:8863559'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'
 }

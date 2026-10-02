@@ -15,7 +15,7 @@ Original game-scale ratings: wheel radius 0.4, traction force 20, torque 8, acce
 
 Forces act at the installed chassis strip. Native rail constraints retain guidance; the addon does not set cart velocity, pose, carrier rotation or angular velocity. At dev.3, Fourth Dimension's provider returned no certified equipment interfaces, while preserving its existing retention/readiness/maintenance/PAX vetoes. Its raw-force regression tests do not establish tire compatibility.
 
-Engineered (`coastersengineered`) and Additions (`coasterfins`) presence currently disables cabinet operation until an ownership adapter exists. Native chain-span ownership is checked across every loaded consist member. Other force addons are not yet coordinated or advertised as supported. Concurrent cabinets claiming one consist are conservatively rejected; intentional distributed drive groups need LS104.
+Engineered (`coastersengineered`) 1.1.1 uses a version-pinned public registry bridge: disjoint Launch Systems equipment can run, while an active Engineered launch, trim or stop command at the same cart contact faults the Launch Systems module before it adds force. Additions (`coasterfins`) still disables cabinet operation until an ownership adapter exists. Native chain-span ownership is checked across every loaded consist member. Other force addons are not yet coordinated or advertised as supported. Concurrent cabinets claiming one consist are conservatively rejected; intentional distributed drive groups need LS104.
 
 ## Validation and reproduction
 
