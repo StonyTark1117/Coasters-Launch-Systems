@@ -100,9 +100,10 @@ Dev.28 begins LS401–LS402 world equipment. Original hydraulic and pneumatic la
 | LS801 | Engineered 1.1.1 operating integration | Reuse its existing controls without double force, energy accounting or incompatible assembly assumptions. Loaded 4D and rollback tests pass; disjoint original equipment still works. |
 | LS802 | Magnetized acceleration/braking integration | Inspect and pin its implementation. Define ownership and block unsupported overlaps; demonstrate actual 4D physics before enabling support. |
 | LS803 | Additions station and restraint signals | Audit actual dependencies and force/chain overrides. Imported dispatch remains a request subject to Fourth Dimension readiness and our reservations. |
-| LS804 | Track Styles appearance/geometry integration | Inspect current 1.2.0 separately from the old audit. Mid-curve styles retain contact/clearance and independent equipment visibility; no cosmetic Arrow 4D eligibility. |
+| LS804 | Track Styles 1.1.0-hotfix1 appearance/geometry integration | Inspect and pin the current artifact separately from the old audit. Mid-curve styles retain contact/clearance and independent equipment visibility; no cosmetic Arrow 4D eligibility. |
 | LS805 | FE, Jade, JEI/EMI and Immersion presentation | Each integration works absent/present independently; no duplicated energy or camera transform. |
 | LS806 | PAX final-brake handoff | Only after Fourth Dimension's own shuttle lifecycle gates pass. Its state machine explicitly delegates/returns braking authority; no launch or unloading on normal station passes. |
+| LS807 | Tracks and Balloons 1.2 coexistence audit | Establish its custom-license terms and a public integration seam before loading any artifact. If supported, prove exclusive force, reservation and station ownership with no double operation; otherwise retain independent, disjoint equipment. |
 
 Adapters can be developed alongside core releases, but do not block a standalone release. Unsupported adapters stay disabled and retain their saved provider identity. PAX veto behavior is core compatibility; LS806 is additional positive functionality.
 

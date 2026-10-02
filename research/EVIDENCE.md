@@ -1,6 +1,6 @@
 # Launch Systems research evidence
 
-Research reviewed September 30, 2026. Distinguish published features, inspected implementation, and proposed compatibility. The original research preceded implementation; subsequent Launch Systems code and native fixture evidence are tracked in [validation status](../docs/VALIDATION.md).
+Research first reviewed September 30, 2026; the published-addon inventory was refreshed October 1, 2026. Distinguish published features, inspected implementation, and proposed compatibility. The original research preceded implementation; subsequent Launch Systems code and native fixture evidence are tracked in [validation status](../docs/VALIDATION.md).
 
 ## Local project evidence
 
@@ -14,7 +14,7 @@ Inspected source paths under `../Coasters: Fourth Dimension/src/main/java/dev/fo
 - `vehicle/VehicleOperations.java`: readiness/restraint/retention validation, PAX delegation, and common translation reduction across chassis/carriers when stopping.
 - `shuttle/ShuttleRuntime.java` and `docs/REVISED-SHUTTLE.md`: catch/lift/release ownership and interrupted operation requirements, consulted through project documentation and source references.
 
-The sibling `research/dependency-audit.json` contains earlier exact release coordinates, hashes and signatures. It is inherited evidence, not a fresh compatibility result. Its Track Styles review covers 1.1.0-hotfix1; the current project page now advertises 1.2.0. Its Immersion review covers 0.2.3.
+The sibling `research/dependency-audit.json` contains earlier exact release coordinates, hashes and signatures. It is inherited evidence, not a fresh compatibility result. Its Track Styles review covers 1.1.0-hotfix1, which is also the current CurseForge 1.21.1 release checked in this refresh. Its Immersion review covers 0.2.3.
 
 ### Recovery of the exact pinned artifact, October 1, 2026
 
@@ -45,13 +45,27 @@ Inference: articulated loaded vehicles need a provider/assembly prototype and ow
 | Source | What it supports |
 | --- | --- |
 | [Coasters Simulated](https://modrinth.com/mod/create-coasters-simulated) | Track/chain/vehicle physics and planned hydraulic/station scope; Aeronautics is not required by the base coaster mod. |
-| [Engineered](https://www.curseforge.com/minecraft/mc-mods/coasters-engineered) | Existing generic motor and operating features summarized in PLAN.md; version listed is 1.1.1. |
-| [Magnetized](https://modrinth.com/mod/coasters-magnetized) | Published accelerating/braking tracks. Force model and current adapter remain unverified. |
-| [Additions](https://www.curseforge.com/minecraft/mc-mods/create-coasters-simulated-additions) | Published station/seat/signal/force/chain behavior and dependency list, with 0.2.0 advertised. No implementation inspection this turn. |
-| [Track Styles](https://www.curseforge.com/minecraft/mc-mods/coasters-simulated-track-styles) | Current 1.2.0 listing, appearance transitions and future Arrow 4D. No new JAR inspection. |
+| [Engineered](https://www.curseforge.com/minecraft/mc-mods/coasters-engineered) | 1.1.1 NeoForge 1.21.1 release advertises linear motors, controller sequencing/rollback, observer, splashdown and optional FE. The separately inspected 1.1.1 JAR supplies no stable third-party extension contract. |
+| [Magnetized](https://modrinth.com/mod/coasters-magnetized) | 1.21.1 NeoForge accelerating and braking tracks; current Modrinth page is MIT. No artifact/API inspection or adapter is complete. |
+| [Additions](https://www.curseforge.com/minecraft/mc-mods/create-coasters-simulated-additions) | 0.2.0 beta NeoForge 1.21.1 release adds station, seats/restraints, sensors, force spans, loose chains and Ponder; it also has optional automatic dispatch. No implementation inspection in this project. |
+| [Track Styles](https://www.curseforge.com/minecraft/mc-mods/coasters-simulated-track-styles) | Current 1.21.1 release is 1.1.0-hotfix1, not 1.2.0. It provides styles/models, an in-game style tool and mid-spline transitions; no new JAR inspection. |
+| [Tracks and Balloons](https://www.curseforge.com/minecraft/mc-mods/ctnb) | Current 1.2 NeoForge 1.21.1 release has boost, launch, brake, reverse, station and sensor track alongside decorative styles. It uses a custom license and has not been downloaded or inspected here. |
 | [Immersion](https://www.curseforge.com/minecraft/mc-mods/coasters-immersion) | Advertised camera/launch presentation; inherited artifact caveats remain in the sibling audit. |
 
 A similarly named “Magnetic Velocity Rail” appeared on a third-party repost site. No authoritative project/artifact identity was established during this research; do not count it as a separate verified dependency or rely on its download.
+
+## Ecosystem refresh and coexistence policy, October 1, 2026
+
+This refresh confirms that several current NeoForge 1.21.1 addons already operate a coaster's translation or station flow. Launch Systems remains a standalone core. Presence of another addon is never consent to touch its spans, energy stores, vehicle state or station dispatch.
+
+- **Engineered 1.1.1:** its published motor/controller/FE surface overlaps linear propulsion. The local bytecode inspection above is still the only implementation evidence: no stable extension API or 4D assembly proof was found. Keep both systems disjoint until a pinned artifact exposes an auditable ownership seam; an eventual adapter must choose one force and energy owner for a given span.
+- **Magnetized:** accelerating and braking tracks directly overlap propulsion and braking. Its MIT project page establishes distribution terms, but not a usable API. Support stays disabled until an exact artifact and loaded 4D test establish exclusive span ownership.
+- **Additions 0.2.0:** its station, restraint and signal facilities can complement Launch Systems, but its Track Control force spans and automatic dispatch overlap core motion/controller duties. A future adapter may translate an external dispatch signal into a fresh Launch Systems request only after reservation and Fourth Dimension readiness; it must never bypass either gate or add force to an owned span.
+- **Track Styles 1.1.0-hotfix1:** this is a cosmetic/geometry candidate. Acceptance must prove that a styled or transitioned spline still presents the same validated contact and clearance; style identity cannot grant Arrow or other 4D eligibility. Its Flywheel-dependent rendering remains a separate client concern.
+- **Tracks and Balloons 1.2:** its functional launch/brake/station/reverse tracks duplicate much of the core control surface. Because its release declares a custom license and no artifact/API has been inspected, Launch Systems does not depend on, invoke or mirror it. A future coexistence audit must first establish terms and a public integration seam, then prove no double force or competing station ownership.
+- **Immersion:** presentation may eventually observe an accepted Launch Systems event, but it receives no camera, transform, force or controller authority.
+
+The Fourth Dimension adapter keeps its existing rule: the provider owns carrier rotation, mass, restraints, retention, and any PAX winch state. Launch Systems owns only an accepted translation operation after the provider's readiness and exclusive-ownership checks. All third-party adapters remain absent by default and must be independently safe when the companion mod is missing.
 
 ## Real mechanism references
 
