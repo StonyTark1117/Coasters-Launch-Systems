@@ -42,6 +42,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   private UUID cableChassis;
   private double cableHome;
   private boolean cableMoving;
+  private NativeCableRig.Phase cablePhase = NativeCableRig.Phase.HOME;
   private double target = 3, accelerationLimit = 2, jerkLimit = 4;
 
   public EquipmentCabinetEntity(BlockPos pos, BlockState state) { super(EquipmentContent.ENTITY.get(), pos, state); }
@@ -121,6 +122,8 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   public double cableHome() { return cableHome; }
   /** Saved from the last physical cable step; permits a bounded recovery-only moving catch. */
   public boolean cableMoving() { return cableMoving; }
+  /** Live physical phase for installed-cabinet status; restart recovery remains governed by the persisted journal. */
+  public NativeCableRig.Phase cablePhase() { return cablePhase; }
   /** Journal native carriage allocation before the controller can dispatch a catch. */
   public void installCable(NativeCableRig rig) {
     if (!mechanism().cable() || cableInstalled || cableInUse || !fault.isEmpty())
@@ -128,14 +131,16 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     if (rig.mechanism() != mechanism()) throw new IllegalStateException("Cable carriage mechanism does not match its cabinet");
     if (rig.phase() != NativeCableRig.Phase.HOME || rig.carriage().isRemoved())
       throw new IllegalStateException("Only an available home carriage can be installed");
-    cableCarriage = rig.carriage().getUniqueId(); cableChassis = null; cableHome = rig.homeDistance(); cableInstalled = true; changed();
+    cableCarriage = rig.carriage().getUniqueId(); cableChassis = null; cableHome = rig.homeDistance(); cableInstalled = true;
+    cablePhase = rig.phase(); changed();
   }
   public void retireCable(NativeCableRig rig) {
     if (!mechanism().cable() || !cableInstalled || cableInUse || rig.phase() != NativeCableRig.Phase.HOME
         || !rig.carriage().getUniqueId().equals(cableCarriage) || Math.abs(rig.homeDistance() - cableHome) > 1e-6
         || Math.abs(rig.travel()) >= .03 || Math.abs(rig.speed()) >= .03)
       throw new IllegalStateException("Only a physically home, unlatched cable carriage can be retired");
-    rig.close(); cableInstalled = false; cableCarriage = null; cableChassis = null; cableHome = 0; changed();
+    rig.close(); cableInstalled = false; cableCarriage = null; cableChassis = null; cableHome = 0;
+    cablePhase = NativeCableRig.Phase.HOME; changed();
   }
   public void finishInspectedCableRetirement(UUID carriage) {
     if (!mechanism().cable() || !cableInstalled || cableInUse || armed
@@ -172,7 +177,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
       throw new IllegalStateException("Cable store is unavailable or awaiting cable inspection");
     if (rig.mechanism() != mechanism()) throw new IllegalStateException("Cable carriage mechanism does not match its cabinet");
     rig.engage(chassis);
-    cableChassis = chassis; cableInUse = true; cableMoving = false; changed();
+    cableChassis = chassis; cableInUse = true; cableMoving = false; cablePhase = rig.phase(); changed();
   }
   public void consumeFlywheel(double work) {
     if (mechanism() != Mechanism.FLYWHEEL || work > flywheel.energy() + 1e-8)
@@ -193,6 +198,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     double before = store.energy();
     var phase = rig.phase();
     var motion = rig.step(store, target, shaft, dt);
+    cablePhase = rig.phase();
     observeCableMotion(rig);
     double charged = 0;
     if (mechanism() == Mechanism.FLYWHEEL && phase != NativeCableRig.Phase.ENGAGED && phase != NativeCableRig.Phase.PULLING

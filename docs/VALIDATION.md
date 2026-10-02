@@ -349,3 +349,11 @@ The restart fixture now creates matching hydraulic and pneumatic native carriage
 Hydraulic and pneumatic preparation/verification pairs each passed **16/16** standalone cable cases per process. The final `0.0.1-dev.31` JAR also passed **27 JUnit tests**, **15/15** focused packaged standalone cable GameTests, and **19/19** focused packaged cable GameTests with the pinned Fourth Dimension artifact. Its SHA-256 is `bad57d3c3da878529ccd5352751bfa68e621f3824c39cfd1bcb8d911c4106e6f`. See [restart validation](evidence/cable-dev31-restart.txt) and [artifact hashes](evidence/cable-dev31-artifacts.sha256).
 
 This validates ordinary active-catch recovery only; pinned Arrow pressure restart, moving/return pressure restart, active release, chunk/multiplayer/rendered operation and broader release gates remain open. **The complete release goal remains active.**
+
+## Pressure return shaft-interruption checkpoint — dev.32
+
+An installed pressure cabinet now exposes its live physical carriage phase for operational status. A dedicated packaged GameTest mode waits for the released carriage to enter `RETURNING`, removes the actual Create charging shaft for 100 ticks, and requires the cabinet to retain that non-home carriage without a fault or simulated return force. Once shaft power returns, the same bounded native carriage reaches home and is retired through the normal controller lifecycle.
+
+The ordinary hydraulic and pneumatic interruption cases passed **13/13** focused packaged standalone cable GameTests and **17/17** focused cases with the pinned Fourth Dimension artifact. The normal suites also passed **27 JUnit tests**, **15/15** packaged standalone cable GameTests and **19/19** pinned compatibility cases. The `0.0.1-dev.32` JAR SHA-256 is `14dd50fd2f17ffd7c65a032ff0474de31a1fe9ee8375ebfffef8ace86a015d5c`; see [local validation](evidence/cable-dev32-validation.txt) and [artifact hashes](evidence/cable-dev32-artifacts.sha256).
+
+This covers ordinary return interruption only; pinned Arrow return interruption, pressure restart while returning, active release, chunk/multiplayer/rendered operation and broader release gates remain open. **The complete release goal remains active.**

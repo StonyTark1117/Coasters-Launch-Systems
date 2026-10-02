@@ -37,6 +37,7 @@ import org.joml.Vector3d;
 public final class CableControllerGameTests {
   private static final List<Scene> SCENES = new ArrayList<>();
   private static boolean registered;
+  private static final boolean PRESSURE_RETURN_SHAFT_LOSS = Boolean.getBoolean("coasterslaunchsystems.cableReturnShaftLoss");
   private static final class Scene {
     final RideControllerGameTests.Scene ride;
     final String mode;
@@ -79,11 +80,14 @@ public final class CableControllerGameTests {
     }
   }
   @GameTestGenerator public static List<TestFunction> ride() {
-    var modes = new ArrayList<>(List.of("ordinary_controller_dispatch", "ordinary_controller_power_loss"));
-    if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension"))
+    var modes = PRESSURE_RETURN_SHAFT_LOSS
+        ? new ArrayList<>(List.of("ordinary_hydraulic_controller_return_shaft_loss", "ordinary_pneumatic_controller_return_shaft_loss"))
+        : new ArrayList<>(List.of("ordinary_controller_dispatch", "ordinary_controller_power_loss"));
+    if (!PRESSURE_RETURN_SHAFT_LOSS && net.neoforged.fml.ModList.get().isLoaded("fourthdimension"))
       // The Arrow fixture has two native-coordinate-safe slots; use them for the new pressure adapters.
       modes.addAll(List.of("arrow_hydraulic_controller_shaft_loss", "arrow_pneumatic_controller_shaft_loss"));
-    else modes.addAll(List.of("ordinary_hydraulic_controller_shaft_loss", "ordinary_pneumatic_controller_shaft_loss"));
+    else if (!PRESSURE_RETURN_SHAFT_LOSS)
+      modes.addAll(List.of("ordinary_hydraulic_controller_shaft_loss", "ordinary_pneumatic_controller_shaft_loss"));
     // This shared server keeps upstream 4D rail metadata after a fixture closes.
     // Keep controller rails away from the cable-mechanics suite's slots 0..14.
     var tests = new ArrayList<TestFunction>(); int slot = 17;
@@ -194,6 +198,23 @@ public final class CableControllerGameTests {
             && s.cabinet().cableInUse(),
             "Stored pressure did not retain the physical pull after its charging shaft stopped: " + r.controller.status()
                 + " " + s.cabinet().status() + " " + s.failure);
+        ((CreativeMotorBlockEntity) level.getBlockEntity(s.motor)).generatedSpeed.setValue(64);
+      });
+    }
+    if (s.mode.endsWith("_controller_return_shaft_loss")) {
+      s.at(700, () -> {
+        r.base.helper.assertTrue(s.failure.isEmpty() && s.running && s.cabinet().cableInUse()
+            && s.cabinet().cablePhase() == NativeCableRig.Phase.RETURNING && s.cabinet().fault().isEmpty(),
+            "Pressure cable carriage did not enter its physical return before shaft interruption: " + r.controller.status()
+                + " " + s.cabinet().status() + " phase=" + s.cabinet().cablePhase() + " " + s.failure);
+        ((CreativeMotorBlockEntity) level.getBlockEntity(s.motor)).generatedSpeed.setValue(0);
+        s.interrupted = true;
+      });
+      s.at(800, () -> {
+        r.base.helper.assertTrue(s.failure.isEmpty() && s.interrupted && s.cabinet().cableInUse()
+            && s.cabinet().cablePhase() == NativeCableRig.Phase.RETURNING && s.cabinet().fault().isEmpty(),
+            "Pressure cable return did not retain its shaft-powered carriage while the charging shaft was unavailable: "
+                + r.controller.status() + " " + s.cabinet().status() + " phase=" + s.cabinet().cablePhase() + " " + s.failure);
         ((CreativeMotorBlockEntity) level.getBlockEntity(s.motor)).generatedSpeed.setValue(64);
       });
     }
