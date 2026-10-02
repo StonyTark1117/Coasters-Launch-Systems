@@ -57,6 +57,7 @@ neoForge {
             if (project.hasProperty('lsCableRestartPhase')) systemProperty 'coasterslaunchsystems.cableRestartPhase', project.property('lsCableRestartPhase')
             if (project.hasProperty('lsSkidRestartPhase')) systemProperty 'coasterslaunchsystems.skidRestartPhase', project.property('lsSkidRestartPhase')
             if (project.hasProperty('lsLinearRestartPhase')) systemProperty 'coasterslaunchsystems.linearRestartPhase', project.property('lsLinearRestartPhase')
+            if (project.hasProperty('lsChunkUnloadProbe')) systemProperty 'coasterslaunchsystems.chunkUnloadProbe', 'true'
             if (project.hasProperty('lsCableReturnShaftLoss')) systemProperty 'coasterslaunchsystems.cableReturnShaftLoss', project.property('lsCableReturnShaftLoss')
         }
         configureEach {

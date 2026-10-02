@@ -18,6 +18,7 @@ import dev.silvergold.simulatedcoasters.track.graph.CoasterPathTrackFrame;
 import java.util.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import org.joml.Vector3d;
 
@@ -28,6 +29,15 @@ public final class RideControllers {
   private static final Map<ServerLevel, Map<UUID, Long>> REGISTRATION_GRACE = new HashMap<>();
   private static final long STARTUP_REGISTRATION_GRACE_TICKS = 20;
   private RideControllers() {}
+
+  /**
+   * Reads a block entity only from an already loaded chunk. Runtime ownership checks must never
+   * create an UNKNOWN ticket, because that would keep an unavailable linked chunk loaded forever.
+   */
+  public static BlockEntity loadedBlockEntity(ServerLevel level, BlockPos position) {
+    var chunk = level.getChunkSource().getChunkNow(position.getX() >> 4, position.getZ() >> 4);
+    return chunk == null ? null : chunk.getBlockEntity(position);
+  }
   public static void register(ServerLevel level, RideControllerEntity controller) {
     CONTROLLERS.computeIfAbsent(level, ignored -> new LinkedHashMap<>()).put(controller.getBlockPos(), new Entry(controller, level.getGameTime()));
   }
@@ -116,7 +126,7 @@ public final class RideControllers {
       List<RideControllerEntity.Module> inspectedOrphans) {
     for (var entry : CONTROLLERS.getOrDefault(level, Map.of()).values()) {
       var other = entry.controller();
-      if (other.isRemoved() || !level.hasChunkAt(other.getBlockPos()) || level.getBlockEntity(other.getBlockPos()) != other) continue;
+      if (other.isRemoved() || !level.hasChunkAt(other.getBlockPos()) || loadedBlockEntity(level, other.getBlockPos()) != other) continue;
       if (other == source || other == target || !other.armed() && other.reservation().isEmpty()) continue;
       if (other.claimedSpans().stream().anyMatch(s -> route.spans().stream().anyMatch(r -> r.sameRail(s.from(), s.to())))) return false;
     }
@@ -190,7 +200,7 @@ public final class RideControllers {
     var modules = new ArrayList<EquipmentCabinetEntity>();
     for (var linked : controller.modules()) {
       if (!level.hasChunkAt(linked.position())) { controller.fail("Linked module chunk unavailable at " + linked.position()); return; }
-      if (!(level.getBlockEntity(linked.position()) instanceof EquipmentCabinetEntity module)) {
+      if (!(loadedBlockEntity(level, linked.position()) instanceof EquipmentCabinetEntity module)) {
         controller.fail("Linked module missing or replaced at " + linked.position()); return;
       }
       if (!linked.identity().equals(module.identity()) || owner(level, module) != controller) {

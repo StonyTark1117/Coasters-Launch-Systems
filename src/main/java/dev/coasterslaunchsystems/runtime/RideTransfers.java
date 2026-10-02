@@ -54,7 +54,7 @@ public final class RideTransfers {
     if (track == null) throw new IllegalStateException("Transfer rail is unavailable");
     var launch = new ArrayList<EquipmentCabinetEntity>(); var exit = new ArrayList<EquipmentCabinetEntity>(); var fins = new ArrayList<EquipmentCabinetEntity>();
     for (var link : links) {
-      if (!level.hasChunkAt(link.position()) || !(level.getBlockEntity(link.position()) instanceof EquipmentCabinetEntity module)
+      if (!level.hasChunkAt(link.position()) || !(RideControllers.loadedBlockEntity(level, link.position()) instanceof EquipmentCabinetEntity module)
           || !link.identity().equals(module.identity()) || !owner.identity().equals(module.controllerIdentity())
           || !owner.position().equals(module.controllerPosition()) || liveOwner && RideControllers.owner(level, module) != controller
           || !EquipmentRuntime.available(level, module) || !module.armed() || !module.fault().isEmpty())

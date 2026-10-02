@@ -70,7 +70,7 @@ final class CableControllers {
   static void evaluate(ServerLevel level, RideControllerEntity controller, DirectedTrack track, double dt) {
     var cabinets = new ArrayList<EquipmentCabinetEntity>();
     for (var linked : controller.modules()) {
-      if (!level.hasChunkAt(linked.position()) || !(level.getBlockEntity(linked.position()) instanceof EquipmentCabinetEntity cabinet)
+      if (!level.hasChunkAt(linked.position()) || !(RideControllers.loadedBlockEntity(level, linked.position()) instanceof EquipmentCabinetEntity cabinet)
           || !linked.identity().equals(cabinet.identity()) || RideControllers.owner(level, cabinet) != controller
           || !cabinet.armed() || !cabinet.fault().isEmpty()) {
         controller.fail("Cable controller linked equipment is missing, disarmed or faulted"); return;

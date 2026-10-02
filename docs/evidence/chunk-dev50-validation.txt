@@ -1,0 +1,27 @@
+Launch Systems dev.50 chunk-ticket lifecycle checkpoint
+Date: 2026-10-02
+
+Focused packaged dedicated-server command:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew classes runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_chunk_unload -PlsChunkUnloadProbe
+
+Observed result:
+  LS_CHUNK_UNLOAD remote=[256, -256] loaded=false
+  ======== 1 GAME TESTS COMPLETE IN 457.2 ms ========
+  All 1 required tests passed :)
+
+Final artifact SHA-256:
+  57051f2d2559768f1d8816b1e6a767d105973b827eb367bab83830c86e7b772d  coasters-launch-systems-0.0.1-dev.50.jar
+
+Complete packaged standalone matrix:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew test classes runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged
+  27 JUnit tests passed
+  ======== 125 GAME TESTS COMPLETE IN 3.860 min ========
+  All 125 required tests passed :)
+
+Scope:
+  The fixture uses ServerLevel#setChunkForced(true), releases that actual forced ticket with
+  ServerLevel#setChunkForced(false), and asserts that the dedicated server subsequently reports
+  the chunk unavailable. It validates the test harness and non-loading runtime ownership reads.
+  It does not establish an active-vehicle unload: Sable intentionally retains a chunk inhabited
+  by a live native body. Packaged multiplayer, late join, rendered interaction, and the broader
+  0.4.0 acceptance gates remain open.
