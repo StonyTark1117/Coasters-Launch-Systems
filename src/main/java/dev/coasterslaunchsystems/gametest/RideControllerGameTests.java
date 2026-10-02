@@ -54,7 +54,7 @@ public final class RideControllerGameTests {
     Scene(GameTestHelper helper, int slot, String mode) { this(helper, slot, mode, 240); }
     Scene(GameTestHelper helper, int slot, String mode, int height) {
       base = new OrdinaryPassengerGameTests.Scene(helper, slot, height, -896); this.mode = mode;
-      reverse = mode.contains("reverse"); linked = mode.contains("linked"); fourthDimension = mode.startsWith("arrow") || mode.startsWith("free_spin"); controllerPosition = base.from.offset(4, -2, 8);
+      reverse = mode.contains("reverse"); linked = mode.contains("linked"); fourthDimension = mode.startsWith("arrow") || mode.startsWith("legacy") || mode.startsWith("free_spin") || mode.startsWith("revised"); controllerPosition = base.from.offset(4, -2, 8);
       if (!fourthDimension) { base.cart(reverse ? 56 : 8); if (linked) base.cart(reverse ? 50 : 14); }
       else prepareFourthDimension();
     }
@@ -62,11 +62,13 @@ public final class RideControllerGameTests {
       var level = base.level;
       ((dev.silvergold.simulatedcoasters.track.anchor.CoasterAnchorpointBlockEntity) level.getBlockEntity(base.from)).removeAnchorPeerCurve(level, base.to);
       var designType = type("dev.fourthdimension.track.TrackDesign");
-      Object design = Arrays.stream(designType.getEnumConstants()).filter(v -> ((Enum<?>) v).name().equals(mode.startsWith("arrow") ? "ARROW" : "FREE_SPIN")).findFirst().orElseThrow();
+      String designName = mode.startsWith("arrow") ? "ARROW" : mode.startsWith("legacy") ? "LEGACY"
+          : mode.startsWith("free_spin") ? "FREE_SPIN" : "REVISED";
+      Object design = Arrays.stream(designType.getEnumConstants()).filter(v -> ((Enum<?>) v).name().equals(designName)).findFirst().orElseThrow();
       var player = net.neoforged.neoforge.common.util.FakePlayerFactory.get(level,
           new com.mojang.authlib.GameProfile(UUID.randomUUID(), "LSController4D"));
       player.setGameMode(net.minecraft.world.level.GameType.CREATIVE); player.setPos(base.to.getX() + 2, base.to.getY() + 1, base.to.getZ());
-      var trackItem = (net.minecraft.world.item.Item) ((java.util.function.Supplier<?>) readStatic("dev.fourthdimension.track.TrackItems", "ARROW")).get();
+      var trackItem = (net.minecraft.world.item.Item) ((java.util.function.Supplier<?>) readStatic("dev.fourthdimension.track.TrackItems", designName)).get();
       player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, trackItem.getDefaultInstance());
       invoke("dev.fourthdimension.track.TrackPlacement", "connect", new Class<?>[] {net.minecraft.server.level.ServerLevel.class, BlockPos.class, BlockPos.class, designType,
           net.minecraft.world.entity.player.Player.class, net.minecraft.world.item.ItemStack.class}, level, base.from, base.to, design, player, player.getMainHandItem());

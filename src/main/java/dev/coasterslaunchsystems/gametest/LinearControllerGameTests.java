@@ -95,7 +95,8 @@ public final class LinearControllerGameTests {
     for (var mechanism : List.of(Mechanism.LSM, Mechanism.LIM)) {
       var modes = new ArrayList<>(List.of("single_forward", "linked_forward", "linked_reverse", "power_loss"));
       if (mechanism == Mechanism.LSM) modes.add("mixed_forward");
-      if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of("arrow_forward", "arrow_linked_reverse", "free_spin_forward"));
+      if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of(
+          "arrow_forward", "arrow_linked_reverse", "legacy_forward", "free_spin_forward", "revised_forward"));
       for (String mode : modes) {
         int selected = slot++;
         tests.add(new TestFunction("launchsystems_linear_sections", "coasterslaunchsystems_linear." + mechanism.name().toLowerCase(Locale.ROOT) + "_section_" + mode,

@@ -1,0 +1,21 @@
+Launch Systems dev.41 focused Fourth Dimension linear validation
+
+Pinned optional provider:
+  /home/braydon/.cache/coasterslaunchsystems-validation/fd-provider-36775040079/libs/coasters-fourth-dimension-0.9.0-dev.1.jar
+  SHA-256 027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16
+
+Unit/build command:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew test classes --offline --console=plain --no-daemon --max-workers=2
+Result: BUILD SUCCESSFUL; 27 JUnit tests passed.
+
+Packaged focused command:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsFourthDimensionJar=/home/braydon/.cache/coasterslaunchsystems-validation/fd-provider-36775040079/libs/coasters-fourth-dimension-0.9.0-dev.1.jar -PlsTestNamespaces=coasterslaunchsystems_linear
+Result: BUILD SUCCESSFUL; all 37 required tests passed in 59.59 seconds.
+
+Added family results:
+  LSM Legacy:  riders=8 mass=28.4 peak_speed=2.968573271088019 steps=203 accounting_error=2.2426505097428162E-13 joint_error=2.7991889912553193E-4 rotor_response=0.389800342490462
+  LIM Legacy:  riders=8 mass=28.4 peak_speed=2.939166825955629 steps=237 accounting_error=2.2581936320875684E-13 joint_error=2.715562909646827E-4 rotor_response=0.3346532342374783
+  LSM Revised: riders=8 mass=48.4 peak_speed=2.917325737092984 steps=243 accounting_error=2.2382096176443156E-13 joint_error=1.9281964563953156E-4 rotor_response=0.24498159815291187
+  LIM Revised: riders=8 mass=48.4 peak_speed=2.8025176828148735 steps=305 accounting_error=2.2715163083830703E-13 joint_error=1.9862587555047993E-4 rotor_response=0.24523227535031963
+
+The selected namespace also includes existing Arrow single/coupled-reverse and Free Spin cases for both motors. The 4D fixture uses its established non-overlapping chassis interfaces; a discarded exploratory run confirmed that overwriting upstream-owned chassis hardware makes the provider withdraw its certificate and the controller fail closed.
