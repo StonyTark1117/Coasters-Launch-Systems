@@ -25,8 +25,9 @@ public final class LinearControllerGameTests {
   private static final List<Scene> SCENES = new ArrayList<>();
   private static boolean registered;
   private static boolean swing(String mode) {
-    return mode.equals("swing_forward") || mode.equals("swing_power_loss") || mode.equals("arrow_swing_forward");
+    return mode.equals("swing_forward") || mode.equals("swing_power_loss") || mode.equals("arrow_swing_forward") || mode.equals("arrow_swing_power_loss");
   }
+  private static boolean swingPowerLoss(String mode) { return mode.equals("swing_power_loss") || mode.equals("arrow_swing_power_loss"); }
   private static final class Scene {
     final RideControllerGameTests.Scene ride;
     final Mechanism mechanism;
@@ -49,7 +50,7 @@ public final class LinearControllerGameTests {
       try {
         // Interrupt the return leg only after the first end-bank reversal has become live. This
         // proves a swing program cannot silently replay after authority is restored.
-        if (r.mode.equals("swing_power_loss") && !s.interrupted && r.controller.swingPassIndex() == 1
+        if (swingPowerLoss(r.mode) && !s.interrupted && r.controller.swingPassIndex() == 1
             && r.controller.phase() == RideControllerEntity.State.RUNNING && s.steps > 150) {
           for (var p : r.motors)
             ((com.simibubi.create.content.kinetics.motor.CreativeMotorBlockEntity) r.base.level.getBlockEntity(p)).generatedSpeed.setValue(0);
@@ -87,7 +88,7 @@ public final class LinearControllerGameTests {
         r.base.helper.assertTrue(s.maxError < 1e-7, "Coordinated linear bank duplicated native work/resources: " + s.maxError);
         s.work += work; s.spent += spent; s.thermal += heat; s.snapshot();
         r.base.helper.assertTrue(r.base.riders.stream().allMatch(net.minecraft.world.entity.animal.Pig::isPassenger), "Linear launch lost a passenger");
-        if (r.mode.equals("swing_power_loss") && s.interrupted && !s.restored && r.controller.phase() == RideControllerEntity.State.FAULT) {
+        if (swingPowerLoss(r.mode) && s.interrupted && !s.restored && r.controller.phase() == RideControllerEntity.State.FAULT) {
           s.interruptedSteps = s.steps;
           for (var p : r.motors)
             ((com.simibubi.create.content.kinetics.motor.CreativeMotorBlockEntity) r.base.level.getBlockEntity(p)).generatedSpeed.setValue(64);
@@ -117,12 +118,13 @@ public final class LinearControllerGameTests {
       if (mechanism == Mechanism.LSM) modes.addAll(List.of("mixed_forward", "swing_forward", "swing_power_loss"));
       if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of(
           "arrow_forward", "arrow_linked_reverse", "arrow_plate_loss", "legacy_forward", "free_spin_forward", "revised_forward", "pax_veto"));
-      if (mechanism == Mechanism.LSM && net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.add("arrow_swing_forward");
+      if (mechanism == Mechanism.LSM && net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of("arrow_swing_forward", "arrow_swing_power_loss"));
       for (String mode : modes) {
-        int selected = slot++;
         boolean fourthDimension = mode.startsWith("arrow") || mode.startsWith("legacy") || mode.startsWith("free_spin")
             || mode.startsWith("revised") || mode.startsWith("pax");
-        int fixtureSlot = fourthDimension ? -1 - fourthDimensionSlot++ : selected;
+        // Optional-provider fixtures have their own compact lane; do not let an added provider
+        // case move an ordinary fixture beyond the native near-origin equipment bound.
+        int fixtureSlot = fourthDimension ? -1 - fourthDimensionSlot++ : slot++;
         // Sable's native world coordinates are bounded. Keep all 4D sections in a compact,
         // negative near-origin lane so their upstream rail records never overlap ordinary fixtures.
         String namespace = fourthDimension ? "coasterslaunchsystems_4d_linear"
@@ -202,11 +204,11 @@ public final class LinearControllerGameTests {
     });
     r.at(swing(r.mode) ? 7600 : 1250, () -> {
       try {
-        if (r.mode.equals("power_loss") || r.mode.equals("arrow_plate_loss") || r.mode.equals("thermal_loss") || r.mode.equals("swing_power_loss")) {
+        if (r.mode.equals("power_loss") || r.mode.equals("arrow_plate_loss") || r.mode.equals("thermal_loss") || swingPowerLoss(r.mode)) {
           r.base.helper.assertTrue(s.failure.isEmpty() && r.controller.phase() == RideControllerEntity.State.FAULT && s.steps == s.interruptedSteps
               && r.controller.reservation().size() == 1 && s.drives().stream().allMatch(c -> c.energy() > 0)
               && r.base.parents.stream().allMatch(b -> Math.abs(r.base.speed(b)) < .03 && EquipmentRuntime.activeFinClamps(r.base.level, b.getUniqueId()) > 0)
-              && (!r.mode.equals("swing_power_loss") || s.interrupted && s.restored), "Interrupted linear field replayed a launch: " + s.failure);
+              && (!swingPowerLoss(r.mode) || s.interrupted && s.restored), "Interrupted linear field replayed a launch: " + s.failure);
           System.out.println("LS_LINEAR_INTERRUPTION mechanism=" + s.mechanism + " mode=" + r.mode + " phase=" + r.controller.phase() + " lease=" + r.controller.reservation().size()
               + " steps=" + s.steps + " spent=" + s.spent + " work=" + s.work + " accounting_error=" + s.maxError);
           r.base.helper.succeed(); return;
