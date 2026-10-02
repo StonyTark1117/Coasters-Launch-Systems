@@ -21,7 +21,7 @@ public final class LinearRestartGameTests {
   private static final BlockPos FROM = new BlockPos(32 + SLOT * 48, 192, -896);
   private static final BlockPos CONTROLLER = FROM.offset(4, -2, 8);
 
-  private record RestartCase(boolean arrow, Mechanism mechanism) {}
+  private record RestartCase(String family, Mechanism mechanism) { boolean fourthDimension() { return !family.equals("ordinary"); } }
 
   private LinearRestartGameTests() {}
 
@@ -30,7 +30,7 @@ public final class LinearRestartGameTests {
     String phase = System.getProperty("coasterslaunchsystems.linearRestartPhase", "");
     if (phase.isEmpty()) return List.of();
     var test = restartCase(phase);
-    if (test.arrow() && !ModList.get().isLoaded("fourthdimension"))
+    if (test.fourthDimension() && !ModList.get().isLoaded("fourthdimension"))
       throw new IllegalStateException("Arrow linear restart validation requires the pinned Fourth Dimension adapter");
     return List.of(new TestFunction("launchsystems_linear_restart", "coasterslaunchsystems_linear_restart.saved_linear_restart_" + phase.toLowerCase(),
         "coasterslaunchsystems_linear_restart:empty", 700, 0, true, LinearRestartGameTests::run));
@@ -44,19 +44,25 @@ public final class LinearRestartGameTests {
 
   private static RestartCase restartCase(String phase) {
     return switch (phase) {
-      case "prepare", "verify" -> new RestartCase(false, Mechanism.LSM);
-      case "prepareArrow", "verifyArrow" -> new RestartCase(true, Mechanism.LSM);
-      case "prepareLIM", "verifyLIM" -> new RestartCase(false, Mechanism.LIM);
-      case "prepareArrowLIM", "verifyArrowLIM" -> new RestartCase(true, Mechanism.LIM);
-      default -> throw new IllegalArgumentException("Set lsLinearRestartPhase to prepare/verify, prepareArrow/verifyArrow, prepareLIM/verifyLIM or prepareArrowLIM/verifyArrowLIM");
+      case "prepare", "verify" -> new RestartCase("ordinary", Mechanism.LSM);
+      case "prepareArrow", "verifyArrow" -> new RestartCase("arrow", Mechanism.LSM);
+      case "prepareLIM", "verifyLIM" -> new RestartCase("ordinary", Mechanism.LIM);
+      case "prepareArrowLIM", "verifyArrowLIM" -> new RestartCase("arrow", Mechanism.LIM);
+      case "prepareLegacy", "verifyLegacy" -> new RestartCase("legacy", Mechanism.LSM);
+      case "prepareLegacyLIM", "verifyLegacyLIM" -> new RestartCase("legacy", Mechanism.LIM);
+      case "prepareFreeSpin", "verifyFreeSpin" -> new RestartCase("free_spin", Mechanism.LSM);
+      case "prepareFreeSpinLIM", "verifyFreeSpinLIM" -> new RestartCase("free_spin", Mechanism.LIM);
+      case "prepareRevised", "verifyRevised" -> new RestartCase("revised", Mechanism.LSM);
+      case "prepareRevisedLIM", "verifyRevisedLIM" -> new RestartCase("revised", Mechanism.LIM);
+      default -> throw new IllegalArgumentException("Set lsLinearRestartPhase to an ordinary, Arrow, Legacy, Free Spin or Revised prepare/verify mechanism pair");
     };
   }
 
   private static void prepare(GameTestHelper helper, RestartCase test) {
-    var scene = new RideControllerGameTests.Scene(helper, SLOT, test.arrow() ? "arrow_forward" : "single_forward", 192);
+    var scene = new RideControllerGameTests.Scene(helper, SLOT, test.fourthDimension() ? test.family() + "_forward" : "single_forward", 192);
     scene.driveMechanism = test.mechanism();
     scene.at(40, () -> {
-      if (test.arrow()) scene.boardFourthDimension(); else for (int seat = 0; seat < 4; seat++) scene.base.board(scene.base.parents.getFirst(), seat);
+      if (test.fourthDimension()) scene.boardFourthDimension(); else for (int seat = 0; seat < 4; seat++) scene.base.board(scene.base.parents.getFirst(), seat);
     });
     scene.at(55, () -> {
       for (var body : scene.base.parents) body.getPlot().getEmbeddedLevelAccessor().setBlock(
@@ -77,7 +83,7 @@ public final class LinearRestartGameTests {
       helper.assertTrue(scene.controller.phase() == RideControllerEntity.State.RUNNING && scene.controller.reservation().size() == 1
           && drives.size() == 5 && drives.stream().allMatch(cabinet -> cabinet.armed() && cabinet.energy() > 0 && cabinet.energy() < LinearMotor.CAPACITY),
           "Live linear section did not reach a persisted running state: " + scene.controller.status());
-      System.out.println("LS_LINEAR_RESTART mode=" + (test.arrow() ? "arrow" : "ordinary") + " mechanism=" + test.mechanism() + " prepared controller=" + scene.controller.identity() + " lease=" + scene.controller.reservation().size()
+      System.out.println("LS_LINEAR_RESTART mode=" + test.family() + " mechanism=" + test.mechanism() + " prepared controller=" + scene.controller.identity() + " lease=" + scene.controller.reservation().size()
           + " drives=" + drives.size() + " energy=" + drives.getFirst().energy() + " heat=" + drives.getFirst().heat());
       helper.succeed();
     });
@@ -96,7 +102,7 @@ public final class LinearRestartGameTests {
                 && cabinet.energy() < LinearMotor.CAPACITY && cabinet.targetSpeed() == 3 && cabinet.accelerationLimit() == 2 && cabinet.jerkLimit() == 4),
             "Saved linear launch did not retain its lease/configuration while failing closed: "
                 + (controller == null ? "missing controller" : controller.status()));
-        System.out.println("LS_LINEAR_RESTART mode=" + (test.arrow() ? "arrow" : "ordinary") + " mechanism=" + test.mechanism() + " verified controller=" + controller.identity() + " lease=" + controller.reservation().size()
+        System.out.println("LS_LINEAR_RESTART mode=" + test.family() + " mechanism=" + test.mechanism() + " verified controller=" + controller.identity() + " lease=" + controller.reservation().size()
             + " drives=" + drives.size() + " energy=" + drives.getFirst().energy() + " heat=" + drives.getFirst().heat());
         helper.succeed();
       });

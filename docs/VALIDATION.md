@@ -19,7 +19,7 @@ Updated October 2, 2026. The goal is a complete 0.4.0 release validated and push
 | Recipes, models, tutorials and Ponder scenes | Twenty-one original recipes and models are present. Four Ponder scenes now cover controller binding, LSM/LIM hardware, brake interfaces, and cable launches; rendered walkthrough and three complete demonstration rides remain |
 | Packaged client and dedicated-server startup | Packaged client and dedicated-server startup passed; rendered scene/ride and multiplayer checks remain |
 | Native validation repeatability | Two fresh packaged full-matrix runs passed 125/125 with the dev.51 JAR; dev.52 passed a 125/125 standalone matrix and a 186/186 pinned Fourth Dimension matrix; dev.53 passed 127/127 standalone and 188/188 pinned Fourth Dimension matrices with pressure guide-loss coverage. Dev.54 introduced the bounded swing program; dev.55 added the pinned Arrow return-leg fault case; dev.56 validates the bounded program for both LSM and LIM; dev.57 extends its pinned Fourth Dimension swing matrix across Arrow, Legacy, Free Spin and Revised families; dev.58 adds linked Arrow normal operation with tail-gated endpoint braking. Both passive-magnet directions recorded live physical contact, cabinet availability and nonzero braking work. The old dev.9 CI cause remains unknown, but did not recur in these independent disposable worlds. |
-| 0.4.0 artifact, commit and verified private remote push | Dev.60 packaged validation checkpoint passed; the final 0.4.0 release remains gated by the items below. |
+| 0.4.0 artifact, commit and verified private remote push | Dev.61 focused lifecycle checkpoint passed; the final 0.4.0 release remains gated by the items below. |
 
 The native force fixture does not prescribe cart velocity or teleport a train. It creates a near-origin Coasters track/cart, queues timestep-scaled forces on the real chassis, and verifies translation, retained engagement and final stop. It is foundation evidence only, not an occupied gameplay or articulated-vehicle acceptance test.
 
@@ -563,3 +563,8 @@ Linked Arrow LSM/LIM return-leg source loss now retains both reserved chassis an
 ## Arrow linear thermal-interruption checkpoint — dev.60
 
 Pinned Arrow LSM/LIM sections now prove controller thermal shutdown after live provider-owned launch work. Each case retains its lease and spring-fin hold without replay. Dev.60 passed 29 JUnit tests, 131/131 standalone GameTests in 4.168 minutes, focused 36/36 in 9.647 minutes, and 214/214 combined GameTests in 18.17 minutes. Evidence: [standalone](evidence/standalone-dev60-full.txt), [focused](evidence/linear-dev60-arrow-thermal.txt), [combined](evidence/combined-dev60-full.txt), and [artifact hashes](evidence/dev60-artifacts.sha256).
+
+
+## Fourth Dimension linear restart-family checkpoint — dev.61
+
+The retained-world linear restart harness now runs Legacy, Free Spin, and Revised designs as well as ordinary and Arrow. Each LSM/LIM prepare/verify pair saved a live provider-owned section and reopened it with the controller disarmed in inspection, the one-car lease and five cabinet identities/configuration intact, and no saved field replay. All twelve server phases passed their single required GameTest. Evidence: [restart logs](evidence/dev61-linear-restart), [artifact hashes](evidence/dev61-artifacts.sha256).
