@@ -93,7 +93,7 @@ public final class LinearControllerGameTests {
     }
   }
   @GameTestGenerator public static List<TestFunction> sections() {
-    var tests = new ArrayList<TestFunction>(); int slot = 0;
+    var tests = new ArrayList<TestFunction>(); int slot = 0, fourthDimensionSlot = 0;
     for (var mechanism : List.of(Mechanism.LSM, Mechanism.LIM)) {
       var modes = new ArrayList<>(List.of("single_forward", "linked_forward", "linked_reverse", "power_loss", "thermal_loss"));
       if (mechanism == Mechanism.LSM) modes.add("mixed_forward");
@@ -101,10 +101,15 @@ public final class LinearControllerGameTests {
           "arrow_forward", "arrow_linked_reverse", "arrow_plate_loss", "legacy_forward", "free_spin_forward", "revised_forward", "pax_veto"));
       for (String mode : modes) {
         int selected = slot++;
-        String namespace = mode.equals("arrow_plate_loss") ? "coasterslaunchsystems_4d_linear"
+        boolean fourthDimension = mode.startsWith("arrow") || mode.startsWith("legacy") || mode.startsWith("free_spin")
+            || mode.startsWith("revised") || mode.startsWith("pax");
+        int fixtureSlot = fourthDimension ? -1 - fourthDimensionSlot++ : selected;
+        // Sable's native world coordinates are bounded. Keep all 4D sections in a compact,
+        // negative near-origin lane so their upstream rail records never overlap ordinary fixtures.
+        String namespace = fourthDimension ? "coasterslaunchsystems_4d_linear"
             : mode.equals("thermal_loss") ? "coasterslaunchsystems_thermal_linear" : "coasterslaunchsystems_linear";
-        tests.add(new TestFunction("launchsystems_linear_sections", namespace + "." + mechanism.name().toLowerCase(Locale.ROOT) + "_section_" + mode,
-            namespace + ":empty", 1600, 0, true, helper -> run(new Scene(helper, selected, mode, mechanism))));
+        tests.add(new TestFunction(namespace + "_sections", namespace + "." + mechanism.name().toLowerCase(Locale.ROOT) + "_section_" + mode,
+            namespace + ":empty", 1600, 0, true, helper -> run(new Scene(helper, fixtureSlot, mode, mechanism))));
       }
     }
     return tests;
