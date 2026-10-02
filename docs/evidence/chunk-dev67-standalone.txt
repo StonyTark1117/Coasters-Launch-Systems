@@ -1,0 +1,14 @@
+# Dev.67 standalone active chunk-unavailability probe
+
+Source commit: 1fd7189516772b1d10208a485a818e4e25ebe718
+Launch Systems JAR SHA-256: d234f7d4ac0552f08e307c9c64001a45cd142a7bad3d2b323ca63038e7c34e28
+
+Command:
+
+JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer -PlsPackaged -PlsChunkUnloadProbe -PlsTestNamespaces=coasterslaunchsystems_chunk_unload --offline --console=plain --no-daemon --max-workers=2
+
+Result: 2 required GameTests passed in 1.520 seconds.
+
+The remote forced-chunk control unloaded after its ticket was released. The occupied ordinary cart on a running, reserved controller section became unavailable through the normal scheduler; its controller faulted closed with the exact reservation retained. Reforcing the route did not rearm or replay the controller.
+
+The source-only full matrix command was started after this focused result but was terminated before completion because an unrelated shared client starved its server process. It is not validation evidence for dev.67.

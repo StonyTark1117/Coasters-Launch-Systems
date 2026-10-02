@@ -1,0 +1,15 @@
+# Dev.67 pinned Fourth Dimension active chunk-unavailability probe
+
+Source commit: 1fd7189516772b1d10208a485a818e4e25ebe718
+Launch Systems JAR SHA-256: d234f7d4ac0552f08e307c9c64001a45cd142a7bad3d2b323ca63038e7c34e28
+Pinned provider JAR: /home/braydon/.cache/coasterslaunchsystems-validation/fd-provider-36775040079/libs/coasters-fourth-dimension-0.9.0-dev.1.jar
+
+Command:
+
+JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer -PlsPackaged -PlsChunkUnloadProbe -PlsTestNamespaces=coasterslaunchsystems_chunk_unload -PlsFourthDimensionJar=/home/braydon/.cache/coasterslaunchsystems-validation/fd-provider-36775040079/libs/coasters-fourth-dimension-0.9.0-dev.1.jar --offline --console=plain --no-daemon --max-workers=2
+
+Result: 4 required GameTests passed in 4.645 seconds.
+
+The suite covers the remote forced-chunk control plus occupied ordinary, Arrow, and individual Free Spin controller sections. In every vehicle case, the active chassis became unavailable after the route tickets were released, the controller entered FAULT, and its exact reservation remained after the route chunks were forced back in. The accepted fail-closed diagnostics are Reserved route chunk is unavailable and Reserved chassis unavailable; ownership retained. Neither diagnostic permits a replay after reload.
+
+This is a focused lifecycle slice. It does not establish the same behavior for Legacy, Revised, PAX, coupled Arrow, multiplayer/reconnect, or a real player-built survival ride.
