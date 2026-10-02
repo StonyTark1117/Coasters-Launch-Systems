@@ -51,6 +51,10 @@ public final class CableRecovery {
       if (catchJoint != null && catchJoint.isValid()) catchJoint.remove();
       caught = chassis; catchJoint = joint;
     }
+    void releaseCatch(UUID chassis) {
+      if (!caught(chassis)) throw new IllegalStateException("Saved native catch joint changed during inspection");
+      catchJoint.remove(); catchJoint = null; caught = null;
+    }
   }
   private static final Map<ServerLevel, Map<UUID, Hold>> HOLDS = new HashMap<>();
   private static final Map<ServerLevel, Set<UUID>> WARNED = new HashMap<>();
@@ -171,6 +175,48 @@ public final class CableRecovery {
     cabinet.finishInspectedCableRetirement(id);
   }
 
+  /**
+   * Releases a reloaded occupied catch only after a separate, live friction-fin clamp holds
+   * every chassis in the saved consist. This path never arms or dispatches the controller.
+   */
+  public static void inspectReleaseActive(ServerLevel level, EquipmentCabinetEntity cabinet) {
+    if (cabinet.mechanism() != Mechanism.FLYWHEEL || !cabinet.cableInstalled() || !cabinet.cableInUse()
+        || cabinet.armed() || cabinet.fault().isEmpty() || cabinet.cableCarriage() == null || cabinet.cableChassis() == null)
+      throw new IllegalArgumentException("Only a disarmed, reloaded active cable catch can be released by inspection");
+    var hold = HOLDS.getOrDefault(level, Map.of()).get(cabinet.cableCarriage());
+    if (hold == null || !hold.valid() || !hold.caught(cabinet.cableChassis()))
+      throw new IllegalArgumentException("Saved active catch has no verified native guide and joint");
+    if (hold.home().distance(NativeCableRig.worldPoint(hold.carriage(), hold.point())) >= .03)
+      throw new IllegalArgumentException("Return the retained carriage to its physical home before active release");
+    if (cabinet.controllerIdentity() == null || cabinet.controllerPosition() == null || !level.hasChunkAt(cabinet.controllerPosition())
+        || !(level.getBlockEntity(cabinet.controllerPosition()) instanceof RideControllerEntity controller)
+        || !cabinet.controllerIdentity().equals(controller.identity()) || controller.armed())
+      throw new IllegalArgumentException("Linked controller is unavailable or armed during active-catch inspection");
+    var capture = inspectCapture(level, cabinet, hold, true);
+    if (!controller.reservation().equals(capture.consist()))
+      throw new IllegalArgumentException("Linked controller no longer owns exactly the saved captured consist");
+    var linkedModules = controller.modules().stream().map(RideControllerEntity.Module::identity)
+        .collect(java.util.stream.Collectors.toSet());
+    var pipeline = SubLevelContainer.getContainer(level).physicsSystem().getPipeline();
+    for (var chassis : capture.consist()) {
+      if (!EquipmentRuntime.activeFinClampFrom(level, chassis, linkedModules))
+        throw new IllegalArgumentException("Apply a rated linked friction-fin clamp to every captured chassis before release");
+      if (!(SubLevelContainer.getContainer(level).getSubLevel(chassis) instanceof ServerSubLevel body)
+          || pipeline.getLinearVelocity(body, new Vector3d()).length() >= .03
+          || pipeline.getAngularVelocity(body, new Vector3d()).length() >= .03)
+        throw new IllegalArgumentException("Captured train has not settled under its independent fin clamp");
+    }
+    hold.releaseCatch(cabinet.cableChassis());
+    var key = new CableTickets.Key(cabinet.cableCarriage(), cabinet.getBlockPos());
+    var container = SubLevelContainer.getContainer(level);
+    for (var body : capture.bodies())
+      if (container.getSubLevel(body) instanceof ServerSubLevel loaded
+          && !container.removeForceLoadTicket(loaded, CableTickets.CAPTURED_BODY, key))
+        throw new IllegalStateException("Captured native body ticket changed during inspected release");
+    controller.clearVerifiedReservation();
+    cabinet.finishInspectedActiveRelease(cabinet.cableCarriage(), cabinet.cableChassis());
+  }
+
   public static void unload(ServerLevel level) { HOLDS.remove(level); WARNED.remove(level); }
 
   private static Hold restorePassive(ServerLevel level, EquipmentCabinetEntity cabinet) {
@@ -230,13 +276,39 @@ public final class CableRecovery {
   private static void restoreCatch(ServerLevel level, EquipmentCabinetEntity cabinet, Hold hold) {
     if (!hold.valid() || !cabinet.cableInUse() || cabinet.cableChassis() == null)
       throw new IllegalStateException("Active catch journal or passive carriage hold is unavailable");
+    var capture = inspectCapture(level, cabinet, hold, false);
     var container = SubLevelContainer.getContainer(level);
+    var chassisId = cabinet.cableChassis();
+    var chassis = capture.chassis();
+    var socket = VehicleInterfaces.catchPoint(chassis);
+    if (socket == null || NativeCableRig.worldPoint(chassis, socket).distance(
+        NativeCableRig.worldPoint(hold.carriage(), hold.point())) >= .03)
+      throw new IllegalStateException("Saved catch socket is missing or no longer aligned");
+    var pipeline = container.physicsSystem().getPipeline();
+    for (var id : capture.bodies()) {
+      var body = (ServerSubLevel) container.getSubLevel(id);
+      if (pipeline.getLinearVelocity(body, new Vector3d()).length() >= .5
+          || pipeline.getAngularVelocity(body, new Vector3d()).length() >= .1)
+        throw new IllegalStateException("Saved captured native body is still moving");
+    }
+    var track = cabinet.resolve(level);
+    if (track == null) throw new IllegalStateException("Saved catch rail is unavailable");
+    var forward = track.forward(level, track.hitAtDistance(level, cabinet.cableHome()));
+    var direction = new Vector3d(forward.x, forward.y, forward.z);
+    hold.attach(chassisId, NativeCableRig.attachCatch(pipeline, hold.carriage(), chassis, hold.point(), socket, direction));
+  }
+
+  private record Capture(ServerSubLevel chassis, Set<UUID> consist, Set<UUID> bodies) {}
+  /** Validates exactly the saved provider, consist, native bodies and tickets without granting motion. */
+  private static Capture inspectCapture(ServerLevel level, EquipmentCabinetEntity cabinet, Hold hold, boolean requireBrakes) {
+    var container = SubLevelContainer.getContainer(level);
+    if (container == null || cabinet.cableChassis() == null) throw new IllegalStateException("Native active-catch state is unavailable");
     var chassisId = cabinet.cableChassis();
     var key = new CableTickets.Key(cabinet.cableCarriage(), cabinet.getBlockPos());
     var carriageTicket = container.getAllTickets().get(cabinet.cableCarriage());
     if (carriageTicket == null || carriageTicket.tickets().stream().noneMatch(
         t -> t.getType() == CableTickets.CARRIAGE && key.equals(t.getKey())))
-      throw new IllegalStateException("Saved carriage loading ticket changed before catch reconstruction");
+      throw new IllegalStateException("Saved carriage loading ticket changed before active inspection");
     if (!(container.getSubLevel(chassisId) instanceof ServerSubLevel chassis) || chassis.isRemoved())
       throw new IllegalStateException("Saved captured chassis is not loaded");
     var motion = MotionProviders.resolve(level, chassisId).orElseThrow(
@@ -247,8 +319,9 @@ public final class CableRecovery {
       var member = MotionProviders.resolve(level, id).orElseThrow(
           () -> new IllegalStateException("Captured consist member is unavailable after reload"));
       if (!member.provider().equals(motion.provider()) || !Set.copyOf(member.consist()).equals(consist)
-          || !member.interfaces().contains(Mechanism.FLYWHEEL))
-        throw new IllegalStateException("Captured consist identity or cable certificate changed");
+          || !member.interfaces().contains(Mechanism.FLYWHEEL)
+          || requireBrakes && !member.interfaces().contains(Mechanism.FIN_BRAKE))
+        throw new IllegalStateException("Captured consist identity or cable/brake certificate changed");
       for (var body : member.bodies()) if (!bodies.add(body))
         throw new IllegalStateException("Captured consist has duplicate native bodies");
     }
@@ -263,18 +336,7 @@ public final class CableRecovery {
     if (socket == null || NativeCableRig.worldPoint(chassis, socket).distance(
         NativeCableRig.worldPoint(hold.carriage(), hold.point())) >= .03)
       throw new IllegalStateException("Saved catch socket is missing or no longer aligned");
-    var pipeline = container.physicsSystem().getPipeline();
-    for (var id : bodies) {
-      var body = (ServerSubLevel) container.getSubLevel(id);
-      if (pipeline.getLinearVelocity(body, new Vector3d()).length() >= .5
-          || pipeline.getAngularVelocity(body, new Vector3d()).length() >= .1)
-        throw new IllegalStateException("Saved captured native body is still moving");
-    }
-    var track = cabinet.resolve(level);
-    if (track == null) throw new IllegalStateException("Saved catch rail is unavailable");
-    var forward = track.forward(level, track.hitAtDistance(level, cabinet.cableHome()));
-    var direction = new Vector3d(forward.x, forward.y, forward.z);
-    hold.attach(chassisId, NativeCableRig.attachCatch(pipeline, hold.carriage(), chassis, hold.point(), socket, direction));
+    return new Capture(chassis, consist, Set.copyOf(bodies));
   }
 
   private static boolean carriageIntact(ServerSubLevel carriage) {

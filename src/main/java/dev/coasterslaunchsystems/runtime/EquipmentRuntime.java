@@ -68,6 +68,12 @@ public final class EquipmentRuntime {
     return clamps == null ? 0 : (int) clamps.entrySet().stream()
         .filter(e -> e.getKey().cart().equals(chassis) && e.getValue().handle().valid()).count();
   }
+  /** Inspection release may only rely on a currently applied clamp owned by its saved controller. */
+  public static boolean activeFinClampFrom(ServerLevel level, UUID chassis, Set<UUID> linkedModuleIdentities) {
+    var clamps = CLAMPS.get(level);
+    return clamps != null && clamps.entrySet().stream().anyMatch(e -> e.getKey().cart().equals(chassis)
+        && linkedModuleIdentities.contains(e.getValue().identity()) && e.getValue().handle().valid());
+  }
   public static void unload(LevelEvent.Unload event) {
     if (event.getLevel() instanceof ServerLevel level) {
       MODULES.remove(level); HISTORY.remove(level); DRIVE_HISTORY.remove(level); STEPS.remove(level);

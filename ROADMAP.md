@@ -67,6 +67,8 @@ Dev.21 reconstructs a bounded zero-target native catch joint after a saved home 
 
 Dev.22 extends that fail-closed native hold to a catch stopped partway along its verified guide after an interrupted pull. A real physics-driven fixture reaches roughly 5–6 blocks of travel, faults and settles before saving. Separate-process ordinary and pinned Arrow restarts keep the same body identities, guide position, socket alignment and reconstructed catch joint without resuming drive. Idle carriages still require home. This does not cover saving while moving, active operator release, support-loss repair or broader service acceptance.
 
+Dev.23 adds the active home-catch inspection release. A recovered, disarmed catch can only disconnect after its exact saved provider/consist, all native bodies and tickets, socket, controller reservation and settled home pose pass inspection, and every captured chassis is physically held by an applied linked friction-fin clamp. A redstone torch in the span tool offhand requests that release; it cannot arm or dispatch. The operation drops captured-body tickets and reservation, retains the faulted home carriage and persists as an idle inspection state. The initial positive fixture is ordinary-cart only; Arrow active-release, moving restart, powered interruption and broader service acceptance remain open.
+
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |
 | LS301 | Shared cable guide, catch socket, carriage and release/reset machine | 0.2. Real constrained pull, rated guide/end clearance, physical return and misalignment handling. No teleport, one-shot impulse or prescribed train path. |

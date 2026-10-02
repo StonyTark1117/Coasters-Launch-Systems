@@ -40,10 +40,17 @@ public final class SpanToolItem extends Item {
       var selected = stack.get(EquipmentContent.CONTROLLER_SELECTION.get());
       if (level.getBlockEntity(pos) instanceof EquipmentCabinetEntity inspected
           && inspected.mechanism() == dev.coasterslaunchsystems.math.Mechanism.FLYWHEEL
-          && player.getOffhandItem().is(net.minecraft.world.item.Items.COMPASS)) {
-        try { dev.coasterslaunchsystems.runtime.CableRecovery.inspectRetireIdle(level, inspected); }
+          && (player.getOffhandItem().is(net.minecraft.world.item.Items.COMPASS)
+              || player.getOffhandItem().is(net.minecraft.world.item.Items.REDSTONE_TORCH))) {
+        boolean active = player.getOffhandItem().is(net.minecraft.world.item.Items.REDSTONE_TORCH);
+        try {
+          if (active) dev.coasterslaunchsystems.runtime.CableRecovery.inspectReleaseActive(level, inspected);
+          else dev.coasterslaunchsystems.runtime.CableRecovery.inspectRetireIdle(level, inspected);
+        }
         catch (RuntimeException failure) { throw new IllegalArgumentException("Cable inspection refused: " + failure.getMessage(), failure); }
-        player.displayClientMessage(Component.literal("Idle native carriage retired by inspection. Verify and rebind the guide before arming."), true);
+        player.displayClientMessage(Component.literal(active
+            ? "Active catch released onto its verified fin clamp. Verify and rebind the guide before arming."
+            : "Idle native carriage retired by inspection. Verify and rebind the guide before arming."), true);
         return InteractionResult.SUCCESS;
       }
       if (level.getBlockEntity(pos) instanceof RideControllerEntity controller) {

@@ -1,0 +1,30 @@
+Dev.23 local validation, 2026-10-02, Java 21, NeoForge GameTest server.
+
+Artifact: coasters-launch-systems-0.0.1-dev.23.jar
+SHA-256: 6240b6aff0f62234e7faa0f15452931739caaa8dac20815fe4bcbbd4b94a0d92
+Pinned Fourth Dimension schema-4 binary SHA-256:
+027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16
+
+JUnit: 27 passed, no failures, errors or skips.
+Packaged standalone full suite: 114/114 required GameTests passed.
+Packaged combined cable suite with pinned Fourth Dimension: 17/17 passed.
+
+Ordinary active home-catch inspection release, three separate processes retaining one world:
+prepareActiveRelease 13/13; verifyActiveRelease 13/13; verifyActiveReleased 13/13.
+The saved carriage UUID 147930f3-3d56-43dd-9cff-c2200d6ff76b and captured chassis UUID
+3580e47e-6e70-4c4c-ba0a-af420f4c6b51 survived the first restart with a reconstructed
+native joint. The verify process armed a placed linked fin module and observed one active
+native fin clamp before inspecting release. Release removed the joint, every captured-body
+ticket and the exact controller reservation, retained a passive home carriage, and left both
+controller and cabinet disarmed. A third process proved the cleared tickets/reservation and
+faulted idle journal persisted.
+
+Pinned Fourth Dimension Arrow home-catch regression, two separate processes:
+prepareActiveArrow 18/18; verifyActiveArrow 18/18. The recovered provider-declared
+articulated native bodies, tickets, socket alignment and catch joint remained valid through
+delayed startup with the dev.23 capture validation.
+
+The active-release GameTest invokes the server-side inspection method after proving its placed
+fin clamp; the span-tool/redstone-torch item entrypoint has not had a rendered player-click test.
+Arrow active release, moving-catch restart, placed-cabinet power-loss, actual chunk unload,
+multiplayer/rendered service and complete 0.4.0 acceptance remain open.

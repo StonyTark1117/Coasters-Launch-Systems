@@ -109,6 +109,14 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     cableInstalled = false; cableCarriage = null; cableChassis = null; cableHome = 0;
     fault = "Idle carriage reclaimed by inspection; verify and rebind the guide before arming"; changed();
   }
+  /** The operator has proved that a stopped captured train is held by an independent fin bank. */
+  public void finishInspectedActiveRelease(UUID carriage, UUID chassis) {
+    if (mechanism() != Mechanism.FLYWHEEL || !cableInstalled || !cableInUse || armed
+        || cableCarriage == null || !cableCarriage.equals(carriage) || cableChassis == null || !cableChassis.equals(chassis)
+        || fault.isEmpty()) throw new IllegalStateException("Saved active catch changed during inspected release");
+    cableInUse = false; cableChassis = null;
+    fault = "Active catch released by inspection; verify and rebind the guide before arming"; changed();
+  }
   public void chargeFlywheel(double dt) {
     if (mechanism() == Mechanism.FLYWHEEL && !cableInUse && fault.isEmpty()
         && flywheel.charge(dev.coasterslaunchsystems.math.LinearMotor.chargingWork(getSpeed(), dt)) > 0) setChanged();

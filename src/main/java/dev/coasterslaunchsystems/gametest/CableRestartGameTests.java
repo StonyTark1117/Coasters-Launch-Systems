@@ -1,5 +1,7 @@
 package dev.coasterslaunchsystems.gametest;
 
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.kinetics.motor.CreativeMotorBlockEntity;
 import dev.coasterslaunchsystems.content.EquipmentCabinetEntity;
 import dev.coasterslaunchsystems.content.EquipmentContent;
 import dev.coasterslaunchsystems.math.FlywheelStore;
@@ -22,6 +24,7 @@ import net.minecraft.gametest.framework.GameTestGenerator;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestFunction;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.DirectionalBlock;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.neoforge.common.NeoForge;
@@ -33,6 +36,9 @@ public final class CableRestartGameTests {
   private static final int SLOT = 19;
   private static final BlockPos FROM = new BlockPos(32 + SLOT * 48, 224, -896);
   private static final BlockPos FLYWHEEL = FROM.offset(-1, -2, 8);
+  private static final BlockPos RECOVERY_CONTROLLER = FROM.offset(4, -2, 8);
+  private static final BlockPos RECOVERY_FIN = FROM.offset(1, -2, 8);
+  private static final BlockPos RECOVERY_FIN_MOTOR = RECOVERY_FIN.east();
   private static final List<ActiveFixture> ACTIVE = new ArrayList<>();
   private static boolean listenerRegistered;
   private static final class ActiveFixture {
@@ -98,23 +104,27 @@ public final class CableRestartGameTests {
         || phase.equals("prepareActiveMissingSocket") || phase.equals("verifyActiveMissingSocket")
         || phase.equals("prepareActiveArrow") || phase.equals("verifyActiveArrow")
         || phase.equals("prepareActiveMidGuide") || phase.equals("verifyActiveMidGuide")
-        || phase.equals("prepareActiveMidGuideArrow") || phase.equals("verifyActiveMidGuideArrow"),
+        || phase.equals("prepareActiveMidGuideArrow") || phase.equals("verifyActiveMidGuideArrow")
+        || phase.equals("prepareActiveRelease") || phase.equals("verifyActiveRelease") || phase.equals("verifyActiveReleased"),
         "Set lsCableRestartPhase to an idle or active restart phase");
     if (phase.equals("prepare")) prepare(helper);
     else if (phase.equals("prepareActive") || phase.equals("prepareActiveMissingSocket") || phase.equals("prepareActiveArrow")
-        || phase.equals("prepareActiveMidGuide") || phase.equals("prepareActiveMidGuideArrow"))
+        || phase.equals("prepareActiveMidGuide") || phase.equals("prepareActiveMidGuideArrow") || phase.equals("prepareActiveRelease"))
       prepareActive(helper, phase.equals("prepareActiveMissingSocket"),
           phase.equals("prepareActiveArrow") || phase.equals("prepareActiveMidGuideArrow"),
-          phase.equals("prepareActiveMidGuide") || phase.equals("prepareActiveMidGuideArrow"));
+          phase.equals("prepareActiveMidGuide") || phase.equals("prepareActiveMidGuideArrow"),
+          phase.equals("prepareActiveRelease"));
     else if (phase.equals("verifyActive") || phase.equals("verifyActiveArrow") || phase.equals("verifyActiveMidGuide")
         || phase.equals("verifyActiveMidGuideArrow"))
       verifyActive(helper, phase.startsWith("verifyActiveMidGuide"));
+    else if (phase.equals("verifyActiveRelease")) verifyActiveRelease(helper);
+    else if (phase.equals("verifyActiveReleased")) verifyActiveReleased(helper);
     else if (phase.equals("verifyActiveMissingSocket")) verifyActiveMissingSocket(helper);
     else if (phase.equals("verifyRetired")) verifyRetired(helper);
     else verify(helper, phase.equals("reclaim"));
   }
 
-  private static void prepareActive(GameTestHelper helper, boolean missingSocket, boolean arrow, boolean midGuide) {
+  private static void prepareActive(GameTestHelper helper, boolean missingSocket, boolean arrow, boolean midGuide, boolean release) {
     helper.assertTrue(!arrow || net.neoforged.fml.ModList.get().isLoaded("fourthdimension"),
         "The Arrow saved-world fixture requires the pinned Fourth Dimension provider");
     var ride = arrow ? new RideControllerGameTests.Scene(helper, SLOT, "arrow_controller_dispatch", 224) : null;
@@ -142,6 +152,18 @@ public final class CableRestartGameTests {
           .setValue(RotatedPillarBlock.AXIS, Direction.Axis.X));
       var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(FLYWHEEL);
       cabinet.bind(level, scene.from, scene.to);
+      if (release) {
+        level.setBlockAndUpdate(RECOVERY_CONTROLLER, EquipmentContent.CONTROLLER.get().defaultBlockState());
+        var controller = (dev.coasterslaunchsystems.content.RideControllerEntity) level.getBlockEntity(RECOVERY_CONTROLLER);
+        controller.bind(level, scene.from, scene.to); controller.link(cabinet);
+        level.setBlockAndUpdate(RECOVERY_FIN, EquipmentContent.FIN.get().defaultBlockState()
+            .setValue(RotatedPillarBlock.AXIS, Direction.Axis.X));
+        level.setBlockAndUpdate(RECOVERY_FIN_MOTOR, AllBlocks.CREATIVE_MOTOR.getDefaultState()
+            .setValue(DirectionalBlock.FACING, Direction.WEST));
+        ((CreativeMotorBlockEntity) level.getBlockEntity(RECOVERY_FIN_MOTOR)).generatedSpeed.setValue(64);
+        var fin = (EquipmentCabinetEntity) level.getBlockEntity(RECOVERY_FIN);
+        fin.bind(level, scene.from, scene.to); controller.link(fin);
+      }
       preparation[0] = new NativeFinClamp(SubLevelContainer.getContainer(level).physicsSystem().getPipeline(), cart[0],
           VehicleInterfaces.brakePoint(cart[0]), new Vector3d(0, 0, 1), 128);
     });
@@ -165,6 +187,12 @@ public final class CableRestartGameTests {
           && fixture[0].failure.isEmpty(),
           "Occupied active cable journal or native catch was not established: " + fixture[0].failure);
       if (midGuide) { fixture[0].pullRequested = true; return; }
+      if (release) {
+        var controller = (dev.coasterslaunchsystems.content.RideControllerEntity) level.getBlockEntity(RECOVERY_CONTROLLER);
+        controller.reserve(java.util.Set.of(cart[0].getUniqueId()));
+        helper.assertTrue(controller.reservation().equals(java.util.Set.of(cart[0].getUniqueId())) && !controller.armed(),
+            "Active release fixture did not retain the captured controller reservation");
+      }
       System.out.println("LS_CABLE_ACTIVE_RESTART prepared carriage=" + cabinet.cableCarriage()
           + " chassis=" + cabinet.cableChassis() + " socket_error=" + fixture[0].rig.socketError()
           + " guide_error=" + fixture[0].rig.guideError() + " removed_socket=" + missingSocket + " arrow=" + arrow);
@@ -266,6 +294,65 @@ public final class CableRestartGameTests {
             "Reconstructed catch joint or passive hold did not survive startup inspection");
         helper.succeed();
       });
+    });
+  }
+
+  private static void verifyActiveRelease(GameTestHelper helper) {
+    var level = helper.getLevel();
+    helper.runAtTickTime(40, () -> {
+      var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(FLYWHEEL);
+      var fin = (EquipmentCabinetEntity) level.getBlockEntity(RECOVERY_FIN);
+      var controller = (dev.coasterslaunchsystems.content.RideControllerEntity) level.getBlockEntity(RECOVERY_CONTROLLER);
+      System.out.println("LS_CABLE_ACTIVE_RELEASE reload cabinet=" + (cabinet == null ? "missing" : cabinet.status())
+          + " fin=" + (fin == null ? "missing" : fin.status())
+          + " controller=" + (controller == null ? "missing" : controller.phase() + "/" + controller.reservation() + "/" + controller.fault())
+          + " restored=" + (cabinet != null && cabinet.cableChassis() != null
+              && CableRecovery.catchRestored(level, cabinet.cableCarriage(), cabinet.cableChassis())));
+      helper.assertTrue(cabinet != null && fin != null && controller != null && cabinet.cableInUse()
+          && CableRecovery.catchRestored(level, cabinet.cableCarriage(), cabinet.cableChassis())
+          && !controller.armed()
+          && controller.reservation().equals(java.util.Set.of(cabinet.cableChassis())),
+          "Saved active-release fixture did not retain its inspected catch and reservation");
+      fin.setArmed(true);
+    });
+    helper.runAtTickTime(90, () -> {
+      var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(FLYWHEEL);
+      var controller = (dev.coasterslaunchsystems.content.RideControllerEntity) level.getBlockEntity(RECOVERY_CONTROLLER);
+      var container = SubLevelContainer.getContainer(level);
+      var carriage = cabinet.cableCarriage(); var chassis = cabinet.cableChassis();
+      helper.assertTrue(dev.coasterslaunchsystems.runtime.EquipmentRuntime.activeFinClamps(level, chassis) > 0,
+          "Placed recovery fin did not establish an independent native clamp");
+      CableRecovery.inspectReleaseActive(level, cabinet);
+      var key = new CableTickets.Key(carriage, FLYWHEEL);
+      helper.assertTrue(cabinet.cableInstalled() && !cabinet.cableInUse() && cabinet.cableChassis() == null
+          && !cabinet.armed() && !controller.armed() && controller.reservation().isEmpty()
+          && CableRecovery.stabilized(level, carriage) && !CableRecovery.catchRestored(level, carriage, chassis)
+          && container.getAllTickets().entrySet().stream().noneMatch(entry -> entry.getValue().tickets().stream()
+              .anyMatch(ticket -> ticket.getType() == CableTickets.CAPTURED_BODY && key.equals(ticket.getKey()))),
+          "Inspected active release left a catch, captured ticket or route reservation behind");
+      System.out.println("LS_CABLE_ACTIVE_RELEASE verified carriage=" + carriage + " chassis=" + chassis
+          + " fin_clamps=" + dev.coasterslaunchsystems.runtime.EquipmentRuntime.activeFinClamps(level, chassis));
+      helper.succeed();
+    });
+  }
+
+  private static void verifyActiveReleased(GameTestHelper helper) {
+    var level = helper.getLevel();
+    helper.runAtTickTime(40, () -> {
+      var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(FLYWHEEL);
+      var controller = (dev.coasterslaunchsystems.content.RideControllerEntity) level.getBlockEntity(RECOVERY_CONTROLLER);
+      helper.assertTrue(cabinet != null && controller != null && cabinet.cableInstalled() && !cabinet.cableInUse()
+          && cabinet.cableCarriage() != null && cabinet.cableChassis() == null && !cabinet.armed()
+          && cabinet.fault().contains("released by inspection") && controller.reservation().isEmpty()
+          && CableRecovery.stabilized(level, cabinet.cableCarriage()),
+          "Inspected active release did not persist as a disarmed idle carriage across restart");
+      var key = new CableTickets.Key(cabinet.cableCarriage(), FLYWHEEL);
+      helper.assertTrue(SubLevelContainer.getContainer(level).getAllTickets().entrySet().stream().noneMatch(entry -> entry.getValue().tickets().stream()
+          .anyMatch(ticket -> ticket.getType() == CableTickets.CAPTURED_BODY && key.equals(ticket.getKey()))),
+          "Released active-catch tickets reappeared after restart");
+      System.out.println("LS_CABLE_ACTIVE_RELEASE persisted carriage=" + cabinet.cableCarriage()
+          + " controller_reservation=" + controller.reservation());
+      helper.succeed();
     });
   }
 
