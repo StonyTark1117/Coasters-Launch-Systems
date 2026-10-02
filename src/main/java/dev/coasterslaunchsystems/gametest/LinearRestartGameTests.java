@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestGenerator;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestFunction;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 
 /** Separate server processes prove that a running linear section preserves state but cannot replay its field. */
@@ -24,22 +25,26 @@ public final class LinearRestartGameTests {
 
   @GameTestGenerator
   public static List<TestFunction> restart() {
-    if (System.getProperty("coasterslaunchsystems.linearRestartPhase", "").isEmpty()) return List.of();
-    return List.of(new TestFunction("launchsystems_linear_restart", "coasterslaunchsystems_linear_restart.saved_linear_restart",
+    String phase = System.getProperty("coasterslaunchsystems.linearRestartPhase", "");
+    if (phase.isEmpty()) return List.of();
+    if (phase.endsWith("Arrow") && !ModList.get().isLoaded("fourthdimension"))
+      throw new IllegalStateException("Arrow linear restart validation requires the pinned Fourth Dimension adapter");
+    return List.of(new TestFunction("launchsystems_linear_restart", "coasterslaunchsystems_linear_restart.saved_linear_restart_" + phase.toLowerCase(),
         "coasterslaunchsystems_linear_restart:empty", 700, 0, true, LinearRestartGameTests::run));
   }
 
   private static void run(GameTestHelper helper) {
     String phase = System.getProperty("coasterslaunchsystems.linearRestartPhase", "");
-    helper.assertTrue(phase.equals("prepare") || phase.equals("verify"), "Set lsLinearRestartPhase to prepare or verify");
-    if (phase.equals("prepare")) prepare(helper); else verify(helper);
+    helper.assertTrue(phase.equals("prepare") || phase.equals("verify") || phase.equals("prepareArrow") || phase.equals("verifyArrow"),
+        "Set lsLinearRestartPhase to prepare, verify, prepareArrow or verifyArrow");
+    if (phase.startsWith("prepare")) prepare(helper, phase.endsWith("Arrow")); else verify(helper, phase.endsWith("Arrow"));
   }
 
-  private static void prepare(GameTestHelper helper) {
-    var scene = new RideControllerGameTests.Scene(helper, SLOT, "single_forward", 192);
+  private static void prepare(GameTestHelper helper, boolean arrow) {
+    var scene = new RideControllerGameTests.Scene(helper, SLOT, arrow ? "arrow_forward" : "single_forward", 192);
     scene.driveMechanism = Mechanism.LSM;
     scene.at(40, () -> {
-      for (int seat = 0; seat < 4; seat++) scene.base.board(scene.base.parents.getFirst(), seat);
+      if (arrow) scene.boardFourthDimension(); else for (int seat = 0; seat < 4; seat++) scene.base.board(scene.base.parents.getFirst(), seat);
     });
     scene.at(55, () -> {
       for (var body : scene.base.parents) body.getPlot().getEmbeddedLevelAccessor().setBlock(
@@ -60,13 +65,13 @@ public final class LinearRestartGameTests {
       helper.assertTrue(scene.controller.phase() == RideControllerEntity.State.RUNNING && scene.controller.reservation().size() == 1
           && drives.size() == 5 && drives.stream().allMatch(cabinet -> cabinet.armed() && cabinet.energy() > 0 && cabinet.energy() < LinearMotor.CAPACITY),
           "Live linear section did not reach a persisted running state: " + scene.controller.status());
-      System.out.println("LS_LINEAR_RESTART prepared controller=" + scene.controller.identity() + " lease=" + scene.controller.reservation().size()
+      System.out.println("LS_LINEAR_RESTART mode=" + (arrow ? "arrow" : "ordinary") + " prepared controller=" + scene.controller.identity() + " lease=" + scene.controller.reservation().size()
           + " drives=" + drives.size() + " energy=" + drives.getFirst().energy() + " heat=" + drives.getFirst().heat());
       helper.succeed();
     });
   }
 
-  private static void verify(GameTestHelper helper) {
+  private static void verify(GameTestHelper helper, boolean arrow) {
     helper.runAtTickTime(40, () -> {
       var controller = (RideControllerEntity) helper.getLevel().getBlockEntity(CONTROLLER);
       var drives = linearDrives(helper);
@@ -79,7 +84,7 @@ public final class LinearRestartGameTests {
                 && cabinet.energy() < LinearMotor.CAPACITY && cabinet.targetSpeed() == 3 && cabinet.accelerationLimit() == 2 && cabinet.jerkLimit() == 4),
             "Saved linear launch did not retain its lease/configuration while failing closed: "
                 + (controller == null ? "missing controller" : controller.status()));
-        System.out.println("LS_LINEAR_RESTART verified controller=" + controller.identity() + " lease=" + controller.reservation().size()
+        System.out.println("LS_LINEAR_RESTART mode=" + (arrow ? "arrow" : "ordinary") + " verified controller=" + controller.identity() + " lease=" + controller.reservation().size()
             + " drives=" + drives.size() + " energy=" + drives.getFirst().energy() + " heat=" + drives.getFirst().heat());
         helper.succeed();
       });

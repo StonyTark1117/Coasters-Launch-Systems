@@ -1,0 +1,15 @@
+Launch Systems dev.48 pinned Fourth Dimension Arrow linear saved-world interruption validation
+Date: 2026-10-02
+Pinned Fourth Dimension artifact:
+  027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16  coasters-fourth-dimension-0.9.0-dev.1.jar
+
+Preparation:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsFourthDimensionJar=/absolute/path/to/coasters-fourth-dimension-0.9.0-dev.1.jar -PlsTestNamespaces=coasterslaunchsystems_linear_restart -PlsLinearRestartPhase=prepareArrow
+  Result: BUILD SUCCESSFUL; 1/1 required packaged GameTest passed. An occupied Arrow LSM section saved while running with one controller lease, five linked drives, 1130.413539765287 buffer energy and 10.265227636079088 heat in its first drive.
+
+Retained-world verification in a fresh server process:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsFourthDimensionJar=/absolute/path/to/coasters-fourth-dimension-0.9.0-dev.1.jar -PlsKeepGameTestWorld -PlsTestNamespaces=coasterslaunchsystems_linear_restart -PlsLinearRestartPhase=verifyArrow
+  Result: BUILD SUCCESSFUL; 1/1 required packaged GameTest passed. The same controller UUID 7a6821c5-82b8-4036-8c74-42bd16b6102b, one-car lease, 31-module manifest, five linked LSM drive identities, energy and heat reopened. The controller remained in inspection and every linear cabinet was disarmed, so no saved field request replayed.
+
+Final artifact SHA-256:
+  84796605d7e0a7721e714bdcd099b2fc590a88cf55dfec590bc791a40e1e807e  coasters-launch-systems-0.0.1-dev.48.jar
