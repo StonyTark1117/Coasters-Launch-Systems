@@ -121,7 +121,7 @@ public final class LinearControllerGameTests {
       if (mechanism == Mechanism.LSM) modes.add("mixed_forward");
       modes.addAll(List.of("swing_forward", "swing_power_loss"));
       if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of(
-          "arrow_forward", "arrow_linked_reverse", "arrow_plate_loss", "legacy_forward", "free_spin_forward", "revised_forward", "pax_veto"));
+          "arrow_forward", "arrow_linked_reverse", "arrow_plate_loss", "arrow_thermal_loss", "legacy_forward", "free_spin_forward", "revised_forward", "pax_veto"));
       if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of(
           "arrow_swing_forward", "arrow_swing_power_loss",
           "arrow_linked_swing_forward", "arrow_linked_swing_power_loss",
@@ -200,7 +200,7 @@ public final class LinearControllerGameTests {
     });
     r.at(readyTick + 10, () -> { r.launched = true; r.high(true); });
     r.at(550, () -> {
-      if (!r.mode.equals("power_loss") && !r.mode.equals("arrow_plate_loss") && !r.mode.equals("thermal_loss")) return;
+      if (!r.mode.equals("power_loss") && !r.mode.equals("arrow_plate_loss") && !r.mode.endsWith("thermal_loss")) return;
       r.base.helper.assertTrue(s.steps > 10, "Interrupted linear fixture never launched");
       if (r.mode.equals("power_loss"))
         for (var p : r.motors) ((com.simibubi.create.content.kinetics.motor.CreativeMotorBlockEntity) r.base.level.getBlockEntity(p)).generatedSpeed.setValue(0);
@@ -209,7 +209,7 @@ public final class LinearControllerGameTests {
       else { s.drives().forEach(cabinet -> cabinet.absorbHeat(8192)); s.snapshot(); }
     });
     r.at(610, () -> {
-      if (!r.mode.equals("power_loss") && !r.mode.equals("arrow_plate_loss") && !r.mode.equals("thermal_loss")) return;
+      if (!r.mode.equals("power_loss") && !r.mode.equals("arrow_plate_loss") && !r.mode.endsWith("thermal_loss")) return;
       r.base.helper.assertTrue(r.controller.phase() == RideControllerEntity.State.FAULT && r.controller.reservation().size() == r.base.parents.size()
           && r.base.parents.stream().allMatch(b -> Math.abs(r.base.speed(b)) < .03 && EquipmentRuntime.activeFinClamps(r.base.level, b.getUniqueId()) > 0),
           "Lost linear authority did not retain the held train");
@@ -219,7 +219,7 @@ public final class LinearControllerGameTests {
     });
     r.at(swing(r.mode) ? (r.linked ? 11000 : 7600) : 1250, () -> {
       try {
-        if (r.mode.equals("power_loss") || r.mode.equals("arrow_plate_loss") || r.mode.equals("thermal_loss") || swingPowerLoss(r.mode)) {
+        if (r.mode.equals("power_loss") || r.mode.equals("arrow_plate_loss") || r.mode.endsWith("thermal_loss") || swingPowerLoss(r.mode)) {
           r.base.helper.assertTrue(s.failure.isEmpty() && r.controller.phase() == RideControllerEntity.State.FAULT && s.steps == s.interruptedSteps
               && r.controller.reservation().size() == r.base.parents.size() && s.drives().stream().allMatch(c -> c.energy() > 0)
               && r.base.parents.stream().allMatch(b -> Math.abs(r.base.speed(b)) < .03 && EquipmentRuntime.activeFinClamps(r.base.level, b.getUniqueId()) > 0)
