@@ -11,6 +11,7 @@ import dev.coasterslaunchsystems.runtime.CableTickets;
 import dev.coasterslaunchsystems.runtime.NativeFinClamp;
 import dev.coasterslaunchsystems.runtime.VehicleInterfaces;
 import dev.ryanhcode.sable.api.sublevel.SubLevelContainer;
+import dev.silvergold.simulatedcoasters.track.cart.CoasterCartTrackSnap;
 import dev.coasterslaunchsystems.runtime.NativeCableRig;
 import dev.coasterslaunchsystems.math.Mechanism;
 import dev.coasterslaunchsystems.track.DirectedTrack;
@@ -90,13 +91,18 @@ public final class CableControllerGameTests {
         : new ArrayList<>(List.of("ordinary_controller_dispatch", "ordinary_controller_power_loss"));
     if (!PRESSURE_RETURN_SHAFT_LOSS && net.neoforged.fml.ModList.get().isLoaded("fourthdimension"))
       // The Arrow fixture has two native-coordinate-safe slots; use them for the new pressure adapters.
-      modes.addAll(List.of("arrow_hydraulic_controller_shaft_loss", "arrow_pneumatic_controller_shaft_loss"));
+      modes.addAll(List.of("arrow_hydraulic_controller_shaft_loss", "arrow_pneumatic_controller_shaft_loss",
+          "arrow_hydraulic_controller_guide_loss", "arrow_pneumatic_controller_guide_loss"));
     else if (!PRESSURE_RETURN_SHAFT_LOSS)
-      modes.addAll(List.of("ordinary_hydraulic_controller_shaft_loss", "ordinary_pneumatic_controller_shaft_loss"));
+      modes.addAll(List.of("ordinary_hydraulic_controller_shaft_loss", "ordinary_pneumatic_controller_shaft_loss",
+          "ordinary_hydraulic_controller_guide_loss", "ordinary_pneumatic_controller_guide_loss"));
     // This shared server keeps upstream 4D rail metadata after a fixture closes.
-    // Keep controller rails away from the cable-mechanics suite's slots 0..14.
-    var tests = new ArrayList<TestFunction>(); int slot = ARROW_PRESSURE_RETURN_SHAFT_LOSS ? 19 : 17;
-    for (var mode : modes) { int selected = slot++; tests.add(new TestFunction("launchsystems_cable_controller",
+    // Keep ordinary controller rails away from the cable-mechanics suite's slots 0..14.
+    // Fourth Dimension guide-loss fixtures use their own compact negative lane.
+    var tests = new ArrayList<TestFunction>(); int slot = ARROW_PRESSURE_RETURN_SHAFT_LOSS ? 19 : 17, guideSlot = 15, fourthDimensionGuideSlot = -1;
+    for (var mode : modes) {
+      int selected = mode.endsWith("_guide_loss") ? (mode.startsWith("arrow") ? fourthDimensionGuideSlot-- : guideSlot++) : slot++;
+      tests.add(new TestFunction("launchsystems_cable_controller",
         "coasterslaunchsystems_cable." + mode, "coasterslaunchsystems_cable:empty", 1350, 0, true,
         helper -> run(new Scene(helper, selected, mode)))); }
     return tests;
@@ -205,6 +211,27 @@ public final class CableControllerGameTests {
                 + " " + s.cabinet().status() + " " + s.failure);
         ((CreativeMotorBlockEntity) level.getBlockEntity(s.motor)).generatedSpeed.setValue(64);
       });
+    }
+    if (s.mode.endsWith("_controller_guide_loss")) {
+      s.at(470, () -> {
+        r.base.helper.assertTrue(s.running && s.cabinet().cableInUse(),
+            "Pressure cable controller did not begin a physical pull before guide support was removed");
+        var missingBed = NativeCableRig.guideBlockAt(level, r.track, s.cabinet().cableHome() + 10);
+        level.removeBlock(missingBed, false);
+        s.interrupted = true;
+      });
+      s.at(620, () -> {
+        r.base.helper.assertTrue(s.failure.isEmpty() && s.interrupted && r.controller.phase() == RideControllerEntity.State.FAULT
+            && s.cabinet().cableInstalled() && s.cabinet().cableInUse() && !s.cabinet().armed() && !s.cabinet().fault().isEmpty()
+            && r.base.parents.stream().allMatch(body -> !CoasterCartTrackSnap.isBearingDisengaged(body) && Math.abs(r.base.speed(body)) < .03),
+            "Broken guide support did not retain and settle the pressure catch: " + r.controller.status() + " "
+                + s.cabinet().status() + " speed=" + r.base.speed(r.base.parents.getFirst()) + " " + s.failure);
+        System.out.println("LS_CABLE_CONTROLLER mode=" + s.mode + " phase=" + r.controller.phase()
+            + " retained=" + s.cabinet().cableInUse() + " speed=" + r.base.speed(r.base.parents.getFirst())
+            + " fault=" + s.cabinet().fault());
+        s.cleanup(); r.base.helper.succeed();
+      });
+      return;
     }
     if (s.mode.endsWith("_controller_return_shaft_loss")) {
       s.at(700, () -> {
