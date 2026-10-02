@@ -95,13 +95,14 @@ public final class LinearControllerGameTests {
   @GameTestGenerator public static List<TestFunction> sections() {
     var tests = new ArrayList<TestFunction>(); int slot = 0;
     for (var mechanism : List.of(Mechanism.LSM, Mechanism.LIM)) {
-      var modes = new ArrayList<>(List.of("single_forward", "linked_forward", "linked_reverse", "power_loss"));
+      var modes = new ArrayList<>(List.of("single_forward", "linked_forward", "linked_reverse", "power_loss", "thermal_loss"));
       if (mechanism == Mechanism.LSM) modes.add("mixed_forward");
       if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of(
           "arrow_forward", "arrow_linked_reverse", "arrow_plate_loss", "legacy_forward", "free_spin_forward", "revised_forward", "pax_veto"));
       for (String mode : modes) {
         int selected = slot++;
-        String namespace = mode.equals("arrow_plate_loss") ? "coasterslaunchsystems_4d_linear" : "coasterslaunchsystems_linear";
+        String namespace = mode.equals("arrow_plate_loss") ? "coasterslaunchsystems_4d_linear"
+            : mode.equals("thermal_loss") ? "coasterslaunchsystems_thermal_linear" : "coasterslaunchsystems_linear";
         tests.add(new TestFunction("launchsystems_linear_sections", namespace + "." + mechanism.name().toLowerCase(Locale.ROOT) + "_section_" + mode,
             namespace + ":empty", 1600, 0, true, helper -> run(new Scene(helper, selected, mode, mechanism))));
       }
@@ -147,15 +148,16 @@ public final class LinearControllerGameTests {
     });
     r.at(510, () -> { r.launched = true; r.high(true); });
     r.at(550, () -> {
-      if (!r.mode.equals("power_loss") && !r.mode.equals("arrow_plate_loss")) return;
+      if (!r.mode.equals("power_loss") && !r.mode.equals("arrow_plate_loss") && !r.mode.equals("thermal_loss")) return;
       r.base.helper.assertTrue(s.steps > 10, "Interrupted linear fixture never launched");
       if (r.mode.equals("power_loss"))
         for (var p : r.motors) ((com.simibubi.create.content.kinetics.motor.CreativeMotorBlockEntity) r.base.level.getBlockEntity(p)).generatedSpeed.setValue(0);
-      else for (var body : r.base.parents) body.getPlot().getEmbeddedLevelAccessor().setBlock(LinearMotorGameTests.reactionPosition(s.mechanism),
+      else if (r.mode.equals("arrow_plate_loss")) for (var body : r.base.parents) body.getPlot().getEmbeddedLevelAccessor().setBlock(LinearMotorGameTests.reactionPosition(s.mechanism),
           net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 3);
+      else { s.drives().forEach(cabinet -> cabinet.absorbHeat(8192)); s.snapshot(); }
     });
     r.at(610, () -> {
-      if (!r.mode.equals("power_loss") && !r.mode.equals("arrow_plate_loss")) return;
+      if (!r.mode.equals("power_loss") && !r.mode.equals("arrow_plate_loss") && !r.mode.equals("thermal_loss")) return;
       r.base.helper.assertTrue(r.controller.phase() == RideControllerEntity.State.FAULT && r.controller.reservation().size() == 1
           && r.base.parents.stream().allMatch(b -> Math.abs(r.base.speed(b)) < .03 && EquipmentRuntime.activeFinClamps(r.base.level, b.getUniqueId()) > 0),
           "Lost linear authority did not retain the held train");
@@ -165,7 +167,7 @@ public final class LinearControllerGameTests {
     });
     r.at(1250, () -> {
       try {
-        if (r.mode.equals("power_loss") || r.mode.equals("arrow_plate_loss")) {
+        if (r.mode.equals("power_loss") || r.mode.equals("arrow_plate_loss") || r.mode.equals("thermal_loss")) {
           r.base.helper.assertTrue(s.failure.isEmpty() && r.controller.phase() == RideControllerEntity.State.FAULT && s.steps == s.interruptedSteps
               && r.controller.reservation().size() == 1 && s.drives().stream().allMatch(c -> c.energy() > 0)
               && r.base.parents.stream().allMatch(b -> Math.abs(r.base.speed(b)) < .03 && EquipmentRuntime.activeFinClamps(r.base.level, b.getUniqueId()) > 0), "Interrupted linear field replayed a launch: " + s.failure);

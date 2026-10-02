@@ -294,6 +294,9 @@ public final class RideControllers {
     controller.envelope(envelope.requiredLength(), stopEnd - stopStart);
     if (!envelope.fits(stopEnd - stopStart)) { controller.fail("Downstream fin bank is too short for this loaded train and speed"); return; }
     if (running) {
+      if (controller.phase() == State.RUNNING && drives.stream().anyMatch(m -> m.mechanism().linear() && m.thermalFraction() < 1 - 1e-8)) {
+        controller.fail("Linear cabinet thermal capacity exceeded; spring pads apply"); return;
+      }
       if (!powered && controller.phase() == State.RUNNING) { controller.fail("Launch release power lost; spring pads apply"); return; }
       if (maximumSpeed > ceiling + .1 && controller.phase() == State.RUNNING) { controller.fail("Reserved train exceeded the certified launch speed"); return; }
       if (largest >= stopStart - .6) controller.state(State.BRAKING);

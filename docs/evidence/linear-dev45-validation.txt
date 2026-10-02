@@ -1,0 +1,14 @@
+Launch Systems dev.45 linear thermal-interruption validation
+
+Command:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew test classes runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_thermal_linear
+
+Result: BUILD SUCCESSFUL; 27 JUnit tests and both selected packaged ordinary-controller GameTests passed.
+
+After each occupied local controller had recorded more than ten field steps, its participating linear cabinets received 8192 units of external fixture heat. The production controller then faulted on thermal derating, retained one chassis lease, applied the native downstream spring-fin hold and recorded no subsequent field step through tick 1250:
+  LSM: phase=FAULT, lease=1, steps=78, spent=56.063327376017014, work=28.991536988416073, accounting_error=2.1005419625907962E-13
+  LIM: phase=FAULT, lease=1, steps=78, spent=29.51356144258466, work=6.916160693072884, accounting_error=1.1214640327494863E-13
+
+The injected fixture heat is external to motor work, so the test resets its energy/heat observer baseline at injection; all subsequent motor work remains reconciled.
+
+Artifact SHA-256: 021821432a2f0574129a5efd12b9a6bcd32a1c308dcb52e8905d220e6a9dce4c  coasters-launch-systems-0.0.1-dev.45.jar
