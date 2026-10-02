@@ -17,7 +17,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import org.joml.Vector3d;
 
-/** A placed controller owns exactly one physical carriage and one flywheel clutch. */
+/** A placed controller owns exactly one physical carriage and one stored-energy cable drive. */
 final class CableControllers {
   private record Key(ServerLevel level, BlockPos position, UUID identity) {}
   private record Installation(BlockPos cabinetPosition, UUID cabinet, double home, NativeCableRig rig) {}
@@ -29,7 +29,7 @@ final class CableControllers {
   static boolean applies(ServerLevel level, RideControllerEntity controller) {
     return INSTALLED.containsKey(new Key(level, controller.getBlockPos(), controller.identity()))
         || controller.modules().stream().anyMatch(m -> level.getBlockEntity(m.position()) instanceof EquipmentCabinetEntity cabinet
-        && cabinet.mechanism() == Mechanism.FLYWHEEL);
+        && cabinet.mechanism().cable());
   }
 
   static void unload(ServerLevel level) { INSTALLED.keySet().removeIf(k -> k.level() == level); }
@@ -85,9 +85,9 @@ final class CableControllers {
     }
     RideControllers.registrationReady(level, controller);
     var drives = cabinets.stream().filter(c -> c.mechanism() != Mechanism.FIN_BRAKE).toList();
-    if (drives.size() != 1 || drives.getFirst().mechanism() != Mechanism.FLYWHEEL
+    if (drives.size() != 1 || !drives.getFirst().mechanism().cable()
         || controller.destination() != null || controller.incoming() != null) {
-      controller.fail("Cable section requires one flywheel, friction fins and no transfer connection"); return;
+      controller.fail("Cable section requires one cable drive, friction fins and no transfer connection"); return;
     }
     var cabinet = drives.getFirst();
     var key = new Key(level, controller.getBlockPos(), controller.identity());
@@ -131,7 +131,7 @@ final class CableControllers {
     for (var id : members) {
       var occupant = occupying.stream().filter(o -> o.cart().getUniqueId().equals(id)).findFirst().orElse(null);
       if (occupant == null || !Set.copyOf(occupant.motion().consist()).equals(members)
-          || !occupant.motion().interfaces().containsAll(Set.of(Mechanism.FLYWHEEL, Mechanism.FIN_BRAKE))
+          || !occupant.motion().interfaces().containsAll(Set.of(cabinet.mechanism(), Mechanism.FIN_BRAKE))
           || !occupant.motion().exclusiveOperator().isEmpty()
           || ChainLiftSpanQuery.findAtGraphHit(level, EngagedContacts.current(level, occupant.cart()).orElseThrow().hit(), 0) != null) {
         controller.fail("Cable consist lost native support, certification or exclusive ownership"); return;
@@ -150,7 +150,7 @@ final class CableControllers {
     if (mass > 64 || brakeForce <= 0) { controller.fail("Cable consist exceeds its mass or friction-fin rating"); return; }
     double home = installed == null ? lead.distance() : installed.home();
     if (installed == null && Math.abs(lead.distance() - (cabinet.interval().start() + 1)) > 1.1) {
-      controller.fail("Catch must start beside its flywheel cabinet"); return;
+      controller.fail("Catch must start beside its cable cabinet"); return;
     }
     double releaseEnd = home + RELEASE_TRAVEL;
     var launchFins = cabinets.stream().filter(c -> c.mechanism() == Mechanism.FIN_BRAKE
@@ -169,10 +169,12 @@ final class CableControllers {
     controller.envelope(envelope.requiredLength(), stopEnd - stopStart);
     if (!envelope.fits(stopEnd - stopStart)) { controller.fail("Cable stopping bank is too short for the loaded train"); return; }
     boolean shaft = DriveEquipment.forwardPowered(cabinet);
+    boolean launchPower = cabinet.mechanism() == Mechanism.FLYWHEEL ? shaft && cabinet.cableReady() : cabinet.cableReady();
+    boolean pullPower = cabinet.mechanism() == Mechanism.FLYWHEEL ? shaft : cabinet.cableEnergy() > 1e-9;
     boolean padPower = launchFins.stream().allMatch(c -> Math.abs(c.getSpeed()) >= 32);
     if (installed == null && held && ready) {
       try {
-        var rig = new NativeCableRig(level, track, lead.distance(), RELEASE_TRAVEL, GUIDE_TRAVEL, cabinet.getBlockPos());
+        var rig = new NativeCableRig(level, track, lead.distance(), RELEASE_TRAVEL, GUIDE_TRAVEL, cabinet.getBlockPos(), cabinet.mechanism());
         try { cabinet.installCable(rig); } catch (RuntimeException failure) { rig.close(); throw failure; }
         installed = new Installation(cabinet.getBlockPos(), cabinet.identity(), lead.distance(), rig); INSTALLED.put(key, installed);
       } catch (RuntimeException failure) { controller.fail("Cable carriage installation failed: " + failure.getMessage()); return; }
@@ -181,7 +183,7 @@ final class CableControllers {
     var rig = installed.rig();
     if (rig.phase() == NativeCableRig.Phase.FAULT) { controller.fail("Cable carriage fault: " + rig.fault()); return; }
     if (controller.phase() == State.RUNNING || controller.phase() == State.BRAKING) {
-      if (rig.phase() != NativeCableRig.Phase.HOME && (!shaft || !padPower || !cabinet.cableInUse())) {
+      if (rig.phase() == NativeCableRig.Phase.PULLING && (!pullPower || !padPower || !cabinet.cableInUse())) {
         rig.emergencyHold("Cable release power or catch ownership lost"); controller.fail("Cable release power or catch ownership lost"); return;
       }
       if (speed > cabinet.targetSpeed() + .1 && controller.phase() == State.RUNNING) {
@@ -189,14 +191,14 @@ final class CableControllers {
       }
       if (maximum >= stopStart - .6) controller.state(State.BRAKING);
       if (controller.phase() == State.BRAKING && held && speed < .03) controller.state(State.HOLD);
-    } else if (rig.phase() == NativeCableRig.Phase.HOME && Math.abs(lead.distance() - home) < .6 && held && ready && shaft && padPower
-        && cabinet.flywheel().energy() >= 750 && !cabinet.cableInUse()
+    } else if (rig.phase() == NativeCableRig.Phase.HOME && Math.abs(lead.distance() - home) < .6 && held && ready && launchPower && padPower
+        && !cabinet.cableInUse()
         && Math.abs(rig.travel()) < .03 && Math.abs(rig.speed()) < .03) {
       try { cabinet.engageCable(rig, lead.cart().getUniqueId()); }
       catch (RuntimeException failure) { controller.fail("Physical cable catch could not engage: " + failure.getMessage()); return; }
     }
     if (controller.phase() != State.RUNNING && controller.phase() != State.BRAKING) {
-      boolean dispatchable = held && ready && shaft && padPower && cabinet.flywheel().energy() >= 750
+      boolean dispatchable = held && ready && launchPower && padPower
           && cabinet.cableInUse() && rig.phase() == NativeCableRig.Phase.ENGAGED && maximum + radius < stopStart;
       controller.state(dispatchable ? State.READY : State.HOLD);
       if (controller.consumeRequest() && dispatchable) {

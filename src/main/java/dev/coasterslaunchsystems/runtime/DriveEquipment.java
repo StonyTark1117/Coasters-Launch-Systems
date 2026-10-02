@@ -8,7 +8,7 @@ import dev.coasterslaunchsystems.math.Mechanism;
 public final class DriveEquipment {
   private DriveEquipment() {}
   public static double speed(EquipmentCabinetEntity module) {
-    return module.mechanism().linear() || module.mechanism() == Mechanism.FLYWHEEL
+    return module.mechanism().linear() || module.mechanism().cable()
         ? module.targetSpeed() : DriveMath.wheelSpeed(module.getSpeed(), .4);
   }
   public static boolean forwardPowered(EquipmentCabinetEntity module) {

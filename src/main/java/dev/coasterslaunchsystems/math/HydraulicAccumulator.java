@@ -37,6 +37,7 @@ public final class HydraulicAccumulator implements EnergyStore {
   public double force(double pistonArea) {
     return energy() == 0 ? 0 : (pressure() - ambientPressure) * Numbers.positive(pistonArea, "area");
   }
+  @Override public double outputForce(double extension) { return force(.7); }
   @Override public double energy() { return work.energy(); }
   @Override public double capacity() { return work.capacity(); }
   @Override public double charge(double value) { return work.charge(value); }

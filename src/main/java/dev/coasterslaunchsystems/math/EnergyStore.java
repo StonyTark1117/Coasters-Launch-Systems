@@ -8,4 +8,7 @@ public interface EnergyStore {
   double draw(double work);
 
   default double fraction() { return energy() / capacity(); }
+
+  /** Maximum actuator force available at the present extension. Infinite means a rotary store sets the limit elsewhere. */
+  default double outputForce(double extension) { return Double.POSITIVE_INFINITY; }
 }

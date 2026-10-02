@@ -22,6 +22,7 @@ class StoredEnergyTest {
     assertTrue(store.pressure() < initial); assertTrue(store.oilVolume() < 2);
     store.draw(store.capacity());
     assertEquals(0, store.oilVolume(), 1e-10); assertEquals(0, store.force(1));
+    assertEquals(0, store.outputForce(0));
   }
 
   @Test void compressedAirHasASeparateExpansionAndRechargeModel() {
@@ -33,6 +34,7 @@ class StoredEnergyTest {
     store.draw(store.capacity() * .5); assertTrue(store.pressure() < 200);
     store.draw(store.capacity()); assertEquals(10, store.pressure(), 1e-6);
     assertEquals(0, store.force(1, 0), 1e-6);
+    assertEquals(0, store.outputForce(12), 1e-6);
   }
 
   @Test void repeatedTransferCannotCreateWork() {

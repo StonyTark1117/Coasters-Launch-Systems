@@ -70,7 +70,9 @@ public final class OrdinaryMotionProvider implements VehicleMotionProvider {
     if (VehicleInterfaces.conductivePoint(body) != null) interfaces.add(dev.coasterslaunchsystems.math.Mechanism.EDDY_BRAKE);
     for (var mechanism : java.util.List.of(dev.coasterslaunchsystems.math.Mechanism.LSM, dev.coasterslaunchsystems.math.Mechanism.LIM))
       if (VehicleInterfaces.linearPoint(body, mechanism) != null) interfaces.add(mechanism);
-    if (VehicleInterfaces.catchPoint(body) != null) interfaces.add(dev.coasterslaunchsystems.math.Mechanism.FLYWHEEL);
+    if (VehicleInterfaces.catchPoint(body) != null)
+      interfaces.addAll(java.util.List.of(dev.coasterslaunchsystems.math.Mechanism.FLYWHEEL,
+          dev.coasterslaunchsystems.math.Mechanism.HYDRAULIC, dev.coasterslaunchsystems.math.Mechanism.PNEUMATIC));
     return Optional.of(new MotionVehicle(id(), chassis, new ArrayList<>(bodies),
         new ArrayList<>(consist), interfaces, true, true, true, "", 2, 256, 256));
   }

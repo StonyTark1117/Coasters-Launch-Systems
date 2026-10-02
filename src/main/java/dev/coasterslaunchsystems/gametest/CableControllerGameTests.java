@@ -12,6 +12,7 @@ import dev.coasterslaunchsystems.runtime.NativeFinClamp;
 import dev.coasterslaunchsystems.runtime.VehicleInterfaces;
 import dev.ryanhcode.sable.api.sublevel.SubLevelContainer;
 import dev.coasterslaunchsystems.runtime.NativeCableRig;
+import dev.coasterslaunchsystems.math.Mechanism;
 import dev.coasterslaunchsystems.track.DirectedTrack;
 import dev.coasterslaunchsystems.track.EngagedContacts;
 import dev.ryanhcode.sable.neoforge.event.ForgeSablePrePhysicsTickEvent;
@@ -41,16 +42,20 @@ public final class CableControllerGameTests {
     final String mode;
     final List<NativeFinClamp> preparation = new ArrayList<>();
     final BlockPos flywheel, motor;
+    final Mechanism mechanism;
     double peakSpeed, initialEnergy, minimumRunningEnergy = Double.POSITIVE_INFINITY, finalDistance;
     UUID carriage;
     boolean running, braking, interrupted;
     String failure = "";
     Scene(GameTestHelper helper, int slot, String mode) {
       this.mode = mode;
+      mechanism = mode.contains("hydraulic") ? Mechanism.HYDRAULIC
+          : mode.contains("pneumatic") ? Mechanism.PNEUMATIC : Mechanism.FLYWHEEL;
       ride = new RideControllerGameTests.Scene(helper, slot, mode, 224);
       flywheel = ride.base.from.offset(-1, -2, 8); motor = flywheel.west();
     }
     EquipmentCabinetEntity cabinet() { return (EquipmentCabinetEntity) ride.base.level.getBlockEntity(flywheel); }
+    double cableEnergy() { return cabinet().cableEnergy(); }
     void at(int tick, Runnable action) { ride.at(tick, action); }
     void cleanup() { SCENES.remove(this); preparation.forEach(NativeFinClamp::close); preparation.clear(); ride.cleanup(); }
   }
@@ -61,7 +66,7 @@ public final class CableControllerGameTests {
       try {
         if (r.controller.phase() == RideControllerEntity.State.RUNNING) {
           s.running = true;
-          s.minimumRunningEnergy = Math.min(s.minimumRunningEnergy, s.cabinet().flywheel().energy());
+          s.minimumRunningEnergy = Math.min(s.minimumRunningEnergy, s.cableEnergy());
           s.preparation.forEach(NativeFinClamp::close); s.preparation.clear();
         }
         if (r.controller.phase() == RideControllerEntity.State.BRAKING) s.braking = true;
@@ -76,7 +81,9 @@ public final class CableControllerGameTests {
   @GameTestGenerator public static List<TestFunction> ride() {
     var modes = new ArrayList<>(List.of("ordinary_controller_dispatch", "ordinary_controller_power_loss"));
     if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension"))
-      modes.addAll(List.of("arrow_controller_dispatch", "arrow_controller_power_loss"));
+      // The Arrow fixture has two native-coordinate-safe slots; use them for the new pressure adapters.
+      modes.addAll(List.of("arrow_hydraulic_controller_dispatch", "arrow_pneumatic_controller_dispatch"));
+    else modes.addAll(List.of("ordinary_hydraulic_controller_dispatch", "ordinary_pneumatic_controller_dispatch"));
     // This shared server keeps upstream 4D rail metadata after a fixture closes.
     // Keep controller rails away from the cable-mechanics suite's slots 0..14.
     var tests = new ArrayList<TestFunction>(); int slot = 17;
@@ -102,7 +109,13 @@ public final class CableControllerGameTests {
       r.controller = (RideControllerEntity) level.getBlockEntity(r.controllerPosition);
       r.controller.bind(level, r.base.from, r.base.to);
       r.track = DirectedTrack.resolve(level, r.base.from, r.base.to).orElseThrow();
-      level.setBlockAndUpdate(s.flywheel, EquipmentContent.FLYWHEEL.get().defaultBlockState().setValue(RotatedPillarBlock.AXIS, Direction.Axis.X));
+      var cabinetBlock = switch (s.mechanism) {
+        case FLYWHEEL -> EquipmentContent.FLYWHEEL.get();
+        case HYDRAULIC -> EquipmentContent.HYDRAULIC.get();
+        case PNEUMATIC -> EquipmentContent.PNEUMATIC.get();
+        default -> throw new IllegalStateException("Not a cable cabinet");
+      };
+      level.setBlockAndUpdate(s.flywheel, cabinetBlock.defaultBlockState().setValue(RotatedPillarBlock.AXIS, Direction.Axis.X));
       level.setBlockAndUpdate(s.motor, AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalBlock.FACING, Direction.EAST));
       ((CreativeMotorBlockEntity) level.getBlockEntity(s.motor)).generatedSpeed.setValue(64);
       r.equipment.add(s.flywheel); r.motors.add(s.motor);
@@ -117,7 +130,7 @@ public final class CableControllerGameTests {
     });
     s.at(420, () -> {
       r.base.helper.assertTrue(s.failure.isEmpty() && r.controller.phase() == RideControllerEntity.State.READY
-          && s.cabinet().cableInUse() && s.cabinet().cableInstalled() && s.cabinet().flywheel().energy() > 750,
+          && s.cabinet().cableInUse() && s.cabinet().cableInstalled() && s.cabinet().cableReady(),
           "Placed cable controller did not hold and engage: " + r.controller.status() + " " + s.cabinet().status()
               + " installed=" + s.cabinet().cableInstalled() + " catch=" + s.cabinet().cableInUse()
               + " clamps=" + EquipmentRuntime.activeFinClamps(level, r.base.parents.getFirst().getUniqueId())
@@ -145,7 +158,7 @@ public final class CableControllerGameTests {
       r.base.helper.assertTrue(legacy != null && legacy.cableInstalled() && legacy.cableCarriage() == null
           && !legacy.armed() && legacy.fault().contains("Legacy cable installation"),
           "A pre-identity cable journal invented a native carriage or silently rearmed");
-      s.initialEnergy = s.cabinet().flywheel().energy(); r.high(true);
+      s.initialEnergy = s.cableEnergy(); r.high(true);
     });
     s.at(425, () -> r.high(false));
     if (s.mode.endsWith("_controller_power_loss")) {
@@ -188,7 +201,7 @@ public final class CableControllerGameTests {
           && SubLevelContainer.getContainer(level).getSubLevel(s.carriage) == null,
           "Disarmed controller did not retire its physically home carriage and loading ticket");
       System.out.println("LS_CABLE_CONTROLLER mode=" + s.mode + " phase=" + r.controller.phase() + " peak_speed=" + s.peakSpeed + " distance=" + s.finalDistance
-          + " energy=" + s.initialEnergy + "->" + s.cabinet().flywheel().energy());
+          + " energy=" + s.initialEnergy + "->" + s.cableEnergy());
       s.cleanup(); r.base.helper.succeed();
     });
   }

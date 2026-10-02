@@ -81,7 +81,7 @@ public final class CableRecovery {
       if (level.getBlockEntity(key.cabinet()) instanceof EquipmentCabinetEntity cabinet) candidates.add(cabinet);
     }
     for (var cabinet : candidates) {
-      if (cabinet.isRemoved() || cabinet.mechanism() != Mechanism.FLYWHEEL || !cabinet.cableInstalled()
+      if (cabinet.isRemoved() || !cabinet.mechanism().cable() || !cabinet.cableInstalled()
           || cabinet.cableCarriage() == null || cabinet.fault().isEmpty()
           || CableControllers.hasLiveCarriage(level, cabinet.cableCarriage())) continue;
       try {
@@ -124,7 +124,7 @@ public final class CableRecovery {
 
   /** Explicitly retire a reloaded idle installation only after its entire physical ownership is checked. */
   public static void inspectRetireIdle(ServerLevel level, EquipmentCabinetEntity cabinet) {
-    if (cabinet.mechanism() != Mechanism.FLYWHEEL || !cabinet.cableInstalled() || cabinet.cableInUse()
+    if (!cabinet.mechanism().cable() || !cabinet.cableInstalled() || cabinet.cableInUse()
         || cabinet.armed() || cabinet.fault().isEmpty() || cabinet.cableCarriage() == null)
       throw new IllegalArgumentException("Only a disarmed, reloaded idle cable carriage can be inspected for retirement");
     var id = cabinet.cableCarriage();
@@ -186,7 +186,7 @@ public final class CableRecovery {
    * every chassis in the saved consist. This path never arms or dispatches the controller.
    */
   public static void inspectReleaseActive(ServerLevel level, EquipmentCabinetEntity cabinet) {
-    if (cabinet.mechanism() != Mechanism.FLYWHEEL || !cabinet.cableInstalled() || !cabinet.cableInUse()
+    if (!cabinet.mechanism().cable() || !cabinet.cableInstalled() || !cabinet.cableInUse()
         || cabinet.armed() || cabinet.fault().isEmpty() || cabinet.cableCarriage() == null || cabinet.cableChassis() == null)
       throw new IllegalArgumentException("Only a disarmed, reloaded active cable catch can be released by inspection");
     var hold = HOLDS.getOrDefault(level, Map.of()).get(cabinet.cableCarriage());
@@ -355,7 +355,7 @@ public final class CableRecovery {
       var member = MotionProviders.resolve(level, id).orElseThrow(
           () -> new IllegalStateException("Captured consist member is unavailable after reload"));
       if (!member.provider().equals(motion.provider()) || !Set.copyOf(member.consist()).equals(consist)
-          || !member.interfaces().contains(Mechanism.FLYWHEEL)
+          || !member.interfaces().contains(cabinet.mechanism())
           || requireBrakes && !member.interfaces().contains(Mechanism.FIN_BRAKE))
         throw new IllegalStateException("Captured consist identity or cable/brake certificate changed");
       for (var body : member.bodies()) if (!bodies.add(body))

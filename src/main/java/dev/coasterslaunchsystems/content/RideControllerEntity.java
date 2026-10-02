@@ -220,9 +220,9 @@ public final class RideControllerEntity extends BlockEntity {
     var track = resolve(server); var other = cabinet.resolve(server);
     if (track == null || other == null || !track.edge().equals(other.edge()) || track.forward(server, track.hitAtDistance(server, 0)).dot(other.forward(server, other.hitAtDistance(server, 0))) < .99)
       throw new IllegalArgumentException("Module must use this section's anchor order");
-    if (!cabinet.mechanism().drive() && cabinet.mechanism() != dev.coasterslaunchsystems.math.Mechanism.FLYWHEEL
+    if (!cabinet.mechanism().drive() && !cabinet.mechanism().cable()
         && cabinet.mechanism() != dev.coasterslaunchsystems.math.Mechanism.FIN_BRAKE)
-      throw new IllegalArgumentException("Controller currently certifies tire/linear/flywheel drives and friction fins");
+      throw new IllegalArgumentException("Controller currently certifies tire/linear/cable drives and friction fins");
     if (cabinet.armed()) throw new IllegalArgumentException("Disarm the module before linking it");
     if (exitDrive && cabinet.mechanism() != dev.coasterslaunchsystems.math.Mechanism.TIRE)
       throw new IllegalArgumentException("Exit transport currently requires a tire drive; linear transfer is not certified");

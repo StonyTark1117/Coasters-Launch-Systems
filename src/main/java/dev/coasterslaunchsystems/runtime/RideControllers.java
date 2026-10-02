@@ -151,7 +151,7 @@ public final class RideControllers {
         .filter(EquipmentCabinetEntity.class::isInstance).map(EquipmentCabinetEntity.class::cast)
         .anyMatch(m -> (m.mechanism().drive() && !controller.exitDrive(m) && m.interval().end() >= module.interval().start()
             && m.interval().start() <= module.interval().end())
-            || m.mechanism() == Mechanism.FLYWHEEL && module.interval().start() <= m.interval().end()
+            || m.mechanism().cable() && module.interval().start() <= m.interval().end()
                 && module.interval().end() >= m.interval().start());
   }
   public static void physics(ServerLevel level, double dt) {

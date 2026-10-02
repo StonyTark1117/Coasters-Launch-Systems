@@ -31,6 +31,7 @@ public final class AirReceiver implements EnergyStore {
     double expanded = pressure() * volume / (volume + expandedCylinderVolume);
     return Math.max(0, expanded - ambientPressure) * Numbers.positive(area, "area");
   }
+  @Override public double outputForce(double extension) { return force(.4, Math.max(0, extension) * .1); }
   @Override public double energy() { return work.energy(); }
   @Override public double capacity() { return work.capacity(); }
   @Override public double charge(double value) { return work.charge(value); }

@@ -39,7 +39,7 @@ public final class SpanToolItem extends Item {
       var from = stack.get(EquipmentContent.FROM.get()); var to = stack.get(EquipmentContent.TO.get());
       var selected = stack.get(EquipmentContent.CONTROLLER_SELECTION.get());
       if (level.getBlockEntity(pos) instanceof EquipmentCabinetEntity inspected
-          && inspected.mechanism() == dev.coasterslaunchsystems.math.Mechanism.FLYWHEEL
+          && inspected.mechanism().cable()
           && (player.getOffhandItem().is(net.minecraft.world.item.Items.COMPASS)
               || player.getOffhandItem().is(net.minecraft.world.item.Items.REDSTONE_TORCH))) {
         boolean active = player.getOffhandItem().is(net.minecraft.world.item.Items.REDSTONE_TORCH);

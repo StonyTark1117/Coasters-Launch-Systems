@@ -25,6 +25,7 @@ public final class NativeCableRig implements AutoCloseable {
   public record Step(double force, double work, double storeDraw, double heat, boolean returning) {}
   private final ServerLevel level;
   private final BlockPos cabinetPosition;
+  private final Mechanism mechanism;
   private final DirectedTrack track;
   private final PhysicsPipeline pipeline;
   private final ServerSubLevel carriage;
@@ -43,12 +44,18 @@ public final class NativeCableRig implements AutoCloseable {
   private String fault = "";
 
   public NativeCableRig(ServerLevel level, DirectedTrack track, double homeDistance, double releaseTravel, double guideTravel) {
-    this(level, track, homeDistance, releaseTravel, guideTravel, null);
+    this(level, track, homeDistance, releaseTravel, guideTravel, null, Mechanism.FLYWHEEL);
   }
   public NativeCableRig(ServerLevel level, DirectedTrack track, double homeDistance, double releaseTravel, double guideTravel,
       BlockPos cabinetPosition) {
+    this(level, track, homeDistance, releaseTravel, guideTravel, cabinetPosition, Mechanism.FLYWHEEL);
+  }
+  public NativeCableRig(ServerLevel level, DirectedTrack track, double homeDistance, double releaseTravel, double guideTravel,
+      BlockPos cabinetPosition, Mechanism mechanism) {
     this.level = level; this.track = track; this.homeDistance = Numbers.nonnegative(homeDistance, "guide home");
     this.cabinetPosition = cabinetPosition == null ? null : cabinetPosition.immutable();
+    this.mechanism = Objects.requireNonNull(mechanism, "cable mechanism");
+    if (!mechanism.cable()) throw new IllegalArgumentException("Native carriage requires a cable mechanism");
     this.releaseTravel = Numbers.positive(releaseTravel, "release travel"); this.guideTravel = Numbers.positive(guideTravel, "guide travel");
     if (releaseTravel + 4 > guideTravel || homeDistance + guideTravel > track.length())
       throw new IllegalArgumentException("Leave four supported carriage braking blocks after cable release");
@@ -106,6 +113,7 @@ public final class NativeCableRig implements AutoCloseable {
     }
   }
   public Phase phase() { return phase; }
+  public Mechanism mechanism() { return mechanism; }
   public double homeDistance() { return homeDistance; }
   /** Bed top stays below the carriage's lowest steel ballast block. */
   public static BlockPos guideBlockAt(ServerLevel level, DirectedTrack track, double distance) {
@@ -136,7 +144,7 @@ public final class NativeCableRig implements AutoCloseable {
       var contact = cart == null ? null : EngagedContacts.current(level, cart).orElse(null);
       if (contact == null || !track.matches(contact.hit()) || !member.provider().equals(motion.provider())
           || !Set.copyOf(member.consist()).equals(Set.copyOf(motion.consist())) || !member.dispatchReady()
-          || !member.exclusiveOperator().isEmpty() || !member.interfaces().contains(Mechanism.FLYWHEEL)
+          || !member.exclusiveOperator().isEmpty() || !member.interfaces().contains(mechanism)
           || ChainLiftSpanQuery.findAtGraphHit(level, contact.hit(), 0) != null)
         throw new IllegalStateException("Cable consist is not ready, supported, certified and exclusively available");
       if (pipeline.getLinearVelocity(cart, new Vector3d()).length() >= .03 || pipeline.getAngularVelocity(cart, new Vector3d()).length() >= .03)
@@ -182,7 +190,7 @@ public final class NativeCableRig implements AutoCloseable {
         var cart = SubLevelContainer.getContainer(level).getSubLevel(id) instanceof ServerSubLevel body ? body : null;
         var contact = cart == null ? null : EngagedContacts.current(level, cart).orElse(null);
         if (!member.dispatchReady() || !member.exclusiveOperator().isEmpty() || !member.provider().equals(provider)
-            || !Set.copyOf(member.consist()).equals(consist) || !member.interfaces().contains(Mechanism.FLYWHEEL)
+            || !Set.copyOf(member.consist()).equals(consist) || !member.interfaces().contains(mechanism)
             || contact == null || !track.matches(contact.hit()) || ChainLiftSpanQuery.findAtGraphHit(level, contact.hit(), 0) != null
             || pipeline.getLinearVelocity(cart, new Vector3d()).length() >= .03 || pipeline.getAngularVelocity(cart, new Vector3d()).length() >= .03)
           throw new IllegalStateException("Whole cable consist is no longer dispatch ready and held");
@@ -196,7 +204,7 @@ public final class NativeCableRig implements AutoCloseable {
     for (var id : consist) {
       var motion = MotionProviders.resolve(level, id).orElseThrow();
       if (!motion.propulsionAllowed() || !motion.brakingAllowed() || !motion.exclusiveOperator().isEmpty()
-          || !motion.provider().equals(provider) || !motion.interfaces().contains(Mechanism.FLYWHEEL) || !Set.copyOf(motion.consist()).equals(consist))
+          || !motion.provider().equals(provider) || !motion.interfaces().contains(mechanism) || !Set.copyOf(motion.consist()).equals(consist))
         throw new IllegalStateException("Cable vehicle owner withdrew motion authority");
       var cart = SubLevelContainer.getContainer(level).getSubLevel(id) instanceof ServerSubLevel body ? body : null;
       var contact = cart == null ? null : EngagedContacts.current(level, cart).orElse(null);
@@ -239,7 +247,7 @@ public final class NativeCableRig implements AutoCloseable {
       double mass = loadedMass + NativeForces.mass(level, List.of(carriage.getUniqueId()));
       double driveSpeed = store instanceof FlywheelStore flywheel ? Math.min(target, flywheel.rimSpeed(.2)) : target;
       // The drum/clutch follows finite flywheel rim speed; an empty flywheel cannot synthesize a field speed.
-      double requested = Math.tanh((driveSpeed - speed()) * 2) * maximumForce;
+      double requested = Math.tanh((driveSpeed - speed()) * 2) * Math.min(maximumForce, store.outputForce(travel()));
       double acceleration = DriveMath.tireAccelerationStep(previousAcceleration, requested / mass, 4, dt);
       var dynamics = NativeForces.pointDynamics(carriage, pipeline, point, direction);
       double desired = acceleration * mass;
