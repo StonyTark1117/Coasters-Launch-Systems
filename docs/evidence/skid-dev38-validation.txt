@@ -1,0 +1,10 @@
+Launch Systems dev.38 local validation
+Date: 2026-10-01
+
+JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew build runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged
+Result: the build/unit stage completed with 27 JUnit tests passed. The later broad 121-test standalone GameTest run was stopped after unrelated simultaneous legacy fixtures interfered; it is excluded from acceptance.
+
+JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_linear
+Result: BUILD SUCCESSFUL; all 27 packaged LSM/LIM linear GameTests passed. The conflict fixtures now retain native contact and verify that overlapping independent modules fault before applying work.
+
+The pinned Fourth Dimension 0.9.0-dev.1 binary loaded with the optional adapter. Its brake GameTest generator shares the root namespace and cannot currently be selected without unrelated root fixtures.

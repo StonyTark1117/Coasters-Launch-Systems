@@ -53,10 +53,11 @@ public final class LinearMotorGameTests {
       plot.setBlock(reactionPosition(mechanism), (mechanism == Mechanism.LSM ? EquipmentContent.LSM_PLATE : EquipmentContent.LIM_PLATE).get().defaultBlockState(), 3);
       if (mode.equals("missing")) plot.setBlock(reactionPosition(mechanism), (mechanism == Mechanism.LSM ? EquipmentContent.LIM_PLATE : EquipmentContent.LSM_PLATE).get().defaultBlockState(), 3);
       base.track = DirectedTrack.resolve(base.level, base.from, base.to).orElseThrow();
-      cabinet(1); if (mode.equals("conflict")) cabinet(-1);
+      int contact = mode.equals("brake") || mode.equals("rolling") ? 10 : 8;
+      cabinet(1, contact); if (mode.equals("conflict")) cabinet(1, contact - 1);
     }
-    void cabinet(int side) {
-      var pos = base.from.offset(side, -2, mode.equals("brake") || mode.equals("rolling") ? 10 : 8); var motor = side > 0 ? pos.east() : pos.west();
+    void cabinet(int side, int contact) {
+      var pos = base.from.offset(side, -2, contact); var motor = side > 0 ? pos.east() : pos.west();
       modules.add(pos); motors.add(motor);
       base.level.setBlockAndUpdate(pos, (mechanism == Mechanism.LSM ? EquipmentContent.LSM : EquipmentContent.LIM).get().defaultBlockState().setValue(RotatedPillarBlock.AXIS, Direction.Axis.X));
       base.level.setBlockAndUpdate(motor, AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalBlock.FACING, side > 0 ? Direction.WEST : Direction.EAST));
@@ -169,7 +170,11 @@ public final class LinearMotorGameTests {
       s.base.helper.assertTrue(s.failure.isEmpty(), "Linear sensor failed: " + s.failure);
       double speed = s.base.speed(s.base.parents.getFirst());
       if (s.mode.equals("missing") || s.mode.equals("conflict")) {
-        for (var pos : s.modules) s.base.helper.assertTrue(((EquipmentCabinetEntity) s.base.level.getBlockEntity(pos)).fault().contains(s.mode.equals("missing") ? "reaction plate" : "Overlapping"), "Invalid linear equipment did not fail before force");
+        for (var pos : s.modules) {
+          var cabinet = (EquipmentCabinetEntity) s.base.level.getBlockEntity(pos);
+          s.base.helper.assertTrue(cabinet.fault().contains(s.mode.equals("missing") ? "reaction plate" : "Overlapping"),
+              "Invalid linear equipment did not fail before force at " + pos + ": " + cabinet.fault());
+        }
         s.base.helper.assertTrue(s.impulse == 0 && s.spent < 1e-8, "Rejected linear equipment applied work");
       } else {
         s.base.helper.assertTrue(s.cabinet().fault().isEmpty() && s.driveSteps > 10 && s.spent > 0 && s.heat > 0, "Linear motor never acted with finite resources: " + s.cabinet().fault());
