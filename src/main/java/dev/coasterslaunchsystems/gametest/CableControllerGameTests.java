@@ -43,7 +43,7 @@ public final class CableControllerGameTests {
     final BlockPos flywheel, motor;
     double peakSpeed, initialEnergy, minimumRunningEnergy = Double.POSITIVE_INFINITY, finalDistance;
     UUID carriage;
-    boolean running, braking;
+    boolean running, braking, interrupted;
     String failure = "";
     Scene(GameTestHelper helper, int slot, String mode) {
       this.mode = mode;
@@ -74,7 +74,7 @@ public final class CableControllerGameTests {
     }
   }
   @GameTestGenerator public static List<TestFunction> ride() {
-    var modes = new ArrayList<>(List.of("ordinary_controller_dispatch"));
+    var modes = new ArrayList<>(List.of("ordinary_controller_dispatch", "ordinary_controller_power_loss"));
     if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.add("arrow_controller_dispatch");
     // This shared server keeps upstream 4D rail metadata after a fixture closes.
     // Keep controller rails away from the cable-mechanics suite's slots 0..14.
@@ -147,6 +147,26 @@ public final class CableControllerGameTests {
       s.initialEnergy = s.cabinet().flywheel().energy(); r.high(true);
     });
     s.at(425, () -> r.high(false));
+    if (s.mode.equals("ordinary_controller_power_loss")) {
+      s.at(470, () -> {
+        r.base.helper.assertTrue(s.running && s.cabinet().cableInUse(),
+            "Placed cable controller did not begin a physical pull before its shaft interruption");
+        ((CreativeMotorBlockEntity) level.getBlockEntity(s.motor)).generatedSpeed.setValue(0);
+        s.interrupted = true;
+      });
+      s.at(650, () -> {
+        r.base.helper.assertTrue(s.failure.isEmpty() && s.interrupted && r.controller.phase() == RideControllerEntity.State.FAULT
+            && s.cabinet().cableInstalled() && s.cabinet().cableInUse() && !s.cabinet().armed()
+            && !s.cabinet().fault().isEmpty() && r.base.parents.stream().allMatch(body -> Math.abs(r.base.speed(body)) < .03),
+            "Placed cable shaft loss did not retain and settle its faulted physical catch: " + r.controller.status()
+                + " " + s.cabinet().status() + " speed=" + r.base.speed(r.base.parents.getFirst()) + " " + s.failure);
+        System.out.println("LS_CABLE_CONTROLLER mode=" + s.mode + " phase=" + r.controller.phase()
+            + " retained=" + s.cabinet().cableInUse() + " speed=" + r.base.speed(r.base.parents.getFirst())
+            + " fault=" + s.cabinet().fault());
+        s.cleanup(); r.base.helper.succeed();
+      });
+      return;
+    }
     s.at(1120, () -> {
       r.base.helper.assertTrue(s.failure.isEmpty() && s.running && s.braking && s.peakSpeed > .5 && s.finalDistance > 21.5
           && s.minimumRunningEnergy < s.initialEnergy && !s.cabinet().cableInUse()

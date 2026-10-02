@@ -1,0 +1,21 @@
+Dev.26 local validation, 2026-10-02, Java 21, NeoForge GameTest server.
+
+Artifact: coasters-launch-systems-0.0.1-dev.26.jar
+SHA-256: d0f4e17f838125c8203d5dd0a476d881a263d8407a9377ba3a26131c05c335fa
+Pinned Fourth Dimension schema-4 binary SHA-256:
+027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16
+
+JUnit: 27 passed, no failures, errors or skips.
+Packaged standalone full suite: 115/115 required GameTests passed.
+Packaged combined cable suite with pinned Fourth Dimension: 18/18 passed.
+
+The ordinary placed-controller interruption fixture dispatches a real Create-powered cabinet
+through its placed ride controller, guide and native catch. During an active pull it sets the
+actual CreativeMotorBlockEntity shaft speed to zero. Production controller evaluation detects
+the missing shaft certificate, retains cable ownership and applies the native emergency hold.
+The captured train settles under the held catch; the cabinet remains faulted, installed,
+cable-in-use and disarmed, with no rearm path asserted before inspection/recovery.
+
+The combined run also verifies ordinary and pinned Fourth Dimension Arrow controller dispatch,
+but does not interrupt a live Arrow controller pull. This checkpoint does not prove Arrow
+active release, chunk unload, multiplayer/rendered service or complete 0.4.0 acceptance.

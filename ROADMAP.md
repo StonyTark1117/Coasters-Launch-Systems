@@ -73,6 +73,8 @@ Dev.24 journals whether an ordinary catch was still physically pulling at save t
 
 Dev.25 applies the same bounded moving-restart path to the pinned Fourth Dimension schema-4 Arrow provider. A two-process saved world preserves the Arrow’s provider-owned native bodies and tickets through a live pulling save, reconstructs the passive guide and catch joint while disarmed, and clears the movement journal once the train settles. The Arrow fixture stops its save at a four-block guide threshold so the loaded Arrow stays inside the same measured 3–12-block recovery span. Placed-cabinet drive interruption, Arrow active release, real chunk/multiplayer/rendered service and broader release gates remain open.
 
+Dev.26 adds an end-to-end ordinary placed-controller shaft interruption. The live controller dispatches through its placed cabinet, guide, catch and fin bank; the fixture then stops the actual Create creative motor. The controller’s production loss branch faults the cabinet and applies the retained native emergency hold, leaving the occupied train settled, loaded and ineligible for rearm. Arrow controller interruption, Arrow active release, actual chunk/multiplayer/rendered service and broader release gates remain open.
+
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |
 | LS301 | Shared cable guide, catch socket, carriage and release/reset machine | 0.2. Real constrained pull, rated guide/end clearance, physical return and misalignment handling. No teleport, one-shot impulse or prescribed train path. |
