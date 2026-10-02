@@ -97,7 +97,7 @@ Dev.28 begins LS401–LS402 world equipment. Original hydraulic and pneumatic la
 
 | ID | Adapter | Acceptance |
 | --- | --- | --- |
-| LS801 | Engineered 1.1.1 operating integration | The public span/controller bridge now cedes an active shared contact before Launch Systems adds force; disjoint original equipment passes standalone and loaded-4D matrices. Reusing controls still requires shared energy, rollback and reservation acceptance without incompatible assembly assumptions. |
+| LS801 | Engineered 1.1.1 operating integration | The public span/controller bridge now cedes an active shared contact before Launch Systems adds force, and a real configured Engineered `LAUNCH` span proves the predicate; disjoint original equipment passes standalone and loaded-4D matrices. Reusing controls still requires shared energy, rollback and reservation acceptance without incompatible assembly assumptions. |
 | LS802 | Magnetized acceleration/braking integration | Inspect and pin its implementation. Define ownership and block unsupported overlaps; demonstrate actual 4D physics before enabling support. |
 | LS803 | Additions station and restraint signals | Audit actual dependencies and force/chain overrides. Imported dispatch remains a request subject to Fourth Dimension readiness and our reservations. |
 | LS804 | Track Styles 1.1.0-hotfix1 appearance/geometry integration | Inspect and pin the current artifact separately from the old audit. Mid-curve styles retain contact/clearance and independent equipment visibility; no cosmetic Arrow 4D eligibility. |

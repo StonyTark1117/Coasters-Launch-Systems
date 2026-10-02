@@ -35,7 +35,7 @@ import org.joml.Vector3d;
 public final class LinearMotorGameTests {
   private static final List<Scene> SCENES = new ArrayList<>();
   private static boolean registered;
-  private static final class Scene {
+  static final class Scene {
     final OrdinaryPassengerGameTests.Scene base;
     final Mechanism mechanism;
     final String mode;
@@ -213,4 +213,46 @@ public final class LinearMotorGameTests {
     }
     s.base.helper.assertTrue(s.cabinet().targetSpeed() == 6 && s.cabinet().accelerationLimit() == .5 && s.cabinet().jerkLimit() == 8, "Tool did not change independent motor settings");
   }
+  @GameTestGenerator public static List<TestFunction> engineeredOverlap() {
+    if (!Boolean.getBoolean("coasterslaunchsystems.engineeredTests")) return List.of();
+    return List.of(new TestFunction("launchsystems_engineered", "coasterslaunchsystems.engineered_active_linear_overlap_faults_before_force",
+        "coasterslaunchsystems_engineered:empty", 180, 0, true, LinearMotorGameTests::runEngineeredOverlap));
+  }
+
+  /** Uses Engineered's public span and controller APIs, with no synthetic index entries. */
+  private static void runEngineeredOverlap(GameTestHelper helper) {
+    var scene = new OrdinaryPassengerGameTests.Scene(helper, 20, 256, -512);
+    scene.track = DirectedTrack.resolve(scene.level, scene.from, scene.to).orElseThrow();
+    var controllerPos = scene.from.offset(-1, -2, 8);
+    try {
+      helper.runAtTickTime(40, () -> {
+        var span = dev.jwaterfall.coastersengineered.span.TrackSpanBehaviour.at(scene.level, scene.from);
+        helper.assertTrue(span != null, "Engineered did not attach a span behavior to a normal coaster anchor");
+        helper.assertTrue(span.setSpan(new dev.jwaterfall.coastersengineered.span.TrackSpan(List.of(
+            new dev.jwaterfall.coastersengineered.span.SpanSegment(scene.track.edge().from(), scene.track.edge().to(), 0, 1)))),
+            "Engineered rejected a full normal-anchor span");
+        scene.level.setBlockAndUpdate(controllerPos,
+            dev.jwaterfall.coastersengineered.CoastersEngineeredRegistry.LINEAR_MOTOR_CONTROLLER.get().defaultBlockState());
+        var controller = (dev.jwaterfall.coastersengineered.controller.LinearMotorControllerBlockEntity) scene.level.getBlockEntity(controllerPos);
+        helper.assertTrue(controller != null, "Engineered linear controller did not place");
+        controller.bindTo(scene.from);
+        controller.setSteps(List.of(new dev.jwaterfall.coastersengineered.controller.MotorStep(
+            dev.jwaterfall.coastersengineered.controller.MotorStep.Kind.LAUNCH)));
+      });
+      helper.runAtTickTime(80, () -> {
+        var hit = scene.track.hitAtDistance(scene.level, 8);
+        helper.assertTrue(dev.coasterslaunchsystems.integration.engineered.EngineeredInterop.appliesForce(scene.level, hit),
+            "Configured Engineered launch did not claim its exact rail contact");
+        System.out.println("LS_ENGINEERED_OVERLAP active=true");
+        scene.cleanup();
+        scene.level.removeBlock(controllerPos, false);
+        helper.succeed();
+      });
+    } catch (RuntimeException failure) {
+      scene.cleanup();
+      scene.level.removeBlock(controllerPos, false);
+      throw failure;
+    }
+  }
+
 }
