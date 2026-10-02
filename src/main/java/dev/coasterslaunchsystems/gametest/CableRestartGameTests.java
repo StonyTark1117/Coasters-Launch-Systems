@@ -55,7 +55,7 @@ public final class CableRestartGameTests {
     final Mechanism mechanism;
     final EnergyStore pullStore;
     NativeCableRig rig;
-    boolean engageRequested, pullRequested, pulling, saveMoving;
+    boolean engageRequested, pullRequested, pulling, saveMoving, saveReturning;
     double interruptionTravel = 5;
     String failure = "";
     ActiveFixture(net.minecraft.server.level.ServerLevel level, EquipmentCabinetEntity cabinet, ServerSubLevel cart,
@@ -96,7 +96,12 @@ public final class CableRestartGameTests {
         }
         if (fixture.pulling) {
           fixture.rig.step(fixture.pullStore, 3, 0, event.getTimeStep());
+          fixture.cabinet.observeCablePhase(fixture.rig);
           fixture.cabinet.observeCableMotion(fixture.rig);
+          if (fixture.saveReturning && fixture.rig.phase() == NativeCableRig.Phase.RETURNING) {
+            fixture.pulling = false;
+            continue;
+          }
           if (fixture.rig.travel() >= fixture.interruptionTravel) {
             if (!fixture.saveMoving) fixture.rig.emergencyHold("Saved-world interrupted pull fixture");
             fixture.pulling = false;
@@ -110,7 +115,8 @@ public final class CableRestartGameTests {
     String phase = System.getProperty("coasterslaunchsystems.cableRestartPhase", "");
     if (phase.isEmpty()) return List.of();
     return List.of(new TestFunction("launchsystems_cable_restart", "coasterslaunchsystems_cable.saved_carriage_restart",
-        "coasterslaunchsystems_cable:empty", phase.startsWith("prepareActiveMidGuide") ? 1000
+        "coasterslaunchsystems_cable:empty", phase.startsWith("prepareActiveMidGuide") || phase.startsWith("prepareReturning") ? 1000
+            : phase.startsWith("verifyReturning") ? 950
             : phase.startsWith("prepareActiveMoving") ? 700
             : phase.startsWith("prepareActive") ? 500 : 140, 0, true, CableRestartGameTests::run));
   }
@@ -127,7 +133,9 @@ public final class CableRestartGameTests {
         || phase.equals("prepareActiveMoving") || phase.equals("verifyActiveMoving")
         || phase.equals("prepareActiveMovingArrow") || phase.equals("verifyActiveMovingArrow")
         || phase.equals("prepareActiveHydraulic") || phase.equals("verifyActiveHydraulic")
-        || phase.equals("prepareActivePneumatic") || phase.equals("verifyActivePneumatic"),
+        || phase.equals("prepareActivePneumatic") || phase.equals("verifyActivePneumatic")
+        || phase.equals("prepareReturningHydraulic") || phase.equals("verifyReturningHydraulic")
+        || phase.equals("prepareReturningPneumatic") || phase.equals("verifyReturningPneumatic"),
         "Set lsCableRestartPhase to an idle or active restart phase");
     if (phase.equals("prepare")) prepare(helper);
     else if (phase.equals("prepareActive") || phase.equals("prepareActiveMissingSocket") || phase.equals("prepareActiveArrow")
@@ -140,10 +148,14 @@ public final class CableRestartGameTests {
           phase.equals("prepareActiveRelease"), phase.equals("prepareActiveMoving") || phase.equals("prepareActiveMovingArrow"),
           phase.equals("prepareActiveHydraulic") ? Mechanism.HYDRAULIC
               : phase.equals("prepareActivePneumatic") ? Mechanism.PNEUMATIC : Mechanism.FLYWHEEL);
+    else if (phase.equals("prepareReturningHydraulic") || phase.equals("prepareReturningPneumatic"))
+      prepareActive(helper, false, false, false, false, false,
+          phase.equals("prepareReturningHydraulic") ? Mechanism.HYDRAULIC : Mechanism.PNEUMATIC, true);
     else if (phase.equals("verifyActive") || phase.equals("verifyActiveArrow") || phase.equals("verifyActiveMidGuide")
         || phase.equals("verifyActiveMidGuideArrow"))
       verifyActive(helper, phase.startsWith("verifyActiveMidGuide"), false);
     else if (phase.equals("verifyActiveHydraulic") || phase.equals("verifyActivePneumatic")) verifyActive(helper, false, false);
+    else if (phase.equals("verifyReturningHydraulic") || phase.equals("verifyReturningPneumatic")) verifyReturning(helper);
     else if (phase.equals("verifyActiveMoving") || phase.equals("verifyActiveMovingArrow")) verifyActive(helper, false, true);
     else if (phase.equals("verifyActiveRelease")) verifyActiveRelease(helper);
     else if (phase.equals("verifyActiveReleased")) verifyActiveReleased(helper);
@@ -154,6 +166,11 @@ public final class CableRestartGameTests {
 
   private static void prepareActive(GameTestHelper helper, boolean missingSocket, boolean arrow, boolean midGuide, boolean release,
       boolean moving, Mechanism mechanism) {
+    prepareActive(helper, missingSocket, arrow, midGuide, release, moving, mechanism, false);
+  }
+
+  private static void prepareActive(GameTestHelper helper, boolean missingSocket, boolean arrow, boolean midGuide, boolean release,
+      boolean moving, Mechanism mechanism, boolean returning) {
     helper.assertTrue(!arrow || net.neoforged.fml.ModList.get().isLoaded("fourthdimension"),
         "The Arrow saved-world fixture requires the pinned Fourth Dimension provider");
     var ride = arrow ? new RideControllerGameTests.Scene(helper, SLOT, "arrow_controller_dispatch", 224) : null;
@@ -207,6 +224,7 @@ public final class CableRestartGameTests {
       var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(FLYWHEEL);
       fixture[0] = new ActiveFixture(level, cabinet, cart[0], track, preparation[0], mechanism); ACTIVE.add(fixture[0]);
       if (moving && arrow) fixture[0].interruptionTravel = 4;
+      if (returning) fixture[0].interruptionTravel = 100;
     });
     helper.runAtTickTime(420, () -> {
       var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(FLYWHEEL);
@@ -222,7 +240,9 @@ public final class CableRestartGameTests {
           && fixture[0].rig.phase() == NativeCableRig.Phase.ENGAGED && scene.riders.stream().allMatch(pig -> pig.isPassenger())
           && fixture[0].failure.isEmpty(),
           "Occupied active cable journal or native catch was not established: " + fixture[0].failure);
-      if (midGuide || moving) { fixture[0].saveMoving = moving; fixture[0].pullRequested = true; return; }
+      if (midGuide || moving || returning) {
+        fixture[0].saveMoving = moving; fixture[0].saveReturning = returning; fixture[0].pullRequested = true; return;
+      }
       if (release) {
         var controller = (dev.coasterslaunchsystems.content.RideControllerEntity) level.getBlockEntity(RECOVERY_CONTROLLER);
         controller.reserve(java.util.Set.of(cart[0].getUniqueId()));
@@ -267,6 +287,56 @@ public final class CableRestartGameTests {
           + " chassis=" + cabinet.cableChassis() + " travel=" + fixture[0].rig.travel()
           + " speed=" + fixture[0].rig.speed() + " journal_moving=" + cabinet.cableMoving() + " arrow=" + arrow);
       ACTIVE.remove(fixture[0]); helper.succeed();
+    });
+    if (returning) helper.runAtTickTime(820, () -> {
+      var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(FLYWHEEL);
+      helper.assertTrue(fixture[0].failure.isEmpty() && !fixture[0].pulling
+          && fixture[0].rig.phase() == NativeCableRig.Phase.RETURNING && fixture[0].rig.travel() > 3
+          && Math.abs(fixture[0].rig.speed()) < .1 && cabinet.cableInstalled() && cabinet.cableInUse()
+          && cabinet.cableReturning() && cabinet.cableChassis() == null && !cabinet.cableMoving(),
+          "Released pressure carriage did not retain a bounded return journal: travel=" + fixture[0].rig.travel()
+              + " speed=" + fixture[0].rig.speed() + " phase=" + fixture[0].rig.phase()
+              + " returning=" + cabinet.cableReturning() + " failure=" + fixture[0].failure);
+      System.out.println("LS_CABLE_RETURN_RESTART prepared carriage=" + cabinet.cableCarriage()
+          + " travel=" + fixture[0].rig.travel() + " mechanism=" + mechanism);
+      ACTIVE.remove(fixture[0]); helper.succeed();
+    });
+  }
+
+  private static void verifyReturning(GameTestHelper helper) {
+    var level = helper.getLevel();
+    helper.runAtTickTime(40, () -> {
+      var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(FLYWHEEL);
+      helper.assertTrue(cabinet != null && cabinet.cableInstalled() && cabinet.cableInUse() && cabinet.cableReturning()
+          && cabinet.cableCarriage() != null && cabinet.cableChassis() == null && !cabinet.armed() && !cabinet.fault().isEmpty()
+          && CableRecovery.stabilized(level, cabinet.cableCarriage()),
+          "Saved released carriage did not reopen under its passive guide hold: " + (cabinet == null ? "missing" : cabinet.status()));
+      level.setBlockAndUpdate(FLYWHEEL.west(), AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalBlock.FACING, Direction.EAST));
+      ((CreativeMotorBlockEntity) level.getBlockEntity(FLYWHEEL.west())).generatedSpeed.setValue(64);
+    });
+    helper.runAtTickTime(100, () -> {
+      var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(FLYWHEEL);
+      CableRecovery.inspectResumeReturn(level, cabinet);
+      helper.assertTrue(cabinet.cableReturning() && cabinet.cableInUse() && CableRecovery.stabilized(level, cabinet.cableCarriage()),
+          "Inspected return resume lost its saved carriage before physical motion began");
+    });
+    helper.runAtTickTime(800, () -> {
+      var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(FLYWHEEL);
+      var carriage = (ServerSubLevel) SubLevelContainer.getContainer(level).getSubLevel(cabinet.cableCarriage());
+      var track = DirectedTrack.resolve(level, FROM, FROM.offset(0, 0, 64)).orElseThrow();
+      var hit = track.hitAtDistance(level, cabinet.cableHome());
+      var up = CoasterPathTrackFrame.trackBasisAtHit(level, hit).up();
+      var expected = hit.point().add(up.scale(.3125 - 2));
+      var center = carriage.getPlot().getCenterBlock().getCenter();
+      var actual = NativeCableRig.worldPoint(carriage, new Vector3d(center.x, center.y, center.z));
+      helper.assertTrue(cabinet.cableInstalled() && !cabinet.cableInUse() && !cabinet.cableReturning()
+          && cabinet.cableChassis() == null && !cabinet.armed() && !cabinet.fault().isEmpty()
+          && CableRecovery.stabilized(level, cabinet.cableCarriage()) && actual.distance(expected.x, expected.y, expected.z) < .03,
+          "Inspected return did not reach its physical home: actual=" + actual + " expected=" + expected
+              + " cabinet=" + cabinet.status());
+      System.out.println("LS_CABLE_RETURN_RESTART verified carriage=" + cabinet.cableCarriage()
+          + " separation=" + actual.distance(expected.x, expected.y, expected.z));
+      helper.succeed();
     });
   }
 

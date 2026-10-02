@@ -365,3 +365,11 @@ The isolated return-shaft GameTest mode accepts `arrow` and allocates only slots
 The pinned Fourth Dimension pressure-return cases passed **17/17** focused packaged cable GameTests. The normal suites also passed **27 JUnit tests**, **15/15** packaged standalone cable GameTests and **19/19** pinned compatibility cases. The `0.0.1-dev.33` JAR SHA-256 is `a31cfff9e23f215181b44aabd63009bf4423e619cde0bb30a77c33cf4c58d2ab`; see [local validation](evidence/cable-dev33-validation.txt) and [artifact hashes](evidence/cable-dev33-artifacts.sha256).
 
 Pressure restart while returning, active Arrow release, chunk/multiplayer/rendered operation and broader release gates remain open. **The complete release goal remains active.**
+
+## Ordinary pressure released-return restart checkpoint — dev.34
+
+Schema 11 journals a released carriage separately from an active train catch. On restart, recovery rebuilds only its passive guide and brake; it never tries to recreate the released train joint. A compass inspection on the saved cabinet checks the live charging shaft before it authorizes the same bounded carriage to return under physical force. The carriage remains disarmed and faulted throughout, then reaches home through the guide before normal inspection/rebinding can continue.
+
+Hydraulic and pneumatic separate-process preparation/verification pairs each passed **16/16** standalone cable GameTests per process. The normal dev.34 JAR passed **27 JUnit tests**, **15/15** focused packaged standalone cable GameTests, and **19/19** focused pinned Fourth Dimension cable GameTests. Its SHA-256 is `18eb494fd4db63f8702a2e492c68a4fe2373791dfe6490a49cc54a03970b04a8`; see [local validation](evidence/cable-dev34-validation.txt) and [artifact hashes](evidence/cable-dev34-artifacts.sha256).
+
+The pinned Arrow released-return fixture is retained passively after restart but does not yet resume: its home-guide correction needs provider-specific work. Active Arrow release, chunk/multiplayer/rendered operation and broader release gates remain open. **The complete release goal remains active.**

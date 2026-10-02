@@ -85,7 +85,7 @@ public final class EquipmentRuntime {
     var level = event.getPhysicsSystem().getLevel();
     var registered = MODULES.get(level);
     CableRecovery.stabilize(level, registered == null ? List.of() : registered.values().stream()
-        .filter(entry -> entry.tick() >= level.getGameTime() - 1).map(Entry::module).toList());
+        .filter(entry -> entry.tick() >= level.getGameTime() - 1).map(Entry::module).toList(), event.getTimeStep());
     RideControllers.physics(level, event.getTimeStep());
     var modules = MODULES.get(level);
     if (modules == null) {

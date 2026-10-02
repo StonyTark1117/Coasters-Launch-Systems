@@ -42,6 +42,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   private UUID cableChassis;
   private double cableHome;
   private boolean cableMoving;
+  private boolean cableReturning;
   private NativeCableRig.Phase cablePhase = NativeCableRig.Phase.HOME;
   private double target = 3, accelerationLimit = 2, jerkLimit = 4;
 
@@ -122,6 +123,8 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   public double cableHome() { return cableHome; }
   /** Saved from the last physical cable step; permits a bounded recovery-only moving catch. */
   public boolean cableMoving() { return cableMoving; }
+  /** A released carriage remains owned until its shaft-powered physical return reaches home. */
+  public boolean cableReturning() { return cableReturning; }
   /** Live physical phase for installed-cabinet status; restart recovery remains governed by the persisted journal. */
   public NativeCableRig.Phase cablePhase() { return cablePhase; }
   /** Journal native carriage allocation before the controller can dispatch a catch. */
@@ -146,7 +149,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     if (!mechanism().cable() || !cableInstalled || cableInUse || armed
         || cableCarriage == null || !cableCarriage.equals(carriage) || fault.isEmpty())
       throw new IllegalStateException("Saved cable installation changed during inspected retirement");
-    cableInstalled = false; cableCarriage = null; cableChassis = null; cableHome = 0; cableMoving = false;
+    cableInstalled = false; cableCarriage = null; cableChassis = null; cableHome = 0; cableMoving = false; cableReturning = false;
     fault = "Idle carriage reclaimed by inspection; verify and rebind the guide before arming"; changed();
   }
   /** The operator has proved that a stopped captured train is held by an independent fin bank. */
@@ -154,7 +157,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     if (!mechanism().cable() || !cableInstalled || !cableInUse || armed
         || cableCarriage == null || !cableCarriage.equals(carriage) || cableChassis == null || !cableChassis.equals(chassis)
         || fault.isEmpty()) throw new IllegalStateException("Saved active catch changed during inspected release");
-    cableInUse = false; cableChassis = null; cableMoving = false;
+    cableInUse = false; cableChassis = null; cableMoving = false; cableReturning = false;
     fault = "Active catch released by inspection; verify and rebind the guide before arming"; changed();
   }
   public void chargeFlywheel(double dt) {
@@ -177,7 +180,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
       throw new IllegalStateException("Cable store is unavailable or awaiting cable inspection");
     if (rig.mechanism() != mechanism()) throw new IllegalStateException("Cable carriage mechanism does not match its cabinet");
     rig.engage(chassis);
-    cableChassis = chassis; cableInUse = true; cableMoving = false; cablePhase = rig.phase(); changed();
+    cableChassis = chassis; cableInUse = true; cableMoving = false; cableReturning = false; cablePhase = rig.phase(); changed();
   }
   public void consumeFlywheel(double work) {
     if (mechanism() != Mechanism.FLYWHEEL || work > flywheel.energy() + 1e-8)
@@ -198,13 +201,13 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     double before = store.energy();
     var phase = rig.phase();
     var motion = rig.step(store, target, shaft, dt);
-    cablePhase = rig.phase();
+    observeCablePhase(rig);
     observeCableMotion(rig);
     double charged = 0;
     if (mechanism() == Mechanism.FLYWHEEL && phase != NativeCableRig.Phase.ENGAGED && phase != NativeCableRig.Phase.PULLING
         && rig.phase() != NativeCableRig.Phase.FAULT)
       charged = flywheel.charge(Math.max(0, shaft - Math.max(0, motion.work())));
-    if (rig.phase() == NativeCableRig.Phase.HOME) { cableInUse = false; cableChassis = null; cableMoving = false; }
+    if (rig.phase() == NativeCableRig.Phase.HOME) { cableInUse = false; cableChassis = null; cableMoving = false; cableReturning = false; }
     if (before != store.energy() || !cableInUse) setChanged();
     return new CableStep(motion, charged, shaft);
   }
@@ -213,12 +216,33 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     boolean next = cableInUse && rig.phase() == NativeCableRig.Phase.PULLING && Math.abs(rig.speed()) > .5;
     if (cableMoving != next) { cableMoving = next; changed(); }
   }
+  /** Keeps the persisted journal aligned with release and return ownership for normal and fixture-driven rigs. */
+  public void observeCablePhase(NativeCableRig rig) {
+    var phase = rig.phase();
+    boolean returning = phase == NativeCableRig.Phase.RELEASING || phase == NativeCableRig.Phase.RETURNING;
+    boolean changed = cablePhase != phase || cableReturning != returning;
+    cablePhase = phase;
+    if (returning) {
+      if (cableChassis != null) { cableChassis = null; changed = true; }
+      if (cableMoving) { cableMoving = false; changed = true; }
+      cableReturning = true;
+    }
+    if (changed) changed();
+  }
   /** Drops the widened restart-only inspection allowance once a reconstructed catch is physically settled. */
   public void finishRecoveredCableMotion(UUID carriage, UUID chassis) {
     if (!mechanism().cable() || !cableInstalled || !cableInUse || cableCarriage == null
         || !cableCarriage.equals(carriage) || cableChassis == null || !cableChassis.equals(chassis))
       throw new IllegalStateException("Saved cable catch changed before recovery could settle");
     if (cableMoving) { cableMoving = false; changed(); }
+  }
+  /** Completes only an inspected, released carriage return; it never restores a train catch or arms a controller. */
+  public void finishRecoveredCableReturn(UUID carriage) {
+    if (!mechanism().cable() || !cableInstalled || !cableInUse || !cableReturning || armed
+        || cableCarriage == null || !cableCarriage.equals(carriage) || cableChassis != null || fault.isEmpty())
+      throw new IllegalStateException("Saved return carriage changed before reaching its physical home");
+    cableInUse = false; cableReturning = false; cableMoving = false; cablePhase = NativeCableRig.Phase.HOME;
+    fault = "Cable return completed under inspection; verify and rebind the guide before arming"; changed();
   }
   public double targetSpeed() { return target; }
   public double accelerationLimit() { return accelerationLimit; }
@@ -353,15 +377,16 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   private void changed() { setChanged(); sendData(); }
   @Override protected void write(CompoundTag tag, HolderLookup.Provider registries, boolean client) {
     super.write(tag, registries, client);
-    tag.putInt("ls_schema", 10);
+    tag.putInt("ls_schema", 11);
     if (mechanism().cable()) {
       tag.putDouble("ls_flywheel_energy", flywheel.energy()); tag.putBoolean("ls_cable_in_use", cableInUse);
       tag.putBoolean("ls_cable_installed", cableInstalled);
       if (cableInstalled && cableCarriage != null) {
         tag.putUUID("ls_cable_carriage", cableCarriage); tag.putDouble("ls_cable_home", cableHome);
       }
-      if (cableInUse && cableChassis != null) tag.putUUID("ls_cable_chassis", cableChassis);
+      if (cableInUse && !cableReturning && cableChassis != null) tag.putUUID("ls_cable_chassis", cableChassis);
       tag.putBoolean("ls_cable_moving", cableMoving);
+      tag.putBoolean("ls_cable_returning", cableReturning);
     }
     if (mechanism().linear()) {
       tag.putDouble("ls_energy", energy()); tag.putDouble("ls_target", target);
@@ -379,7 +404,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   }
   @Override protected void read(CompoundTag tag, HolderLookup.Provider registries, boolean client) {
     super.read(tag, registries, client);
-    if (tag.contains("ls_schema") && (tag.getInt("ls_schema") < 1 || tag.getInt("ls_schema") > 10)) throw new IllegalArgumentException("Unsupported equipment schema");
+    if (tag.contains("ls_schema") && (tag.getInt("ls_schema") < 1 || tag.getInt("ls_schema") > 11)) throw new IllegalArgumentException("Unsupported equipment schema");
     heat = new dev.coasterslaunchsystems.math.BrakeHeat(4096, 8, tag.getInt("ls_schema") >= 2 ? tag.getDouble("ls_heat") : 0);
     controllerIdentity = tag.hasUUID("ls_controller") ? tag.getUUID("ls_controller") : null;
     controllerPosition = controllerIdentity == null ? null : BlockPos.of(tag.getLong("ls_controller_pos"));
@@ -398,7 +423,8 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
       cableInUse = tag.getBoolean("ls_cable_in_use");
       cableInstalled = tag.getBoolean("ls_cable_installed");
       cableCarriage = cableInstalled && tag.hasUUID("ls_cable_carriage") ? tag.getUUID("ls_cable_carriage") : null;
-      cableChassis = cableInUse && tag.hasUUID("ls_cable_chassis") ? tag.getUUID("ls_cable_chassis") : null;
+      cableReturning = cableInUse && tag.getInt("ls_schema") >= 11 && tag.getBoolean("ls_cable_returning");
+      cableChassis = cableInUse && !cableReturning && tag.hasUUID("ls_cable_chassis") ? tag.getUUID("ls_cable_chassis") : null;
       cableHome = cableInstalled && tag.contains("ls_cable_home") ? tag.getDouble("ls_cable_home") : 0;
       cableMoving = cableInUse && tag.getInt("ls_schema") >= 8 && tag.getBoolean("ls_cable_moving");
       if (!Double.isFinite(cableHome) || cableHome < 0 || cableHome > 1024)
@@ -407,6 +433,8 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
         armed = false;
         if ((cableInUse || cableInstalled) && fault.isEmpty()) fault = cableInstalled && cableCarriage == null
             ? "Legacy cable installation needs inspected recovery after reload"
+            : cableReturning && cableInstalled
+                ? "Cable return needs inspected recovery after reload"
             : cableInUse && cableChassis == null && cableInstalled
                 ? "Legacy active cable catch needs inspected recovery after reload"
                 : "Cable catch needs inspected recovery after reload";

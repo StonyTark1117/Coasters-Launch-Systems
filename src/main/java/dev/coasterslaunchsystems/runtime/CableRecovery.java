@@ -6,6 +6,8 @@ import dev.coasterslaunchsystems.content.EquipmentCabinetEntity;
 import dev.coasterslaunchsystems.content.EquipmentContent;
 import dev.coasterslaunchsystems.content.RideControllerEntity;
 import dev.coasterslaunchsystems.math.Mechanism;
+import dev.coasterslaunchsystems.math.DriveMath;
+import dev.coasterslaunchsystems.math.LinearMotor;
 import dev.ryanhcode.sable.api.physics.constraint.ConstraintJointAxis;
 import dev.ryanhcode.sable.api.physics.constraint.GenericConstraintConfiguration;
 import dev.ryanhcode.sable.api.physics.constraint.GenericConstraintHandle;
@@ -35,13 +37,15 @@ public final class CableRecovery {
     private final ServerSubLevel carriage;
     private final GenericConstraintHandle guide;
     private final NativeFinClamp brake;
-    private final Vector3d home, point;
+    private final Vector3d home, point, direction;
     private final boolean movingAtRecovery;
     private GenericConstraintHandle catchJoint;
     private UUID caught;
+    private boolean returnAuthorized;
     private Hold(ServerSubLevel carriage, GenericConstraintHandle guide, NativeFinClamp brake, Vector3d home, Vector3d point,
-        boolean movingAtRecovery) {
+        Vector3d direction, boolean movingAtRecovery) {
       this.carriage = carriage; this.guide = guide; this.brake = brake; this.home = home; this.point = point;
+      this.direction = direction;
       this.movingAtRecovery = movingAtRecovery;
     }
     ServerSubLevel carriage() { return carriage; }
@@ -59,12 +63,31 @@ public final class CableRecovery {
       if (!caught(chassis)) throw new IllegalStateException("Saved native catch joint changed during inspection");
       catchJoint.remove(); catchJoint = null; caught = null;
     }
+    void authorizeReturn() { returnAuthorized = true; }
+    void stepReturning(ServerLevel level, EquipmentCabinetEntity cabinet, double dt) {
+      if (!returnAuthorized || !cabinet.cableReturning()) return;
+      var container = SubLevelContainer.getContainer(level);
+      if (container == null || !valid()) return;
+      var pipeline = container.physicsSystem().getPipeline();
+      if (!DriveEquipment.forwardPowered(cabinet)) { brake.setForce(256); return; }
+      var dynamics = NativeForces.pointDynamics(carriage, pipeline, point, direction);
+      var actual = NativeCableRig.worldPoint(carriage, point);
+      double travel = new Vector3d(actual).sub(home).dot(direction);
+      if (Math.abs(travel) < .03 && Math.abs(dynamics.speed()) < .03) {
+        brake.setForce(256); returnAuthorized = false; cabinet.finishRecoveredCableReturn(carriage.getUniqueId()); return;
+      }
+      brake.setForce(0);
+      double shaft = LinearMotor.chargingWork(cabinet.getSpeed(), dt);
+      double force = DriveMath.affordableForce(DriveMath.lsmForce(dynamics.speed(), -1, 16), dynamics.speed(),
+          dynamics.effectiveMass(), shaft, dt);
+      NativeForces.pointForce(carriage, point, new Vector3d(direction).mul(force), dt);
+    }
   }
   private static final Map<ServerLevel, Map<UUID, Hold>> HOLDS = new HashMap<>();
   private static final Map<ServerLevel, Set<UUID>> WARNED = new HashMap<>();
   private CableRecovery() {}
 
-  public static void stabilize(ServerLevel level, Collection<EquipmentCabinetEntity> cabinets) {
+  public static void stabilize(ServerLevel level, Collection<EquipmentCabinetEntity> cabinets, double dt) {
     var retained = HOLDS.computeIfAbsent(level, ignored -> new HashMap<UUID, Hold>());
     retained.entrySet().removeIf(entry -> {
       if (entry.getValue().valid()) return false;
@@ -91,6 +114,11 @@ public final class CableRecovery {
           if (hold != null) retained.put(cabinet.cableCarriage(), hold);
         }
         if (hold != null) {
+          if (cabinet.cableReturning()) {
+            hold.stepReturning(level, cabinet, dt);
+            WARNED.computeIfAbsent(level, ignored -> new HashSet<>()).remove(cabinet.cableCarriage());
+            continue;
+          }
           if (cabinet.cableInUse() && !hold.caught(cabinet.cableChassis())) {
             try { restoreCatch(level, cabinet, hold); }
             catch (RuntimeException failure) {
@@ -120,6 +148,22 @@ public final class CableRecovery {
   public static boolean catchRestored(ServerLevel level, UUID carriage, UUID chassis) {
     var hold = HOLDS.getOrDefault(level, Map.of()).get(carriage);
     return hold != null && hold.valid() && hold.caught(chassis);
+  }
+
+  /** An operator may resume only a released, passively stabilized return using the cabinet's live shaft. */
+  public static void inspectResumeReturn(ServerLevel level, EquipmentCabinetEntity cabinet) {
+    if (!cabinet.mechanism().cable() || !cabinet.cableInstalled() || !cabinet.cableInUse() || !cabinet.cableReturning()
+        || cabinet.armed() || cabinet.fault().isEmpty() || cabinet.cableCarriage() == null || cabinet.cableChassis() != null)
+      throw new IllegalArgumentException("Only a disarmed, reloaded released carriage can resume its physical return");
+    if (!DriveEquipment.forwardPowered(cabinet))
+      throw new IllegalArgumentException("Restore the cabinet charging shaft before resuming its return");
+    var hold = HOLDS.getOrDefault(level, Map.of()).get(cabinet.cableCarriage());
+    if (hold == null || !hold.valid())
+      throw new IllegalArgumentException("Saved released carriage has no verified passive guide hold");
+    var track = cabinet.resolve(level);
+    if (track == null || cabinet.cableHome() + 20 > track.length())
+      throw new IllegalArgumentException("Saved return guide no longer matches the cabinet");
+    hold.authorizeReturn();
   }
 
   /** Explicitly retire a reloaded idle installation only after its entire physical ownership is checked. */
@@ -282,7 +326,7 @@ public final class CableRecovery {
     if (guide == null || !guide.isValid()) throw new IllegalStateException("Native reload guide unavailable");
     guide.setLimit(ConstraintJointAxis.LINEAR_X, 0, 20);
     try { return new Hold(carriage, guide, new NativeFinClamp(pipeline, carriage, point, direction, 256), home, point,
-        cabinet.cableInUse() && cabinet.cableMoving()); }
+        direction, cabinet.cableInUse() && cabinet.cableMoving()); }
     catch (RuntimeException failure) { guide.remove(); throw failure; }
   }
 
