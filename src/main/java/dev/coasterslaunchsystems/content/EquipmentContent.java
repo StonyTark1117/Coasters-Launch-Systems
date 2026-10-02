@@ -32,6 +32,8 @@ public final class EquipmentContent {
   public static final DeferredBlock<EquipmentCabinetBlock> LSM = cabinet("lsm_drive", Mechanism.LSM);
   public static final DeferredBlock<EquipmentCabinetBlock> LIM = cabinet("lim_drive", Mechanism.LIM);
   public static final DeferredBlock<EquipmentCabinetBlock> FLYWHEEL = cabinet("flywheel_cabinet", Mechanism.FLYWHEEL);
+  public static final DeferredBlock<EquipmentCabinetBlock> HYDRAULIC = cabinet("hydraulic_launch_cabinet", Mechanism.HYDRAULIC);
+  public static final DeferredBlock<EquipmentCabinetBlock> PNEUMATIC = cabinet("pneumatic_launch_cabinet", Mechanism.PNEUMATIC);
   public static final DeferredBlock<LinearReactionBlock> LSM_PLATE = reaction("lsm_reaction_plate");
   public static final DeferredBlock<LinearReactionBlock> LIM_PLATE = reaction("lim_reaction_plate");
   public static final DeferredBlock<CatchSocketBlock> CATCH_SOCKET = BLOCKS.register("catch_socket", () -> new CatchSocketBlock(BlockBehaviour.Properties.of().strength(4).noOcclusion()));
@@ -54,7 +56,7 @@ public final class EquipmentContent {
       () -> new BlockItem(CONDUCTIVE_FIN.get(), new Item.Properties()));
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EquipmentCabinetEntity>> ENTITY =
       ENTITIES.register("equipment_cabinet", () -> BlockEntityType.Builder.of(EquipmentCabinetEntity::new,
-          TIRE.get(), FIN.get(), EDDY.get(), LSM.get(), LIM.get(), FLYWHEEL.get()).build(null));
+          TIRE.get(), FIN.get(), EDDY.get(), LSM.get(), LIM.get(), FLYWHEEL.get(), HYDRAULIC.get(), PNEUMATIC.get()).build(null));
   public static final DeferredHolder<DataComponentType<?>, DataComponentType<GlobalPos>> FROM = selection("span_from");
   public static final DeferredHolder<DataComponentType<?>, DataComponentType<GlobalPos>> TO = selection("span_to");
   public static final DeferredItem<SpanToolItem> TOOL = ITEMS.register("span_tool", () -> new SpanToolItem(new Item.Properties().stacksTo(1)));
@@ -80,7 +82,7 @@ public final class EquipmentContent {
     bus.addListener((net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent event) -> {
       if (event.getTabKey().equals(net.minecraft.world.item.CreativeModeTabs.REDSTONE_BLOCKS)) {
         event.accept(CONTROLLER.get()); event.accept(TIRE.get()); event.accept(FIN.get()); event.accept(EDDY.get()); event.accept(TIRE_SURFACE.get()); event.accept(BRAKE_FIN.get()); event.accept(CONDUCTIVE_FIN.get());
-        event.accept(LSM.get()); event.accept(LIM.get()); event.accept(FLYWHEEL.get()); event.accept(LSM_PLATE.get()); event.accept(LIM_PLATE.get());
+        event.accept(LSM.get()); event.accept(LIM.get()); event.accept(FLYWHEEL.get()); event.accept(HYDRAULIC.get()); event.accept(PNEUMATIC.get()); event.accept(LSM_PLATE.get()); event.accept(LIM_PLATE.get());
         event.accept(CATCH_SOCKET.get()); event.accept(CATCH_CARRIAGE.get()); event.accept(CABLE_GUIDE.get());
       }
       if (event.getTabKey().equals(net.minecraft.world.item.CreativeModeTabs.TOOLS_AND_UTILITIES)) event.accept(TOOL.get());

@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shaped", "category": "redstone",
+  "pattern": ["ISI", "BPB", "IAI"],
+  "key": { "I": { "item": "create:iron_sheet" }, "S": { "item": "create:shaft" }, "B": { "item": "create:brass_sheet" }, "P": { "item": "create:precision_mechanism" }, "A": { "item": "minecraft:light_blue_concrete" } },
+  "result": { "id": "coasterslaunchsystems:pneumatic_launch_cabinet", "count": 1 }
+}

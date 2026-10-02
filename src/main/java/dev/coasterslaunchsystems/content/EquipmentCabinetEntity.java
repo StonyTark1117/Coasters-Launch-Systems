@@ -34,6 +34,8 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   private dev.coasterslaunchsystems.math.BrakeHeat heat = new dev.coasterslaunchsystems.math.BrakeHeat(4096, 8, 0);
   private dev.coasterslaunchsystems.math.EnergyBuffer buffer = new dev.coasterslaunchsystems.math.EnergyBuffer(dev.coasterslaunchsystems.math.LinearMotor.CAPACITY, 0);
   private dev.coasterslaunchsystems.math.FlywheelStore flywheel = new dev.coasterslaunchsystems.math.FlywheelStore(4, 50, 0);
+  private dev.coasterslaunchsystems.math.HydraulicAccumulator hydraulic = new dev.coasterslaunchsystems.math.HydraulicAccumulator(4, 2, 100, 10, 1.4, 0);
+  private dev.coasterslaunchsystems.math.AirReceiver pneumatic = new dev.coasterslaunchsystems.math.AirReceiver(4, 10, 200, 0);
   private boolean cableInUse;
   private boolean cableInstalled;
   private UUID cableCarriage;
@@ -47,7 +49,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     super.tick();
     if (level instanceof ServerLevel server) {
       dev.coasterslaunchsystems.runtime.EquipmentRuntime.register(server, this);
-      if ((mechanism() == Mechanism.EDDY_BRAKE || mechanism().linear() || mechanism() == Mechanism.FLYWHEEL) && server.getGameTime() % 20 == 0) sendData();
+      if ((mechanism() == Mechanism.EDDY_BRAKE || mechanism().linear() || mechanism().cable()) && server.getGameTime() % 20 == 0) sendData();
     }
   }
   public BlockPos controllerPosition() { return controllerPosition; }
@@ -77,11 +79,19 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   public double thermalFraction() { return heat.forceFraction(); }
   public void absorbHeat(double work) { if (work > 0) { heat.absorb(work); setChanged(); } }
   public void cool(double dt) { if (heat.heat() > 0) { heat.cool(dt); setChanged(); } }
-  @Override public float calculateStressApplied() { return lastStressApplied = mechanism().drive() || mechanism() == Mechanism.FLYWHEEL ? 16 : 0; }
+  @Override public float calculateStressApplied() { return lastStressApplied = mechanism().drive() || mechanism().cable() ? 16 : 0; }
   public double energy() { return buffer.energy(); }
   public dev.coasterslaunchsystems.math.FlywheelStore flywheel() {
     if (mechanism() != Mechanism.FLYWHEEL) throw new IllegalStateException("This cabinet is not a flywheel");
     return flywheel;
+  }
+  public dev.coasterslaunchsystems.math.HydraulicAccumulator hydraulic() {
+    if (mechanism() != Mechanism.HYDRAULIC) throw new IllegalStateException("This cabinet is not hydraulic");
+    return hydraulic;
+  }
+  public dev.coasterslaunchsystems.math.AirReceiver pneumatic() {
+    if (mechanism() != Mechanism.PNEUMATIC) throw new IllegalStateException("This cabinet is not pneumatic");
+    return pneumatic;
   }
   public boolean cableInUse() { return cableInUse; }
   public boolean cableInstalled() { return cableInstalled; }
@@ -123,6 +133,16 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   public void chargeFlywheel(double dt) {
     if (mechanism() == Mechanism.FLYWHEEL && !cableInUse && fault.isEmpty()
         && flywheel.charge(dev.coasterslaunchsystems.math.LinearMotor.chargingWork(getSpeed(), dt)) > 0) setChanged();
+  }
+  /** Hydraulic pumps move a closed oil loop; compression losses make its shaft-work rate distinct. */
+  public void chargeHydraulic(double dt) {
+    if (mechanism() == Mechanism.HYDRAULIC && !cableInUse && fault.isEmpty()
+        && hydraulic.charge(.72 * dev.coasterslaunchsystems.math.LinearMotor.chargingWork(getSpeed(), dt)) > 0) setChanged();
+  }
+  /** Pneumatic compressors store less useful work per shaft tick and discharge through gas expansion. */
+  public void chargePneumatic(double dt) {
+    if (mechanism() == Mechanism.PNEUMATIC && !cableInUse && fault.isEmpty()
+        && pneumatic.charge(.55 * dev.coasterslaunchsystems.math.LinearMotor.chargingWork(getSpeed(), dt)) > 0) setChanged();
   }
   /** The physical catch owns this cabinet's store until it returns home or enters inspection. */
   public void engageCable(NativeCableRig rig, UUID chassis) {
@@ -295,7 +315,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   private void changed() { setChanged(); sendData(); }
   @Override protected void write(CompoundTag tag, HolderLookup.Provider registries, boolean client) {
     super.write(tag, registries, client);
-    tag.putInt("ls_schema", 8);
+    tag.putInt("ls_schema", 9);
     if (mechanism() == Mechanism.FLYWHEEL) {
       tag.putDouble("ls_flywheel_energy", flywheel.energy()); tag.putBoolean("ls_cable_in_use", cableInUse);
       tag.putBoolean("ls_cable_installed", cableInstalled);
@@ -309,6 +329,8 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
       tag.putDouble("ls_energy", energy()); tag.putDouble("ls_target", target);
       tag.putDouble("ls_acceleration", accelerationLimit); tag.putDouble("ls_jerk", jerkLimit);
     }
+    if (mechanism() == Mechanism.HYDRAULIC) tag.putDouble("ls_hydraulic_work", hydraulic.energy());
+    if (mechanism() == Mechanism.PNEUMATIC) tag.putDouble("ls_pneumatic_work", pneumatic.energy());
     if (controllerIdentity != null) { tag.putUUID("ls_controller", controllerIdentity); tag.putLong("ls_controller_pos", controllerPosition.asLong()); } tag.putDouble("ls_heat", heat.heat()); tag.putUUID("ls_identity", identity);
     tag.putBoolean("ls_armed", armed); tag.putString("ls_fault", fault);
     if (from != null) {
@@ -319,7 +341,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   }
   @Override protected void read(CompoundTag tag, HolderLookup.Provider registries, boolean client) {
     super.read(tag, registries, client);
-    if (tag.contains("ls_schema") && (tag.getInt("ls_schema") < 1 || tag.getInt("ls_schema") > 8)) throw new IllegalArgumentException("Unsupported equipment schema");
+    if (tag.contains("ls_schema") && (tag.getInt("ls_schema") < 1 || tag.getInt("ls_schema") > 9)) throw new IllegalArgumentException("Unsupported equipment schema");
     heat = new dev.coasterslaunchsystems.math.BrakeHeat(4096, 8, tag.getInt("ls_schema") >= 2 ? tag.getDouble("ls_heat") : 0);
     controllerIdentity = tag.hasUUID("ls_controller") ? tag.getUUID("ls_controller") : null;
     controllerPosition = controllerIdentity == null ? null : BlockPos.of(tag.getLong("ls_controller_pos"));
@@ -359,6 +381,16 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
           || !Double.isFinite(jerk) || jerk <= 0 || jerk > 8) throw new IllegalArgumentException("Invalid saved linear settings");
       target = speed; accelerationLimit = acceleration; jerkLimit = jerk;
       // Saved energy and configuration never replay an enabled field after a server load.
+      if (!client) armed = false;
+    }
+    if (mechanism() == Mechanism.HYDRAULIC) {
+      double stored = tag.getInt("ls_schema") >= 9 ? tag.getDouble("ls_hydraulic_work") : 0;
+      hydraulic = new dev.coasterslaunchsystems.math.HydraulicAccumulator(4, 2, 100, 10, 1.4, stored);
+      if (!client) armed = false;
+    }
+    if (mechanism() == Mechanism.PNEUMATIC) {
+      double stored = tag.getInt("ls_schema") >= 9 ? tag.getDouble("ls_pneumatic_work") : 0;
+      pneumatic = new dev.coasterslaunchsystems.math.AirReceiver(4, 10, 200, stored);
       if (!client) armed = false;
     }
     boundAxis = from == null ? null : Direction.Axis.valueOf(tag.getString("ls_axis"));

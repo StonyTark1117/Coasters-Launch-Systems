@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shaped", "category": "redstone",
+  "pattern": ["ISI", "BPB", "ICI"],
+  "key": { "I": { "item": "create:iron_sheet" }, "S": { "item": "create:shaft" }, "B": { "item": "create:brass_sheet" }, "P": { "item": "create:precision_mechanism" }, "C": { "item": "minecraft:copper_block" } },
+  "result": { "id": "coasterslaunchsystems:hydraulic_launch_cabinet", "count": 1 }
+}

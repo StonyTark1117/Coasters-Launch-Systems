@@ -14,5 +14,7 @@
   "block.coasterslaunchsystems.catch_socket": "Cable Catch Socket",
   "block.coasterslaunchsystems.catch_carriage": "Cable Catch Carriage",
   "block.coasterslaunchsystems.cable_guide": "Cable Carriage Guide",
-  "block.coasterslaunchsystems.flywheel_cabinet": "Flywheel Launch Cabinet"
+  "block.coasterslaunchsystems.flywheel_cabinet": "Flywheel Launch Cabinet",
+  "block.coasterslaunchsystems.hydraulic_launch_cabinet": "Hydraulic Launch Cabinet",
+  "block.coasterslaunchsystems.pneumatic_launch_cabinet": "Pneumatic Launch Cabinet"
 }

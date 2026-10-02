@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": { "model": "coasterslaunchsystems:block/pneumatic_launch_cabinet" },
+    "axis=z": { "model": "coasterslaunchsystems:block/pneumatic_launch_cabinet", "x": 90 },
+    "axis=x": { "model": "coasterslaunchsystems:block/pneumatic_launch_cabinet", "x": 90, "y": 90 }
+  }
+}

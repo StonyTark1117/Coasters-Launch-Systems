@@ -77,6 +77,8 @@ Dev.26 adds an end-to-end ordinary placed-controller shaft interruption. The liv
 
 Dev.27 applies that placed-controller interruption to the pinned Fourth Dimension Arrow provider. The Arrow uses its existing native preparation clamp only to establish safe engagement; after the controller starts its provider-owned pull, the fixture stops the actual cabinet motor. The production loss branch holds the loaded Arrow catch faulted and settled with its provider body tickets retained. Arrow active release, actual chunk/multiplayer/rendered service and broader release gates remain open.
 
+Dev.28 begins LS401–LS402 world equipment. Original hydraulic and pneumatic launch cabinets now have craftable placed blocks, independent finite persisted accumulator/receiver stores and distinct Create shaft charging losses. They load disarmed, and their pressure models retain separate oil-return and gas-expansion behavior. The controller still only operates flywheel catches: pressure-actuator allocation, closed-loop return, interruption/reset and loaded native release verification remain open.
+
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |
 | LS301 | Shared cable guide, catch socket, carriage and release/reset machine | 0.2. Real constrained pull, rated guide/end clearance, physical return and misalignment handling. No teleport, one-shot impulse or prescribed train path. |
