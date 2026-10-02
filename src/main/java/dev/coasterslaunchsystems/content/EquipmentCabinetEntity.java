@@ -419,6 +419,10 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     to = tag.contains("ls_to") ? BlockPos.of(tag.getLong("ls_to")) : null;
     geometry = tag.getLong("ls_geometry"); start = tag.getDouble("ls_start"); end = tag.getDouble("ls_end");
     fault = tag.getString("ls_fault"); armed = tag.getBoolean("ls_armed");
+    if (mechanism() == Mechanism.SKID_BRAKE && !client) {
+      armed = false;
+      if (fault.isEmpty()) fault = "Skid brake paused after reload; inspect the shoe and rearm";
+    }
     if (mechanism() == Mechanism.FLYWHEEL) {
       double stored = tag.getInt("ls_schema") >= 5 ? tag.getDouble("ls_flywheel_energy") : 0;
       if (!Double.isFinite(stored) || stored < 0 || stored > 5000)

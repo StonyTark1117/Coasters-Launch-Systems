@@ -1,0 +1,23 @@
+Skid brake saved-world interruption validation — 2026-10-01
+
+Source:
+  Coasters: Launch Systems 0.0.1-dev.40
+  Coasters: Fourth Dimension 0.9.0-dev.1
+
+Commands:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_skid_restart -PlsSkidRestartPhase=prepare
+  Result: BUILD SUCCESSFUL; 1/1 required GameTest passed. A live ordinary skid
+  brake accumulated 540.343914621197 work of heat before its server saved.
+
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsKeepGameTestWorld -PlsTestNamespaces=coasterslaunchsystems_skid_restart -PlsSkidRestartPhase=verify
+  Result: BUILD SUCCESSFUL; 1/1 required GameTest passed. The same cabinet UUID
+  and heat reopened. The ordinary cart has no restart ticket, so no loaded skid
+  shoe could be certified; the cabinet remained disarmed and faulted for shoe
+  inspection before rearming.
+
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew test classes --offline --console=plain --no-daemon --max-workers=2
+  Result: BUILD SUCCESSFUL; 27 JUnit tests, 0 failures, 0 errors.
+
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsFourthDimensionJar=/home/braydon/.cache/coasterslaunchsystems-validation/fd-provider-36775040079/libs/coasters-fourth-dimension-0.9.0-dev.1.jar -PlsTestNamespaces=coasterslaunchsystems_4d_brakes
+  Result: BUILD SUCCESSFUL; all 57 required pinned Fourth Dimension brake
+  GameTests passed.

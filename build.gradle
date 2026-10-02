@@ -55,6 +55,7 @@ neoForge {
             gameDirectory = layout.buildDirectory.dir('runs/gametest').get().asFile
             systemProperty 'neoforge.enabledGameTestNamespaces', project.findProperty('lsTestNamespaces') ?: 'coasterslaunchsystems,coasterslaunchsystems_routes,coasterslaunchsystems_recovery,coasterslaunchsystems_linear,coasterslaunchsystems_cable'
             if (project.hasProperty('lsCableRestartPhase')) systemProperty 'coasterslaunchsystems.cableRestartPhase', project.property('lsCableRestartPhase')
+            if (project.hasProperty('lsSkidRestartPhase')) systemProperty 'coasterslaunchsystems.skidRestartPhase', project.property('lsSkidRestartPhase')
             if (project.hasProperty('lsCableReturnShaftLoss')) systemProperty 'coasterslaunchsystems.cableReturnShaftLoss', project.property('lsCableReturnShaftLoss')
         }
         configureEach {
