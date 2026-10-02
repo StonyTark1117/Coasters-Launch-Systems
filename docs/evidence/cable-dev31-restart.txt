@@ -1,0 +1,23 @@
+Launch Systems dev.31 ordinary pressure active-catch restart validation
+Date: 2026-10-01
+
+Hydraulic preparation:
+./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_cable -PlsCableRestartPhase=prepareActiveHydraulic
+Result: 16/16 required GameTests passed.
+
+Hydraulic verification in the retained world:
+./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsKeepGameTestWorld -PlsTestNamespaces=coasterslaunchsystems_cable -PlsCableRestartPhase=verifyActiveHydraulic
+Result: 16/16 required GameTests passed.
+
+Pneumatic preparation and retained-world verification use prepareActivePneumatic and verifyActivePneumatic with the same command shape.
+Result: each process passed 16/16 required GameTests.
+
+The verification checks a disarmed/faulted cabinet, same saved carriage/chassis identities, a force-loaded carriage and chassis, passive guide/brake stabilization, reconstructed native catch joint and socket separation below 0.03 blocks.
+
+Release build validation:
+./gradlew build runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_cable
+Result: BUILD SUCCESSFUL; 27 JUnit tests and 15/15 required packaged standalone cable GameTests passed.
+
+Pinned Fourth Dimension compatibility validation:
+./gradlew build runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_cable -PlsFourthDimensionJar=/home/braydon/.cache/coasterslaunchsystems-validation/fd-provider-36775040079/libs/coasters-fourth-dimension-0.9.0-dev.1.jar
+Result: BUILD SUCCESSFUL; 27 JUnit tests and 19/19 required packaged cable GameTests passed.

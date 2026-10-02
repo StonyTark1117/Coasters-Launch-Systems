@@ -5,6 +5,10 @@ import com.simibubi.create.content.kinetics.motor.CreativeMotorBlockEntity;
 import dev.coasterslaunchsystems.content.EquipmentCabinetEntity;
 import dev.coasterslaunchsystems.content.EquipmentContent;
 import dev.coasterslaunchsystems.math.FlywheelStore;
+import dev.coasterslaunchsystems.math.EnergyStore;
+import dev.coasterslaunchsystems.math.HydraulicAccumulator;
+import dev.coasterslaunchsystems.math.AirReceiver;
+import dev.coasterslaunchsystems.math.Mechanism;
 import dev.coasterslaunchsystems.runtime.CableTickets;
 import dev.coasterslaunchsystems.runtime.CableRecovery;
 import dev.coasterslaunchsystems.runtime.NativeFinClamp;
@@ -33,7 +37,8 @@ import org.joml.Vector3d;
 /** Two separate GameTest server processes inspect one saved native carriage world. */
 @GameTestHolder("coasterslaunchsystems_cable")
 public final class CableRestartGameTests {
-  private static final int SLOT = 19;
+  // Controller pressure cases occupy slots 19/20; this slot stays below the native-coordinate limit and outside cable mechanics.
+  private static final int SLOT = 15;
   private static final BlockPos FROM = new BlockPos(32 + SLOT * 48, 224, -896);
   private static final BlockPos FLYWHEEL = FROM.offset(-1, -2, 8);
   private static final BlockPos RECOVERY_CONTROLLER = FROM.offset(4, -2, 8);
@@ -47,14 +52,23 @@ public final class CableRestartGameTests {
     final ServerSubLevel cart;
     final DirectedTrack track;
     final NativeFinClamp preparation;
-    final FlywheelStore pullStore = new FlywheelStore(4, 50, 23);
+    final Mechanism mechanism;
+    final EnergyStore pullStore;
     NativeCableRig rig;
     boolean engageRequested, pullRequested, pulling, saveMoving;
     double interruptionTravel = 5;
     String failure = "";
     ActiveFixture(net.minecraft.server.level.ServerLevel level, EquipmentCabinetEntity cabinet, ServerSubLevel cart,
-        DirectedTrack track, NativeFinClamp preparation) {
+        DirectedTrack track, NativeFinClamp preparation, Mechanism mechanism) {
       this.level = level; this.cabinet = cabinet; this.cart = cart; this.track = track; this.preparation = preparation;
+      this.mechanism = mechanism;
+      pullStore = switch (mechanism) {
+        case FLYWHEEL -> new FlywheelStore(4, 50, 23);
+        case HYDRAULIC -> new HydraulicAccumulator(4, 2, 250, 10, 1.4, 0);
+        case PNEUMATIC -> new AirReceiver(4, 10, 200, 0);
+        default -> throw new IllegalArgumentException("Restart fixture needs a cable mechanism");
+      };
+      if (mechanism != Mechanism.FLYWHEEL) pullStore.charge(pullStore.capacity());
     }
   }
   private CableRestartGameTests() {}
@@ -67,7 +81,7 @@ public final class CableRestartGameTests {
           var contact = EngagedContacts.current(fixture.level, fixture.cart).orElse(null);
           if (contact != null) {
             double home = fixture.track.distance(contact.hit());
-            fixture.rig = new NativeCableRig(fixture.level, fixture.track, home, 12, 20, FLYWHEEL);
+            fixture.rig = new NativeCableRig(fixture.level, fixture.track, home, 12, 20, FLYWHEEL, fixture.mechanism);
             fixture.cabinet.installCable(fixture.rig);
           }
         }
@@ -111,19 +125,25 @@ public final class CableRestartGameTests {
         || phase.equals("prepareActiveMidGuideArrow") || phase.equals("verifyActiveMidGuideArrow")
         || phase.equals("prepareActiveRelease") || phase.equals("verifyActiveRelease") || phase.equals("verifyActiveReleased")
         || phase.equals("prepareActiveMoving") || phase.equals("verifyActiveMoving")
-        || phase.equals("prepareActiveMovingArrow") || phase.equals("verifyActiveMovingArrow"),
+        || phase.equals("prepareActiveMovingArrow") || phase.equals("verifyActiveMovingArrow")
+        || phase.equals("prepareActiveHydraulic") || phase.equals("verifyActiveHydraulic")
+        || phase.equals("prepareActivePneumatic") || phase.equals("verifyActivePneumatic"),
         "Set lsCableRestartPhase to an idle or active restart phase");
     if (phase.equals("prepare")) prepare(helper);
     else if (phase.equals("prepareActive") || phase.equals("prepareActiveMissingSocket") || phase.equals("prepareActiveArrow")
         || phase.equals("prepareActiveMidGuide") || phase.equals("prepareActiveMidGuideArrow") || phase.equals("prepareActiveRelease")
-        || phase.equals("prepareActiveMoving") || phase.equals("prepareActiveMovingArrow"))
+        || phase.equals("prepareActiveMoving") || phase.equals("prepareActiveMovingArrow")
+        || phase.equals("prepareActiveHydraulic") || phase.equals("prepareActivePneumatic"))
       prepareActive(helper, phase.equals("prepareActiveMissingSocket"),
           phase.equals("prepareActiveArrow") || phase.equals("prepareActiveMidGuideArrow") || phase.equals("prepareActiveMovingArrow"),
           phase.equals("prepareActiveMidGuide") || phase.equals("prepareActiveMidGuideArrow"),
-          phase.equals("prepareActiveRelease"), phase.equals("prepareActiveMoving") || phase.equals("prepareActiveMovingArrow"));
+          phase.equals("prepareActiveRelease"), phase.equals("prepareActiveMoving") || phase.equals("prepareActiveMovingArrow"),
+          phase.equals("prepareActiveHydraulic") ? Mechanism.HYDRAULIC
+              : phase.equals("prepareActivePneumatic") ? Mechanism.PNEUMATIC : Mechanism.FLYWHEEL);
     else if (phase.equals("verifyActive") || phase.equals("verifyActiveArrow") || phase.equals("verifyActiveMidGuide")
         || phase.equals("verifyActiveMidGuideArrow"))
       verifyActive(helper, phase.startsWith("verifyActiveMidGuide"), false);
+    else if (phase.equals("verifyActiveHydraulic") || phase.equals("verifyActivePneumatic")) verifyActive(helper, false, false);
     else if (phase.equals("verifyActiveMoving") || phase.equals("verifyActiveMovingArrow")) verifyActive(helper, false, true);
     else if (phase.equals("verifyActiveRelease")) verifyActiveRelease(helper);
     else if (phase.equals("verifyActiveReleased")) verifyActiveReleased(helper);
@@ -133,7 +153,7 @@ public final class CableRestartGameTests {
   }
 
   private static void prepareActive(GameTestHelper helper, boolean missingSocket, boolean arrow, boolean midGuide, boolean release,
-      boolean moving) {
+      boolean moving, Mechanism mechanism) {
     helper.assertTrue(!arrow || net.neoforged.fml.ModList.get().isLoaded("fourthdimension"),
         "The Arrow saved-world fixture requires the pinned Fourth Dimension provider");
     var ride = arrow ? new RideControllerGameTests.Scene(helper, SLOT, "arrow_controller_dispatch", 224) : null;
@@ -157,7 +177,13 @@ public final class CableRestartGameTests {
       else for (int seat = 0; seat < 4; seat++) scene.board(cart[0], seat);
     });
     helper.runAtTickTime(55, () -> {
-      level.setBlockAndUpdate(FLYWHEEL, EquipmentContent.FLYWHEEL.get().defaultBlockState()
+      var cabinetBlock = switch (mechanism) {
+        case FLYWHEEL -> EquipmentContent.FLYWHEEL.get();
+        case HYDRAULIC -> EquipmentContent.HYDRAULIC.get();
+        case PNEUMATIC -> EquipmentContent.PNEUMATIC.get();
+        default -> throw new IllegalArgumentException("Restart fixture needs a cable cabinet");
+      };
+      level.setBlockAndUpdate(FLYWHEEL, cabinetBlock.defaultBlockState()
           .setValue(RotatedPillarBlock.AXIS, Direction.Axis.X));
       var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(FLYWHEEL);
       cabinet.bind(level, scene.from, scene.to);
@@ -179,7 +205,7 @@ public final class CableRestartGameTests {
     helper.runAtTickTime(75, () -> {
       var track = DirectedTrack.resolve(level, scene.from, scene.to).orElseThrow();
       var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(FLYWHEEL);
-      fixture[0] = new ActiveFixture(level, cabinet, cart[0], track, preparation[0]); ACTIVE.add(fixture[0]);
+      fixture[0] = new ActiveFixture(level, cabinet, cart[0], track, preparation[0], mechanism); ACTIVE.add(fixture[0]);
       if (moving && arrow) fixture[0].interruptionTravel = 4;
     });
     helper.runAtTickTime(420, () -> {
@@ -205,7 +231,8 @@ public final class CableRestartGameTests {
       }
       System.out.println("LS_CABLE_ACTIVE_RESTART prepared carriage=" + cabinet.cableCarriage()
           + " chassis=" + cabinet.cableChassis() + " socket_error=" + fixture[0].rig.socketError()
-          + " guide_error=" + fixture[0].rig.guideError() + " removed_socket=" + missingSocket + " arrow=" + arrow);
+          + " guide_error=" + fixture[0].rig.guideError() + " removed_socket=" + missingSocket + " arrow=" + arrow
+          + " mechanism=" + mechanism);
       if (missingSocket) helper.assertTrue(cart[0].getPlot().getEmbeddedLevelAccessor().setBlock(BlockPos.ZERO.below(2),
           net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 3),
           "Captured socket could not be removed before saved-world negative case");

@@ -341,3 +341,11 @@ This is partial LS401–LS402 progress. Pressure-launch interruption, saved acti
 Pressure stores remain the launch power source after their Create charging shaft stops. New ordinary and pinned Arrow controller fixtures interrupt a hydraulic or pneumatic pull after the physical catch begins moving, prove the controller stays running without a cabinet fault or ownership loss, then restore the shaft for physical return. Both mechanisms retain their finite pressure-store behavior rather than applying the flywheel's immediate shaft-loss fault policy.
 
 The focused packaged cable suites passed **15/15** standalone and **19/19** with the same pinned Fourth Dimension artifact. The `0.0.1-dev.30` JAR SHA-256 is `ddb60e211b68f55c3dd5cb13bae383401389895fc6b3bfed79c316c85ca58a08`. Pressure-cabinet restart and interruption while the carriage is returning remain open. **The complete release goal remains active.**
+
+## Pressure active-catch restart checkpoint — dev.31
+
+The restart fixture now creates matching hydraulic and pneumatic native carriages, saves their active cabinet journals, and reopens the same world in a separate server process. In both cases the cabinet remains disarmed and faulted for inspection while its force-loaded carriage, captured chassis, passive guide/brake and bounded zero-target catch joint reconstruct. The fixture was moved to a non-overlapping native-coordinate-safe slot so regular pressure-controller cases cannot modify its retained world.
+
+Hydraulic and pneumatic preparation/verification pairs each passed **16/16** standalone cable cases per process. The final `0.0.1-dev.31` JAR also passed **27 JUnit tests**, **15/15** focused packaged standalone cable GameTests, and **19/19** focused packaged cable GameTests with the pinned Fourth Dimension artifact. Its SHA-256 is `bad57d3c3da878529ccd5352751bfa68e621f3824c39cfd1bcb8d911c4106e6f`. See [restart validation](evidence/cable-dev31-restart.txt) and [artifact hashes](evidence/cable-dev31-artifacts.sha256).
+
+This validates ordinary active-catch recovery only; pinned Arrow pressure restart, moving/return pressure restart, active release, chunk/multiplayer/rendered operation and broader release gates remain open. **The complete release goal remains active.**
