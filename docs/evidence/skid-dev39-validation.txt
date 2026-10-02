@@ -1,0 +1,20 @@
+Skid brake optional-provider validation — 2026-10-01
+
+Source:
+  Coasters: Launch Systems 0.0.1-dev.39
+  Coasters: Fourth Dimension 0.9.0-dev.1
+
+Commands:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew test classes --offline --console=plain --no-daemon --max-workers=2
+  Result: BUILD SUCCESSFUL; 27 JUnit tests, 0 failures, 0 errors.
+
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_linear
+  Result: BUILD SUCCESSFUL; all 27 required packaged standalone linear GameTests passed.
+
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsFourthDimensionJar=/home/braydon/.cache/coasterslaunchsystems-validation/fd-provider-36775040079/libs/coasters-fourth-dimension-0.9.0-dev.1.jar -PlsTestNamespaces=coasterslaunchsystems_4d_brakes
+  Result: BUILD SUCCESSFUL; all 57 required pinned Fourth Dimension brake GameTests passed.
+
+The isolated provider suite covers fin, skid and eddy brakes with Arrow, Legacy,
+Free Spin, Revised and PAX designs, including reverse travel, uneven loads and
+eligible coupled Arrow consists. PAX continues to reject the physical brake
+interface as required by its provider restriction.

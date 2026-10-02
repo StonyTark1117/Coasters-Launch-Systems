@@ -56,7 +56,7 @@ import net.neoforged.neoforge.gametest.GameTestHolder;
 import org.joml.Vector3d;
 
 /** Real equipment brakes only; physical entry forces end before the measured braking phase. */
-@GameTestHolder("coasterslaunchsystems")
+@GameTestHolder("coasterslaunchsystems_4d_brakes")
 public final class FourthDimensionBrakeGameTests {
   private static final List<Scene> SCENES = new ArrayList<>();
   private static boolean registered;
@@ -203,7 +203,8 @@ public final class FourthDimensionBrakeGameTests {
   private static TestFunction test(Mechanism mechanism, String design, int slot, boolean reverse, boolean uneven) {
     String name = mechanism.name().toLowerCase(Locale.ROOT) + "_" + design.toLowerCase(Locale.ROOT)
         + (slot >= 17 ? "_linked" : "") + (reverse ? "_reverse" : "_forward") + (uneven ? "_uneven" : "_full");
-    return new TestFunction("launchsystems_4d_brakes", "coasterslaunchsystems.4d_" + name, "coasterslaunchsystems:empty", 480, 0, true,
+    return new TestFunction("launchsystems_4d_brakes", "coasterslaunchsystems_4d_brakes.4d_" + name,
+        "coasterslaunchsystems_4d_brakes:empty", 480, 0, true,
         helper -> run(new Scene(helper, design, mechanism, slot, reverse, uneven), slot));
   }
   private static void run(Scene s, int slot) {
@@ -234,12 +235,20 @@ public final class FourthDimensionBrakeGameTests {
         var vehicle = invoke("dev.fourthdimension.vehicle.VehicleFactory", "create", new Class<?>[] {ServerLevel.class, designType, GraphHit.class}, level, design, hit);
         var parent = (ServerSubLevel) SubLevelContainer.getContainer(level).getSubLevel((UUID) read(vehicle, "chassis"));
         s.vehicles.add(vehicle); s.parents.add(parent);
-        var cell = s.mechanism == Mechanism.FIN_BRAKE ? new BlockPos(1, -1, 0) : s.mechanism == Mechanism.SKID_BRAKE ? new BlockPos(0, -2, -1) : new BlockPos(-1, -1, 0);
+      }
+      s.track = DirectedTrack.resolve(level, s.reverse ? s.to : s.from, s.reverse ? s.from : s.to).orElseThrow(); SCENES.add(s);
+    });
+    s.at(35, () -> {
+      for (var parent : s.parents) {
+        var bearing = CoasterCartTrackSnap.representativeBearingPlotPos(parent);
+        helper.assertTrue(bearing != null, "Fourth Dimension car has no bearing cell for brake installation");
+        var localBearing = bearing.subtract(parent.getPlot().getCenterBlock());
+        var cell = s.mechanism == Mechanism.FIN_BRAKE ? localBearing.east().below()
+            : s.mechanism == Mechanism.SKID_BRAKE ? localBearing.north().below(2) : localBearing.west().below();
         var plot = parent.getPlot().getEmbeddedLevelAccessor();
         helper.assertTrue(plot.getBlockState(cell).isAir(), "Brake fin would replace existing Fourth Dimension hardware at " + cell);
         helper.assertTrue(plot.setBlock(cell, (s.mechanism == Mechanism.FIN_BRAKE ? EquipmentContent.BRAKE_FIN : s.mechanism == Mechanism.SKID_BRAKE ? EquipmentContent.SKID_SHOE : EquipmentContent.CONDUCTIVE_FIN).get().defaultBlockState(), 3), "4D brake hardware installation failed");
       }
-      s.track = DirectedTrack.resolve(level, s.reverse ? s.to : s.from, s.reverse ? s.from : s.to).orElseThrow(); SCENES.add(s);
     });
     s.at(90, () -> {
       if (s.linked) helper.assertTrue(CoasterCartTrainLinkConstraint.linkCarts(level, s.parents.getFirst(), s.parents.getLast(), 6), "Native occupied Arrow brake consist could not couple");
