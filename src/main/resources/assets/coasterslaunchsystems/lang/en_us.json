@@ -18,5 +18,22 @@
   "block.coasterslaunchsystems.cable_guide": "Cable Carriage Guide",
   "block.coasterslaunchsystems.flywheel_cabinet": "Flywheel Launch Cabinet",
   "block.coasterslaunchsystems.hydraulic_launch_cabinet": "Hydraulic Launch Cabinet",
-  "block.coasterslaunchsystems.pneumatic_launch_cabinet": "Pneumatic Launch Cabinet"
+  "block.coasterslaunchsystems.pneumatic_launch_cabinet": "Pneumatic Launch Cabinet",
+  "coasterslaunchsystems.ponder.controller_binding.header": "Binding a local launch section",
+  "coasterslaunchsystems.ponder.controller_binding.text_1": "Place the controller and its disarmed modules beside fixed rail.",
+  "coasterslaunchsystems.ponder.controller_binding.text_2": "Use the Span Tool on two coaster anchors in travel order, then use it on the controller.",
+  "coasterslaunchsystems.ponder.controller_binding.text_3": "Shift-use the controller with the tool selected, then use the tool on each bound module to link it.",
+  "coasterslaunchsystems.ponder.controller_binding.text_4": "Inspect bindings and safety hardware before arming. A loaded controller or cabinet always comes back disarmed.",
+  "coasterslaunchsystems.ponder.linear_motors.header": "Linear motor hardware",
+  "coasterslaunchsystems.ponder.linear_motors.text_1": "LSM and LIM use separate cabinets and matching reaction plates. Do not mix their plates.",
+  "coasterslaunchsystems.ponder.linear_motors.text_2": "Install the matching plate on the certified chassis interface, then bind the cabinet over level fixed rail.",
+  "coasterslaunchsystems.ponder.linear_motors.text_3": "Charge with a real Create shaft and tune while empty and disarmed. Linear braking cannot provide a static hold.",
+  "coasterslaunchsystems.ponder.brake_hardware.header": "Choosing braking hardware",
+  "coasterslaunchsystems.ponder.brake_hardware.text_1": "A spring fin clamp uses the chassis brake fin for final stop and hold.",
+  "coasterslaunchsystems.ponder.brake_hardware.text_2": "The magnetic brake uses the conductive fin and dissipates motion; it does not hold a stopped train.",
+  "coasterslaunchsystems.ponder.brake_hardware.text_3": "Skid hardware needs its matching shoe. Bind every cabinet to its local span and leave a friction hold downstream.",
+  "coasterslaunchsystems.ponder.cable_launch.header": "Preparing a cable launch",
+  "coasterslaunchsystems.ponder.cable_launch.text_1": "Install a socket, carriage and a continuous verified guide along the straight launch route.",
+  "coasterslaunchsystems.ponder.cable_launch.text_2": "Flywheel, hydraulic and pneumatic cabinets are distinct finite-energy cable stores. Bind only one to the section.",
+  "coasterslaunchsystems.ponder.cable_launch.text_3": "After any interruption, inspect the retained carriage and guide before rebinding or arming. Never bypass the downstream fin hold."
 }
