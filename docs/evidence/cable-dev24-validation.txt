@@ -1,0 +1,23 @@
+Dev.24 local validation, 2026-10-02, Java 21, NeoForge GameTest server.
+
+Artifact: coasters-launch-systems-0.0.1-dev.24.jar
+SHA-256: c549d4e2c5d493f8cc60106cdcfd9374e33c5442881eed7e1b8c3717306f0850
+Pinned Fourth Dimension schema-4 binary SHA-256:
+027ed99261ec8ce45a7916fcaf6d65f252f9d359421a384c44f861217169af16
+
+JUnit: 27 passed, no failures, errors or skips.
+Packaged standalone full suite: 114/114 required GameTests passed.
+Packaged combined cable suite with pinned Fourth Dimension: 17/17 passed.
+
+Ordinary moving active-catch restart, two separate processes retaining one world:
+prepareActiveMoving 13/13; verifyActiveMoving 13/13. Preparation saved a live ordinary
+pull at 5.592895507949379 guide blocks and 2.7873859167692374 blocks/second with the
+schema-8 movement journal true. After restart, the passive guide/brake and reconstructed
+native catch joint reduced socket separation to 0.0003713169397933775 block. At tick 120
+the carriage speed was below 0.03 blocks/second and the movement journal was cleared,
+restoring the normal strict alignment check. The cabinet remained disarmed and faulted.
+
+The moving fixture drives the finite native fixture store and invokes the cabinet's production
+motion-journal observer. It demonstrates an ordinary cart only; it does not demonstrate a
+placed-cabinet shaft interruption. Arrow moving restart, Arrow active release, actual chunk
+unload, multiplayer/rendered service and complete 0.4.0 acceptance remain open.
