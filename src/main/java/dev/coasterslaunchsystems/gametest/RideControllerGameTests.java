@@ -122,7 +122,8 @@ public final class RideControllerGameTests {
     }
     void at(int tick, Runnable action) {
       base.helper.runAtTickTime(tick + (fourthDimension ? 120 : 0), () -> { try { action.run(); }
-        catch (RuntimeException failure) { System.err.println("LS_CONTROLLER_FAILURE mode=" + mode + " tick=" + tick + " " + controller.status()); failure.printStackTrace(); cleanup(); throw failure; } });
+        catch (RuntimeException failure) { System.err.println("LS_CONTROLLER_FAILURE mode=" + mode + " tick=" + tick + " "
+            + (controller == null ? "controller not installed" : controller.status())); failure.printStackTrace(); cleanup(); throw failure; } });
     }
     double distance() {
       return measuredDistance;

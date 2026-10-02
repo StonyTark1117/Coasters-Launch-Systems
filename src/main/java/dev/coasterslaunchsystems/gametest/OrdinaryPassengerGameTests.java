@@ -102,7 +102,7 @@ public final class OrdinaryPassengerGameTests {
       var plot = body.getPlot().getEmbeddedLevelAccessor();
       plot.setBlock(BlockPos.ZERO.below(), EquipmentContent.TIRE_SURFACE.get().defaultBlockState(), 3);
       plot.setBlock(new BlockPos(1, -1, 0), EquipmentContent.BRAKE_FIN.get().defaultBlockState(), 3);
-      plot.setBlock(new BlockPos(0, -1, -1), EquipmentContent.SKID_SHOE.get().defaultBlockState(), 3);
+      plot.setBlock(new BlockPos(0, -2, -1), EquipmentContent.SKID_SHOE.get().defaultBlockState(), 3);
       plot.setBlock(new BlockPos(-1, -1, 0), EquipmentContent.CONDUCTIVE_FIN.get().defaultBlockState(), 3);
       for (var bridge : List.of(new BlockPos(-1, 0, 0), new BlockPos(1, 0, 0), new BlockPos(0, 0, -1), new BlockPos(0, 0, 1)))
         helper.assertTrue(plot.setBlock(bridge, Blocks.OAK_PLANKS.defaultBlockState(), 3), "Continuous ordinary deck did not install");

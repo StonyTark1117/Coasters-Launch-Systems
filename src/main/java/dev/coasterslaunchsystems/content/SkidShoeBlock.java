@@ -8,7 +8,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-/** Install at the bearing's local north/below cell; this sacrificial steel shoe is separate from a fin. */
+/** Install at the bearing's local north/two-below cell; this sacrificial steel shoe is separate from every reaction plate. */
 public final class SkidShoeBlock extends Block {
   private static final VoxelShape SHAPE = Shapes.or(box(1, 0, 5, 15, 3, 11), box(3, 3, 6, 13, 5, 10));
   public SkidShoeBlock(Properties properties) { super(properties); }

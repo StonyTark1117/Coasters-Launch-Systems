@@ -24,7 +24,7 @@ public final class VehicleInterfaces {
   /** A low-friction skid shoe is independently certified and cannot substitute for the held fin clamp. */
   public static Vector3d skidPoint(ServerSubLevel chassis) {
     var bearing = CoasterCartTrackSnap.representativeBearingPlotPos(chassis);
-    var shoe = bearing == null ? null : bearing.north().below();
+    var shoe = bearing == null ? null : bearing.north().below(2);
     if (shoe == null || !chassis.getLevel().getBlockState(shoe).is(EquipmentContent.SKID_SHOE.get())) return null;
     return new Vector3d(shoe.getX() + .5, shoe.getY() + .25, shoe.getZ() + .5);
   }

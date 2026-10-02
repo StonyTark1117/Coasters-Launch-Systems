@@ -1,0 +1,8 @@
+Launch Systems dev.37 local validation
+Date: 2026-10-01
+
+JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew test classes --offline --console=plain --no-daemon --max-workers=2
+Result: BUILD SUCCESSFUL; 27 JUnit tests passed and production/test classes compiled.
+
+JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_linear
+Result: every LSM and LIM launch-section test passed after moving the skid shoe out of the LSM plate slot. 25/27 total linear GameTests passed; lsm_conflict and lim_conflict remain failing conflict-fixture assertions unrelated to the skid shoe placement.

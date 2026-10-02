@@ -234,7 +234,7 @@ public final class FourthDimensionBrakeGameTests {
         var vehicle = invoke("dev.fourthdimension.vehicle.VehicleFactory", "create", new Class<?>[] {ServerLevel.class, designType, GraphHit.class}, level, design, hit);
         var parent = (ServerSubLevel) SubLevelContainer.getContainer(level).getSubLevel((UUID) read(vehicle, "chassis"));
         s.vehicles.add(vehicle); s.parents.add(parent);
-        var cell = s.mechanism == Mechanism.FIN_BRAKE ? new BlockPos(1, -1, 0) : s.mechanism == Mechanism.SKID_BRAKE ? new BlockPos(0, -1, -1) : new BlockPos(-1, -1, 0);
+        var cell = s.mechanism == Mechanism.FIN_BRAKE ? new BlockPos(1, -1, 0) : s.mechanism == Mechanism.SKID_BRAKE ? new BlockPos(0, -2, -1) : new BlockPos(-1, -1, 0);
         var plot = parent.getPlot().getEmbeddedLevelAccessor();
         helper.assertTrue(plot.getBlockState(cell).isAir(), "Brake fin would replace existing Fourth Dimension hardware at " + cell);
         helper.assertTrue(plot.setBlock(cell, (s.mechanism == Mechanism.FIN_BRAKE ? EquipmentContent.BRAKE_FIN : s.mechanism == Mechanism.SKID_BRAKE ? EquipmentContent.SKID_SHOE : EquipmentContent.CONDUCTIVE_FIN).get().defaultBlockState(), 3), "4D brake hardware installation failed");
