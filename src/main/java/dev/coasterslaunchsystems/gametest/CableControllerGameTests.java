@@ -37,7 +37,10 @@ import org.joml.Vector3d;
 public final class CableControllerGameTests {
   private static final List<Scene> SCENES = new ArrayList<>();
   private static boolean registered;
-  private static final boolean PRESSURE_RETURN_SHAFT_LOSS = Boolean.getBoolean("coasterslaunchsystems.cableReturnShaftLoss");
+  private static final String PRESSURE_RETURN_SHAFT_LOSS_MODE = System.getProperty("coasterslaunchsystems.cableReturnShaftLoss", "");
+  private static final boolean PRESSURE_RETURN_SHAFT_LOSS = !PRESSURE_RETURN_SHAFT_LOSS_MODE.isBlank()
+      && !PRESSURE_RETURN_SHAFT_LOSS_MODE.equalsIgnoreCase("false");
+  private static final boolean ARROW_PRESSURE_RETURN_SHAFT_LOSS = PRESSURE_RETURN_SHAFT_LOSS_MODE.equalsIgnoreCase("arrow");
   private static final class Scene {
     final RideControllerGameTests.Scene ride;
     final String mode;
@@ -81,7 +84,9 @@ public final class CableControllerGameTests {
   }
   @GameTestGenerator public static List<TestFunction> ride() {
     var modes = PRESSURE_RETURN_SHAFT_LOSS
-        ? new ArrayList<>(List.of("ordinary_hydraulic_controller_return_shaft_loss", "ordinary_pneumatic_controller_return_shaft_loss"))
+        ? new ArrayList<>(ARROW_PRESSURE_RETURN_SHAFT_LOSS
+            ? List.of("arrow_hydraulic_controller_return_shaft_loss", "arrow_pneumatic_controller_return_shaft_loss")
+            : List.of("ordinary_hydraulic_controller_return_shaft_loss", "ordinary_pneumatic_controller_return_shaft_loss"))
         : new ArrayList<>(List.of("ordinary_controller_dispatch", "ordinary_controller_power_loss"));
     if (!PRESSURE_RETURN_SHAFT_LOSS && net.neoforged.fml.ModList.get().isLoaded("fourthdimension"))
       // The Arrow fixture has two native-coordinate-safe slots; use them for the new pressure adapters.
@@ -90,7 +95,7 @@ public final class CableControllerGameTests {
       modes.addAll(List.of("ordinary_hydraulic_controller_shaft_loss", "ordinary_pneumatic_controller_shaft_loss"));
     // This shared server keeps upstream 4D rail metadata after a fixture closes.
     // Keep controller rails away from the cable-mechanics suite's slots 0..14.
-    var tests = new ArrayList<TestFunction>(); int slot = 17;
+    var tests = new ArrayList<TestFunction>(); int slot = ARROW_PRESSURE_RETURN_SHAFT_LOSS ? 19 : 17;
     for (var mode : modes) { int selected = slot++; tests.add(new TestFunction("launchsystems_cable_controller",
         "coasterslaunchsystems_cable." + mode, "coasterslaunchsystems_cable:empty", 1350, 0, true,
         helper -> run(new Scene(helper, selected, mode)))); }

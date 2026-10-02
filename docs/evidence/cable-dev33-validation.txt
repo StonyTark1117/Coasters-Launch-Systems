@@ -1,0 +1,11 @@
+Launch Systems dev.33 local validation
+Date: 2026-10-01
+
+./gradlew test runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_cable -PlsCableReturnShaftLoss=arrow -PlsFourthDimensionJar=/home/braydon/.cache/coasterslaunchsystems-validation/fd-provider-36775040079/libs/coasters-fourth-dimension-0.9.0-dev.1.jar
+Result: BUILD SUCCESSFUL; 27 JUnit tests and 17/17 required packaged cable GameTests passed. The pinned Arrow hydraulic and pneumatic fixtures each retained their RETURNING carriage without fault during a 100-tick charging-shaft interruption and retired it after restoration.
+
+./gradlew build runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_cable
+Result: BUILD SUCCESSFUL; 27 JUnit tests and 15/15 required packaged standalone cable GameTests passed.
+
+./gradlew build runGameTestServer --offline --console=plain --no-daemon --max-workers=2 -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems_cable -PlsFourthDimensionJar=/home/braydon/.cache/coasterslaunchsystems-validation/fd-provider-36775040079/libs/coasters-fourth-dimension-0.9.0-dev.1.jar
+Result: BUILD SUCCESSFUL; 27 JUnit tests and 19/19 required packaged cable GameTests passed with the pinned Fourth Dimension binary.

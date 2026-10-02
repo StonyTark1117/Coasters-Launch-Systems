@@ -357,3 +357,11 @@ An installed pressure cabinet now exposes its live physical carriage phase for o
 The ordinary hydraulic and pneumatic interruption cases passed **13/13** focused packaged standalone cable GameTests and **17/17** focused cases with the pinned Fourth Dimension artifact. The normal suites also passed **27 JUnit tests**, **15/15** packaged standalone cable GameTests and **19/19** pinned compatibility cases. The `0.0.1-dev.32` JAR SHA-256 is `14dd50fd2f17ffd7c65a032ff0474de31a1fe9ee8375ebfffef8ace86a015d5c`; see [local validation](evidence/cable-dev32-validation.txt) and [artifact hashes](evidence/cable-dev32-artifacts.sha256).
 
 This covers ordinary return interruption only; pinned Arrow return interruption, pressure restart while returning, active release, chunk/multiplayer/rendered operation and broader release gates remain open. **The complete release goal remains active.**
+
+## Fourth Dimension pressure return interruption checkpoint — dev.33
+
+The isolated return-shaft GameTest mode accepts `arrow` and allocates only slots 19–20, the native-coordinate-safe Fourth Dimension fixture positions. It stages the provider-owned Arrow, waits until its hydraulic or pneumatic carriage is physically returning, removes the actual Create charging shaft for 100 ticks, then restores the shaft. The test requires the cabinet to retain the non-home carriage and its `RETURNING` phase with no fault before the ordinary physical retirement lifecycle can complete.
+
+The pinned Fourth Dimension pressure-return cases passed **17/17** focused packaged cable GameTests. The normal suites also passed **27 JUnit tests**, **15/15** packaged standalone cable GameTests and **19/19** pinned compatibility cases. The `0.0.1-dev.33` JAR SHA-256 is `a31cfff9e23f215181b44aabd63009bf4423e619cde0bb30a77c33cf4c58d2ab`; see [local validation](evidence/cable-dev33-validation.txt) and [artifact hashes](evidence/cable-dev33-artifacts.sha256).
+
+Pressure restart while returning, active Arrow release, chunk/multiplayer/rendered operation and broader release gates remain open. **The complete release goal remains active.**
