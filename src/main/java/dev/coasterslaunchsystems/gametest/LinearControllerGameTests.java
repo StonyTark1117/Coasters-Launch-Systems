@@ -29,7 +29,7 @@ public final class LinearControllerGameTests {
   private static final class Scene {
     final RideControllerGameTests.Scene ride;
     final Mechanism mechanism;
-    final Map<BlockPos, Double> energy = new HashMap<>(), heat = new HashMap<>();
+    final Map<BlockPos, Double> energy = new HashMap<>(), heat = new HashMap<>(), pendingSourceCharge = new HashMap<>();
     double work, spent, thermal, peakSpeed, maxError, maxJoint, maxCoupler, rotorResponse;
     int steps;
     int interruptedSteps;
@@ -48,13 +48,17 @@ public final class LinearControllerGameTests {
       try {
         // Interrupt the return leg only after the first end-bank reversal has become live. This
         // proves a swing program cannot silently replay after authority is restored.
+        double work = 0, spent = 0, heat = 0; double dt = event.getTimeStep();
         if (swingPowerLoss(r.mode) && !s.interrupted && r.controller.swingPassIndex() == 1
             && r.controller.phase() == RideControllerEntity.State.RUNNING && s.steps > 150) {
+          // Cabinet charging for this physics step is already queued at the prior shaft speed.
+          // Preserve that one measured charge while changing the actual source for the next step.
+          for (var c : s.drives()) s.pendingSourceCharge.put(c.getBlockPos(),
+              Math.min(LinearMotor.CAPACITY - s.energy.get(c.getBlockPos()), LinearMotor.chargingWork(c.getSpeed(), dt)));
           for (var p : r.motors)
             ((com.simibubi.create.content.kinetics.motor.CreativeMotorBlockEntity) r.base.level.getBlockEntity(p)).generatedSpeed.setValue(0);
           s.interrupted = true;
         }
-        double work = 0, spent = 0, heat = 0; double dt = event.getTimeStep();
         for (var body : r.base.parents) {
           var motion = MotionProviders.resolve(r.base.level, body.getUniqueId()).orElseThrow();
           var contact = EngagedContacts.current(r.base.level, body).orElseThrow();
@@ -79,7 +83,8 @@ public final class LinearControllerGameTests {
         }
         for (var c : s.drives()) {
           boolean active = EquipmentRuntime.available(r.base.level, c);
-          double charge = active ? Math.min(LinearMotor.CAPACITY - s.energy.get(c.getBlockPos()), LinearMotor.chargingWork(c.getSpeed(), dt)) : 0;
+          Double queuedCharge = s.pendingSourceCharge.remove(c.getBlockPos());
+          double charge = queuedCharge != null ? queuedCharge : active ? Math.min(LinearMotor.CAPACITY - s.energy.get(c.getBlockPos()), LinearMotor.chargingWork(c.getSpeed(), dt)) : 0;
           spent += s.energy.get(c.getBlockPos()) + charge - c.energy(); heat += c.heat() - (active ? Math.max(0, s.heat.get(c.getBlockPos()) - 8 * dt) : s.heat.get(c.getBlockPos()));
         }
         s.maxError = Math.max(s.maxError, Math.abs(spent - heat - work));
@@ -119,7 +124,7 @@ public final class LinearControllerGameTests {
           "arrow_forward", "arrow_linked_reverse", "arrow_plate_loss", "legacy_forward", "free_spin_forward", "revised_forward", "pax_veto"));
       if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of(
           "arrow_swing_forward", "arrow_swing_power_loss",
-          "arrow_linked_swing_forward",
+          "arrow_linked_swing_forward", "arrow_linked_swing_power_loss",
           "legacy_swing_forward", "legacy_swing_power_loss",
           "free_spin_swing_forward", "free_spin_swing_power_loss",
           "revised_swing_forward", "revised_swing_power_loss"));
