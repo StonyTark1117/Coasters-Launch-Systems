@@ -4,7 +4,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -28,6 +31,13 @@ public final class RideControllerBlock extends BaseEntityBlock {
   @Override protected boolean isSignalSource(BlockState state) { return true; }
   @Override protected int getSignal(BlockState state, net.minecraft.world.level.BlockGetter level, BlockPos pos, Direction face) {
     return level.getBlockEntity(pos) instanceof RideControllerEntity controller ? controller.signal(face) : 0;
+  }
+  /** Allows the Span Tool to bind this controller before the status interaction consumes the click. */
+  @Override protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+      Player player, InteractionHand hand, BlockHitResult hit) {
+    return stack.getItem() instanceof SpanToolItem
+        ? ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION
+        : super.useItemOn(stack, state, level, pos, player, hand, hit);
   }
   @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
     if (level.isClientSide) return InteractionResult.SUCCESS;

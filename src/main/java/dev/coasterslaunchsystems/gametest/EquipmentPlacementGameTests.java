@@ -17,6 +17,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.DirectionalBlock;
@@ -51,6 +52,10 @@ public final class EquipmentPlacementGameTests {
     player.setGameMode(GameType.CREATIVE);
     player.setItemInHand(InteractionHand.MAIN_HAND, EquipmentContent.TOOL.get().getDefaultInstance());
     helper.runAtTickTime(10, () -> {
+      var toolHit = new BlockHitResult(module.getCenter(), Direction.UP, module, false);
+      helper.assertTrue(level.getBlockState(module).useItemOn(player.getMainHandItem(), level, player, InteractionHand.MAIN_HAND, toolHit)
+              == ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION,
+          "Cabinet status interaction consumed the Span Tool before its bind action");
       for (var pos : new BlockPos[] {from, to, module}) {
         player.setPos(pos.getX() + .5, pos.getY() + 1, pos.getZ() + 2);
         var result = player.getMainHandItem().useOn(new UseOnContext(player, InteractionHand.MAIN_HAND,
@@ -63,6 +68,10 @@ public final class EquipmentPlacementGameTests {
       helper.assertTrue(player.getMainHandItem().get(EquipmentContent.FROM.get()) == null,
           "Selection retained after successful installation");
       level.setBlockAndUpdate(controllerPos, EquipmentContent.CONTROLLER.get().defaultBlockState());
+      var controllerHit = new BlockHitResult(controllerPos.getCenter(), Direction.UP, controllerPos, false);
+      helper.assertTrue(level.getBlockState(controllerPos).useItemOn(player.getMainHandItem(), level, player, InteractionHand.MAIN_HAND, controllerHit)
+              == ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION,
+          "Controller status interaction consumed the Span Tool before its bind action");
       for (var pos : new BlockPos[] {from, to, controllerPos}) {
         player.setPos(pos.getX() + .5, pos.getY() + 1, pos.getZ() + 2);
         helper.assertTrue(player.getMainHandItem().useOn(new UseOnContext(player, InteractionHand.MAIN_HAND,

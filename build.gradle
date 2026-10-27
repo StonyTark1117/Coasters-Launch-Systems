@@ -35,13 +35,13 @@ neoForge {
     if (project.hasProperty('lsPackaged')) addModdingDependenciesTo sourceSets.packaged
     runs {
         client {
-            client(); gameDirectory = layout.buildDirectory.dir(project.hasProperty('lsPackaged') ? 'runs/packaged-client' : 'runs/client').get().asFile
+            client(); gameDirectory = layout.buildDirectory.dir(project.hasProperty('lsPackaged') ? (project.hasProperty('lsValidation') ? 'runs/packaged-client-validation' : 'runs/packaged-client') : 'runs/client').get().asFile
             if (project.hasProperty('lsConnect')) programArguments.addAll '--quickPlayMultiplayer', project.property('lsConnect')
             if (project.hasProperty('lsWorld')) programArguments.addAll '--quickPlaySingleplayer', project.property('lsWorld')
             systemProperty 'coasterslaunchsystems.validation', project.hasProperty('lsValidation').toString()
         }
         observer {
-            client(); gameDirectory = layout.buildDirectory.dir(project.hasProperty('lsPackaged') ? 'runs/packaged-observer' : 'runs/observer').get().asFile
+            client(); gameDirectory = layout.buildDirectory.dir(project.hasProperty('lsPackaged') ? (project.hasProperty('lsValidation') ? 'runs/packaged-observer-validation' : 'runs/packaged-observer') : 'runs/observer').get().asFile
             programArguments.addAll '--username', 'Observer'
             if (project.hasProperty('lsConnect')) programArguments.addAll '--quickPlayMultiplayer', project.property('lsConnect')
             systemProperty 'coasterslaunchsystems.validation', project.hasProperty('lsValidation').toString()

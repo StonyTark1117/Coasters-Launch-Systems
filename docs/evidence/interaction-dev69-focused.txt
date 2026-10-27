@@ -1,0 +1,544 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.2.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :createMinecraftArtifacts UP-TO-DATE
+> Task :compileJava UP-TO-DATE
+> Task :compileApi4Fixture UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :jarJar NO-SOURCE
+> Task :jar
+> Task :compileTestJava UP-TO-DATE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test
+> Task :compilePackagedJava NO-SOURCE
+> Task :processPackagedResources NO-SOURCE
+> Task :packagedClasses UP-TO-DATE
+> Task :downloadAssets UP-TO-DATE
+> Task :writeGameTestServerLegacyClasspath UP-TO-DATE
+> Task :prepareGameTestServerRun
+
+> Task :runGameTestServer
+WARN StatusConsoleListener Advanced terminal features are not available in this environment
+[16:47:19] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgeserverdev, --gameDir, ., --fml.fmlVersion, 4.0.43, --fml.mcVersion, 1.21.1, --fml.neoForgeVersion, 21.1.248, --fml.neoFormVersion, 20240808.144430]
+[16:47:19] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: JVM identified as Arch Linux OpenJDK 64-Bit Server VM 21.0.13.0.2+1
+[16:47:19] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: ModLauncher 11.0.5+main.901c6ea8 starting: java version 21.0.13.0.2 by Arch Linux; OS Linux arch amd64 version 7.2.11-zen1-1-zen
+[16:47:19] [main/INFO] [ne.ne.fm.lo.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgeserverdev
+[16:47:19] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=union:/home/braydon/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.2+mixin.0.8.7/2af2f021d8e02a0220dc27a7a72b4666d66d44ca/sponge-mixin-0.15.2+mixin.0.8.7.jar%2394!/ Service=ModLauncher Env=SERVER
+[16:47:19] [main/WARN] [ne.ne.ja.se.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: veil. Using Mod File: /home/braydon/.gradle/caches/modules-2/files-2.1/foundry.veil/veil-neoforge-1.21.1/4.1.4/642ec0bd02213ee087d86eda553d6d79c6a04d2b/veil-neoforge-1.21.1-4.1.4.jar
+[16:47:19] [main/WARN] [ne.ne.ja.se.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: sablecompanion. Using Mod File: /home/braydon/.gradle/caches/modules-2/files-2.1/dev.ryanhcode.sable-companion/sable-companion-common-1.21.1/1.6.0/370be7db705926176e05c0215ed676150c45daae/sable-companion-common-1.21.1-1.6.0.jar
+[16:47:19] [main/WARN] [ne.ne.ja.se.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: library:sable_rapier. Using Mod File: /home/braydon/.gradle/caches/modules-2/files-2.1/dev.ryanhcode.sable/sable-sable_rapier-1.21.1/2.0.3/a88c0860320890144b6b44c332a2a2db3a61e189/sable-sable_rapier-1.21.1-2.0.3.jar
+[16:47:19] [main/INFO] [ne.ne.fm.lo.mo.lo.JarInJarDependencyLocator/]: Found 4 dependencies adding them to mods collection
+[16:47:19] [main/INFO] [ne.ne.fm.lo.mo.ModDiscoverer/]:
+     Mod List:
+		Name Version (Mod Id)
+
+		Coasters: Launch Systems 0.0.1-dev.69 (coasterslaunchsystems)
+		Create 6.0.10 (create)
+		Create: Coasters Simulated 0.1.5 (simulatedcoasters)
+		Flywheel 1.0.6 (flywheel)
+		Minecraft 1.21.1 (minecraft)
+		NeoForge 21.1.248 (neoforge)
+		Ponder 1.0.82+mc1.21.1 (ponder)
+		Sable 2.0.3 (sable)
+		Sable Companion 1.6.0 (sablecompanion)
+		Veil 4.1.4 (veil)
+[16:47:20] [main/INFO] [mixin/]: Compatibility level set to JAVA_21
+[16:47:20] [main/INFO] [cp.mo.mo.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgeserverdev' with arguments [--gameDir, .]
+[16:47:20] [main/WARN] [mixin/]: Reference map 'ponder.refmap.json' for ponder-common.mixins.json could not be read. If this is a development environment you can ignore this message
+[16:47:20] [main/INFO] [de.ry.sa.mi.AbstractSableMixinPlugin/]: Using Vanilla renderer mixins
+[16:47:20] [main/INFO] [de.ry.sa.mi.AbstractSableMixinPlugin/]: Using Vanilla renderer mixins
+[16:47:20] [main/WARN] [mixin/]: Error loading class: dev/simulated_team/simulated/content/blocks/merging_glue/MergingGlueBlockEntity (java.lang.ClassNotFoundException: dev.simulated_team.simulated.content.blocks.merging_glue.MergingGlueBlockEntity)
+[16:47:20] [main/WARN] [mixin/]: @Mixin target dev.simulated_team.simulated.content.blocks.merging_glue.MergingGlueBlockEntity was not found simulatedcoasters.mixins.json:compat.MergingGlueBlockEntityRivetMixin from mod simulatedcoasters
+[16:47:20] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[16:47:20] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[16:47:20] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[16:47:20] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[16:47:20] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[16:47:20] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[16:47:20] [main/WARN] [mixin/]: Error loading class: org/jetbrains/annotations/ApiStatus$ScheduledForRemoval (java.lang.ClassNotFoundException: org.jetbrains.annotations.ApiStatus$ScheduledForRemoval)
+[16:47:20] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[16:47:20] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[16:47:20] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[16:47:20] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[16:47:20] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[16:47:20] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[16:47:20] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[16:47:20] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[16:47:20] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[16:47:20] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[16:47:20] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[16:47:20] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[16:47:20] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.3).
+[16:47:21] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[16:47:21] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[16:47:21] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[16:47:21] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[16:47:21] [main/ERROR] [ne.ne.fm.co.as.RuntimeDistCleaner/DISTXFORM]: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER
+[16:47:21] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/multiplayer/ClientLevel (java.lang.RuntimeException: Attempted to load class net/minecraft/client/multiplayer/ClientLevel for invalid dist DEDICATED_SERVER)
+[16:47:23] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[16:47:23] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[16:47:23] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[16:47:23] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[16:47:23] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[16:47:23] [modloading-worker-0/INFO] [Veil/]: Veil is initializing.
+[16:47:23] [modloading-worker-0/INFO] [ne.ne.ne.co.NeoForgeMod/NEOFORGE-MOD]: NeoForge mod loading, version 21.1.248, for MC 1.21.1
+[16:47:23] [modloading-worker-0/INFO] [co.si.cr.Create/]: Create 6.0.10 initializing! Commit hash: ac0c444d9828da3453ae8cc65338e8de063286fb
+[16:47:24] [modloading-worker-0/INFO] [de.ry.sa.Sable/]: Sable loaded!
+[16:47:24] [modloading-worker-0/INFO] [de.co.LaunchSystems/]: Coasters: Launch Systems loaded from union:/tmp/coasterslaunchsystems-22eeb619/build/libs/coasters-launch-systems-0.0.1-dev.69.jar%23127!/
+[16:47:24] [main/INFO] [mojang/YggdrasilAuthenticationService]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[16:47:24] [NeoForge Version Check/INFO] [ne.ne.fm.VersionChecker/]: [create] Starting version check at https://api.modrinth.com/updates/create/forge_updates.json?neoforge=only
+[16:47:24] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/tmp/coasterslaunchsystems-22eeb619/build/moddev/artifacts/neoforge-21.1.248.jar%23124!/assets/.mcassetsroot' uses unexpected schema
+[16:47:24] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/tmp/coasterslaunchsystems-22eeb619/build/moddev/artifacts/neoforge-21.1.248.jar%23124!/data/.mcassetsroot' uses unexpected schema
+[16:47:24] [main/INFO] [co.si.cr.Create/]: Created 157 recipes which will be injected into the game
+[16:47:24] [main/INFO] [co.si.cr.Create/]: Created 0 tags which will be injected into the game
+[16:47:24] [main/INFO] [ne.ne.ne.ga.GameTestHooks/]: Enabled Gametest Namespaces: [coasterslaunchsystems]
+[16:47:25] [NeoForge Version Check/INFO] [ne.ne.fm.VersionChecker/]: [create] Found status: OUTDATED Current: 6.0.10 Target: 6.0.10+mc1.21.1
+[16:47:25] [main/INFO] [minecraft/RecipeManager]: Loaded 2842 recipes
+[16:47:25] [main/INFO] [minecraft/AdvancementTree]: Loaded 2507 advancements
+[16:47:26] [Server thread/INFO] [de.ry.sa.Sable/]: Creating physics pipeline for ResourceKey[minecraft:dimension / minecraft:overworld] using RapierPhysicsPipelineProvider
+[2026-10-27T23:47:26.251330868Z] [[32mINFO[0m] (sable_rapier) Rapier scene initialized
+[16:47:26] [Server thread/INFO] [de.ry.sa.Sable/]: Creating physics pipeline for ResourceKey[minecraft:dimension / minecraft:the_end] using RapierPhysicsPipelineProvider
+[2026-10-27T23:47:26.477049215Z] [[32mINFO[0m] (sable_rapier) Rapier scene initialized
+[16:47:26] [Server thread/INFO] [de.ry.sa.Sable/]: Creating physics pipeline for ResourceKey[minecraft:dimension / minecraft:the_nether] using RapierPhysicsPipelineProvider
+[2026-10-27T23:47:26.497829251Z] [[32mINFO[0m] (sable_rapier) Rapier scene initialized
+[16:47:26] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing start region for dimension minecraft:overworld
+[16:47:26] [worldgen/INFO] [minecraft/LoggerChunkProgressListener]: Preparing spawn area: 2%
+[16:47:26] [Server thread/INFO] [minecraft/LoggerChunkProgressListener]: Time elapsed: 88 ms
+[16:47:26] [Server thread/INFO] [minecraft/GameTestServer]: Started game test server
+[16:47:26] [Server thread/INFO] [ne.ne.ne.se.pe.PermissionAPI/]: Successfully initialized permission handler neoforge:default_handler
+[16:47:26] [Server thread/INFO] [minecraft/GameTestServer]: 66 tests are now running at position 904717, -59, 12866167!
+[16:47:26] [Server thread/INFO] [minecraft/GameTestRunner]: Running test batch 'launchsystems_section_transfer:0' (11 tests)...
+[16:47:26] [Server thread/INFO] [minecraft/GameTestServer]: [                                                                  ]
+[16:47:27] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:27] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:28] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts d9763511-d1f1-4fec-8b4b-3ac017ab18a1 <-> 19adb5e3-7ddd-4498-a3f0-25aeaf5aeb22 at distance 6.000
+[16:47:28] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts eddfcd66-cb3c-44de-b84a-b43302719250 <-> 34d6322d-2532-47e9-8342-612903202933 at distance 6.000
+[16:47:28] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts c50b379f-72d7-45fd-ba42-3dcf3e901e63 <-> 023306c2-1a12-438f-a387-c4855c8146be at distance 6.000
+[16:47:28] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:28] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts 66074142-d54f-4b39-aba9-bfcd5bd4f4b1 <-> b26d15b6-199f-4935-a125-12cad108bc25 at distance 6.000
+[16:47:28] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts 5a017b88-9ad1-41bf-b241-689f64496761 <-> f07595c2-5004-4967-9b1e-ac4c0ba29178 at distance 6.000
+[16:47:29] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts 850b05b1-1a05-4013-a1c7-cdcfcd0ba407 <-> 932731f9-179e-42bd-80c1-412ef5374b61 at distance 6.000
+[16:47:29] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts a0c500db-92aa-4310-8f3c-c22db0f44606 <-> 247ee89f-2cd6-41f9-84f4-0323777b73b8 at distance 6.000
+[16:47:29] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts 3372de82-024a-4f12-96a8-2dbc3bb48528 <-> 1d6eb194-963b-4c84-bd8e-3deda8ad511b at distance 6.000
+[16:47:29] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts 95e1c2df-3a2c-4252-889f-4a88b96c8dca <-> 17f13e8b-a603-415d-b883-bce071b911b2 at distance 6.000
+[16:47:30] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:31] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:32] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:33] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:34] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:35] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:36] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:37] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:39] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:40] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:41] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:42] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:44] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:45] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:47] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:48] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:48] [Server thread/WARN] [minecraft/MinecraftServer]: Can't keep up! Is the server overloaded? Running 2013ms or 40 ticks behind
+[16:47:50] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:51] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:52] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:54] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:55] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:56] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:58] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:47:59] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:00] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:01] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:03] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:04] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:06] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:07] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:09] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:09] [Server thread/WARN] [minecraft/MinecraftServer]: Can't keep up! Is the server overloaded? Running 5706ms or 114 ticks behind
+[16:48:10] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:12] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:13] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:15] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:17] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:18] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:20] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:21] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:23] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:24] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:26] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:27] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:29] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:30] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:31] [Server thread/INFO] [minecraft/GameTestServer]: [___________                                                       ]
+[16:48:31] [Server thread/WARN] [minecraft/MinecraftServer]: Can't keep up! Is the server overloaded? Running 7523ms or 150 ticks behind
+LS_TRANSFER mode=occupied_destination source=Ride controller: HOLD, reserved chassis 2, required brake length 13.23/22.00, transfer false, station capture false, swing off, boarding ready false.  receiver=Ride controller: HOLD, reserved chassis 1, required brake length 6.85/22.00, transfer false, station capture false, swing off, boarding ready false.  work=188.2440658293613
+[16:48:32] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked c50b379f-72d7-45fd-ba42-3dcf3e901e63 <-> 023306c2-1a12-438f-a387-c4855c8146be
+LS_TRANSFER mode=short_destination source=Ride controller: HOLD, reserved chassis 2, required brake length 13.23/2.00, transfer false, station capture false, swing off, boarding ready false.  receiver=Ride controller: HOLD, reserved chassis 0, required brake length 0.00/0.00, transfer false, station capture false, swing off, boarding ready false.  work=188.2440658292557
+[16:48:33] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked 66074142-d54f-4b39-aba9-bfcd5bd4f4b1 <-> b26d15b6-199f-4935-a125-12cad108bc25
+[16:48:34] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:34] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:35] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:36] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:37] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:38] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:38] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:39] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:40] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:41] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:42] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:42] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:43] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:44] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:45] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:46] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:46] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:47] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:47] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:48] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:48] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:49] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:49] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:49] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:50] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:50] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:50] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:51] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:51] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:52] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:52] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:52] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:53] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:53] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:54] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:54] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:54] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:55] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:55] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:56] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:56] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:57] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:57] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:58] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:58] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+[16:48:58] [Server thread/INFO] [minecraft/GameTestServer]: [____++_____                                                       ]
+LS_TRANSFER mode=single_forward cars=1 riders=4 source=Ride controller: HOLD, reserved chassis 0, required brake length 6.85/22.00, transfer false, station capture false, swing off, boarding ready false.  receiver=Ride controller: HOLD, reserved chassis 1, required brake length 6.85/22.00, transfer false, station capture false, swing off, boarding ready false.  straddling=0 retained_tail_steps=54 post_clear_steps=1158 drive_steps=985 missing_carrier_denial_steps=0 removed_seat_riders=0 work=196.12618327070643 peak_speed=2.6808316707611084 joint_error=0.0 coupler_error=0.0
+LS_TRANSFER mode=single_reverse cars=1 riders=4 source=Ride controller: HOLD, reserved chassis 0, required brake length 6.85/22.00, transfer false, station capture false, swing off, boarding ready false.  receiver=Ride controller: HOLD, reserved chassis 1, required brake length 6.85/22.00, transfer false, station capture false, swing off, boarding ready false.  straddling=0 retained_tail_steps=54 post_clear_steps=1160 drive_steps=983 missing_carrier_denial_steps=0 removed_seat_riders=0 work=196.1719685985716 peak_speed=2.6808316707611084 joint_error=0.0 coupler_error=0.0
+LS_TRANSFER mode=linked_forward cars=2 riders=8 source=Ride controller: HOLD, reserved chassis 0, required brake length 13.23/22.00, transfer false, station capture false, swing off, boarding ready false.  receiver=Ride controller: HOLD, reserved chassis 2, required brake length 13.23/22.00, transfer false, station capture false, swing off, boarding ready false.  straddling=90 retained_tail_steps=142 post_clear_steps=1070 drive_steps=1981 missing_carrier_denial_steps=0 removed_seat_riders=0 work=384.49678300735894 peak_speed=2.6808304779812837 joint_error=0.0 coupler_error=3.733930498128757E-9
+[16:48:59] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked d9763511-d1f1-4fec-8b4b-3ac017ab18a1 <-> 19adb5e3-7ddd-4498-a3f0-25aeaf5aeb22
+LS_TRANSFER mode=linked_reverse cars=2 riders=8 source=Ride controller: HOLD, reserved chassis 0, required brake length 13.23/22.00, transfer false, station capture false, swing off, boarding ready false.  receiver=Ride controller: HOLD, reserved chassis 2, required brake length 13.23/22.00, transfer false, station capture false, swing off, boarding ready false.  straddling=90 retained_tail_steps=144 post_clear_steps=1070 drive_steps=1977 missing_carrier_denial_steps=0 removed_seat_riders=0 work=377.905439426831 peak_speed=2.6808304779812837 joint_error=0.0 coupler_error=8.981260180007666E-12
+[16:48:59] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked eddfcd66-cb3c-44de-b84a-b43302719250 <-> 34d6322d-2532-47e9-8342-612903202933
+LS_TRANSFER mode=rollback cars=2 riders=8 source=Ride controller: FAULT, reserved chassis 2, required brake length 13.23/22.00, transfer true, station capture false, swing off, boarding ready false. Rollback during transfer; both sections remain reserved receiver=Ride controller: FAULT, reserved chassis 2, required brake length 0.00/0.00, transfer false, station capture false, swing off, boarding ready false. Rollback during transfer; both sections remain reserved straddling=1212 retained_tail_steps=1212 post_clear_steps=0 drive_steps=1456 missing_carrier_denial_steps=0 removed_seat_riders=0 work=410.11799691804515 peak_speed=2.6808290481567383 joint_error=0.0 coupler_error=2.034994395216927E-11
+[16:48:59] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked 5a017b88-9ad1-41bf-b241-689f64496761 <-> f07595c2-5004-4967-9b1e-ac4c0ba29178
+LS_TRANSFER mode=missing_destination cars=2 riders=8 source=Ride controller: FAULT, reserved chassis 2, required brake length 13.23/22.00, transfer true, station capture false, swing off, boarding ready false. Transfer destination unavailable; reservation retained receiver=Ride controller: RECEIVING, reserved chassis 2, required brake length 0.00/0.00, transfer false, station capture false, swing off, boarding ready false.  straddling=1212 retained_tail_steps=1212 post_clear_steps=0 drive_steps=1414 missing_carrier_denial_steps=0 removed_seat_riders=0 work=384.49678293216346 peak_speed=2.6808290481567383 joint_error=0.0 coupler_error=2.034994395216927E-11
+[16:49:00] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked a0c500db-92aa-4310-8f3c-c22db0f44606 <-> 247ee89f-2cd6-41f9-84f4-0323777b73b8
+LS_TRANSFER mode=power_loss cars=2 riders=8 source=Ride controller: FAULT, reserved chassis 2, required brake length 13.23/22.00, transfer true, station capture false, swing off, boarding ready false. Transfer release power lost; spring pads apply receiver=Ride controller: FAULT, reserved chassis 2, required brake length 0.00/0.00, transfer false, station capture false, swing off, boarding ready false. Transfer release power lost; spring pads apply straddling=1212 retained_tail_steps=1212 post_clear_steps=0 drive_steps=1414 missing_carrier_denial_steps=0 removed_seat_riders=0 work=384.49678300729977 peak_speed=2.6808290481567383 joint_error=0.0 coupler_error=3.733930498128757E-9
+[16:49:00] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked 3372de82-024a-4f12-96a8-2dbc3bb48528 <-> 1d6eb194-963b-4c84-bd8e-3deda8ad511b
+LS_TRANSFER mode=reload cars=2 riders=8 source=Ride controller: INSPECTION, reserved chassis 2, required brake length 13.23/22.00, transfer true, station capture false, swing off, boarding ready false. Reloaded controller requires inspection; reservation retained receiver=Ride controller: INSPECTION, reserved chassis 2, required brake length 0.00/0.00, transfer false, station capture false, swing off, boarding ready false. Reloaded controller requires inspection; reservation retained straddling=1212 retained_tail_steps=1212 post_clear_steps=0 drive_steps=1414 missing_carrier_denial_steps=0 removed_seat_riders=0 work=384.49678300727203 peak_speed=2.6808290481567383 joint_error=0.0 coupler_error=7.470930540875997E-9
+[16:49:00] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked 95e1c2df-3a2c-4252-889f-4a88b96c8dca <-> 17f13e8b-a603-415d-b883-bce071b911b2
+[16:49:00] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:00] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:00] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:00] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:00] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:00] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:01] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:01] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:01] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:01] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:01] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:01] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:01] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:01] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:01] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:01] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:01] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:01] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:01] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:01] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:02] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:02] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:02] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:02] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:02] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:02] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:02] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:02] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:02] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:02] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:02] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:02] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:02] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:02] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:03] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:03] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:03] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:03] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:03] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+[16:49:03] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++_+                                                       ]
+LS_TRANSFER mode=reload_resume cars=2 riders=8 source=Ride controller: HOLD, reserved chassis 0, required brake length 13.23/22.00, transfer false, station capture false, swing off, boarding ready false.  receiver=Ride controller: HOLD, reserved chassis 2, required brake length 13.23/22.00, transfer false, station capture false, swing off, boarding ready false.  straddling=998 retained_tail_steps=1050 post_clear_steps=1762 drive_steps=2091 missing_carrier_denial_steps=0 removed_seat_riders=0 work=580.6668896205241 peak_speed=2.6808304779812824 joint_error=0.0 coupler_error=7.462290341209155E-9
+[16:49:03] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked 850b05b1-1a05-4013-a1c7-cdcfcd0ba407 <-> 932731f9-179e-42bd-80c1-412ef5374b61
+[16:49:03] [Server thread/INFO] [minecraft/GameTestRunner]: Running test batch 'launchsystems_fin:0' (6 tests)...
+[16:49:03] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++                                                       ]
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++______                                                 ]
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++______                                                 ]
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++______                                                 ]
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++______                                                 ]
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++______                                                 ]
+LS_FIN_EQUIPMENT fixture=OVERMASS phase=stop mass=82.0 speed=1.9955307245254517 moved=4.04296875 fault=Loaded consist exceeds the fin clamp mass/slope rating
+LS_FIN_EQUIPMENT fixture=FORWARD phase=stop mass=26.0 speed=4.144504531233828E-11 moved=0.20184326171875 fault=
+LS_FIN_EQUIPMENT fixture=REVERSE phase=stop mass=26.0 speed=5.132066438484628E-10 moved=0.20184326171875 fault=
+LS_FIN_EQUIPMENT fixture=SLOPE phase=stop mass=64.0 speed=-0.0035354921128600836 moved=0.0 fault=
+LS_FIN_EQUIPMENT fixture=MISSING_FIN phase=stop mass=25.0 speed=1.9955307245254517 moved=4.04296875 fault=Vehicle has no certified friction fin
+LS_FIN_EQUIPMENT fixture=CONFLICT phase=stop mass=27.0 speed=1.9955309629440308 moved=4.04296875 fault=Overlapping modules claim this consist; separate their contact zones
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++___+++                                                 ]
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++___+++                                                 ]
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++___+++                                                 ]
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++___+++                                                 ]
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++___+++                                                 ]
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++___+++                                                 ]
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++___+++                                                 ]
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++___+++                                                 ]
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++___+++                                                 ]
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++___+++                                                 ]
+LS_FIN_EQUIPMENT fixture=FORWARD phase=hold creep=0.0 distance=8.726877676113517 interval=SpanInterval[start=8.000000457979326, end=10.000000457979326]
+LS_FIN_EQUIPMENT fixture=REVERSE phase=hold creep=0.0 distance=6.27314208639195 interval=SpanInterval[start=6.000000218113094, end=8.000000218113094]
+LS_FIN_EQUIPMENT fixture=SLOPE phase=hold creep=0.0 distance=6.6845789785642715 interval=SpanInterval[start=5.730363852747704, end=7.730363852747704]
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++___+++                                                 ]
+LS_FIN_EQUIPMENT fixture=SLOPE phase=powered_release speed=-0.6491461396217346 rpm=-64.0 distance=6.630099228963094
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++___+++                                                 ]
+LS_FIN_EQUIPMENT fixture=FORWARD phase=reapply speed=-3.557908689888478E-10 rpm=0.0 fault= drift=0.0 distance=8.726877676113517
+LS_FIN_EQUIPMENT fixture=REVERSE phase=reapply speed=-3.557908134776966E-10 rpm=0.0 fault= drift=0.0 distance=6.27314208639195
+LS_FIN_EQUIPMENT fixture=SLOPE phase=reapply speed=-0.0035292189568281174 rpm=0.0 fault= drift=0.2529718813075039 distance=6.431606847794345
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++___+++                                                 ]
+LS_FIN_EQUIPMENT fixture=FORWARD phase=hardware_removed speed=3.9871857166290283
+LS_FIN_EQUIPMENT fixture=REVERSE phase=hardware_removed speed=3.9871857166290283
+LS_FIN_EQUIPMENT fixture=SLOPE phase=hardware_removed speed=1.2843809127807617
+[16:49:04] [Server thread/INFO] [minecraft/GameTestRunner]: Running test batch 'defaultBatch:0' (12 tests)...
+[16:49:04] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++                                                 ]
+[16:49:05] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++_______                                          ]
+LS_EQUIPMENT_PLACEMENT rpm=64.0 contact=SpanInterval[start=7.000000453561613, end=9.000000453561613] identity=a9400be4-bde1-4afd-bd66-05848bd68fc2 support_fault=Track geometry changed; inspect and rebind
+[16:49:05] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++__+_________                                     ]
+[16:49:05] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++__+_________                                     ]
+[16:49:05] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++__+_________                                     ]
+[16:49:05] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++__+_________                                     ]
+LS_NATIVE_POINT_FORCE phase=launch speed=3.991027593612671 seconds=1.999999999999997 impulse=3.999999999999994 mass=1.0 moved=4.0499725341796875
+LS_TIRE_EQUIPMENT fixture=MISSING_STRIP mass=1.0 rpm=64.0 speed=0.0 moved=0.0 fault=Vehicle has no certified tire interface
+LS_TIRE_EQUIPMENT fixture=LOADED mass=26.0 rpm=64.0 speed=1.81930673122406 moved=2.26318359375 fault=
+LS_TIRE_EQUIPMENT fixture=FORWARD mass=2.0 rpm=64.0 speed=2.674377679824829 moved=4.3209228515625 fault=
+LS_TIRE_EQUIPMENT fixture=REVERSE mass=2.0 rpm=64.0 speed=-2.1701302528381348 moved=3.785888671875 fault=
+LS_FIN_CONSTRAINT fixture=FORWARD phase=stop mass=25.0 speed=2.48128140810884E-4 min_directed=-7.733707207080442E-6
+LS_FIN_CONSTRAINT fixture=OVERLOAD phase=stop mass=25.0 speed=2.4812814081090495E-4 min_directed=-7.733758138783742E-6
+[16:49:05] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++__+_________                                     ]
+LS_TIRE_EQUIPMENT fixture=CONFLICT mass=2.0 rpm=64.0 speed=0.0 moved=0.0 fault=Overlapping modules claim this consist; separate their contact zones
+LS_TIRE_EQUIPMENT fixture=REVERSE_SHAFT mass=2.0 rpm=-64.0 speed=-2.1701302528381348 moved=3.785888671875 fault=
+LS_FIN_CONSTRAINT fixture=REVERSE phase=stop mass=25.0 speed=2.481281408108771E-4 min_directed=-7.733615348115563E-6
+LS_FIN_CONSTRAINT fixture=SLOPE phase=stop mass=25.0 speed=0.0028705867735597653 min_directed=-4.001893599767378
+[16:49:05] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++_+++_+_____                                     ]
+LS_NATIVE_POINT_FORCE phase=stop speed=2.0130879420321435E-5 impulse=-3.191891195797325E-16
+[16:49:05] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++_+++_++_+__                                     ]
+[16:49:05] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++_+++_++_+__                                     ]
+LS_NATIVE_CONTACT phase=reverse speed=-3.991006374359131 moved=4.0499725341796875
+[16:49:05] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++_+++_++_+__                                     ]
+[16:49:05] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++_+++_++_+__                                     ]
+LS_NATIVE_CONTACT phase=complete speed=0.0 contact_steps=320 missing_steps=0
+[16:49:05] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++_+++_++++__                                     ]
+[16:49:05] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++_+++_++++__                                     ]
+[16:49:05] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++_+++_++++__                                     ]
+[16:49:06] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++_+++_++++__                                     ]
+LS_FIN_CONSTRAINT fixture=FORWARD phase=hold creep=0.0 missing=0
+LS_FIN_CONSTRAINT fixture=OVERLOAD phase=hold creep=0.0 missing=0
+[16:49:06] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++_+++_++++__                                     ]
+LS_FIN_CONSTRAINT fixture=REVERSE phase=hold creep=0.0 missing=0
+LS_FIN_CONSTRAINT fixture=SLOPE phase=hold creep=0.0 missing=0
+LS_FIN_CONSTRAINT fixture=FORWARD phase=release_or_overload speed=-5.880605724595256E-11
+LS_FIN_CONSTRAINT fixture=OVERLOAD phase=release_or_overload speed=5.108534812927246
+[16:49:06] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++__                                     ]
+LS_FIN_CONSTRAINT fixture=REVERSE phase=release_or_overload speed=1.1215252234683871E-17
+LS_FIN_CONSTRAINT fixture=SLOPE phase=release_or_overload speed=-2.585153818130493
+[16:49:06] [Server thread/INFO] [minecraft/GameTestRunner]: Running test batch 'launchsystems_eddy:0' (10 tests)...
+[16:49:06] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++                                     ]
+[16:49:06] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++__ _______                           ]
+[16:49:06] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++__________                           ]
+[16:49:06] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++__________                           ]
+[16:49:06] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++__________                           ]
+[16:49:06] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++__________                           ]
+LS_EDDY_EQUIPMENT fixture=AT_REST mass=26.0 initial=0.0 speed=-4.3600529436860214E-11 impulse=1.9717125657372398E-9 peak_force=3.05634062140305E-9 work=3.19144919882609E-20 heat=7.165808471628133E-23 fault=
+LS_EDDY_CONTACT fixture=AT_REST entry=7.500009766052276 last=7.500009766052276 interval=SpanInterval[start=7.000000453561528, end=9.000000453561528] contact_steps=80 available_steps=80 armed=true missing_contact_steps=0 mismatched_edge_steps=0
+LS_EDDY_EQUIPMENT fixture=SLOPE mass=26.0 initial=5.580063952947967E-5 speed=-1.121376872062683 impulse=108.61060469471175 peak_force=68.36005496986644 work=85.0312011123809 heat=70.25214166555298 fault=
+LS_EDDY_CONTACT fixture=SLOPE entry=6.957881042278894 last=5.242290115479286 interval=SpanInterval[start=5.730363852747704, end=7.730363852747704] contact_steps=80 available_steps=80 armed=true missing_contact_steps=0 mismatched_edge_steps=0
+LS_EDDY_EQUIPMENT fixture=MISSING_FIN mass=25.0 initial=1.9955116510391235 speed=1.9955307245254517 impulse=0.0 peak_force=0.0 work=0.0 heat=0.0 fault=Vehicle has no certified conductive fin
+LS_EDDY_CONTACT fixture=MISSING_FIN entry=8.524944777199162 last=12.46683929312754 interval=SpanInterval[start=7.000000453561528, end=9.000000453561528] contact_steps=22 available_steps=80 armed=false missing_contact_steps=0 mismatched_edge_steps=0
+LS_EDDY_EQUIPMENT fixture=CONFLICT mass=27.0 initial=1.9955118894577026 speed=1.9955309629440308 impulse=0.0 peak_force=0.0 work=0.0 heat=0.0 fault=Overlapping modules claim this consist; separate their contact zones
+LS_EDDY_CONTACT fixture=CONFLICT entry=8.525038221647831 last=12.466932757880752 interval=SpanInterval[start=7.000000453561528, end=9.000000453561528] contact_steps=22 available_steps=80 armed=false missing_contact_steps=0 mismatched_edge_steps=0
+LS_EDDY_EQUIPMENT fixture=HOT mass=26.0 initial=1.9955118894577026 speed=1.758913278579712 impulse=6.165610854504546 peak_force=10.240005859445311 work=11.410493576981182 heat=8187.410493576944 fault=
+LS_EDDY_CONTACT fixture=HOT entry=8.525034417154954 last=12.02637717832538 interval=SpanInterval[start=7.000000453561528, end=9.000000453561528] contact_steps=24 available_steps=80 armed=true missing_contact_steps=0 mismatched_edge_steps=0
+LS_EDDY_EQUIPMENT fixture=FORWARD mass=26.0 initial=1.9955118894577026 speed=0.0142110176384449 impulse=51.62979071276116 peak_force=102.4000585945078 work=42.53087687263946 heat=26.730876872639378 fault=
+LS_EDDY_CONTACT fixture=FORWARD entry=8.525034417154954 last=9.350107658490943 interval=SpanInterval[start=7.000000453561528, end=9.000000453561528] contact_steps=80 available_steps=80 armed=true missing_contact_steps=0 mismatched_edge_steps=0
+LS_EDDY_EQUIPMENT fixture=REVERSE mass=26.0 initial=-1.9955118894577026 speed=-0.0142110176384449 impulse=51.62979067497716 peak_force=102.40005859291027 work=42.53087675747606 heat=26.730876757475993 fault=
+LS_EDDY_CONTACT fixture=REVERSE entry=6.474985360219678 last=5.649912107398265 interval=SpanInterval[start=5.000000229185453, end=7.000000229185453] contact_steps=80 available_steps=80 armed=true missing_contact_steps=0 mismatched_edge_steps=0
+LS_EDDY_EQUIPMENT fixture=POWER_LOSS mass=26.0 initial=1.9955118894577026 speed=0.0142110176384449 impulse=51.62979069881129 peak_force=102.40005860385551 work=42.53087685876409 heat=26.730876858764 fault=
+LS_EDDY_CONTACT fixture=POWER_LOSS entry=8.525034417154954 last=9.350107658490943 interval=SpanInterval[start=7.000000453561528, end=9.000000453561528] contact_steps=80 available_steps=80 armed=true missing_contact_steps=0 mismatched_edge_steps=0
+LS_EDDY_EQUIPMENT fixture=GRAPH_CHANGE mass=26.0 initial=1.9955118894577026 speed=0.0142110176384449 impulse=51.629790698281816 peak_force=102.40005859440629 work=42.53087687935849 heat=26.73087687935841 fault=
+LS_EDDY_CONTACT fixture=GRAPH_CHANGE entry=8.525034417154954 last=9.350107658490943 interval=SpanInterval[start=7.000000453561528, end=9.000000453561528] contact_steps=80 available_steps=80 armed=true missing_contact_steps=0 mismatched_edge_steps=0
+[16:49:06] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++_____++___                           ]
+LS_EDDY_EQUIPMENT fixture=FULL_LOAD mass=64.0 initial=1.9955118894577026 speed=1.0027698278427124 impulse=63.67899565432958 peak_force=102.40005859345032 work=90.29924981995168 heat=74.49924981995146 fault=
+LS_EDDY_CONTACT fixture=FULL_LOAD entry=8.524963849827198 last=10.833191370066446 interval=SpanInterval[start=7.000000453561528, end=9.000000453561528] contact_steps=30 available_steps=80 armed=true missing_contact_steps=0 mismatched_edge_steps=0
+[16:49:07] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++_____++___                           ]
+LS_EDDY_DISTURBANCE speed=0.3063802123069763 moved=0.35595703125 impulse=22.016215118415303 work=4.412980171504061
+[16:49:07] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++_____++___                           ]
+[16:49:07] [Server thread/INFO] [minecraft/GameTestRunner]: Running test batch 'launchsystems_controller:0' (10 tests)...
+[16:49:07] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++                           ]
+[16:49:07] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____     _                 ]
+[16:49:07] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++__________                 ]
+[16:49:07] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++__________                 ]
+[16:49:07] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts 030ffeae-3922-4a06-abd4-203e155a9fea <-> 6fc500c3-544d-4ee3-a6ab-8c48e7d3e2b6 at distance 6.000
+[16:49:07] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts 449db012-d4dc-4a0f-ae69-2566ce88b38b <-> 90948e05-5d22-4f38-b94b-30033f65d5af at distance 6.000
+[16:49:07] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++__________                 ]
+[16:49:08] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++__________                 ]
+[16:49:08] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++__________                 ]
+LS_CONTROLLER mode=owned_module state=Ride controller: READY, reserved chassis 1, required brake length 6.85/22.00, transfer false, station capture false, swing off, boarding ready false.  work=0.0 peak_speed=2.1090219325020622E-10 pads=128
+[16:49:08] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++_________+                 ]
+LS_CONTROLLER mode=occupied_stop state=Ride controller: FAULT, reserved chassis 0, required brake length 0.00/0.00, transfer false, station capture false, swing off, boarding ready false. Another consist occupies the reserved stopping region work=0.0 peak_speed=1.0545109662510311E-10 pads=256
+LS_CONTROLLER mode=short_bank state=Ride controller: FAULT, reserved chassis 1, required brake length 6.85/2.00, transfer false, station capture false, swing off, boarding ready false. Downstream fin bank is too short for this loaded train and speed work=0.0 peak_speed=2.1090219325020622E-10 pads=128
+LS_CONTROLLER mode=power_loss state=Ride controller: FAULT, reserved chassis 1, required brake length 6.23/22.00, transfer false, station capture false, swing off, boarding ready false. Launch release power lost; spring pads apply work=1.0307706235701555 peak_speed=0.2721884846687317 pads=48
+LS_CONTROLLER mode=reload state=Ride controller: INSPECTION, reserved chassis 1, required brake length 6.85/22.00, transfer false, station capture false, swing off, boarding ready false. Reloaded controller requires inspection; reservation retained work=0.0 peak_speed=2.1090219325020622E-10 pads=128
+LS_CONTROLLER mode=module_loss state=Ride controller: FAULT, reserved chassis 1, required brake length 6.85/22.00, transfer false, station capture false, swing off, boarding ready false. Linked module missing or replaced at BlockPos{x=415, y=238, z=-888} work=0.0 peak_speed=2.1090219325020622E-10 pads=128
+[16:49:09] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:09] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:09] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:09] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:09] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:09] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:09] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:09] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:10] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:10] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:10] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:10] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:10] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:10] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:10] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:10] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:10] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:11] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:11] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:11] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:11] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:11] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:11] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:11] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:11] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:12] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:12] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:12] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:12] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:12] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:12] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:12] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:12] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:12] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:13] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:13] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:13] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:13] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:13] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+[16:49:13] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++____++++++                 ]
+LS_CONTROLLER mode=single_forward cars=1 riders=4 mass=27.200000000000003 state=Ride controller: HOLD, reserved chassis 1, required brake length 6.85/22.00, transfer false, station capture false, swing off, boarding ready false.  distance=19.820801721368667 speed=-2.630357563704333E-11 work=97.99982798871413 peak_speed=2.6802077293395996 drive_steps=221 joint_error=0.0 coupler_error=0.0 rotor_response=0.0
+LS_CONTROLLER mode=single_reverse cars=1 riders=4 mass=27.200000000000003 state=Ride controller: HOLD, reserved chassis 1, required brake length 6.85/22.00, transfer false, station capture false, swing off, boarding ready false.  distance=19.88128472778319 speed=5.260716168242752E-11 work=98.04314178769437 peak_speed=2.6795237064361572 drive_steps=181 joint_error=0.0 coupler_error=0.0 rotor_response=0.0
+LS_CONTROLLER mode=linked_forward cars=2 riders=8 mass=54.400000000000006 state=Ride controller: HOLD, reserved chassis 2, required brake length 13.23/22.00, transfer false, station capture false, swing off, boarding ready false.  distance=13.815796371429217 speed=-1.0521430948706723E-10 work=188.24407021206298 peak_speed=2.6258521080033472 drive_steps=273 joint_error=0.0 coupler_error=3.7370000427472405E-9 rotor_response=0.0
+[16:49:13] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked 030ffeae-3922-4a06-abd4-203e155a9fea <-> 6fc500c3-544d-4ee3-a6ab-8c48e7d3e2b6
+LS_CONTROLLER mode=linked_reverse cars=2 riders=8 mass=54.400000000000006 state=Ride controller: HOLD, reserved chassis 2, required brake length 13.23/22.00, transfer false, station capture false, swing off, boarding ready false.  distance=13.880918525240453 speed=1.0521432336485503E-10 work=181.6477809190775 peak_speed=2.5784647464752632 drive_steps=211 joint_error=0.0 coupler_error=3.734271558641922E-9 rotor_response=0.0
+[16:49:13] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked 449db012-d4dc-4a0f-ae69-2566ce88b38b <-> 90948e05-5d22-4f38-b94b-30033f65d5af
+[16:49:13] [Server thread/INFO] [minecraft/GameTestRunner]: Running test batch 'launchsystems_ordinary_passengers:0' (1 tests)...
+[16:49:13] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++++++++++++                 ]
+[16:49:13] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++++++++++++                 ]
+[16:49:14] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++++++++++++_                ]
+[16:49:14] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++++++++++++_                ]
+[16:49:14] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++++++++++++_                ]
+LS_ORDINARY_PASSENGER phase=board baseline=24.0 mass=24.8
+[16:49:14] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++++++++++++_                ]
+LS_ORDINARY_REBUILD phase=before mass=25.6
+[16:49:14] [Server thread/INFO] [de.ry.sa.Sable/]: Attempting to recover physics state for sub-level ServerSubLevel[name=null, id=da471605-0a12-4fc3-8872-4d5342ac6553, global_plot=10000,10000]. Removing and re-adding from pipeline.
+LS_ORDINARY_REBUILD phase=after mass=25.6 invalid=false
+[16:49:14] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++++++++++++_                ]
+LS_ORDINARY_REBUILD phase=later removed=false mass=25.6 bearing=Block{simulatedcoasters:coaster_cart}[snap_engaged=true]
+LS_ORDINARY_RECOVERY displacement=3.725290298461914E-9 before=( 6.565E+2  2.091E+2 -6.320E+2) after=( 6.565E+2  2.091E+2 -6.320E+2)
+[16:49:14] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++++++++++++_                ]
+[16:49:14] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++++++++++++_                ]
+[16:49:14] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++++++++++++_                ]
+[16:49:14] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++++++++++++_                ]
+[16:49:14] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++++++++++++_                ]
+LS_ORDINARY_OWNERSHIP phase=foreign mass=24.0 rider_retained=true
+[16:49:14] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++++++++++++_                ]
+[16:49:14] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++++++++++++_                ]
+[16:49:14] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++++++++++++_                ]
+[16:49:14] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++++++++++++++++++++++++++++++++++++++++++++_                ]
+LS_ORDINARY_PASSENGER phase=complete baseline=24.0 removed_seat_mass=0.5 mass=23.5
+[16:49:14] [Server thread/INFO] [minecraft/GameTestRunner]: Running test batch 'launchsystems_ordinary_equipment:0' (16 tests)...
+[16:49:14] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++++++++++++++++++++++++++++++++++                ]
+[16:49:14] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++++++++++++++++++++++++++++++++++______          ]
+[16:49:15] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++++++++++++++++++++++++++++++++++________________]
+[16:49:15] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts 689fa718-956b-4898-adc8-74311460d77b <-> 0bdd7211-6339-49be-a155-3b6d8a809629 at distance 6.000
+[16:49:15] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts 5fa363a8-d49a-44ba-8e27-56fd75a1a3d5 <-> 0797f98e-fec5-44cb-a599-b19849738b48 at distance 6.000
+[16:49:15] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++++++++++++++++++++++++++++++++++________________]
+[16:49:15] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts e03a08d2-23d6-4ee0-9b65-2040991cd44e <-> 05aa98c1-71a3-4bd4-af23-4bf837104e3e at distance 6.000
+[16:49:15] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts ba809417-56ea-4a92-9068-1c593648da60 <-> b8534b95-e847-4c2c-be82-60ed0665a8c7 at distance 6.000
+[16:49:15] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts 20014640-505b-457c-961e-64614c7dd8a4 <-> e7a1ca86-c5d8-4933-aba4-d0414e8392f7 at distance 6.000
+[16:49:15] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts 2bfa4e50-a9b3-4306-9f23-ac46cc9e1dfd <-> 59163a42-83d4-4aee-a347-ac72aa8c9072 at distance 6.000
+[16:49:15] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts 0b4a3087-df03-4009-b39c-3fd9cbd77fbd <-> f1b8daa5-13a5-4604-a263-032ac8ce43bb at distance 6.000
+[16:49:15] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] linked carts 3d1a6be6-cdf2-44e9-853f-2493b4fba04c <-> 27467a0c-81e9-4b1d-9b58-e053f6387310 at distance 6.000
+[16:49:15] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++++++++++++++++++++++++++++++++++________________]
+[16:49:15] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++++++++++++++++++++++++++++++++++________________]
+[16:49:15] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++++++++++++++++++++++++++++++++++________________]
+[16:49:15] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++++++++++++++++++++++++++++++++++________________]
+[16:49:16] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++++++++++++++++++++++++++++++++++________________]
+LS_ORDINARY_EQUIPMENT mechanism=TIRE reverse=false cars=1 riders=4 mass=27.200000000000003 initial=0.9977558255195618 speed=2.144374370574951 steps=69 impulse=31.257441924454934 work=49.317240177533286 shaft_work=214.46605848506348 peak_force=19.936455089932743 max_coupler_error=0.0
+LS_ORDINARY_EQUIPMENT mechanism=TIRE reverse=true cars=1 riders=4 mass=27.200000000000003 initial=-0.9977558255195618 speed=-1.8226481676101685 steps=49 impulse=22.487105801617357 work=31.85587350847332 shaft_work=214.46605848506348 peak_force=19.936455089932743 max_coupler_error=0.0
+LS_ORDINARY_EQUIPMENT mechanism=TIRE reverse=false cars=2 riders=8 mass=54.400000000000006 initial=0.9977558255195618 speed=1.6843153238296509 steps=79 impulse=37.43254139808758 work=50.60254203139732 shaft_work=214.46605848506348 peak_force=19.94474526045877 max_coupler_error=3.7370000427472405E-9
+[16:49:16] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked 689fa718-956b-4898-adc8-74311460d77b <-> 0bdd7211-6339-49be-a155-3b6d8a809629
+LS_ORDINARY_EQUIPMENT mechanism=TIRE reverse=true cars=2 riders=8 mass=54.400000000000006 initial=-0.9977558255195618 speed=-1.7272292375564575 steps=87 impulse=39.77226860158377 work=54.61594143557619 shaft_work=214.46605848506348 peak_force=19.944745260460305 max_coupler_error=1.0686562745831907E-11
+[16:49:16] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked 5fa363a8-d49a-44ba-8e27-56fd75a1a3d5 <-> 0797f98e-fec5-44cb-a599-b19849738b48
+LS_ORDINARY_EQUIPMENT mechanism=FIN_BRAKE reverse=false cars=1 riders=4 mass=27.200000000000003 initial=1.9955116510391235 speed=-1.0521430254817332E-10 steps=160 impulse=0.0 work=0.0 shaft_work=0.0 peak_force=0.0 max_coupler_error=0.0
+LS_ORDINARY_EQUIPMENT mechanism=FIN_BRAKE reverse=true cars=1 riders=4 mass=27.200000000000003 initial=-1.9955116510391235 speed=2.1042863285192226E-10 steps=160 impulse=0.0 work=0.0 shaft_work=0.0 peak_force=0.0 max_coupler_error=0.0
+[16:49:16] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++____________]
+LS_ORDINARY_EQUIPMENT mechanism=FIN_BRAKE reverse=false cars=2 riders=8 mass=54.400000000000006 initial=1.9955116510391235 speed=-2.3108069624466765E-10 steps=160 impulse=0.0 work=0.0 shaft_work=0.0 peak_force=0.0 max_coupler_error=1.7840420696302317E-7
+LS_ORDINARY_EQUIPMENT mechanism=FIN_BRAKE reverse=true cars=2 riders=8 mass=54.400000000000006 initial=-1.9955116510391235 speed=2.4271681886567364E-10 steps=160 impulse=0.0 work=0.0 shaft_work=0.0 peak_force=0.0 max_coupler_error=1.8585865291242953E-7
+LS_ORDINARY_EQUIPMENT mechanism=SKID_BRAKE reverse=false cars=1 riders=4 mass=28.200000000000003 initial=1.9955118894577026 speed=1.707266793216089E-11 steps=90 impulse=56.40007598916417 work=43.51086463113326 shaft_work=0.0 peak_force=192.00000000000003 max_coupler_error=0.0
+LS_ORDINARY_EQUIPMENT mechanism=SKID_BRAKE reverse=true cars=1 riders=4 mass=28.200000000000003 initial=-1.9955118894577026 speed=1.7072666197437414E-11 steps=90 impulse=56.40007601843154 work=43.510864667141334 shaft_work=0.0 peak_force=192.00000000000003 max_coupler_error=0.0
+LS_ORDINARY_EQUIPMENT mechanism=SKID_BRAKE reverse=false cars=2 riders=8 mass=56.400000000000006 initial=1.9955118894577026 speed=7.024049786252817E-9 steps=160 impulse=112.80018676792969 work=83.3391038003824 shaft_work=0.0 peak_force=192.00000000000003 max_coupler_error=7.654989531147294E-9
+[16:49:16] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked 20014640-505b-457c-961e-64614c7dd8a4 <-> e7a1ca86-c5d8-4933-aba4-d0414e8392f7
+LS_ORDINARY_EQUIPMENT mechanism=SKID_BRAKE reverse=true cars=2 riders=8 mass=56.400000000000006 initial=-1.9955118894577026 speed=-6.9936163527017925E-9 steps=160 impulse=112.80018682703206 work=83.33910388502531 shaft_work=0.0 peak_force=192.00000000000003 max_coupler_error=2.0440893422346562E-10
+[16:49:16] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked 2bfa4e50-a9b3-4306-9f23-ac46cc9e1dfd <-> 59163a42-83d4-4aee-a347-ac72aa8c9072
+LS_ORDINARY_EQUIPMENT mechanism=EDDY_BRAKE reverse=false cars=1 riders=4 mass=27.200000000000003 initial=1.9955116510391235 speed=1.401035551680252E-4 steps=160 impulse=54.396291879845194 work=52.26301064808216 shaft_work=0.0 peak_force=102.40005126949988 max_coupler_error=0.0
+LS_ORDINARY_EQUIPMENT mechanism=EDDY_BRAKE reverse=true cars=1 riders=4 mass=27.200000000000003 initial=-1.9955116510391235 speed=-1.401035551680252E-4 steps=160 impulse=54.396291879845194 work=52.263010647680716 shaft_work=0.0 peak_force=102.40005126949988 max_coupler_error=0.0
+LS_ORDINARY_EQUIPMENT mechanism=EDDY_BRAKE reverse=false cars=2 riders=8 mass=54.400000000000006 initial=1.9955116510391235 speed=0.019153013825416565 steps=160 impulse=107.75604997783377 work=103.11863142067337 shaft_work=0.0 peak_force=102.40005126949988 max_coupler_error=8.276401786133647E-11
+[16:49:16] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked 0b4a3087-df03-4009-b39c-3fd9cbd77fbd <-> f1b8daa5-13a5-4604-a263-032ac8ce43bb
+LS_ORDINARY_EQUIPMENT mechanism=EDDY_BRAKE reverse=true cars=2 riders=8 mass=54.400000000000006 initial=-1.9955116510391235 speed=-0.7836363315582275 steps=35 impulse=66.07475029086524 work=87.31472786229692 shaft_work=0.0 peak_force=102.40005126949988 max_coupler_error=7.557900971733034E-9
+[16:49:16] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked 3d1a6be6-cdf2-44e9-853f-2493b4fba04c <-> 27467a0c-81e9-4b1d-9b58-e053f6387310
+[16:49:16] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++____++++++++]
+[16:49:16] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++____++++++++]
+[16:49:16] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++__++++++++]
+[16:49:16] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked e03a08d2-23d6-4ee0-9b65-2040991cd44e <-> 05aa98c1-71a3-4bd4-af23-4bf837104e3e
+[16:49:16] [Server thread/INFO] [de.si.si.SimulatedCoasters/]: [cart-link] unlinked ba809417-56ea-4a92-9068-1c593648da60 <-> b8534b95-e847-4c2c-be82-60ed0665a8c7
+[16:49:16] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++]
+[16:49:16] [Server thread/INFO] [minecraft/GameTestServer]: ========= 66 GAME TESTS COMPLETE IN 1.831 min ======================
+[16:49:16] [Server thread/INFO] [minecraft/GameTestServer]: All 66 required tests passed :)
+[16:49:16] [Server thread/INFO] [minecraft/GameTestServer]: ====================================================
+[16:49:16] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server
+[16:49:16] [Server thread/INFO] [minecraft/MinecraftServer]: Saving players
+[16:49:16] [Server thread/INFO] [minecraft/MinecraftServer]: Saving worlds
+[16:49:16] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:overworld
+[16:49:16] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:overworld
+[16:49:16] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_end
+[16:49:16] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:the_end
+[16:49:16] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[16:49:16] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[16:49:16] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[16:49:16] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[16:49:16] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[16:49:16] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved
+[16:49:16] [Server thread/INFO] [minecraft/GameTestServer]: Game test server shutting down
+
+BUILD SUCCESSFUL in 2m 8s
+11 actionable tasks: 4 executed, 7 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.2.1/userguide/configuration_cache_enabling.html
