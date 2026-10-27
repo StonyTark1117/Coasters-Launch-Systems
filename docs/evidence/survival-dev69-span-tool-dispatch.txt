@@ -1,0 +1,21 @@
+Controlled Survival-mode Span Tool dispatch record — dev.69
+
+Source commit: 6f7a08a95191a112b4fcf4ea873e84fa98f39aa6
+Launch Systems JAR: coasters-launch-systems-0.0.1-dev.69.jar
+JAR SHA-256: 59c7be8a70ab02056a732fe897772382222ce98e2e97f3e90b84ec7de70c6b12
+Client: packaged runClient -PlsPackaged -PlsValidation, Minecraft 1.21.1, NeoForge 21.1.248.
+World: new command-enabled Survival world, "Launch Systems Manual dev69".
+
+Controlled setup only: commands supplied the platform, two Coasters Simulated anchors, a Coaster Track item, one Span Tool, a tire cabinet, and a ride controller. The player stayed in Survival mode while connecting the anchors with the native track item, selecting both anchors with the Span Tool, and right-clicking each Launch Systems block.
+
+Player actions and observed result:
+1. Right-clicked each anchor from above with the Coaster Track. The native rail was created; the stack fell from 64 to 44.
+2. Right-clicked both native anchors from above with the Span Tool. The tool accepted the selections.
+3. Right-clicked the exposed tire cabinet with the selected Span Tool. Its actionbar reported: "This module requires level unbanked rail and a transverse shaft". This is the binder's geometry guard, proving the click reached SpanToolItem.useOn instead of the cabinet's former status interaction.
+4. Right-clicked the exposed ride controller with the same selected route. Its actionbar reported: "This controller prototype requires a straight, level, unbanked section". This is the controller binder's geometry guard, proving this click also reached SpanToolItem.useOn instead of the controller's former status interaction.
+
+The temporary rail deliberately used a manually connected curved native track and therefore did not satisfy the production straight/level geometry gate. This record demonstrates player dispatch to both binders, not a successful installation or a complete ride.
+
+Rendered frames:
+8dc47bf34e6697e4fd78d4543df699c59be4eaab741c6cc25f4a3f201d6ff1b4  docs/evidence/survival-dev69-tire-dispatch.png
+97c0bec84f7532c2b158aa09b833ef25892435728d7331f9c80da2873e9a0291  docs/evidence/survival-dev69-controller-dispatch.png
