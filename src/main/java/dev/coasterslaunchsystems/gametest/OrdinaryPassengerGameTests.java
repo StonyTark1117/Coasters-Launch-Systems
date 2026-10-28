@@ -76,13 +76,16 @@ public final class OrdinaryPassengerGameTests {
     int drivenSteps;
     String failure = "";
     boolean closed;
-    Scene(GameTestHelper helper, int slot) { this(helper, slot, 208, -640); }
-    Scene(GameTestHelper helper, int slot, int height, int zPosition) {
+    Scene(GameTestHelper helper, int slot) { this(helper, slot, 208, -640, false); }
+    Scene(GameTestHelper helper, int slot, int height, int zPosition) { this(helper, slot, height, zPosition, false); }
+    Scene(GameTestHelper helper, int slot, int height, int zPosition, boolean floorMountedAnchors) {
       this.helper = helper; level = helper.getLevel();
       from = new BlockPos(32 + slot * 48, height, zPosition); to = from.offset(0, 0, 64);
       for (int x = from.getX() / 16 - 1; x <= from.getX() / 16 + 1; x++)
         for (int z = Math.floorDiv(from.getZ(), 16) - 1; z <= Math.floorDiv(to.getZ(), 16) + 1; z++) level.setChunkForced(x, z, true);
-      for (var pos : List.of(from, to)) level.setBlockAndUpdate(pos, SimulatedCoastersBlocks.COASTER_ANCHORPOINT.get().defaultBlockState());
+      var anchorState = SimulatedCoastersBlocks.COASTER_ANCHORPOINT.get().defaultBlockState();
+      if (floorMountedAnchors) anchorState = anchorState.setValue(dev.silvergold.simulatedcoasters.track.anchor.CoasterAnchorpointBlock.FACING, Direction.UP);
+      for (var pos : List.of(from, to)) level.setBlockAndUpdate(pos, anchorState);
       var curve = new BezierConnection(Couple.create(from, to),
           Couple.create(CoasterAnchorpointBlockEntity.worldCenter(level, from), CoasterAnchorpointBlockEntity.worldCenter(level, to)),
           Couple.create(new Vec3(0, 0, 1), new Vec3(0, 0, -1)), Couple.create(new Vec3(0, 1, 0), new Vec3(0, 1, 0)), true, false, CoasterTrackMaterials.COASTER);

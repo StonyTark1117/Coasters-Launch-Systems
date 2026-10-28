@@ -53,7 +53,7 @@ public final class RideControllerGameTests {
     String failure = "";
     Scene(GameTestHelper helper, int slot, String mode) { this(helper, slot, mode, 240); }
     Scene(GameTestHelper helper, int slot, String mode, int height) {
-      base = new OrdinaryPassengerGameTests.Scene(helper, slot, height, -896); this.mode = mode;
+      base = new OrdinaryPassengerGameTests.Scene(helper, slot, height, -896, mode.equals("single_tool_bound")); this.mode = mode;
       reverse = mode.contains("reverse"); linked = mode.contains("linked"); fourthDimension = mode.startsWith("arrow") || mode.startsWith("legacy") || mode.startsWith("free_spin") || mode.startsWith("revised") || mode.startsWith("pax"); controllerPosition = base.from.offset(4, -2, 8);
       if (!fourthDimension) { base.cart(mode.contains("swing_") ? 14 : reverse ? 56 : 8); if (linked) base.cart(reverse ? 50 : 14); }
       else prepareFourthDimension();
@@ -107,10 +107,42 @@ public final class RideControllerGameTests {
       var level = base.level;
       level.setBlockAndUpdate(controllerPosition, EquipmentContent.CONTROLLER.get().defaultBlockState());
       controller = (RideControllerEntity) level.getBlockEntity(controllerPosition);
-      var first = reverse ? base.to : base.from; var second = reverse ? base.from : base.to;
-      controller.bind(level, first, second); track = DirectedTrack.resolve(level, first, second).orElseThrow();
+      if (!mode.equals("single_tool_bound")) {
+        var first = reverse ? base.to : base.from; var second = reverse ? base.from : base.to;
+        controller.bind(level, first, second);
+      }
       for (int s = 8; s <= 16; s += 2) { module(s, false); module(s, true); }
       for (int s = 21; s <= (shortBank ? 21 : 41); s += 2) module(s, true);
+      if (mode.equals("single_tool_bound")) bindWithSpanTool();
+      track = DirectedTrack.resolve(level, reverse ? base.to : base.from, reverse ? base.from : base.to).orElseThrow();
+    }
+    void bindWithSpanTool() {
+      var level = base.level;
+      var player = net.neoforged.neoforge.common.util.FakePlayerFactory.get(level,
+          new com.mojang.authlib.GameProfile(UUID.randomUUID(), "LSToolBoundOrdinary"));
+      player.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
+      player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, EquipmentContent.TOOL.get().getDefaultInstance());
+      for (var position : List.of(base.from, base.to, controllerPosition)) {
+        player.setPos(position.getX() + .5, position.getY() + 1, position.getZ() + 2);
+        base.helper.assertTrue(player.getMainHandItem().useOn(new net.minecraft.world.item.context.UseOnContext(player,
+            net.minecraft.world.InteractionHand.MAIN_HAND, new net.minecraft.world.phys.BlockHitResult(position.getCenter(), Direction.UP, position, false)))
+            == net.minecraft.world.InteractionResult.SUCCESS, "Span Tool failed while binding the ordinary controller at " + position);
+      }
+      player.setShiftKeyDown(true);
+      player.setPos(controllerPosition.getX() + .5, controllerPosition.getY() + 1, controllerPosition.getZ() + 2);
+      base.helper.assertTrue(player.getMainHandItem().useOn(new net.minecraft.world.item.context.UseOnContext(player,
+          net.minecraft.world.InteractionHand.MAIN_HAND, new net.minecraft.world.phys.BlockHitResult(controllerPosition.getCenter(), Direction.UP, controllerPosition, false)))
+          == net.minecraft.world.InteractionResult.SUCCESS, "Span Tool did not select the bound ordinary controller");
+      player.setShiftKeyDown(false);
+      for (var position : equipment) {
+        player.setPos(position.getX() + .5, position.getY() + 1, position.getZ() + 2);
+        base.helper.assertTrue(player.getMainHandItem().useOn(new net.minecraft.world.item.context.UseOnContext(player,
+            net.minecraft.world.InteractionHand.MAIN_HAND, new net.minecraft.world.phys.BlockHitResult(position.getCenter(), Direction.UP, position, false)))
+            == net.minecraft.world.InteractionResult.SUCCESS, "Span Tool failed while linking ordinary controller module at " + position);
+        ((EquipmentCabinetEntity) level.getBlockEntity(position)).setArmed(true);
+      }
+      base.helper.assertTrue(controller.resolve(level) != null && controller.fault().isEmpty()
+          && controller.modules().size() == equipment.size(), "Span Tool did not finish the ordinary controller installation");
     }
     void module(int distance, boolean fin) { module(distance, fin, false); }
     void module(int distance, boolean fin, boolean exit) {
@@ -122,8 +154,10 @@ public final class RideControllerGameTests {
       var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(pos);
       cabinet.bind(level, reverse ? base.to : base.from, reverse ? base.from : base.to);
       if (mode.contains("swing_") && cabinet.mechanism().linear()) cabinet.tuneLinear(1.5, cabinet.accelerationLimit(), cabinet.jerkLimit());
-      controller.link(cabinet, exit);
-      cabinet.setArmed(true);
+      if (!mode.equals("single_tool_bound")) {
+        controller.link(cabinet, exit);
+        cabinet.setArmed(true);
+      }
     }
     void at(int tick, Runnable action) {
       base.helper.runAtTickTime(tick + (fourthDimension ? 120 : 0), () -> { try { action.run(); }
@@ -199,7 +233,7 @@ public final class RideControllerGameTests {
   }
   @GameTestGenerator public static List<TestFunction> nativeControllerTests() {
     var tests = new ArrayList<TestFunction>(); int slot = 0;
-    var modes = new ArrayList<>(List.of("single_forward", "single_reverse", "linked_forward", "linked_reverse", "occupied_stop", "short_bank", "power_loss", "reload", "module_loss", "owned_module"));
+    var modes = new ArrayList<>(List.of("single_forward", "single_reverse", "single_tool_bound", "linked_forward", "linked_reverse", "occupied_stop", "short_bank", "power_loss", "reload", "module_loss", "owned_module"));
     if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of("arrow_forward", "arrow_reverse", "arrow_linked_forward", "arrow_linked_reverse", "free_spin_forward", "free_spin_reverse"));
     for (String mode : modes) {
       int index = slot++;
