@@ -1,0 +1,27 @@
+Launch Systems dev.71 controller Ponder floor-anchor correction
+Date: 2026-10-27
+
+Packaged client command:
+  Xvfb :106 -screen 0 1280x800x24
+  env DISPLAY=:106 JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runClient -PlsPackaged -PlsValidation --offline --console=plain --no-daemon --max-workers=2
+
+Build command:
+  JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew build --offline --console=plain --no-daemon --max-workers=2
+  BUILD SUCCESSFUL in 4s
+
+Runtime workflow:
+  1. Opened the packaged client and the existing command-enabled creative world.
+  2. Used /give @s coasterslaunchsystems:ride_controller.
+  3. Opened the normal creative inventory and held Ponder's W key over Local Ride Controller.
+  4. The rendered "Binding a local launch section" guide displayed:
+     "Mount both anchors on floor supports so they face up, then place modules beside the level rail."
+
+Rendered frame:
+  controller-floor-anchor.png
+  bb99fa5b294eefa7a389d3ebe439075ec4b63ca27d51cef8d13a68d045759ec4  controller-floor-anchor.png
+
+Packaged artifact:
+  36f02d7cdcbabc513d45b9477a0a46a7de55507c6d82c23fdafd334f1e2eafaa  coasters-launch-systems-0.0.1-dev.71.jar
+
+Scope:
+  This verifies the updated controller guide text resolves and renders from the packaged dev.71 client. It does not validate a survival-built ride, multiplayer ride ownership/reconnect, or other 0.4.0 release gates.

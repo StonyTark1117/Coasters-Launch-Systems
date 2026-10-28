@@ -20,7 +20,7 @@
   "block.coasterslaunchsystems.hydraulic_launch_cabinet": "Hydraulic Launch Cabinet",
   "block.coasterslaunchsystems.pneumatic_launch_cabinet": "Pneumatic Launch Cabinet",
   "coasterslaunchsystems.ponder.controller_binding.header": "Binding a local launch section",
-  "coasterslaunchsystems.ponder.controller_binding.text_1": "Place the controller and its disarmed modules beside fixed rail.",
+  "coasterslaunchsystems.ponder.controller_binding.text_1": "Mount both anchors on floor supports so they face up, then place modules beside the level rail.",
   "coasterslaunchsystems.ponder.controller_binding.text_2": "Use the Span Tool on two coaster anchors in travel order, then use it on the controller.",
   "coasterslaunchsystems.ponder.controller_binding.text_3": "Shift-use the controller with the tool selected, then use the tool on each bound module to link it.",
   "coasterslaunchsystems.ponder.controller_binding.text_4": "Inspect bindings and safety hardware before arming. A loaded controller or cabinet always comes back disarmed.",

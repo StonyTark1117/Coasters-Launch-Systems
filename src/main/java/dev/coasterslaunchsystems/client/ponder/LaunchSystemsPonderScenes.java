@@ -33,7 +33,7 @@ final class LaunchSystemsPonderScenes {
     scene.idle(10);
     scene.world().showSection(util.select().fromTo(0, 1, 0, 4, 1, 4), Direction.DOWN);
     scene.overlay().showText(70).attachKeyFrame().placeNearTarget().pointAt(util.vector().topOf(2, 1, 2))
-        .text("Place the controller and its disarmed modules beside fixed rail.");
+        .text("Mount both anchors on floor supports so they face up, then place modules beside the level rail.");
     scene.idle(80);
     scene.overlay().showText(90).attachKeyFrame().placeNearTarget().pointAt(util.vector().centerOf(2, 1, 2))
         .text("Use the Span Tool on two coaster anchors in travel order, then use it on the controller.");

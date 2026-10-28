@@ -637,3 +637,9 @@ Simulated Coasters derives a rail frame from each anchor's mounting face. A manu
 The new packaged GameTest uses Simulated Coasters' upstream anchor-placement algorithm for that floor-mounted span, selects its two anchors with the actual Span Tool item, and binds both a transverse tire cabinet and a ride controller through their normal item actions. It passed with the default namespace matrix: **67/67 required GameTests** in **1.826 minutes**. The exact command and log extract are in [the dev.70 span record](evidence/upstream-straight-span-dev70.txt). The final dev.70 packaged standalone build passed **29 JUnit tests** and **132/132 required GameTests** in **5.053 minutes**; its JAR SHA-256 is `46ec7a6d772d1ae98bda5ac3ce320934522f857fc5e6ce315136900219f4d08f`.
 
 This is a placement regression, not a rendered manual Track-item client session or a survival-built demonstration ride. The complete release goal remains active.
+
+## Controller Ponder floor-anchor correction — dev.71
+
+The controller Ponder guide now tells operators to mount both Coasters Simulated anchors on floor supports facing upward before placing modules beside the resulting level rail. A packaged dev.71 client opened the normal creative-inventory Ponder entry for the Local Ride Controller and rendered the updated text. The focused packaged build passed. The [rendered frame and command record](evidence/ponder-dev71-floor-anchor.txt) identify the exact workflow and artifact checksum.
+
+This corrects the in-game setup instruction exposed by the dev.70 horizontal-span regression. It does not establish the three survival-built demonstration rides, multiplayer ride/ownership reconnect behavior, or any other 0.4.0 release gate. **The complete release goal remains active.**
