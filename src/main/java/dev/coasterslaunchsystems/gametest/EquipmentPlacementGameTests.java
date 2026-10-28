@@ -7,6 +7,8 @@ import com.simibubi.create.content.trains.track.BezierConnection;
 import dev.coasterslaunchsystems.content.*;
 import dev.silvergold.simulatedcoasters.CoasterTrackMaterials;
 import dev.silvergold.simulatedcoasters.SimulatedCoastersBlocks;
+import dev.silvergold.simulatedcoasters.track.CoasterTrackPlacement;
+import dev.silvergold.simulatedcoasters.track.anchor.CoasterAnchorpointBlock;
 import dev.silvergold.simulatedcoasters.track.anchor.CoasterAnchorpointBlockEntity;
 import java.util.UUID;
 import net.createmod.catnip.data.Couple;
@@ -32,6 +34,42 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 @GameTestHolder("coasterslaunchsystems")
 @PrefixGameTestTemplate(false)
 public final class EquipmentPlacementGameTests {
+  @GameTest(template = "empty", timeoutTicks = 40)
+  public static void upstreamAnchorPlacementBuildsBindableStraightLevelSpan(GameTestHelper helper) {
+    var level = helper.getLevel();
+    var from = new BlockPos(80, 104, -256); var to = from.south(64);
+    // A floor-mounted anchor faces up. Two such anchors form a level, unbanked span along Z.
+    var anchorState = SimulatedCoastersBlocks.COASTER_ANCHORPOINT.get().defaultBlockState()
+        .setValue(CoasterAnchorpointBlock.FACING, Direction.UP);
+    level.setBlockAndUpdate(from, anchorState); level.setBlockAndUpdate(to, anchorState);
+    var curve = CoasterTrackPlacement.buildAnchorAnchorBezier(level, from, to, CoasterTrackMaterials.COASTER, false);
+    helper.assertTrue(curve != null, "Simulated Coasters did not build the floor-mounted anchor span");
+    ((CoasterAnchorpointBlockEntity) level.getBlockEntity(from)).putAnchorPeerCurve(level, to, curve);
+    var module = from.offset(1, -2, 8); var controllerPos = from.offset(4, -2, 8);
+    level.setBlockAndUpdate(module, EquipmentContent.TIRE.get().defaultBlockState().setValue(RotatedPillarBlock.AXIS, Direction.Axis.X));
+    level.setBlockAndUpdate(controllerPos, EquipmentContent.CONTROLLER.get().defaultBlockState());
+    var player = FakePlayerFactory.get(level, new GameProfile(new UUID(0x1a0c5L, 2), "LSUpstreamPlacement"));
+    player.setGameMode(GameType.CREATIVE); player.setItemInHand(InteractionHand.MAIN_HAND, EquipmentContent.TOOL.get().getDefaultInstance());
+    helper.runAtTickTime(10, () -> {
+      for (var pos : new BlockPos[] {from, to, module}) {
+        player.setPos(pos.getX() + .5, pos.getY() + 1, pos.getZ() + 2);
+        helper.assertTrue(player.getMainHandItem().useOn(new UseOnContext(player, InteractionHand.MAIN_HAND,
+            new BlockHitResult(pos.getCenter(), Direction.UP, pos, false))) == InteractionResult.SUCCESS, "Span Tool did not bind the floor-mounted tire span at " + pos);
+      }
+      var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(module);
+      helper.assertTrue(cabinet.resolve(level) != null && cabinet.fault().isEmpty(), "Floor-mounted upstream span failed the tire's level, unbanked and transverse-shaft checks");
+      for (var pos : new BlockPos[] {from, to, controllerPos}) {
+        player.setPos(pos.getX() + .5, pos.getY() + 1, pos.getZ() + 2);
+        helper.assertTrue(player.getMainHandItem().useOn(new UseOnContext(player, InteractionHand.MAIN_HAND,
+            new BlockHitResult(pos.getCenter(), Direction.UP, pos, false))) == InteractionResult.SUCCESS, "Span Tool did not bind the floor-mounted controller span at " + pos);
+      }
+      var controller = (RideControllerEntity) level.getBlockEntity(controllerPos);
+      helper.assertTrue(controller.resolve(level) != null && controller.fault().isEmpty(), "Floor-mounted upstream span failed the controller's straight, level and unbanked checks");
+      System.out.println("LS_UPSTREAM_STRAIGHT_SPAN anchors=" + from + "->" + to + " facing=up module=" + cabinet.interval());
+      helper.succeed();
+    });
+  }
+
   @GameTest(template = "empty", timeoutTicks = 80)
   public static void realToolBindingKineticPowerPersistenceAndSupportLoss(GameTestHelper helper) {
     var level = helper.getLevel();

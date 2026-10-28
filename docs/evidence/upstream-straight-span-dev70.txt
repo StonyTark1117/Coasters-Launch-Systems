@@ -1,0 +1,31 @@
+# Floor-mounted horizontal-span regression — dev.70
+
+Source checkout: /home/braydon/Documents/Coasters: Launch Systems
+Branch: codex/launch-systems-0-4-0
+
+Command:
+JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew runGameTestServer -PlsPackaged -PlsTestNamespaces=coasterslaunchsystems --offline --console=plain --no-daemon --max-workers=2
+
+Result:
+BUILD SUCCESSFUL in 2m 4s
+67 required GameTests passed in 1.826 min.
+
+Relevant GameTest output:
+LS_UPSTREAM_STRAIGHT_SPAN anchors=BlockPos{x=80, y=104, z=-256}->BlockPos{x=80, y=104, z=-192} facing=up module=SpanInterval[start=7.000000453561613, end=9.000000453561613]
+
+Scope:
+The test creates two floor-mounted Coasters Simulated anchors (facing up), builds their span through CoasterTrackPlacement.buildAnchorAnchorBezier, selects the two anchors through the actual Launch Systems Span Tool item, and binds both a transverse tire cabinet and a ride controller through their normal item actions. It proves the addon accepts the upstream-generated, level/unbanked frame.
+
+Limit:
+The upstream placement algorithm is invoked directly by the GameTest; this record is not a rendered client Track-item click sequence and does not establish a survival-built demonstration ride.
+
+Complete packaged standalone validation:
+JAVA_HOME=/usr/lib/jvm/java-21-openjdk ./gradlew build runGameTestServer -PlsPackaged --offline --console=plain --no-daemon --max-workers=2
+
+Result:
+BUILD SUCCESSFUL in 5m 15s
+29 JUnit tests passed.
+132 required GameTests passed in 5.053 min.
+
+Artifact:
+46ec7a6d772d1ae98bda5ac3ce320934522f857fc5e6ce315136900219f4d08f  /tmp/coasterslaunchsystems-22eeb619/build/libs/coasters-launch-systems-0.0.1-dev.70.jar

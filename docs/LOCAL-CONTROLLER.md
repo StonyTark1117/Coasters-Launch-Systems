@@ -6,6 +6,8 @@ This records partial LS004/LS102/LS104 progress toward the full 0.4.0 goal at de
 
 ## Installation and operation
 
+Before binding equipment to a horizontal, level section, mount both Coasters Simulated anchors on the **top face of their floor supports** so each anchor faces upward, then connect them with Coaster Track. This preserves the world-up rail frame required by tire drives and the local controller. Side-mounted anchors can form a horizontal centerline while retaining a horizontal rail normal; Launch Systems treats that frame as banked and refuses it. Place the tire shaft on the horizontal axis transverse to travel.
+
 1. Bind each disarmed drive/fin module with the span tool, using the same ordered anchors. Each cabinet retains its physical two-block contact interval.
 2. Select those section anchors and use the tool on a local ride controller. Shift-use the tool on the controller to select it, then use it on each bound disarmed module to link them. Shift-use a module while its controller is selected to unlink it after both are disarmed and the reservation is empty. Unlink every module before rebinding/removing an empty controller. Shift-use elsewhere clears tool selection.
 3. Install a spring-pad launch bank overlapping the tire contacts, and a continuous downstream friction-fin bank beyond every drive contact. Gaps and insufficient usable braking length reject launch. Passive magnets receive no final-stop credit.
