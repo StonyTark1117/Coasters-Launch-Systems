@@ -2,8 +2,8 @@
 
 ## Current status overlay — 2026-11-22
 
-The **0.1** assignment is accepted; its validated source is being integrated
-and pushed on the existing task branch. The
+The **0.1** assignment is accepted; its validated source and evidence are
+committed on the existing task branch for delivery. The
 broader [roadmap](../ROADMAP.md) retains 0.4 as the six-launch release outcome;
 modern FD families and shared multi-train operations remain later 0.5/0.6 scope.
 Use [CURRENT-WORK](CURRENT-WORK.md) for owners and remaining cases, and

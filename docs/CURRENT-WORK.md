@@ -1,7 +1,9 @@
 # Current work and resumption queue
 
 Updated **2026-11-22**. The user-assigned **0.1** outcome is complete;
-final Git integration/push is owned by the coordinator. Foundation LS001–LS005
+implementation and evidence are committed as `2062e26eb54ec1aa5730cb39d9edfecfd6f19355`.
+The coordinator handles delivery of that commit and this documentation receipt
+on the existing branch; no gameplay or runtime work remains. Foundation LS001–LS005
 and LS101–LS106 are accepted, including all three player-built rides and required
 lifecycle evidence. All owned runtimes saved and stopped. The broader release
 target remains **0.4.0**; later packages are unassigned for this task.
@@ -9,10 +11,11 @@ See [integration evidence](evidence/0.1/integration-20261122/README.md),
 [ROADMAP](../ROADMAP.md) and the [execution guide](ROADMAP-EXECUTION.md).
 
 Checkout: `codex/launch-systems-0-4-0` at
-`/home/braydon/Documents/Coasters: Launch Systems`, inspected HEAD
-`1ac51d7b1dc7c3dffdb672b6df9ab7b9b875fb09`. Existing uncommitted workflow,
-dependency, cable-ticket and GameTest edits are preserved. Current Git status
-is authoritative; do not switch branches or discard those edits to start work.
+`/home/braydon/Documents/Coasters: Launch Systems`. Starting HEAD was
+`1ac51d7b1dc7c3dffdb672b6df9ab7b9b875fb09`; the pre-existing workflow,
+dependency, cable-ticket and GameTest edits were preserved and integrated in
+`2062e26eb54ec1aa5730cb39d9edfecfd6f19355`. Current Git status is authoritative;
+continue this branch for an authorized follow-up.
 
 Active coordinator: chat `01a2049e-cf6c-7fe0-88fe-c814e690d101` (`/root`).
 Delegated owners below share the existing checkout and coordinate disjoint source

@@ -237,5 +237,6 @@
   "build_inputs": {
     "build.gradle": "218d0c1736e457a0c370e1045ced66f76442c0ba03d5631f356a9ac9764abf84",
     "gradle.properties": "5da0ad3e63d7506e393db60e5c7062f0ecc2b0aceeb4658f263d543f7268bee4"
-  }
+  },
+  "source_commit": "2062e26eb54ec1aa5730cb39d9edfecfd6f19355"
 }

@@ -1,7 +1,8 @@
 # 0.1 integration record — 2026-11-22
 
 Status: 0.1 accepted. All required gameplay cases passed and all owned runtimes
-saved and stopped; coordinator is completing the Git delivery.
+saved and stopped. Source and evidence are committed; this documentation-only
+receipt identifies the completed integration.
 Owner `/root`, existing branch `codex/launch-systems-0-4-0`, checkout
 `/home/braydon/Documents/Coasters: Launch Systems`, initial HEAD
 `1ac51d7b1dc7c3dffdb672b6df9ab7b9b875fb09`. Pre-existing workflow, dependency
@@ -59,6 +60,9 @@ unneeded project cache was ignored. The FD facade is already pushed to main as
 
 Raw logs/readbacks retain their original whitespace and content for hash
 verification. Source/document whitespace and all local Markdown targets pass
-inspection. The source commit containing these recorded inputs and final Git
-push/CI receipt will be recorded after commit; no runtime retest is implied by
-the documentation-only delivery receipt.
+inspection. The source/evidence commit is `2062e26eb54ec1aa5730cb39d9edfecfd6f19355`.
+This following receipt changes documentation only; all recorded runtime and
+build inputs still match that commit. Delivery uses the existing
+`codex/launch-systems-0-4-0` branch. The coordinator verifies the remote head
+and reports the push-triggered CI outcome separately; no new runtime run is
+implied by this documentation receipt.
