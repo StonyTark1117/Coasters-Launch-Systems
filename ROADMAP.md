@@ -1,6 +1,75 @@
-# Coasters: Launch Systems release roadmap
+# Coasters: Launch Systems version roadmap
 
-Implementation started September 30, 2026 toward the user's goal of a validated 0.4.0 release in its own private GitHub repository. LS001–LS005, LS101–LS104, LS201–LS202 and LS301–LS303 are in progress; remaining packages are planned. Track actual acceptance in [validation status](docs/VALIDATION.md). Stable LS identifiers allow later requests to name a concrete scope. Completing a package requires its evidence; version numbers do not establish completion. The user approved a standalone core with optional integrations.
+Updated **2026-11-22 (America/Phoenix)**. **0.1.0 is accepted**: foundation
+LS001–LS005 and usable-ride packages LS101–LS106 are complete, with exact scope
+and inputs in the [integration record](docs/evidence/0.1/integration-20261122/README.md).
+The broader **0.4.0 six-launch outcome** remains open; later packages retain
+their existing scope and are not part of the completed 0.1 assignment.
+[Validation](docs/VALIDATION.md) owns accepted evidence;
+[CURRENT-WORK](docs/CURRENT-WORK.md) owns assignments. Stable LS IDs retain
+scope and acceptance. Version milestones express outcomes and order, not dates.
+
+## Release map
+
+| Version / stage | Player outcome | Packages / status |
+| --- | --- | --- |
+| Foundation refresh | A working modern standalone stack and an explicit current Fourth Dimension bridge | LS001–LS005 accepted, including standalone startup, current FD authority and clearance. |
+| 0.1 — Usable rides | Tire transport/launch, final-hold fin clamps, passive magnetic trim, local controller, three player-built ordinary/Arrow/Free Spin rides | LS101–LS106 accepted: three player-built empty/occupied rides, normal exit/reboard and packaged lifecycle evidence. |
+| 0.2 — Linear launches | Distinct LSM and LIM, bounded swing launches, skid/thermal braking and original-family certification | LS201–LS205; substantial native evidence, remaining mechanism/player/lifecycle criteria open. |
+| 0.3 — Physical cable launch | Finite flywheel energy, constrained catch/carriage, release, physical return and inspected recovery | LS301–LS303; substantial implementation, service and current-Arrow recovery remain to reconcile. |
+| 0.4 — Complete six-launch release | Hydraulic and pneumatic equipment join tire, LSM, LIM and flywheel; coherent usable content and interruption behavior | LS401–LS403 plus preceding gates; first complete release target, not a rename of dev.72. |
+| 0.5 — Expanded FD vehicle support | Explicit launch/brake certificates for the modern FD catalog, preserving each family's mechanics and body choices | LS501–LS504; newly planned, after 0.4. No automatic eligibility for every launcher. |
+| 0.6 — Shared ride operation | Launch Systems equipment respects FD's bounded multi-train reservations and operator controls | LS601–LS602; newly planned, after LS004 and relevant vehicle/equipment certificates. |
+| 0.9 — Release candidate | Reconciled advertised matrix, migration/multiplayer, measured costs and finished instructions | LS901–LS904; planned. Reuse accepted evidence and run only remaining/affected coverage. |
+| 1.0 — Stable | A supported, documented package with all required core and adopted FD outcomes accepted | LS1001; planned. Optional LS801–LS807 adapters ship only when independently accepted. |
+| After 1.0 | Consider moving-track launch interfaces, new specialty vehicles and wider routing | Separate feasibility/design decisions; no implied support or date. |
+
+0.1–0.4 are cumulative acceptance milestones, not four required publication
+ceremonies. Preserve the original six-launch scope. Do not delay 0.4 for the
+new 0.5/0.6 expansion or optional adapters. Newly allocated 0.5/0.6 outcomes
+belong to the expanded 1.0 plan. FD 1.4 specialty vehicles and moving tracks
+remain outside that finite catalog. No source version bump, upload or tag is
+part of this planning change.
+
+## What changed and what to do next
+
+The accepted Fourth Dimension baseline is `59c40d11` (1.0 readiness and
+1.1/1.2/1.3 implementation), with our authority facade integrated and pushed
+on `main` as `235255cf`. The current artifact
+label is still **1.1.0**, schema **8**; published 1.0.0 is Beta. The old LS
+`0.9.0-dev.1`/schema-4 adapter supports neither that label nor those contracts.
+Use the [source/artifact handoff](docs/FOURTH-DIMENSION-HANDOFF.md), not a
+milestone number as a compatibility check.
+
+The [dated dependency review](docs/DEPENDENCY-REVIEW-2026-11-22.md) verifies
+Coasters Simulated **0.1.6**, newer NeoForge/Ponder/Flywheel Maven coordinates,
+Additions **0.2.5**, Track Styles **1.2.0** and Immersion **1.1.1**. Create's
+released baseline and Sable remain 6.0.10 and 2.0.6 in the reviewed listings.
+Newer available artifacts are candidates until their consumed contracts pass.
+
+1. **LS001/LS002:** standalone qualification passed on NeoForge 21.1.256 /
+   Sable 2.0.6, including Veil startup and affected cable ticket/mass recovery.
+   Coasters 0.1.6 was audited and explicitly deferred for 0.1, retaining FD
+   parity at 0.1.5. See [dependency selection](docs/DEPENDENCIES.md).
+2. **LS004 / affected LS003:** the registered API 1 facade is integrated
+   upstream; native, serialized-token, real occupied Arrow and separate-JVM
+   restart proof pass. Preserve the registered owner/token contract
+   and native family, restraint and route-management vetoes.
+3. **LS105/LS106:** complete. Ordinary, Arrow and Free Spin player-built rides
+   passed empty/occupied circuits, exit/reboard and fresh dispatch. Reconnect,
+   current authority restart and retained interruption evidence cover lifecycle.
+   All owned runtimes saved and stopped; preserve applicable dev.65–72 evidence.
+4. **LS201–LS403:** finish the named remaining linear, cable and pressure
+   criteria, including current-Arrow catch recovery. Combine compatible evidence
+   to close complete packages; historical checkpoint caveats are not extra gates.
+5. Close 0.4, then implement the explicit family and ride-operation expansion.
+   Optional adapters may advance once their interfaces exist; none holds up a
+   standalone equipment release.
+
+[Execution guide](docs/ROADMAP-EXECUTION.md) gives package inputs and handoffs.
+[Historical dev notes](docs/ROADMAP-CHECKPOINT-HISTORY-2026-11-22.md) preserve
+the removed checkpoint narrative. Follow [validation policy](docs/VALIDATION-POLICY.md):
+a documentation change or new artifact hash never resets closed cases.
 
 ## Foundation
 
@@ -25,19 +94,11 @@ Foundation is a release gate. LS003 and LS004 require a validated Fourth Dimensi
 | LS105 | Recipes, placement tool, Ponder and three demonstration rides | LS101–LS104. Survival setup and empty/occupied ordinary, Arrow and individual free-spin rides work from documented instructions. |
 | LS106 | Packaged multiplayer and interruption evidence | LS105. Late join, restart, power/support loss and active chunk unavailability preserve mechanism and vehicle ownership. |
 
-The 0.1 gate requires all packages through LS106. It includes verified Arrow and at least one free-spin family; revised carriers and broader variants continue at later gates. PAX is recognized and vetoed when its winch owns the train.
-
-Dev.10 adds the repeatable native circuit prototype described in [circuit scope](docs/CIRCUITS.md). A longer handoff resolves a unique, unbranched directed route, retains its geometry and loaded-chunk requirements, and reserves the route and complete receiver before departure. Actual accepted contact on intermediate curves keeps the whole-consist leases alive. Departure speed includes gravitational potential gain; native downhill acceptance remains pending. Tail clearance still uses loaded native body bounds. Handle-only edits invalidate the route even without a graph revision.
-
-Five occupied fixtures complete two laps, actual passenger exit/reboarding and a fresh departure. Dev.11 adds optional controller/provider station capture, described in [station scope](docs/STATIONS.md). Its API-5 operation defaults to denial, verifies whole-train physical hold, live consist and exclusive ownership, and delegates public capture/readiness to the vehicle owner while retaining the lease. Open restraints keep departure disabled; closing does not replay a held-high request. Carrier angles remain native-owned. Real tool configuration and legacy opt-out are checked, but rendered survival instructions, general profile traversal and multiplayer lifecycle acceptance remain required.
-
-Dev.12 adds [inspected receiving-controller recovery](docs/RECEIVER-RECOVERY.md) for an active retained transfer. A schema-5 equipment journal preserves coordinated spring braking and identifies the exact original modules. A one-time native inspection restores an empty replacement at the saved position only after whole-train hold, unchanged loaded route, complete equipment/ownership and stopping/conflict checks. Both controllers stay disarmed; separate arming and a fresh request complete native tail handoff. Ordinary coupled and occupied Arrow/Free Spin cases, moving/refused inspections and queued-request cancellation pass scoped native checks. Missing-source and changed-hardware/geometry repair, rendered operator setup and real restart/chunk/multiplayer validation remain open.
+The 0.1 gate is accepted with all packages through LS106. It includes verified Arrow and at least one free-spin family; revised carriers and broader variants continue at later gates. PAX is recognized and vetoed when its winch owns the train.
 
 Acceptance remains three usable demonstration rides: ordinary, Arrow and individual free spin. Each must complete repeated departure, route traversal, whole-train stop, appropriate native capture, passenger exit/boarding and a fresh dispatch request. An occupied route, changed geometry, missing receiver, lost power/support, rollback or unavailable chunk must retain ownership and deny further propulsion. Rendered survival setup and packaged multiplayer/restart evidence remain required.
 
 ## Version 0.2 linear motors and local block operation
-
-Dev.13 adds original LSM/LIM cabinets, matching chassis plates, finite kinetic charging, separate slip/loss response, signed targets and acceleration/jerk tuning. Scoped occupied local sections coordinate motor banks, wait for conservative whole-train charge and retain leases through loss/return of power. Arrow and individual Free Spin continue to use their native vehicle owner. Dev.54–58 add a bounded LSM/LIM forward/backward/forward program with midpoint tail-clearance checks, matched end fin banks, conservative three-pass cabinet reserves, and retained fault holds. Ordinary, all eligible single-car pinned Fourth Dimension family cases, and linked Arrow normal operation pass the scoped native fixtures. See [linear scope](docs/LINEAR-MOTORS.md). LS201/LS202 and their 0.1 prerequisites remain open for rendered gameplay, lifecycle and broader cases; linear section transfers are not enabled.
 
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |
@@ -48,36 +109,6 @@ Dev.13 adds original LSM/LIM cabinets, matching chassis plates, finite kinetic c
 | LS205 | All eligible 4D family linear-drive/brake fixtures | LS004, LS201–LS204. Focused LSM/LIM fixtures cover Arrow, Legacy, Free Spin and Revised with loaded independent carrier rotation; coupled reverse Arrow remains within native limits. Arrow rollback/profile behavior and broader lifecycle/gameplay acceptance remain. PAX retains its declared restrictions. |
 
 ## Version 0.3 physical flywheel launch
-
-Dev.14 adds a [native cable-mechanics prototype](docs/CABLE-MECHANICS.md): a real constrained carriage pulls a separate chassis socket, releases, brakes and physically returns. Finite flywheel work, loaded ordinary/coupled/Arrow motion, misalignment and unsupported-family denial, external interruption hold, early reset denial, handle edits and changing mass pass scoped fixtures. This remains internal mechanics: playable guide/flywheel/drum controls, shared controller ownership, journals/restart/recovery, removed support and rendered/lifecycle acceptance remain open.
-
-Dev.15 adds a craftable world cable-guide bed and a kinetic flywheel cabinet with a finite saved store. Rig creation and every physics step validate continuous guide placement. Removing a bed during pull causes a retained fault and ends resource draw. The flywheel cabinet charges from Create shaft RPM and reloads disarmed; its clutch cannot yet arm because controller/catch integration and inspected recovery are still required. The fixture still drives its own cable store and stopping clamps, so this is not a playable launch system.
-
-Dev.16 feeds the native catch from the placed cabinet's actual saved flywheel store. Active catch ownership pauses background charging; shaft work first funds physical carriage return and only the remainder recharges the store. A persisted active-catch journal blocks automatic restart, binding edits and equipment removal after an interrupted reload. Test fixtures still request engagement/dispatch and provide final train stopping, so player controller/clutch integration and inspected recovery remain open.
-
-Dev.17 adds a placed controller path for one flywheel, a catch-home launch fin and a continuous downstream stop bank. An occupied ordinary cart engages and dispatches from the cabinet and a fresh redstone input, then stops under linked pads while the carriage physically returns. Installation is journaled and only a disarmed, physically home carriage retires. A pinned Arrow case also launches with an independent preparation hold. The installed-carriage journal currently fails closed across reload; native identity inspection and reclamation, Arrow staging equipment, real chunk/restart and rendered operation remain open.
-
-Dev.18 records the installed native carriage UUID and accepted rail home in the cabinet, and registers a Sable force-load ticket for that carriage. Controller dispatch checks the live carriage against the saved identity and home; physical retirement removes the ticket and journal. Legacy journals without an identity remain disarmed and faulted. In-memory NBT reload and ticket lifecycle have focused native coverage, but a real world restart, native constraint reconstruction, inspected reclamation and broader gameplay acceptance remain open.
-
-Dev.19 adds a cabinet-addressed loading ticket and a passive guide/brake reconstructed for an idle carriage on world startup. A separate two-process packaged GameTest saves and reopens the same world, confirms the carriage stays at home through repeated restarts, then retires it under explicit empty-track inspection and confirms the retired journal persists. This closes the idle-carriage restart/reclamation slice; active catches, legacy UUID-only ticket stabilization, real chunk/multiplayer/rendered service and the remaining mechanism gates are still open.
-
-Dev.20 journals the captured chassis and force-loads captured native bodies while the catch is engaged. The carriage now uses a mass-centred pose pivot so Sable's saved pose preserves its world position. A real occupied home catch survives a separate server restart with both bodies present, the socket aligned, a passive carriage guide/brake and the cabinet disarmed; the earlier idle restart/inspection path still passes. Reconstructing the active catch joint and an inspected operator release, mid-pull/return restarts, articulated-body saved-world coverage, chunk/multiplayer/rendered service and the remaining mechanism gates are still open.
-
-Dev.21 reconstructs a bounded zero-target native catch joint after a saved home catch reopens. The passive carriage guide remains in place while startup verifies current provider/consist identity, every captured native body and its ticket, the socket and settled pose. Separate-process occupied ordinary and pinned Fourth Dimension Arrow fixtures check that the joint and alignment survive startup. A removed-socket fixture retains the passive carriage hold but denies joint reconstruction. The cabinet stays disarmed; active operator release, moving catches, actual chunk/multiplayer/rendered operation and the other release gates remain open.
-
-Dev.22 extends that fail-closed native hold to a catch stopped partway along its verified guide after an interrupted pull. A real physics-driven fixture reaches roughly 5–6 blocks of travel, faults and settles before saving. Separate-process ordinary and pinned Arrow restarts keep the same body identities, guide position, socket alignment and reconstructed catch joint without resuming drive. Idle carriages still require home. This does not cover saving while moving, active operator release, support-loss repair or broader service acceptance.
-
-Dev.23 adds the active home-catch inspection release. A recovered, disarmed catch can only disconnect after its exact saved provider/consist, all native bodies and tickets, socket, controller reservation and settled home pose pass inspection, and every captured chassis is physically held by an applied linked friction-fin clamp. A redstone torch in the span tool offhand requests that release; it cannot arm or dispatch. The operation drops captured-body tickets and reservation, retains the faulted home carriage and persists as an idle inspection state. The initial positive fixture is ordinary-cart only; Arrow active-release, moving restart, powered interruption and broader service acceptance remain open.
-
-Dev.24 journals whether an ordinary catch was still physically pulling at save time. Reload permits only that recorded state to use a bounded 3-block/second guide-aligned recovery envelope, with 0.15-block transverse and 0.1 angular limits, exact body-ticket ownership and a 0.25-block temporary socket/body-speed alignment check. A passive guide/brake and native catch joint then settle the train; strict 0.03-block inspection resumes when the journal clears. The saved-world fixture records a catch at 5.59 blocks and 2.79 blocks/second, reloads it through the bounded window, and proves it settles with its reconstructed joint. Arrow moving restart, a placed-cabinet drive interruption, real chunk/multiplayer/rendered service and broader release gates remain open.
-
-Dev.25 applies the same bounded moving-restart path to the pinned Fourth Dimension schema-4 Arrow provider. A two-process saved world preserves the Arrow’s provider-owned native bodies and tickets through a live pulling save, reconstructs the passive guide and catch joint while disarmed, and clears the movement journal once the train settles. The Arrow fixture stops its save at a four-block guide threshold so the loaded Arrow stays inside the same measured 3–12-block recovery span. Placed-cabinet drive interruption, Arrow active release, real chunk/multiplayer/rendered service and broader release gates remain open.
-
-Dev.26 adds an end-to-end ordinary placed-controller shaft interruption. The live controller dispatches through its placed cabinet, guide, catch and fin bank; the fixture then stops the actual Create creative motor. The controller’s production loss branch faults the cabinet and applies the retained native emergency hold, leaving the occupied train settled, loaded and ineligible for rearm. Arrow controller interruption, Arrow active release, actual chunk/multiplayer/rendered service and broader release gates remain open.
-
-Dev.27 applies that placed-controller interruption to the pinned Fourth Dimension Arrow provider. The Arrow uses its existing native preparation clamp only to establish safe engagement; after the controller starts its provider-owned pull, the fixture stops the actual cabinet motor. The production loss branch holds the loaded Arrow catch faulted and settled with its provider body tickets retained. Arrow active release, actual chunk/multiplayer/rendered service and broader release gates remain open.
-
-Dev.28 begins LS401–LS402 world equipment. Original hydraulic and pneumatic launch cabinets now have craftable placed blocks, independent finite persisted accumulator/receiver stores and distinct Create shaft charging losses. They load disarmed, and their pressure models retain separate oil-return and gas-expansion behavior. Dev.29 connects those stores to the physical cable carriage: hydraulic force follows accumulator pressure, pneumatic force follows receiver expansion, and the controller, provider certificates and reload inspection retain the selected cable mechanism. Stored pressure funds the pull; Create shaft work drives charging and the physical carriage return. Dev.30 proves that an ordinary or pinned Arrow pressure launch retains its physical pull through a temporary charging-shaft loss, then resumes shaft-powered return after supply restoration. Dev.31 adds two-process ordinary active-catch restart coverage for both pressure stores; the cabinet stays disarmed and its native guide/catch reconstruct only for the saved journal. Dev.32 proves each ordinary pressure cabinet retains its physical return carriage during a temporary charging-shaft loss and resumes its bounded return after restoration. Dev.33 applies that return interruption to the pinned Arrow provider. Dev.34 saves released return ownership separately from an active catch and restores an ordinary pressure carriage under a passive guide/brake; only an inspected live-shaft action resumes its bounded return. Dev.35 persists the releasing provider identity and allows that resume only for the tested ordinary adapter; unverified provider returns remain passively held pending a provider-specific home-guide solution. Dev.36 removes a required guide bed during live hydraulic/pneumatic ordinary and Arrow pulls; each controller faults closed with the catch retained and all chassis still bearing-engaged. Dev.62 verifies the complete retained active-release sequence for ordinary flywheel, hydraulic and pneumatic catches: a fresh server reopens the active joint, an applied linked fin permits inspection release, and a second restart restores the idle carriage hold with no captured-body tickets or controller reservation. The passive-recovery speed predicate now accepts an at-home released carriage at rest; it formerly excluded all non-active catches. Arrow active release remains unadvertised because the pinned provider does not restore its nested carrier bodies early enough to re-establish the independent fin clamp after restart.
 
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |
@@ -93,16 +124,53 @@ Dev.28 begins LS401–LS402 world equipment. Original hydraulic and pneumatic la
 | LS402 | Pneumatic compressor, receiver, valve and launch actuator | LS301. Pressure/volume discharge and recharge materially differ from hydraulic/flywheel models; no external pneumatic mod required. |
 | LS403 | Loaded mechanisms and loss-of-support verification | LS401–LS402. Catch, brakes and release retain native train engagement in both normal and interrupted operations; recipes and Ponder match the actual mechanics. |
 
+## Version 0.5 expanded Fourth Dimension certificates
+
+This extends the original-family LS205 outcome; it does not reopen it. The
+catalog is FD's accepted pre-1.0 vehicle set plus 1.3 appearance/body variants,
+not every future FD vehicle. Shared schema fields and similar models do not
+establish shared drive surfaces, brake fins or catch sockets.
+
+| ID | Work | Prerequisites and acceptance |
+| --- | --- | --- |
+| LS501 | Fixed-seat and spinning family interfaces | 0.4 and LS004. Certify tire/fin/linear interfaces where physically valid for Wing, Fixed Inverted, Classic Spinning and Launched Inverting Spinning. Preserve native pivot/mass, inversion/rotation limits and capture. Publish positive combinations and specific mechanical exclusions. |
+| LS502 | Articulated and posture-dependent interfaces | LS501's shared certificate contract. Assess Suspended, Axis, Conventional Flying, New-generation Flying, Pipeline, Dive and Powered Inverted Yaw with their native locks/postures/holds. Provide usable propulsion/braking on eligible interfaces; posture/yaw/vertical-drop state cannot be bypassed by a launch request. |
+| LS503 | Roller Ball and specialized cycle boundaries | LS004 and the applicable cable/linear/brake gates. Resolve Roller Ball's route/lift/return contact separately; certify only a physically meaningful interface. Retain PAX's core veto; positive PAX final-brake delegation remains optional LS806. No generic catch fitted to every vehicle. |
+| LS504 | Integrated family support and body/appearance persistence | LS501–LS503. Publish a finite family × equipment certificate table; each advertised combination has loaded native and relevant occupied behavior, each excluded combination has a reason and denial. FD's compact Wing/open-frame Fixed Inverted choices and colors must preserve the certificate, mass, contacts and saved mechanical identity. Shared evidence is reused where the contract is unchanged. |
+
+0.5 closes with a complete disposition of that catalog and functioning eligible
+interfaces. A technically unsupported combination needs an evidenced mechanical
+reason; "not tested yet" remains open. Cable/flywheel/hydraulic/pneumatic support
+continues to require a certified socket and measured loaded-consist limits.
+
+## Version 0.6 ride-local operations interoperability
+
+FD 1.2 already owns a bounded original-Arrow circuit: eight route segments,
+six reservation blocks, at most three trains. It is not an arbitrary park
+scheduler. Launch Systems must respect those reservations as well as its own
+physical stopping and equipment leases. Until positive integration is accepted,
+reject the overlapping operating mode with a clear reason; never run two
+independent block owners on the same route.
+
+| ID | Work | Prerequisites and acceptance |
+| --- | --- | --- |
+| LS601 | Equipment leases under FD route authority | 0.4, LS004 and the relevant Arrow certificate. Reconcile FD admission/current-next reservations with LS stopping-region leases through an explicit contract. A denied/changed reservation, stale owner, opposing move, rollback or unloaded body prevents propulsion and retains the required hold. The first supported scope is FD's actual bounded Arrow circuit. |
+| LS602 | Operator requests and multi-train recovery | LS601. FD operator controls and LS controls report the same owner, blocked reason, charge and fresh-request state. An occupied multi-train run proves separation and denied dispatch, followed by the affected restart/rejoin/resume path without replaying stored requests. Preserve existing FD tools, vehicle controls and appearance data; no second general park-control UI. |
+
+The 0.6 gate is the integrated bounded outcome, not an expansion of FD's train
+capacity or route grammar. Individual launch mechanics and FD's prior route
+acceptance remain closed when compatible; qualify the new interaction.
+
 ## Optional adapters
 
 | ID | Adapter | Acceptance |
 | --- | --- | --- |
 | LS801 | Engineered 1.1.1 operating integration | The public span/controller bridge now cedes an active shared contact before Launch Systems adds force, and a real configured Engineered `LAUNCH` span proves the predicate; disjoint original equipment passes standalone and loaded-4D matrices. Reusing controls still requires shared energy, rollback and reservation acceptance without incompatible assembly assumptions. |
 | LS802 | Magnetized acceleration/braking integration | Inspect and pin its implementation. Define ownership and block unsupported overlaps; demonstrate actual 4D physics before enabling support. |
-| LS803 | Additions station and restraint signals | Audit actual dependencies and force/chain overrides. Imported dispatch remains a request subject to Fourth Dimension readiness and our reservations. |
-| LS804 | Track Styles 1.1.0-hotfix1 appearance/geometry integration | Inspect and pin the current artifact separately from the old audit. Mid-curve styles retain contact/clearance and independent equipment visibility; no cosmetic Arrow 4D eligibility. |
+| LS803 | Additions 0.2.5 station, restraint and launch-span coexistence | Audit actual dependencies, force/chain overrides and hydraulic/flywheel/tire span overlap. Imported dispatch remains a request subject to Fourth Dimension readiness and our reservations. |
+| LS804 | Track Styles 1.2.0 appearance/geometry integration | Inspect and pin the current artifact separately from the old audit. Mid-curve styles retain contact/clearance and independent equipment visibility; no cosmetic Arrow 4D eligibility. |
 | LS805 | FE, Jade, JEI/EMI and Immersion presentation | Each integration works absent/present independently; no duplicated energy or camera transform. |
-| LS806 | PAX final-brake handoff | Only after Fourth Dimension's own shuttle lifecycle gates pass. Its state machine explicitly delegates/returns braking authority; no launch or unloading on normal station passes. |
+| LS806 | PAX final-brake handoff | Consume Fourth Dimension's accepted shuttle lifecycle and current ownership contract. Its state machine explicitly delegates/returns braking authority; no launch or unloading on normal station passes. |
 | LS807 | Tracks and Balloons 1.2 coexistence audit | Establish its custom-license terms and a public integration seam before loading any artifact. If supported, prove exclusive force, reservation and station ownership with no double operation; otherwise retain independent, disjoint equipment. |
 
 Adapters can be developed alongside core releases, but do not block a standalone release. Unsupported adapters stay disabled and retain their saved provider identity. PAX veto behavior is core compatibility; LS806 is additional positive functionality.
@@ -115,6 +183,6 @@ Adapters can be developed alongside core releases, but do not block a standalone
 | LS902 | Persistence, migration and packaged multiplayer lifecycle | Old schemas, server restart, rejoin, missing providers, removed support and chunk availability pass without replaying launches or changing vehicle families. |
 | LS903 | Performance and resource accounting | Publish scene/hardware/load and measured per-step costs; reconcile energy/pressure/heat with motion, including no FE conversion loops. |
 | LS904 | Release gameplay, documentation and artifact audit | Ordinary and occupied 4D demonstrations for all six launches; fin/skid/passive/active/tire braking instructions; tutorials, licenses and exact dependency pins match the packaged artifact. |
-| LS1001 | Publish standalone 1.0 after every core gate passes | Completed LS001–LS005, LS101–LS106, LS201–LS205, LS301–LS303, LS401–LS403 and LS901–LS904, with linked evidence. Advertise optional integrations only for completed adapter packages. |
+| LS1001 | Publish standalone 1.0 after every core gate passes | Completed LS001–LS005, LS101–LS106, LS201–LS205, LS301–LS303, LS401–LS403, LS501–LS504, LS601–LS602 and LS901–LS904, with linked evidence. Advertise optional integrations only for completed adapter packages. |
 
-No calendar estimates are assigned before the loaded force and catch prototypes. Future weight-drop launching, moving-track equipment, complex switch routing and park scheduling remain outside the 1.0 gate.
+Milestones are sequenced by accepted outcomes; no calendar dates are promised. Future weight-drop launching, moving-track equipment, complex switch routing and park scheduling remain outside the 1.0 gate.

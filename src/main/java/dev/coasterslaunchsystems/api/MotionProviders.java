@@ -51,6 +51,20 @@ public final class MotionProviders {
     return fallback != null && fallback.id().equals(motion.provider()) ? fallback : null;
   }
 
+  public static boolean reserveAuthority(ServerLevel level, UUID chassis, net.minecraft.core.BlockPos controller) {
+    var provider = owner(resolve(level, chassis).orElse(null));
+    return provider != null && provider.reserveAuthority(level, chassis, controller);
+  }
+
+  public static void resumeAuthority(ServerLevel level, net.minecraft.core.BlockPos controller) {
+    for (var provider : PROVIDERS) provider.resumeAuthority(level, controller);
+  }
+  public static boolean transferAuthority(ServerLevel level, UUID chassis, net.minecraft.core.BlockPos source,
+      net.minecraft.core.BlockPos target) {
+    var provider = owner(resolve(level, chassis).orElse(null));
+    return provider != null && provider.transferAuthority(level, chassis, source, target);
+  }
+
   /** No fallback operation may override the uniquely resolved primary vehicle owner. */
   public static CaptureState captureState(ServerLevel level, UUID chassis) {
     var motion = resolve(level, chassis).orElse(null); var provider = owner(motion);

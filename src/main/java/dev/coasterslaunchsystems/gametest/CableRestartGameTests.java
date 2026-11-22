@@ -462,7 +462,7 @@ public final class CableRestartGameTests {
           && !cabinet.armed() && !controller.armed() && controller.reservation().isEmpty()
           && CableRecovery.stabilized(level, carriage) && !CableRecovery.catchRestored(level, carriage, chassis)
           && container.getAllTickets().entrySet().stream().noneMatch(entry -> entry.getValue().tickets().stream()
-              .anyMatch(ticket -> ticket.getType() == CableTickets.CAPTURED_BODY && key.equals(ticket.getKey()))),
+              .anyMatch(ticket -> CableTickets.typeOf(ticket) == CableTickets.CAPTURED_BODY && key.equals(CableTickets.keyOf(ticket)))),
           "Inspected active release left a catch, captured ticket or route reservation behind");
       System.out.println("LS_CABLE_ACTIVE_RELEASE verified carriage=" + carriage + " chassis=" + chassis
           + " fin_clamps=" + dev.coasterslaunchsystems.runtime.EquipmentRuntime.activeFinClamps(level, chassis));
@@ -488,7 +488,7 @@ public final class CableRestartGameTests {
           "Inspected active release did not persist as a disarmed idle carriage across restart");
       var key = new CableTickets.Key(cabinet.cableCarriage(), FLYWHEEL);
       helper.assertTrue(SubLevelContainer.getContainer(level).getAllTickets().entrySet().stream().noneMatch(entry -> entry.getValue().tickets().stream()
-          .anyMatch(ticket -> ticket.getType() == CableTickets.CAPTURED_BODY && key.equals(ticket.getKey()))),
+          .anyMatch(ticket -> CableTickets.typeOf(ticket) == CableTickets.CAPTURED_BODY && key.equals(CableTickets.keyOf(ticket)))),
           "Released active-catch tickets reappeared after restart");
       System.out.println("LS_CABLE_ACTIVE_RELEASE persisted carriage=" + cabinet.cableCarriage()
           + " controller_reservation=" + controller.reservation());
@@ -531,8 +531,8 @@ public final class CableRestartGameTests {
           "Saved idle carriage journal did not reload disarmed for inspection: " + cabinet.status());
       var container = SubLevelContainer.getContainer(level);
       var info = container.getAllTickets().get(id);
-      helper.assertTrue(info != null && info.tickets().stream().anyMatch(ticket -> ticket.getType().equals(CableTickets.CARRIAGE)
-          && new CableTickets.Key(id, FLYWHEEL).equals(ticket.getKey())), "Native carriage loading ticket did not reload");
+      helper.assertTrue(info != null && info.tickets().stream().anyMatch(ticket -> CableTickets.typeOf(ticket).equals(CableTickets.CARRIAGE)
+          && new CableTickets.Key(id, FLYWHEEL).equals(CableTickets.keyOf(ticket))), "Native carriage loading ticket did not reload");
       helper.assertTrue(container.getSubLevel(id) instanceof ServerSubLevel,
           "Sable did not load the saved native carriage body");
       var body = (ServerSubLevel) container.getSubLevel(id);

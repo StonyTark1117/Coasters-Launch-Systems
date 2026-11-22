@@ -1,0 +1,14 @@
+{
+  "owner": "ls-foundation-fd-observer-20261122",
+  "root": "/mnt/NVME4/launchsystems-runs/ls01-fd-observer-20261122",
+  "display": 394,
+  "unit_prefix": "fd-ls-fdobserver-20261122",
+  "player": "Observer",
+  "client_script": "/mnt/NVME4/launchsystems-runs/ls01-fd-observer-20261122/client.sh",
+  "client_limit": "6G",
+  "server_owner": "/root/bridge",
+  "server_root": "/mnt/NVME4/launchsystems-runs/bridge-20261122/arrow",
+  "server_unit": "fd-ls-arrow-20261122-server.service",
+  "endpoint": "127.0.0.1:25751",
+  "status": "launched on bridge ready cue"
+}

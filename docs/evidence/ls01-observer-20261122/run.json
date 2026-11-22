@@ -1,0 +1,16 @@
+{
+  "owner": "ls-foundation-observer-20261122",
+  "root": "/mnt/NVME4/launchsystems-runs/ls01-observer-20261122",
+  "display": 394,
+  "player": "Observer",
+  "client_unit": "fd-ls-observer-20261122-client.service",
+  "display_unit": "fd-ls-observer-20261122-xvfb.service",
+  "client_heap": "1536M",
+  "client_limit": "6G",
+  "server_owner": "/root/rides",
+  "server_unit": "fd-ls-rides-20261122-server.service",
+  "endpoint": "127.0.0.1:25741",
+  "jar_sha256": "8bb78ede6decb007b53ace87c265923463cd3c3e77aa5cee59d0040829839c67",
+  "scope": "LS106 observe occupied ordinary cycle then Dev reconnect; server/world remain rides-owned",
+  "unit_prefix": "fd-ls-observer-20261122"
+}

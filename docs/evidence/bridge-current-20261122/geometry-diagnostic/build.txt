@@ -1,0 +1,17 @@
+> Task :createMinecraftArtifacts UP-TO-DATE
+
+> Task :compileJava
+Note: /home/braydon/Documents/Coasters: Launch Systems/src/main/java/dev/coasterslaunchsystems/gametest/VehicleGeometryDiagnostics.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :compileApi4Fixture UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes
+> Task :jarJar NO-SOURCE
+> Task :jar
+
+[Incubating] Problems report is available at: file:///mnt/NVME4/launchsystems-runs/bridge-20261122/geometry-build/reports/problems/problems-report.html
+
+BUILD SUCCESSFUL in 791ms
+5 actionable tasks: 2 executed, 3 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.2.1/userguide/configuration_cache_enabling.html

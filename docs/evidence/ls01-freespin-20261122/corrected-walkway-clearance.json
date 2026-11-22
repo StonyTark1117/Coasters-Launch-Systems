@@ -1,0 +1,318 @@
+{
+  "at": "2026-11-22T20:04:35.768453+00:00",
+  "purpose": "Both complete temporary strips, including both turn sweeps, are air before dispatch",
+  "checks": [
+    {
+      "command": "execute if block 67 99 -3 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 -2 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 -1 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 0 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 1 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 2 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 3 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 4 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 5 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 6 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 7 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 8 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 9 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 10 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 11 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 12 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 13 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 14 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 15 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 16 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 17 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 18 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 19 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 20 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 21 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 22 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 23 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 24 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 25 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 26 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 27 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 28 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 29 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 30 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 31 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 32 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 33 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 34 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 67 99 35 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 -3 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 -2 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 -1 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 0 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 1 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 2 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 3 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 4 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 5 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 6 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 7 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 8 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 9 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 10 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 11 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 12 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 13 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 14 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 15 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 16 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 17 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 18 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 19 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 20 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 21 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 22 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 23 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 24 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 25 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 26 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 27 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 28 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 29 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 30 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 31 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 32 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 33 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 34 minecraft:air",
+      "result": "Test passed\n"
+    },
+    {
+      "command": "execute if block 83 99 35 minecraft:air",
+      "result": "Test passed\n"
+    }
+  ]
+}

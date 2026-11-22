@@ -1,0 +1,9 @@
+{
+  "source": "/home/braydon/Documents/Coasters: Launch Systems/src/main/java/dev/coasterslaunchsystems/gametest/VehicleGeometryDiagnostics.java",
+  "source_sha256": "c885ee2d68f689b1162f5e7ab3613b19024803a1aec2c73671f4e103e4732641",
+  "jar": "/mnt/NVME4/launchsystems-runs/bridge-20261122/geometry-build/libs/coasters-launch-systems-0.0.1-dev.72.jar",
+  "jar_sha256": "046993cecf9837081023992c5fda5512fd06ae3163df9fde527e7bc8219eef6e",
+  "java": "21.0.13.1",
+  "command": "lsdiagnose geometry 98506dac-0d56-463e-80a1-9a29cf22f42e 5 98 4",
+  "enable": "-Dcoasterslaunchsystems.validation=true"
+}

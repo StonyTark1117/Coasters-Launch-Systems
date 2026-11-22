@@ -1,0 +1,25 @@
+[22Nov2026 12:30:29.138] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Stopping server
+[22Nov2026 12:30:29.139] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving players
+[22Nov2026 12:30:29.139] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving worlds
+[22Nov2026 12:30:29.268] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[ls01-survival]'/minecraft:overworld
+[22Nov2026 12:30:29.268] [Server thread/INFO] [dev.ryanhcode.sable.Sable/]: Saving sub-levels for level 'ServerLevel[ls01-survival]'/minecraft:overworld
+[22Nov2026 12:37:30.106] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[ls01-survival]'/minecraft:the_end
+[22Nov2026 12:37:30.106] [Server thread/INFO] [dev.ryanhcode.sable.Sable/]: Saving sub-levels for level 'ServerLevel[ls01-survival]'/minecraft:the_end
+[22Nov2026 12:37:30.508] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[ls01-survival]'/minecraft:the_nether
+[22Nov2026 12:37:30.508] [Server thread/INFO] [dev.ryanhcode.sable.Sable/]: Saving sub-levels for level 'ServerLevel[ls01-survival]'/minecraft:the_nether
+[22Nov2026 12:37:31.223] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (ls01-survival): All chunks are saved
+[22Nov2026 12:37:31.224] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[22Nov2026 12:37:31.224] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[22Nov2026 12:37:31.224] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage: All dimensions are saved
+[22Nov2026 12:37:33.616] [Server thread/INFO] [net.minecraft.server.rcon.thread.GenericThread/]: Thread RCON Listener stopped
+ActiveState=inactive
+MainPID=0
+Result=success
+
+ActiveState=inactive
+MainPID=0
+Result=success
+
+ActiveState=inactive
+MainPID=0
+Result=success

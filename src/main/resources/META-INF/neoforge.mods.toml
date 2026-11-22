@@ -11,7 +11,7 @@ description='''Physical launch and brake equipment for Create: Coasters Simulate
 [[dependencies.coasterslaunchsystems]]
 modId="neoforge"
 type="required"
-versionRange="[21.1.248]"
+versionRange="[${neo_version}]"
 ordering="NONE"
 side="BOTH"
 [[dependencies.coasterslaunchsystems]]
@@ -35,7 +35,7 @@ side="CLIENT"
 [[dependencies.coasterslaunchsystems]]
 modId="sable"
 type="required"
-versionRange="[2.0.3]"
+versionRange="[${sable_version}]"
 ordering="AFTER"
 side="BOTH"
 [[dependencies.coasterslaunchsystems]]
@@ -49,8 +49,17 @@ side="BOTH"
 config="coasterslaunchsystems.mixins.json"
 
 [[dependencies.coasterslaunchsystems]]
+# Exact selected profile; current adapter additionally requires registered external authority API 1. See docs/FOURTH-DIMENSION-HANDOFF.md before changing this pin.
 modId="fourthdimension"
 type="optional"
-versionRange="[0.9.0-dev.1]"
+versionRange="[${fd_supported_version}]"
 ordering="AFTER"
 side="BOTH"
+
+# Scheduler compatibility is inspected against the selected exact Veil release.
+[[dependencies.coasterslaunchsystems]]
+modId="veil"
+type="required"
+versionRange="[${veil_version}]"
+ordering="AFTER"
+side="CLIENT"

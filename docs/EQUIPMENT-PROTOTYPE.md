@@ -36,3 +36,16 @@ Evidence: [unit results](evidence/equipment-unit.txt), [packaged standalone](evi
 ## Remaining acceptance
 
 Fin and passive-magnetic cabinets are registered scaffolds with original models/recipes, and reject operation. They do not yet brake or hold a vehicle. Full obstruction/clearance checks, tire wheel animation/rendered QA, dynamic stress, rolling entry, linked consists, ordinary passengers, Fourth Dimension tire certification, controllers, reservations, Ponder and multiplayer lifecycle evidence remain. Save/load reconstruction was tested; active server restart/chunk loss is not yet accepted. LIM/LSM, skid, catch, physical reset, flywheel, hydraulic and pneumatic equipment remain on the roadmap.
+
+## 0.1 placement clearance
+
+Tire, fin-clamp and passive-magnetic binding and new arming check the fixed-world
+running corridor along the module contact interval: 0.6 blocks on either
+horizontal side of the rail center and 0.05–1.05 blocks above it. Actual block
+collision shapes are tested; a low floor slab outside that corridor is allowed.
+An obstruction or unavailable chunk rejects the operation with its position.
+Rejected rebinding preserves the previous contact and module identity. Remove
+the obstruction before binding or re-arming. This is the minimum bearing running
+clearance, not a certificate for the entire envelope of a player-built cart or
+for later cable/linear hardware. Native vehicle and family clearance remains
+separate. A new obstacle does not automatically disarm a live holding fin clamp.

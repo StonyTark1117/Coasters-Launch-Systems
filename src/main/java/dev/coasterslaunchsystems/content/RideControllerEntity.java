@@ -153,7 +153,13 @@ public final class RideControllerEntity extends BlockEntity {
   public void finishTransfer(RideControllerEntity target) {
     if (!transferring || target.incoming == null || !identity.equals(target.incoming.identity()) || !reservation().equals(target.reservation()))
       throw new IllegalArgumentException("Transfer ownership changed before tail clearance");
-    target.incoming = null; target.phase = State.RUNNING; target.changed();
+    target.incoming = null; target.phase = State.RUNNING;
+    if (level instanceof ServerLevel server) {
+      var capture = dev.coasterslaunchsystems.api.MotionProviders.captureState(server, reservation.iterator().next());
+      if (capture == dev.coasterslaunchsystems.api.CaptureState.ALIGNING || capture == dev.coasterslaunchsystems.api.CaptureState.READY)
+        target.phase = State.HOLD;
+    }
+    target.changed();
     transferring = false; transferSpeedLimit = 0; clearVerifiedReservation();
   }
   public boolean endpoint(BlockPos pos) { return claimedSpans().stream().anyMatch(s -> pos.equals(s.from()) || pos.equals(s.to())); }
@@ -203,6 +209,8 @@ public final class RideControllerEntity extends BlockEntity {
     requestedRepair = null; armed = value; boardingReady = false; launchRequested = false; inputObserved = false; fault = "";
     if (value) { completedSwingPasses = 0; forwardTailClear = false; backwardTailClear = false; }
     phase = value ? State.HOLD : State.INSPECTION; changed();
+    if (value && level instanceof ServerLevel server)
+      dev.coasterslaunchsystems.api.MotionProviders.resumeAuthority(server, worldPosition);
   }
   public void bind(ServerLevel level, BlockPos first, BlockPos second) {
     if (armed || !reservation.isEmpty() || !modules.isEmpty()) throw new IllegalArgumentException("Disarm an empty controller and unlink its modules before rebinding");

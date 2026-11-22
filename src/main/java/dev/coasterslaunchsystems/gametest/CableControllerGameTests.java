@@ -153,11 +153,11 @@ public final class CableControllerGameTests {
               + " speed=" + r.base.speed(r.base.parents.getFirst()) + " " + s.failure);
       s.carriage = s.cabinet().cableCarriage();
       var ticket = s.carriage == null ? null : SubLevelContainer.getContainer(level).getAllTickets().get(s.carriage);
-      r.base.helper.assertTrue(ticket != null && ticket.tickets().stream().anyMatch(t -> t.getType().equals(CableTickets.CARRIAGE)
-          && new CableTickets.Key(s.carriage, s.flywheel).equals(t.getKey())), "Installed native carriage has no registered loading ticket");
+      r.base.helper.assertTrue(ticket != null && ticket.tickets().stream().anyMatch(t -> CableTickets.typeOf(t).equals(CableTickets.CARRIAGE)
+          && new CableTickets.Key(s.carriage, s.flywheel).equals(CableTickets.keyOf(t))), "Installed native carriage has no registered loading ticket");
       var captured = SubLevelContainer.getContainer(level).getAllTickets().get(r.base.parents.getFirst().getUniqueId());
-      r.base.helper.assertTrue(captured != null && captured.tickets().stream().anyMatch(t -> t.getType() == CableTickets.CAPTURED_BODY
-          && new CableTickets.Key(s.carriage, s.flywheel).equals(t.getKey())),
+      r.base.helper.assertTrue(captured != null && captured.tickets().stream().anyMatch(t -> CableTickets.typeOf(t) == CableTickets.CAPTURED_BODY
+          && new CableTickets.Key(s.carriage, s.flywheel).equals(CableTickets.keyOf(t))),
           "Engaged train chassis has no restart loading ticket");
       var saved = s.cabinet().saveWithFullMetadata(level.registryAccess());
       var restored = (EquipmentCabinetEntity) BlockEntity.loadStatic(s.flywheel, s.cabinet().getBlockState(), saved, level.registryAccess());
@@ -255,7 +255,7 @@ public final class CableControllerGameTests {
           && s.minimumRunningEnergy < s.initialEnergy && !s.cabinet().cableInUse()
           && r.base.parents.stream().noneMatch(body -> {
             var info = SubLevelContainer.getContainer(level).getAllTickets().get(body.getUniqueId());
-            return info != null && info.tickets().stream().anyMatch(t -> t.getType() == CableTickets.CAPTURED_BODY);
+            return info != null && info.tickets().stream().anyMatch(t -> CableTickets.typeOf(t) == CableTickets.CAPTURED_BODY);
           })
           && r.controller.phase() == RideControllerEntity.State.HOLD
           && r.base.parents.stream().allMatch(body -> Math.abs(r.base.speed(body)) < .03),

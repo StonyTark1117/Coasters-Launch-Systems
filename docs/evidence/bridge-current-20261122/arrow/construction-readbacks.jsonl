@@ -1,0 +1,1212 @@
+{"command": "tp Dev 3.5 100 0.5 90 28.369", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "execute if block 0 100 0 simulatedcoasters:coaster_anchorpoint[facing=up]", "result": "Test passed\n"}
+{"command": "tp Dev 3.5 100 32.5 90 28.369", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "execute if block 0 100 32 simulatedcoasters:coaster_anchorpoint[facing=up]", "result": "Test passed\n"}
+{"command": "tp Dev 19.5 100 32.5 90 28.369", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "execute if block 16 100 32 simulatedcoasters:coaster_anchorpoint[facing=up]", "result": "Test passed\n"}
+{"command": "tp Dev 19.5 100 0.5 90 28.369", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "execute if block 16 100 0 simulatedcoasters:coaster_anchorpoint[facing=up]", "result": "Test passed\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"fourthdimension:track_selection\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 64, id: \"fourthdimension:arrow_track\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get block 0 100 0 AnchorPeerCurves", "result": "0, 100, 0 has the following block data: [{Peer: 131172L, Bezier: {Starts: [{V: [0.5d, 0.75d, 0.5d]}, {V: [0.5d, 0.75d, 32.5d]}], Girder: 0b, Normals: [{V: [0.0d, 1.0d, 0.0d]}, {V: [0.0d, 1.0d, 0.0d]}], Primary: 1b, Positions: [{Pos: [I; 0, 0, 0]}, {Pos: [I; 0, 0, 32]}], Axes: [{V: [0.0d, 0.0d, 1.0d]}, {V: [0.0d, 0.0d, -1.0d]}], Material: \"simulatedcoasters:coaster_track\"}, HHi: 10.666666666666666d, HLo: 10.666666666666666d}]\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {count: 56, id: \"fourthdimension:arrow_track\"}\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"fourthdimension:track_selection\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 56, id: \"fourthdimension:arrow_track\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get block 16 100 32 AnchorPeerCurves", "result": "16, 100, 32 has the following block data: [{Peer: 4398046511204L, Bezier: {Starts: [{V: [0.5d, 0.75d, 0.5d]}, {V: [0.5d, 0.75d, -31.5d]}], Girder: 0b, Normals: [{V: [0.0d, 1.0d, 0.0d]}, {V: [0.0d, 1.0d, 0.0d]}], Primary: 0b, Positions: [{Pos: [I; 0, 0, 0]}, {Pos: [I; 0, 0, -32]}], Axes: [{V: [0.0d, 0.0d, -1.0d]}, {V: [0.0d, 0.0d, 1.0d]}], Material: \"simulatedcoasters:coaster_track\"}, HHi: 10.666666666666666d, HLo: 10.666666666666666d}]\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {count: 48, id: \"fourthdimension:arrow_track\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"fourthdimension:track_selection\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 48, id: \"fourthdimension:arrow_track\"}\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get block 0 100 32 AnchorPeerCurves", "result": "0, 100, 32 has the following block data: [{Peer: 100L, Bezier: {Starts: [{V: [0.5d, 0.75d, 0.5d]}, {V: [0.5d, 0.75d, -31.5d]}], Girder: 0b, Normals: [{V: [0.0d, 1.0d, 0.0d]}, {V: [0.0d, 1.0d, 0.0d]}], Primary: 0b, Positions: [{Pos: [I; 0, 0, 0]}, {Pos: [I; 0, 0, -32]}], Axes: [{V: [0.0d, 0.0d, -1.0d]}, {V: [0.0d, 0.0d, 1.0d]}], Material: \"simulatedcoasters:coaster_track\"}, HHi: 10.666666666666666d, HLo: 10.666666666666666d}, {Peer: 4398046642276L, Bezier: {Starts: [{V: [0.5d, 0.75d, 0.5d]}, {V: [16.5d, 0.75d, 0.5d]}], Girder: 0b, Normals: [{V: [0.0d, 1.0d, 0.0d]}, {V: [0.0d, 1.0d, 0.0d]}], Primary: 1b, Positions: [{Pos: [I; 0, 0, 0]}, {Pos: [I; 16, 0, 0]}], Axes: [{V: [0.0d, 0.0d, 1.0d]}, {V: [0.0d, 0.0d, 1.0d]}], Material: \"simulatedcoasters:coaster_track\"}, HHi: 5.333333333333333d, HLo: 5.333333333333333d}]\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {count: 43, id: \"fourthdimension:arrow_track\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"fourthdimension:track_selection\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 43, id: \"fourthdimension:arrow_track\"}\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get block 16 100 0 AnchorPeerCurves", "result": "16, 100, 0 has the following block data: [{Peer: 4398046642276L, Bezier: {Starts: [{V: [0.5d, 0.75d, 0.5d]}, {V: [0.5d, 0.75d, 32.5d]}], Girder: 0b, Normals: [{V: [0.0d, 1.0d, 0.0d]}, {V: [0.0d, 1.0d, 0.0d]}], Primary: 1b, Positions: [{Pos: [I; 0, 0, 0]}, {Pos: [I; 0, 0, 32]}], Axes: [{V: [0.0d, 0.0d, 1.0d]}, {V: [0.0d, 0.0d, -1.0d]}], Material: \"simulatedcoasters:coaster_track\"}, HHi: 10.666666666666666d, HLo: 10.666666666666666d}, {Peer: 100L, Bezier: {Starts: [{V: [0.5d, 0.75d, 0.5d]}, {V: [-15.5d, 0.75d, 0.5d]}], Girder: 0b, Normals: [{V: [0.0d, 1.0d, 0.0d]}, {V: [0.0d, 1.0d, 0.0d]}], Primary: 0b, Positions: [{Pos: [I; 0, 0, 0]}, {Pos: [I; -16, 0, 0]}], Axes: [{V: [0.0d, 0.0d, -1.0d]}, {V: [0.0d, 0.0d, -1.0d]}], Material: \"simulatedcoasters:coaster_track\"}, HHi: 5.333333333333333d, HLo: 5.333333333333333d}]\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {count: 38, id: \"fourthdimension:arrow_track\"}\n"}
+{"command": "item replace entity Dev hotbar.0 with coasterslaunchsystems:tire_drive 64", "result": "Replaced a slot on Dev with [Tire Drive Module]\n"}
+{"command": "execute if block -1 98 4 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock -2 97 4 stone", "result": "Changed the block at -2, 97, 4\n"}
+{"command": "setblock -2 98 4 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at -2, 98, 4\n"}
+{"command": "tp Dev 0.5 97 4.5 90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 4.500000\n"}
+{"command": "execute if block -1 98 4 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block -1 98 4 Speed", "result": "-1, 98, 4 has the following block data: 64.0f\n"}
+{"command": "execute if block -1 98 6 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock -2 97 6 stone", "result": "Changed the block at -2, 97, 6\n"}
+{"command": "setblock -2 98 6 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at -2, 98, 6\n"}
+{"command": "tp Dev 0.5 97 6.5 90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 6.500000\n"}
+{"command": "execute if block -1 98 6 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block -1 98 6 Speed", "result": "-1, 98, 6 has the following block data: 64.0f\n"}
+{"command": "execute if block -1 98 8 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock -2 97 8 stone", "result": "Changed the block at -2, 97, 8\n"}
+{"command": "setblock -2 98 8 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at -2, 98, 8\n"}
+{"command": "tp Dev 0.5 97 8.5 90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 8.500000\n"}
+{"command": "execute if block -1 98 8 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block -1 98 8 Speed", "result": "-1, 98, 8 has the following block data: 64.0f\n"}
+{"command": "execute if block -1 98 11 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock -2 97 11 stone", "result": "Changed the block at -2, 97, 11\n"}
+{"command": "setblock -2 98 11 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at -2, 98, 11\n"}
+{"command": "tp Dev 0.5 97 11.5 90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 11.500000\n"}
+{"command": "execute if block -1 98 11 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block -1 98 11 Speed", "result": "-1, 98, 11 has the following block data: 64.0f\n"}
+{"command": "execute if block -1 98 13 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock -2 97 13 stone", "result": "Changed the block at -2, 97, 13\n"}
+{"command": "setblock -2 98 13 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at -2, 98, 13\n"}
+{"command": "tp Dev 0.5 97 13.5 90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 13.500000\n"}
+{"command": "execute if block -1 98 13 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block -1 98 13 Speed", "result": "-1, 98, 13 has the following block data: 64.0f\n"}
+{"command": "execute if block -1 98 15 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock -2 97 15 stone", "result": "Changed the block at -2, 97, 15\n"}
+{"command": "setblock -2 98 15 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at -2, 98, 15\n"}
+{"command": "tp Dev 0.5 97 15.5 90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 15.500000\n"}
+{"command": "execute if block -1 98 15 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block -1 98 15 Speed", "result": "-1, 98, 15 has the following block data: 64.0f\n"}
+{"command": "execute if block -1 98 17 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock -2 97 17 stone", "result": "Changed the block at -2, 97, 17\n"}
+{"command": "setblock -2 98 17 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at -2, 98, 17\n"}
+{"command": "tp Dev 0.5 97 17.5 90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 17.500000\n"}
+{"command": "execute if block -1 98 17 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block -1 98 17 Speed", "result": "-1, 98, 17 has the following block data: 64.0f\n"}
+{"command": "execute if block -1 98 19 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock -2 97 19 stone", "result": "Changed the block at -2, 97, 19\n"}
+{"command": "setblock -2 98 19 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at -2, 98, 19\n"}
+{"command": "tp Dev 0.5 97 19.5 90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 19.500000\n"}
+{"command": "execute if block -1 98 19 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block -1 98 19 Speed", "result": "-1, 98, 19 has the following block data: 64.0f\n"}
+{"command": "execute if block -1 98 21 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock -2 97 21 stone", "result": "Changed the block at -2, 97, 21\n"}
+{"command": "setblock -2 98 21 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at -2, 98, 21\n"}
+{"command": "tp Dev 0.5 97 21.5 90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 21.500000\n"}
+{"command": "execute if block -1 98 21 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block -1 98 21 Speed", "result": "-1, 98, 21 has the following block data: 64.0f\n"}
+{"command": "execute if block -1 98 23 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock -2 97 23 stone", "result": "Changed the block at -2, 97, 23\n"}
+{"command": "setblock -2 98 23 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at -2, 98, 23\n"}
+{"command": "tp Dev 0.5 97 23.5 90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 23.500000\n"}
+{"command": "execute if block -1 98 23 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block -1 98 23 Speed", "result": "-1, 98, 23 has the following block data: 64.0f\n"}
+{"command": "execute if block -1 98 25 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock -2 97 25 stone", "result": "Changed the block at -2, 97, 25\n"}
+{"command": "setblock -2 98 25 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at -2, 98, 25\n"}
+{"command": "tp Dev 0.5 97 25.5 90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 25.500000\n"}
+{"command": "execute if block -1 98 25 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block -1 98 25 Speed", "result": "-1, 98, 25 has the following block data: 64.0f\n"}
+{"command": "execute if block -1 98 27 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock -2 97 27 stone", "result": "Changed the block at -2, 97, 27\n"}
+{"command": "setblock -2 98 27 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at -2, 98, 27\n"}
+{"command": "tp Dev 0.5 97 27.5 90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 27.500000\n"}
+{"command": "execute if block -1 98 27 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block -1 98 27 Speed", "result": "-1, 98, 27 has the following block data: 64.0f\n"}
+{"command": "execute if block -1 98 29 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock -2 97 29 stone", "result": "Changed the block at -2, 97, 29\n"}
+{"command": "setblock -2 98 29 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at -2, 98, 29\n"}
+{"command": "tp Dev 0.5 97 29.5 90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 29.500000\n"}
+{"command": "execute if block -1 98 29 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block -1 98 29 Speed", "result": "-1, 98, 29 has the following block data: 64.0f\n"}
+{"command": "execute if block -1 98 31 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock -2 97 31 stone", "result": "Changed the block at -2, 97, 31\n"}
+{"command": "setblock -2 98 31 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at -2, 98, 31\n"}
+{"command": "tp Dev 0.5 97 31.5 90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 31.500000\n"}
+{"command": "execute if block -1 98 31 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block -1 98 31 Speed", "result": "-1, 98, 31 has the following block data: 64.0f\n"}
+{"command": "item replace entity Dev hotbar.0 with coasterslaunchsystems:fin_brake 64", "result": "Replaced a slot on Dev with [Fin Brake Module]\n"}
+{"command": "execute if block 1 98 4 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 2 97 4 stone", "result": "Changed the block at 2, 97, 4\n"}
+{"command": "setblock 2 98 4 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 2, 98, 4\n"}
+{"command": "tp Dev 0.5 97 4.5 -90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 4.500000\n"}
+{"command": "execute if block 1 98 4 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 1 98 4 Speed", "result": "1, 98, 4 has the following block data: -64.0f\n"}
+{"command": "execute if block 1 98 6 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 2 97 6 stone", "result": "Changed the block at 2, 97, 6\n"}
+{"command": "setblock 2 98 6 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 2, 98, 6\n"}
+{"command": "tp Dev 0.5 97 6.5 -90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 6.500000\n"}
+{"command": "execute if block 1 98 6 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 1 98 6 Speed", "result": "1, 98, 6 has the following block data: -64.0f\n"}
+{"command": "execute if block 1 98 8 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 2 97 8 stone", "result": "Changed the block at 2, 97, 8\n"}
+{"command": "setblock 2 98 8 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 2, 98, 8\n"}
+{"command": "tp Dev 0.5 97 8.5 -90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 8.500000\n"}
+{"command": "execute if block 1 98 8 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 1 98 8 Speed", "result": "1, 98, 8 has the following block data: -64.0f\n"}
+{"command": "execute if block 1 98 13 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 2 97 13 stone", "result": "Changed the block at 2, 97, 13\n"}
+{"command": "setblock 2 98 13 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 2, 98, 13\n"}
+{"command": "tp Dev 0.5 97 13.5 -90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 13.500000\n"}
+{"command": "execute if block 1 98 13 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 1 98 13 Speed", "result": "1, 98, 13 has the following block data: -64.0f\n"}
+{"command": "execute if block 1 98 15 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 2 97 15 stone", "result": "Changed the block at 2, 97, 15\n"}
+{"command": "setblock 2 98 15 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 2, 98, 15\n"}
+{"command": "tp Dev 0.5 97 15.5 -90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 15.500000\n"}
+{"command": "execute if block 1 98 15 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 1 98 15 Speed", "result": "1, 98, 15 has the following block data: -64.0f\n"}
+{"command": "execute if block 1 98 17 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 2 97 17 stone", "result": "Changed the block at 2, 97, 17\n"}
+{"command": "setblock 2 98 17 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 2, 98, 17\n"}
+{"command": "tp Dev 0.5 97 17.5 -90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 17.500000\n"}
+{"command": "execute if block 1 98 17 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 1 98 17 Speed", "result": "1, 98, 17 has the following block data: -64.0f\n"}
+{"command": "execute if block 1 98 19 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 2 97 19 stone", "result": "Changed the block at 2, 97, 19\n"}
+{"command": "setblock 2 98 19 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 2, 98, 19\n"}
+{"command": "tp Dev 0.5 97 19.5 -90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 19.500000\n"}
+{"command": "execute if block 1 98 19 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 1 98 19 Speed", "result": "1, 98, 19 has the following block data: -64.0f\n"}
+{"command": "execute if block 1 98 21 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 2 97 21 stone", "result": "Changed the block at 2, 97, 21\n"}
+{"command": "setblock 2 98 21 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 2, 98, 21\n"}
+{"command": "tp Dev 0.5 97 21.5 -90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 21.500000\n"}
+{"command": "execute if block 1 98 21 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 1 98 21 Speed", "result": "1, 98, 21 has the following block data: -64.0f\n"}
+{"command": "execute if block 1 98 23 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 2 97 23 stone", "result": "Changed the block at 2, 97, 23\n"}
+{"command": "setblock 2 98 23 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 2, 98, 23\n"}
+{"command": "tp Dev 0.5 97 23.5 -90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 23.500000\n"}
+{"command": "execute if block 1 98 23 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 1 98 23 Speed", "result": "1, 98, 23 has the following block data: -64.0f\n"}
+{"command": "execute if block 1 98 25 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 2 97 25 stone", "result": "Changed the block at 2, 97, 25\n"}
+{"command": "setblock 2 98 25 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 2, 98, 25\n"}
+{"command": "tp Dev 0.5 97 25.5 -90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 25.500000\n"}
+{"command": "execute if block 1 98 25 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 1 98 25 Speed", "result": "1, 98, 25 has the following block data: -64.0f\n"}
+{"command": "execute if block 1 98 27 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 2 97 27 stone", "result": "Changed the block at 2, 97, 27\n"}
+{"command": "setblock 2 98 27 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 2, 98, 27\n"}
+{"command": "tp Dev 0.5 97 27.5 -90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 27.500000\n"}
+{"command": "execute if block 1 98 27 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 1 98 27 Speed", "result": "1, 98, 27 has the following block data: -64.0f\n"}
+{"command": "execute if block 1 98 29 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 2 97 29 stone", "result": "Changed the block at 2, 97, 29\n"}
+{"command": "setblock 2 98 29 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 2, 98, 29\n"}
+{"command": "tp Dev 0.5 97 29.5 -90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 29.500000\n"}
+{"command": "execute if block 1 98 29 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 1 98 29 Speed", "result": "1, 98, 29 has the following block data: -64.0f\n"}
+{"command": "execute if block 1 98 31 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 2 97 31 stone", "result": "Changed the block at 2, 97, 31\n"}
+{"command": "setblock 2 98 31 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 2, 98, 31\n"}
+{"command": "tp Dev 0.5 97 31.5 -90 4.5739", "result": "Teleported Dev to 0.500000, 97.000000, 31.500000\n"}
+{"command": "execute if block 1 98 31 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 1 98 31 Speed", "result": "1, 98, 31 has the following block data: -64.0f\n"}
+{"command": "item replace entity Dev hotbar.0 with coasterslaunchsystems:tire_drive 64", "result": "Replaced a slot on Dev with [Tire Drive Module]\n"}
+{"command": "execute if block 15 98 28 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock 14 97 28 stone", "result": "Changed the block at 14, 97, 28\n"}
+{"command": "setblock 14 98 28 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 14, 98, 28\n"}
+{"command": "tp Dev 16.5 97 28.5 90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 28.500000\n"}
+{"command": "execute if block 15 98 28 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 15 98 28 Speed", "result": "15, 98, 28 has the following block data: 64.0f\n"}
+{"command": "execute if block 15 98 26 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock 14 97 26 stone", "result": "Changed the block at 14, 97, 26\n"}
+{"command": "setblock 14 98 26 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 14, 98, 26\n"}
+{"command": "tp Dev 16.5 97 26.5 90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 26.500000\n"}
+{"command": "execute if block 15 98 26 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 15 98 26 Speed", "result": "15, 98, 26 has the following block data: 64.0f\n"}
+{"command": "execute if block 15 98 24 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock 14 97 24 stone", "result": "Changed the block at 14, 97, 24\n"}
+{"command": "setblock 14 98 24 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 14, 98, 24\n"}
+{"command": "tp Dev 16.5 97 24.5 90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 24.500000\n"}
+{"command": "execute if block 15 98 24 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 15 98 24 Speed", "result": "15, 98, 24 has the following block data: 64.0f\n"}
+{"command": "execute if block 15 98 21 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock 14 97 21 stone", "result": "Changed the block at 14, 97, 21\n"}
+{"command": "setblock 14 98 21 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 14, 98, 21\n"}
+{"command": "tp Dev 16.5 97 21.5 90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 21.500000\n"}
+{"command": "execute if block 15 98 21 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 15 98 21 Speed", "result": "15, 98, 21 has the following block data: 64.0f\n"}
+{"command": "execute if block 15 98 19 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock 14 97 19 stone", "result": "Changed the block at 14, 97, 19\n"}
+{"command": "setblock 14 98 19 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 14, 98, 19\n"}
+{"command": "tp Dev 16.5 97 19.5 90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 19.500000\n"}
+{"command": "execute if block 15 98 19 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 15 98 19 Speed", "result": "15, 98, 19 has the following block data: 64.0f\n"}
+{"command": "execute if block 15 98 17 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock 14 97 17 stone", "result": "Changed the block at 14, 97, 17\n"}
+{"command": "setblock 14 98 17 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 14, 98, 17\n"}
+{"command": "tp Dev 16.5 97 17.5 90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 17.500000\n"}
+{"command": "execute if block 15 98 17 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 15 98 17 Speed", "result": "15, 98, 17 has the following block data: 64.0f\n"}
+{"command": "execute if block 15 98 15 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock 14 97 15 stone", "result": "Changed the block at 14, 97, 15\n"}
+{"command": "setblock 14 98 15 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 14, 98, 15\n"}
+{"command": "tp Dev 16.5 97 15.5 90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 15.500000\n"}
+{"command": "execute if block 15 98 15 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 15 98 15 Speed", "result": "15, 98, 15 has the following block data: 64.0f\n"}
+{"command": "execute if block 15 98 13 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock 14 97 13 stone", "result": "Changed the block at 14, 97, 13\n"}
+{"command": "setblock 14 98 13 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 14, 98, 13\n"}
+{"command": "tp Dev 16.5 97 13.5 90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 13.500000\n"}
+{"command": "execute if block 15 98 13 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 15 98 13 Speed", "result": "15, 98, 13 has the following block data: 64.0f\n"}
+{"command": "execute if block 15 98 11 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock 14 97 11 stone", "result": "Changed the block at 14, 97, 11\n"}
+{"command": "setblock 14 98 11 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 14, 98, 11\n"}
+{"command": "tp Dev 16.5 97 11.5 90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 11.500000\n"}
+{"command": "execute if block 15 98 11 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 15 98 11 Speed", "result": "15, 98, 11 has the following block data: 64.0f\n"}
+{"command": "execute if block 15 98 9 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock 14 97 9 stone", "result": "Changed the block at 14, 97, 9\n"}
+{"command": "setblock 14 98 9 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 14, 98, 9\n"}
+{"command": "tp Dev 16.5 97 9.5 90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 9.500000\n"}
+{"command": "execute if block 15 98 9 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 15 98 9 Speed", "result": "15, 98, 9 has the following block data: 64.0f\n"}
+{"command": "execute if block 15 98 7 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock 14 97 7 stone", "result": "Changed the block at 14, 97, 7\n"}
+{"command": "setblock 14 98 7 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 14, 98, 7\n"}
+{"command": "tp Dev 16.5 97 7.5 90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 7.500000\n"}
+{"command": "execute if block 15 98 7 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 15 98 7 Speed", "result": "15, 98, 7 has the following block data: 64.0f\n"}
+{"command": "execute if block 15 98 5 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock 14 97 5 stone", "result": "Changed the block at 14, 97, 5\n"}
+{"command": "setblock 14 98 5 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 14, 98, 5\n"}
+{"command": "tp Dev 16.5 97 5.5 90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 5.500000\n"}
+{"command": "execute if block 15 98 5 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 15 98 5 Speed", "result": "15, 98, 5 has the following block data: 64.0f\n"}
+{"command": "execute if block 15 98 3 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock 14 97 3 stone", "result": "Changed the block at 14, 97, 3\n"}
+{"command": "setblock 14 98 3 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 14, 98, 3\n"}
+{"command": "tp Dev 16.5 97 3.5 90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 3.500000\n"}
+{"command": "execute if block 15 98 3 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 15 98 3 Speed", "result": "15, 98, 3 has the following block data: 64.0f\n"}
+{"command": "execute if block 15 98 1 coasterslaunchsystems:tire_drive", "result": "Test failed\n"}
+{"command": "setblock 14 97 1 stone", "result": "Changed the block at 14, 97, 1\n"}
+{"command": "setblock 14 98 1 create:creative_motor[facing=east]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 14, 98, 1\n"}
+{"command": "tp Dev 16.5 97 1.5 90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 1.500000\n"}
+{"command": "execute if block 15 98 1 coasterslaunchsystems:tire_drive[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 15 98 1 Speed", "result": "15, 98, 1 has the following block data: 64.0f\n"}
+{"command": "item replace entity Dev hotbar.0 with coasterslaunchsystems:fin_brake 64", "result": "Replaced a slot on Dev with [Fin Brake Module]\n"}
+{"command": "execute if block 17 98 28 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 18 97 28 stone", "result": "Changed the block at 18, 97, 28\n"}
+{"command": "setblock 18 98 28 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 18, 98, 28\n"}
+{"command": "tp Dev 16.5 97 28.5 -90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 28.500000\n"}
+{"command": "execute if block 17 98 28 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 17 98 28 Speed", "result": "17, 98, 28 has the following block data: -64.0f\n"}
+{"command": "execute if block 17 98 26 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 18 97 26 stone", "result": "Changed the block at 18, 97, 26\n"}
+{"command": "setblock 18 98 26 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 18, 98, 26\n"}
+{"command": "tp Dev 16.5 97 26.5 -90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 26.500000\n"}
+{"command": "execute if block 17 98 26 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 17 98 26 Speed", "result": "17, 98, 26 has the following block data: -64.0f\n"}
+{"command": "execute if block 17 98 24 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 18 97 24 stone", "result": "Changed the block at 18, 97, 24\n"}
+{"command": "setblock 18 98 24 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 18, 98, 24\n"}
+{"command": "tp Dev 16.5 97 24.5 -90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 24.500000\n"}
+{"command": "execute if block 17 98 24 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 17 98 24 Speed", "result": "17, 98, 24 has the following block data: -64.0f\n"}
+{"command": "execute if block 17 98 19 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 18 97 19 stone", "result": "Changed the block at 18, 97, 19\n"}
+{"command": "setblock 18 98 19 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 18, 98, 19\n"}
+{"command": "tp Dev 16.5 97 19.5 -90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 19.500000\n"}
+{"command": "execute if block 17 98 19 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 17 98 19 Speed", "result": "17, 98, 19 has the following block data: -64.0f\n"}
+{"command": "execute if block 17 98 17 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 18 97 17 stone", "result": "Changed the block at 18, 97, 17\n"}
+{"command": "setblock 18 98 17 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 18, 98, 17\n"}
+{"command": "tp Dev 16.5 97 17.5 -90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 17.500000\n"}
+{"command": "execute if block 17 98 17 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 17 98 17 Speed", "result": "17, 98, 17 has the following block data: -64.0f\n"}
+{"command": "execute if block 17 98 15 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 18 97 15 stone", "result": "Changed the block at 18, 97, 15\n"}
+{"command": "setblock 18 98 15 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 18, 98, 15\n"}
+{"command": "tp Dev 16.5 97 15.5 -90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 15.500000\n"}
+{"command": "execute if block 17 98 15 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 17 98 15 Speed", "result": "17, 98, 15 has the following block data: -64.0f\n"}
+{"command": "execute if block 17 98 13 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 18 97 13 stone", "result": "Changed the block at 18, 97, 13\n"}
+{"command": "setblock 18 98 13 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 18, 98, 13\n"}
+{"command": "tp Dev 16.5 97 13.5 -90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 13.500000\n"}
+{"command": "execute if block 17 98 13 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 17 98 13 Speed", "result": "17, 98, 13 has the following block data: -64.0f\n"}
+{"command": "execute if block 17 98 11 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 18 97 11 stone", "result": "Changed the block at 18, 97, 11\n"}
+{"command": "setblock 18 98 11 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 18, 98, 11\n"}
+{"command": "tp Dev 16.5 97 11.5 -90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 11.500000\n"}
+{"command": "execute if block 17 98 11 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 17 98 11 Speed", "result": "17, 98, 11 has the following block data: -64.0f\n"}
+{"command": "execute if block 17 98 9 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 18 97 9 stone", "result": "Changed the block at 18, 97, 9\n"}
+{"command": "setblock 18 98 9 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 18, 98, 9\n"}
+{"command": "tp Dev 16.5 97 9.5 -90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 9.500000\n"}
+{"command": "execute if block 17 98 9 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 17 98 9 Speed", "result": "17, 98, 9 has the following block data: -64.0f\n"}
+{"command": "execute if block 17 98 7 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 18 97 7 stone", "result": "Changed the block at 18, 97, 7\n"}
+{"command": "setblock 18 98 7 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 18, 98, 7\n"}
+{"command": "tp Dev 16.5 97 7.5 -90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 7.500000\n"}
+{"command": "execute if block 17 98 7 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 17 98 7 Speed", "result": "17, 98, 7 has the following block data: -64.0f\n"}
+{"command": "execute if block 17 98 5 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 18 97 5 stone", "result": "Changed the block at 18, 97, 5\n"}
+{"command": "setblock 18 98 5 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 18, 98, 5\n"}
+{"command": "tp Dev 16.5 97 5.5 -90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 5.500000\n"}
+{"command": "execute if block 17 98 5 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 17 98 5 Speed", "result": "17, 98, 5 has the following block data: -64.0f\n"}
+{"command": "execute if block 17 98 3 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 18 97 3 stone", "result": "Changed the block at 18, 97, 3\n"}
+{"command": "setblock 18 98 3 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 18, 98, 3\n"}
+{"command": "tp Dev 16.5 97 3.5 -90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 3.500000\n"}
+{"command": "execute if block 17 98 3 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 17 98 3 Speed", "result": "17, 98, 3 has the following block data: -64.0f\n"}
+{"command": "execute if block 17 98 1 coasterslaunchsystems:fin_brake", "result": "Test failed\n"}
+{"command": "setblock 18 97 1 stone", "result": "Changed the block at 18, 97, 1\n"}
+{"command": "setblock 18 98 1 create:creative_motor[facing=west]{Speed:64.0f,ScrollValue:64}", "result": "Changed the block at 18, 98, 1\n"}
+{"command": "tp Dev 16.5 97 1.5 -90 4.5739", "result": "Teleported Dev to 16.500000, 97.000000, 1.500000\n"}
+{"command": "execute if block 17 98 1 coasterslaunchsystems:fin_brake[axis=x]", "result": "Test passed\n"}
+{"command": "data get block 17 98 1 Speed", "result": "17, 98, 1 has the following block data: -64.0f\n"}
+{"command": "item replace entity Dev hotbar.0 with coasterslaunchsystems:ride_controller 2", "result": "Replaced a slot on Dev with [Local Ride Controller]\n"}
+{"command": "setblock 5 97 4 stone", "result": "Changed the block at 5, 97, 4\n"}
+{"command": "tp Dev 5.5 97 2.5 0 17.223", "result": "Teleported Dev to 5.500000, 97.000000, 2.500000\n"}
+{"command": "execute if block 5 98 4 coasterslaunchsystems:ride_controller", "result": "Test passed\n"}
+{"command": "setblock 21 97 28 stone", "result": "Changed the block at 21, 97, 28\n"}
+{"command": "tp Dev 21.5 97 26.5 0 17.223", "result": "Teleported Dev to 21.500000, 97.000000, 26.500000\n"}
+{"command": "execute if block 21 98 28 coasterslaunchsystems:ride_controller", "result": "Test passed\n"}
+{"command": "item replace entity Dev hotbar.0 with coasterslaunchsystems:span_tool 1", "result": "Replaced a slot on Dev with [Launch Span Tool]\n"}
+{"command": "data get block -1 98 4 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 4.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 4.500000\n"}
+{"command": "data get block -1 98 4 ls_from", "result": "-1, 98, 4 has the following block data: 100L\n"}
+{"command": "data get block -1 98 4 ls_fault", "result": "-1, 98, 4 has the following block data: \"\"\n"}
+{"command": "data get block -1 98 6 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 6.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 6.500000\n"}
+{"command": "data get block -1 98 6 ls_from", "result": "-1, 98, 6 has the following block data: 100L\n"}
+{"command": "data get block -1 98 6 ls_fault", "result": "-1, 98, 6 has the following block data: \"\"\n"}
+{"command": "data get block -1 98 8 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 8.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 8.500000\n"}
+{"command": "data get block -1 98 8 ls_from", "result": "-1, 98, 8 has the following block data: 100L\n"}
+{"command": "data get block -1 98 8 ls_fault", "result": "-1, 98, 8 has the following block data: \"\"\n"}
+{"command": "data get block -1 98 11 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 11.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 11.500000\n"}
+{"command": "data get block -1 98 11 ls_from", "result": "-1, 98, 11 has the following block data: 100L\n"}
+{"command": "data get block -1 98 11 ls_fault", "result": "-1, 98, 11 has the following block data: \"\"\n"}
+{"command": "data get block -1 98 13 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 13.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 13.500000\n"}
+{"command": "data get block -1 98 13 ls_from", "result": "-1, 98, 13 has the following block data: 100L\n"}
+{"command": "data get block -1 98 13 ls_fault", "result": "-1, 98, 13 has the following block data: \"\"\n"}
+{"command": "data get block -1 98 15 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 15.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 15.500000\n"}
+{"command": "data get block -1 98 15 ls_from", "result": "-1, 98, 15 has the following block data: 100L\n"}
+{"command": "data get block -1 98 15 ls_fault", "result": "-1, 98, 15 has the following block data: \"\"\n"}
+{"command": "data get block -1 98 17 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 17.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 17.500000\n"}
+{"command": "data get block -1 98 17 ls_from", "result": "-1, 98, 17 has the following block data: 100L\n"}
+{"command": "data get block -1 98 17 ls_fault", "result": "-1, 98, 17 has the following block data: \"\"\n"}
+{"command": "data get block -1 98 19 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 19.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 19.500000\n"}
+{"command": "data get block -1 98 19 ls_from", "result": "-1, 98, 19 has the following block data: 100L\n"}
+{"command": "data get block -1 98 19 ls_fault", "result": "-1, 98, 19 has the following block data: \"\"\n"}
+{"command": "data get block -1 98 21 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 21.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 21.500000\n"}
+{"command": "data get block -1 98 21 ls_from", "result": "-1, 98, 21 has the following block data: 100L\n"}
+{"command": "data get block -1 98 21 ls_fault", "result": "-1, 98, 21 has the following block data: \"\"\n"}
+{"command": "data get block -1 98 23 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 23.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 23.500000\n"}
+{"command": "data get block -1 98 23 ls_from", "result": "-1, 98, 23 has the following block data: 100L\n"}
+{"command": "data get block -1 98 23 ls_fault", "result": "-1, 98, 23 has the following block data: \"\"\n"}
+{"command": "data get block -1 98 25 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 25.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 25.500000\n"}
+{"command": "data get block -1 98 25 ls_from", "result": "-1, 98, 25 has the following block data: 100L\n"}
+{"command": "data get block -1 98 25 ls_fault", "result": "-1, 98, 25 has the following block data: \"\"\n"}
+{"command": "data get block -1 98 27 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 27.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 27.500000\n"}
+{"command": "data get block -1 98 27 ls_from", "result": "-1, 98, 27 has the following block data: 100L\n"}
+{"command": "data get block -1 98 27 ls_fault", "result": "-1, 98, 27 has the following block data: \"\"\n"}
+{"command": "data get block -1 98 29 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 29.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 29.500000\n"}
+{"command": "data get block -1 98 29 ls_from", "result": "-1, 98, 29 has the following block data: 100L\n"}
+{"command": "data get block -1 98 29 ls_fault", "result": "-1, 98, 29 has the following block data: \"\"\n"}
+{"command": "data get block -1 98 31 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 31.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 31.500000\n"}
+{"command": "data get block -1 98 31 ls_from", "result": "-1, 98, 31 has the following block data: 100L\n"}
+{"command": "data get block -1 98 31 ls_fault", "result": "-1, 98, 31 has the following block data: \"\"\n"}
+{"command": "item replace entity Dev hotbar.0 with coasterslaunchsystems:span_tool 1", "result": "Replaced a slot on Dev with [Launch Span Tool]\n"}
+{"command": "data get block 1 98 4 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 4.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 4.500000\n"}
+{"command": "data get block 1 98 4 ls_from", "result": "1, 98, 4 has the following block data: 100L\n"}
+{"command": "data get block 1 98 4 ls_fault", "result": "1, 98, 4 has the following block data: \"\"\n"}
+{"command": "data get block 1 98 6 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 6.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 6.500000\n"}
+{"command": "data get block 1 98 6 ls_from", "result": "1, 98, 6 has the following block data: 100L\n"}
+{"command": "data get block 1 98 6 ls_fault", "result": "1, 98, 6 has the following block data: \"\"\n"}
+{"command": "data get block 1 98 8 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 8.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 8.500000\n"}
+{"command": "data get block 1 98 8 ls_from", "result": "1, 98, 8 has the following block data: 100L\n"}
+{"command": "data get block 1 98 8 ls_fault", "result": "1, 98, 8 has the following block data: \"\"\n"}
+{"command": "data get block 1 98 13 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 13.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 13.500000\n"}
+{"command": "data get block 1 98 13 ls_from", "result": "1, 98, 13 has the following block data: 100L\n"}
+{"command": "data get block 1 98 13 ls_fault", "result": "1, 98, 13 has the following block data: \"\"\n"}
+{"command": "data get block 1 98 15 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 15.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 15.500000\n"}
+{"command": "data get block 1 98 15 ls_from", "result": "1, 98, 15 has the following block data: 100L\n"}
+{"command": "data get block 1 98 15 ls_fault", "result": "1, 98, 15 has the following block data: \"\"\n"}
+{"command": "data get block 1 98 17 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 17.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 17.500000\n"}
+{"command": "data get block 1 98 17 ls_from", "result": "1, 98, 17 has the following block data: 100L\n"}
+{"command": "data get block 1 98 17 ls_fault", "result": "1, 98, 17 has the following block data: \"\"\n"}
+{"command": "data get block 1 98 19 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 19.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 19.500000\n"}
+{"command": "data get block 1 98 19 ls_from", "result": "1, 98, 19 has the following block data: 100L\n"}
+{"command": "data get block 1 98 19 ls_fault", "result": "1, 98, 19 has the following block data: \"\"\n"}
+{"command": "data get block 1 98 21 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 21.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 21.500000\n"}
+{"command": "data get block 1 98 21 ls_from", "result": "1, 98, 21 has the following block data: 100L\n"}
+{"command": "data get block 1 98 21 ls_fault", "result": "1, 98, 21 has the following block data: \"\"\n"}
+{"command": "data get block 1 98 23 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 23.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 23.500000\n"}
+{"command": "data get block 1 98 23 ls_from", "result": "1, 98, 23 has the following block data: 100L\n"}
+{"command": "data get block 1 98 23 ls_fault", "result": "1, 98, 23 has the following block data: \"\"\n"}
+{"command": "data get block 1 98 25 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 25.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 25.500000\n"}
+{"command": "data get block 1 98 25 ls_from", "result": "1, 98, 25 has the following block data: 100L\n"}
+{"command": "data get block 1 98 25 ls_fault", "result": "1, 98, 25 has the following block data: \"\"\n"}
+{"command": "data get block 1 98 27 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 27.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 27.500000\n"}
+{"command": "data get block 1 98 27 ls_from", "result": "1, 98, 27 has the following block data: 100L\n"}
+{"command": "data get block 1 98 27 ls_fault", "result": "1, 98, 27 has the following block data: \"\"\n"}
+{"command": "data get block 1 98 29 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 29.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 29.500000\n"}
+{"command": "data get block 1 98 29 ls_from", "result": "1, 98, 29 has the following block data: 100L\n"}
+{"command": "data get block 1 98 29 ls_fault", "result": "1, 98, 29 has the following block data: \"\"\n"}
+{"command": "data get block 1 98 31 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 0.5 97 31.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 31.500000\n"}
+{"command": "data get block 1 98 31 ls_from", "result": "1, 98, 31 has the following block data: 100L\n"}
+{"command": "data get block 1 98 31 ls_fault", "result": "1, 98, 31 has the following block data: \"\"\n"}
+{"command": "item replace entity Dev hotbar.0 with coasterslaunchsystems:span_tool 1", "result": "Replaced a slot on Dev with [Launch Span Tool]\n"}
+{"command": "data get block 15 98 28 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 28.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 28.500000\n"}
+{"command": "data get block 15 98 28 ls_from", "result": "15, 98, 28 has the following block data: 4398046642276L\n"}
+{"command": "data get block 15 98 28 ls_fault", "result": "15, 98, 28 has the following block data: \"\"\n"}
+{"command": "data get block 15 98 26 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 26.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 26.500000\n"}
+{"command": "data get block 15 98 26 ls_from", "result": "15, 98, 26 has the following block data: 4398046642276L\n"}
+{"command": "data get block 15 98 26 ls_fault", "result": "15, 98, 26 has the following block data: \"\"\n"}
+{"command": "data get block 15 98 24 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 24.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 24.500000\n"}
+{"command": "data get block 15 98 24 ls_from", "result": "15, 98, 24 has the following block data: 4398046642276L\n"}
+{"command": "data get block 15 98 24 ls_fault", "result": "15, 98, 24 has the following block data: \"\"\n"}
+{"command": "data get block 15 98 21 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 21.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 21.500000\n"}
+{"command": "data get block 15 98 21 ls_from", "result": "15, 98, 21 has the following block data: 4398046642276L\n"}
+{"command": "data get block 15 98 21 ls_fault", "result": "15, 98, 21 has the following block data: \"\"\n"}
+{"command": "data get block 15 98 19 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 19.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 19.500000\n"}
+{"command": "data get block 15 98 19 ls_from", "result": "15, 98, 19 has the following block data: 4398046642276L\n"}
+{"command": "data get block 15 98 19 ls_fault", "result": "15, 98, 19 has the following block data: \"\"\n"}
+{"command": "data get block 15 98 17 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 17.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 17.500000\n"}
+{"command": "data get block 15 98 17 ls_from", "result": "15, 98, 17 has the following block data: 4398046642276L\n"}
+{"command": "data get block 15 98 17 ls_fault", "result": "15, 98, 17 has the following block data: \"\"\n"}
+{"command": "data get block 15 98 15 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 15.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 15.500000\n"}
+{"command": "data get block 15 98 15 ls_from", "result": "15, 98, 15 has the following block data: 4398046642276L\n"}
+{"command": "data get block 15 98 15 ls_fault", "result": "15, 98, 15 has the following block data: \"\"\n"}
+{"command": "data get block 15 98 13 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 13.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 13.500000\n"}
+{"command": "data get block 15 98 13 ls_from", "result": "15, 98, 13 has the following block data: 4398046642276L\n"}
+{"command": "data get block 15 98 13 ls_fault", "result": "15, 98, 13 has the following block data: \"\"\n"}
+{"command": "data get block 15 98 11 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 11.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 11.500000\n"}
+{"command": "data get block 15 98 11 ls_from", "result": "15, 98, 11 has the following block data: 4398046642276L\n"}
+{"command": "data get block 15 98 11 ls_fault", "result": "15, 98, 11 has the following block data: \"\"\n"}
+{"command": "data get block 15 98 9 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 9.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 9.500000\n"}
+{"command": "data get block 15 98 9 ls_from", "result": "15, 98, 9 has the following block data: 4398046642276L\n"}
+{"command": "data get block 15 98 9 ls_fault", "result": "15, 98, 9 has the following block data: \"\"\n"}
+{"command": "data get block 15 98 7 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 7.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 7.500000\n"}
+{"command": "data get block 15 98 7 ls_from", "result": "15, 98, 7 has the following block data: 4398046642276L\n"}
+{"command": "data get block 15 98 7 ls_fault", "result": "15, 98, 7 has the following block data: \"\"\n"}
+{"command": "data get block 15 98 5 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 5.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 5.500000\n"}
+{"command": "data get block 15 98 5 ls_from", "result": "15, 98, 5 has the following block data: 4398046642276L\n"}
+{"command": "data get block 15 98 5 ls_fault", "result": "15, 98, 5 has the following block data: \"\"\n"}
+{"command": "data get block 15 98 3 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 3.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 3.500000\n"}
+{"command": "data get block 15 98 3 ls_from", "result": "15, 98, 3 has the following block data: 4398046642276L\n"}
+{"command": "data get block 15 98 3 ls_fault", "result": "15, 98, 3 has the following block data: \"\"\n"}
+{"command": "data get block 15 98 1 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 1.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 1.500000\n"}
+{"command": "data get block 15 98 1 ls_from", "result": "15, 98, 1 has the following block data: 4398046642276L\n"}
+{"command": "data get block 15 98 1 ls_fault", "result": "15, 98, 1 has the following block data: \"\"\n"}
+{"command": "item replace entity Dev hotbar.0 with coasterslaunchsystems:span_tool 1", "result": "Replaced a slot on Dev with [Launch Span Tool]\n"}
+{"command": "data get block 17 98 28 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 28.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 28.500000\n"}
+{"command": "data get block 17 98 28 ls_from", "result": "17, 98, 28 has the following block data: 4398046642276L\n"}
+{"command": "data get block 17 98 28 ls_fault", "result": "17, 98, 28 has the following block data: \"\"\n"}
+{"command": "data get block 17 98 26 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 26.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 26.500000\n"}
+{"command": "data get block 17 98 26 ls_from", "result": "17, 98, 26 has the following block data: 4398046642276L\n"}
+{"command": "data get block 17 98 26 ls_fault", "result": "17, 98, 26 has the following block data: \"\"\n"}
+{"command": "data get block 17 98 24 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 24.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 24.500000\n"}
+{"command": "data get block 17 98 24 ls_from", "result": "17, 98, 24 has the following block data: 4398046642276L\n"}
+{"command": "data get block 17 98 24 ls_fault", "result": "17, 98, 24 has the following block data: \"\"\n"}
+{"command": "data get block 17 98 19 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 19.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 19.500000\n"}
+{"command": "data get block 17 98 19 ls_from", "result": "17, 98, 19 has the following block data: 4398046642276L\n"}
+{"command": "data get block 17 98 19 ls_fault", "result": "17, 98, 19 has the following block data: \"\"\n"}
+{"command": "data get block 17 98 17 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 17.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 17.500000\n"}
+{"command": "data get block 17 98 17 ls_from", "result": "17, 98, 17 has the following block data: 4398046642276L\n"}
+{"command": "data get block 17 98 17 ls_fault", "result": "17, 98, 17 has the following block data: \"\"\n"}
+{"command": "data get block 17 98 15 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 15.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 15.500000\n"}
+{"command": "data get block 17 98 15 ls_from", "result": "17, 98, 15 has the following block data: 4398046642276L\n"}
+{"command": "data get block 17 98 15 ls_fault", "result": "17, 98, 15 has the following block data: \"\"\n"}
+{"command": "data get block 17 98 13 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 13.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 13.500000\n"}
+{"command": "data get block 17 98 13 ls_from", "result": "17, 98, 13 has the following block data: 4398046642276L\n"}
+{"command": "data get block 17 98 13 ls_fault", "result": "17, 98, 13 has the following block data: \"\"\n"}
+{"command": "data get block 17 98 11 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 11.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 11.500000\n"}
+{"command": "data get block 17 98 11 ls_from", "result": "17, 98, 11 has the following block data: 4398046642276L\n"}
+{"command": "data get block 17 98 11 ls_fault", "result": "17, 98, 11 has the following block data: \"\"\n"}
+{"command": "data get block 17 98 9 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 9.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 9.500000\n"}
+{"command": "data get block 17 98 9 ls_from", "result": "17, 98, 9 has the following block data: 4398046642276L\n"}
+{"command": "data get block 17 98 9 ls_fault", "result": "17, 98, 9 has the following block data: \"\"\n"}
+{"command": "data get block 17 98 7 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 7.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 7.500000\n"}
+{"command": "data get block 17 98 7 ls_from", "result": "17, 98, 7 has the following block data: 4398046642276L\n"}
+{"command": "data get block 17 98 7 ls_fault", "result": "17, 98, 7 has the following block data: \"\"\n"}
+{"command": "data get block 17 98 5 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 5.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 5.500000\n"}
+{"command": "data get block 17 98 5 ls_from", "result": "17, 98, 5 has the following block data: 4398046642276L\n"}
+{"command": "data get block 17 98 5 ls_fault", "result": "17, 98, 5 has the following block data: \"\"\n"}
+{"command": "data get block 17 98 3 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 3.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 3.500000\n"}
+{"command": "data get block 17 98 3 ls_from", "result": "17, 98, 3 has the following block data: 4398046642276L\n"}
+{"command": "data get block 17 98 3 ls_fault", "result": "17, 98, 3 has the following block data: \"\"\n"}
+{"command": "data get block 17 98 1 ls_from", "result": "Found no elements matching ls_from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 16.5 97 1.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 1.500000\n"}
+{"command": "data get block 17 98 1 ls_from", "result": "17, 98, 1 has the following block data: 4398046642276L\n"}
+{"command": "data get block 17 98 1 ls_fault", "result": "17, 98, 1 has the following block data: \"\"\n"}
+{"command": "item replace entity Dev hotbar.0 with coasterslaunchsystems:span_tool 1", "result": "Replaced a slot on Dev with [Launch Span Tool]\n"}
+{"command": "data get block 5 98 4 from", "result": "Found no elements matching from\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 32.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 5.5 97 2.5 0 4.5739", "result": "Teleported Dev to 5.500000, 97.000000, 2.500000\n"}
+{"command": "data get block 5 98 4 from", "result": "5, 98, 4 has the following block data: 100L\n"}
+{"command": "data get block 5 98 4 fault", "result": "5, 98, 4 has the following block data: \"\"\n"}
+{"command": "item replace entity Dev hotbar.0 with coasterslaunchsystems:span_tool 1", "result": "Replaced a slot on Dev with [Launch Span Tool]\n"}
+{"command": "data get block 21 98 28 from", "result": "Found no elements matching from\n"}
+{"command": "tp Dev 19.5 100 32.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 32.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 19.5 100 0.5 90 20.472", "result": "Teleported Dev to 19.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 16, 100, 32], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 16, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 21.5 97 26.5 0 4.5739", "result": "Teleported Dev to 21.500000, 97.000000, 26.500000\n"}
+{"command": "data get block 21 98 28 from", "result": "21, 98, 28 has the following block data: 4398046642276L\n"}
+{"command": "data get block 21 98 28 fault", "result": "21, 98, 28 has the following block data: \"\"\n"}
+{"command": "item replace entity Dev hotbar.0 with coasterslaunchsystems:span_tool 1", "result": "Replaced a slot on Dev with [Launch Span Tool]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 5.5 97 2.5 0 -8.717", "result": "Teleported Dev to 5.500000, 97.000000, 2.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:controller_selection\": {pos: [I; 5, 98, 4], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 0.5 97 4.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 4.500000\n"}
+{"command": "data get block -1 98 4 ls_controller", "result": "-1, 98, 4 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 0.5 97 6.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 6.500000\n"}
+{"command": "data get block -1 98 6 ls_controller", "result": "-1, 98, 6 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 0.5 97 8.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 8.500000\n"}
+{"command": "data get block -1 98 8 ls_controller", "result": "-1, 98, 8 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 0.5 97 11.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 11.500000\n"}
+{"command": "data get block -1 98 11 ls_controller", "result": "-1, 98, 11 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 0.5 97 13.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 13.500000\n"}
+{"command": "data get block -1 98 13 ls_controller", "result": "-1, 98, 13 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 0.5 97 15.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 15.500000\n"}
+{"command": "data get block -1 98 15 ls_controller", "result": "-1, 98, 15 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 0.5 97 17.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 17.500000\n"}
+{"command": "data get block -1 98 17 ls_controller", "result": "-1, 98, 17 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 0.5 97 19.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 19.500000\n"}
+{"command": "data get block -1 98 19 ls_controller", "result": "-1, 98, 19 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 0.5 97 21.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 21.500000\n"}
+{"command": "data get block -1 98 21 ls_controller", "result": "-1, 98, 21 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 0.5 97 23.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 23.500000\n"}
+{"command": "data get block -1 98 23 ls_controller", "result": "-1, 98, 23 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 0.5 97 25.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 25.500000\n"}
+{"command": "data get block -1 98 25 ls_controller", "result": "-1, 98, 25 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 0.5 97 27.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 27.500000\n"}
+{"command": "data get block -1 98 27 ls_controller", "result": "-1, 98, 27 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 0.5 97 29.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 29.500000\n"}
+{"command": "data get block -1 98 29 ls_controller", "result": "-1, 98, 29 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 0.5 97 31.5 90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 31.500000\n"}
+{"command": "data get block -1 98 31 ls_controller", "result": "-1, 98, 31 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 0.5 97 4.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 4.500000\n"}
+{"command": "data get block 1 98 4 ls_controller", "result": "1, 98, 4 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 0.5 97 6.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 6.500000\n"}
+{"command": "data get block 1 98 6 ls_controller", "result": "1, 98, 6 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 0.5 97 8.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 8.500000\n"}
+{"command": "data get block 1 98 8 ls_controller", "result": "1, 98, 8 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 0.5 97 13.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 13.500000\n"}
+{"command": "data get block 1 98 13 ls_controller", "result": "1, 98, 13 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 0.5 97 15.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 15.500000\n"}
+{"command": "data get block 1 98 15 ls_controller", "result": "1, 98, 15 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 0.5 97 17.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 17.500000\n"}
+{"command": "data get block 1 98 17 ls_controller", "result": "1, 98, 17 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 0.5 97 19.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 19.500000\n"}
+{"command": "data get block 1 98 19 ls_controller", "result": "1, 98, 19 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 0.5 97 21.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 21.500000\n"}
+{"command": "data get block 1 98 21 ls_controller", "result": "1, 98, 21 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 0.5 97 23.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 23.500000\n"}
+{"command": "data get block 1 98 23 ls_controller", "result": "1, 98, 23 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 0.5 97 25.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 25.500000\n"}
+{"command": "data get block 1 98 25 ls_controller", "result": "1, 98, 25 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 0.5 97 27.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 27.500000\n"}
+{"command": "data get block 1 98 27 ls_controller", "result": "1, 98, 27 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 0.5 97 29.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 29.500000\n"}
+{"command": "data get block 1 98 29 ls_controller", "result": "1, 98, 29 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 0.5 97 31.5 -90 13.4957", "result": "Teleported Dev to 0.500000, 97.000000, 31.500000\n"}
+{"command": "data get block 1 98 31 ls_controller", "result": "1, 98, 31 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "item replace entity Dev hotbar.0 with coasterslaunchsystems:span_tool 1", "result": "Replaced a slot on Dev with [Launch Span Tool]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 21.5 97 26.5 0 -8.717", "result": "Teleported Dev to 21.500000, 97.000000, 26.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:controller_selection\": {pos: [I; 21, 98, 28], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 16.5 97 28.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 28.500000\n"}
+{"command": "data get block 15 98 28 ls_controller", "result": "15, 98, 28 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 16.5 97 26.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 26.500000\n"}
+{"command": "data get block 15 98 26 ls_controller", "result": "15, 98, 26 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 16.5 97 24.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 24.500000\n"}
+{"command": "data get block 15 98 24 ls_controller", "result": "15, 98, 24 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 16.5 97 21.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 21.500000\n"}
+{"command": "data get block 15 98 21 ls_controller", "result": "15, 98, 21 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 16.5 97 19.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 19.500000\n"}
+{"command": "data get block 15 98 19 ls_controller", "result": "15, 98, 19 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 16.5 97 17.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 17.500000\n"}
+{"command": "data get block 15 98 17 ls_controller", "result": "15, 98, 17 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 16.5 97 15.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 15.500000\n"}
+{"command": "data get block 15 98 15 ls_controller", "result": "15, 98, 15 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 16.5 97 13.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 13.500000\n"}
+{"command": "data get block 15 98 13 ls_controller", "result": "15, 98, 13 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 16.5 97 11.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 11.500000\n"}
+{"command": "data get block 15 98 11 ls_controller", "result": "15, 98, 11 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 16.5 97 9.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 9.500000\n"}
+{"command": "data get block 15 98 9 ls_controller", "result": "15, 98, 9 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 16.5 97 7.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 7.500000\n"}
+{"command": "data get block 15 98 7 ls_controller", "result": "15, 98, 7 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 16.5 97 5.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 5.500000\n"}
+{"command": "data get block 15 98 5 ls_controller", "result": "15, 98, 5 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 16.5 97 3.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 3.500000\n"}
+{"command": "data get block 15 98 3 ls_controller", "result": "15, 98, 3 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:redstone_torch", "result": "Replaced a slot on Dev with [Redstone Torch]\n"}
+{"command": "tp Dev 16.5 97 1.5 90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 1.500000\n"}
+{"command": "data get block 15 98 1 ls_controller", "result": "15, 98, 1 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 16.5 97 28.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 28.500000\n"}
+{"command": "data get block 17 98 28 ls_controller", "result": "17, 98, 28 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 16.5 97 26.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 26.500000\n"}
+{"command": "data get block 17 98 26 ls_controller", "result": "17, 98, 26 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 16.5 97 24.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 24.500000\n"}
+{"command": "data get block 17 98 24 ls_controller", "result": "17, 98, 24 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 16.5 97 19.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 19.500000\n"}
+{"command": "data get block 17 98 19 ls_controller", "result": "17, 98, 19 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 16.5 97 17.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 17.500000\n"}
+{"command": "data get block 17 98 17 ls_controller", "result": "17, 98, 17 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 16.5 97 15.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 15.500000\n"}
+{"command": "data get block 17 98 15 ls_controller", "result": "17, 98, 15 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 16.5 97 13.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 13.500000\n"}
+{"command": "data get block 17 98 13 ls_controller", "result": "17, 98, 13 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 16.5 97 11.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 11.500000\n"}
+{"command": "data get block 17 98 11 ls_controller", "result": "17, 98, 11 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 16.5 97 9.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 9.500000\n"}
+{"command": "data get block 17 98 9 ls_controller", "result": "17, 98, 9 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 16.5 97 7.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 7.500000\n"}
+{"command": "data get block 17 98 7 ls_controller", "result": "17, 98, 7 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 16.5 97 5.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 5.500000\n"}
+{"command": "data get block 17 98 5 ls_controller", "result": "17, 98, 5 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 16.5 97 3.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 3.500000\n"}
+{"command": "data get block 17 98 3 ls_controller", "result": "17, 98, 3 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 16.5 97 1.5 -90 13.4957", "result": "Teleported Dev to 16.500000, 97.000000, 1.500000\n"}
+{"command": "data get block 17 98 1 ls_controller", "result": "17, 98, 1 has the following block data: [I; 206887987, -1533787541, -1625766488, -2043218469]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "item replace entity Dev hotbar.0 with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 0.5 97 4.5 90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 4.500000\n"}
+{"command": "data get block -1 98 4 ls_armed", "result": "-1, 98, 4 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 6.5 90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 6.500000\n"}
+{"command": "data get block -1 98 6 ls_armed", "result": "-1, 98, 6 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 8.5 90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 8.500000\n"}
+{"command": "data get block -1 98 8 ls_armed", "result": "-1, 98, 8 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 11.5 90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 11.500000\n"}
+{"command": "data get block -1 98 11 ls_armed", "result": "-1, 98, 11 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 13.5 90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 13.500000\n"}
+{"command": "data get block -1 98 13 ls_armed", "result": "-1, 98, 13 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 15.5 90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 15.500000\n"}
+{"command": "data get block -1 98 15 ls_armed", "result": "-1, 98, 15 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 17.5 90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 17.500000\n"}
+{"command": "data get block -1 98 17 ls_armed", "result": "-1, 98, 17 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 19.5 90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 19.500000\n"}
+{"command": "data get block -1 98 19 ls_armed", "result": "-1, 98, 19 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 21.5 90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 21.500000\n"}
+{"command": "data get block -1 98 21 ls_armed", "result": "-1, 98, 21 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 23.5 90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 23.500000\n"}
+{"command": "data get block -1 98 23 ls_armed", "result": "-1, 98, 23 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 25.5 90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 25.500000\n"}
+{"command": "data get block -1 98 25 ls_armed", "result": "-1, 98, 25 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 27.5 90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 27.500000\n"}
+{"command": "data get block -1 98 27 ls_armed", "result": "-1, 98, 27 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 29.5 90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 29.500000\n"}
+{"command": "data get block -1 98 29 ls_armed", "result": "-1, 98, 29 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 31.5 90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 31.500000\n"}
+{"command": "data get block -1 98 31 ls_armed", "result": "-1, 98, 31 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 4.5 -90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 4.500000\n"}
+{"command": "data get block 1 98 4 ls_armed", "result": "1, 98, 4 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 6.5 -90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 6.500000\n"}
+{"command": "data get block 1 98 6 ls_armed", "result": "1, 98, 6 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 8.5 -90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 8.500000\n"}
+{"command": "data get block 1 98 8 ls_armed", "result": "1, 98, 8 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 13.5 -90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 13.500000\n"}
+{"command": "data get block 1 98 13 ls_armed", "result": "1, 98, 13 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 15.5 -90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 15.500000\n"}
+{"command": "data get block 1 98 15 ls_armed", "result": "1, 98, 15 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 17.5 -90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 17.500000\n"}
+{"command": "data get block 1 98 17 ls_armed", "result": "1, 98, 17 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 19.5 -90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 19.500000\n"}
+{"command": "data get block 1 98 19 ls_armed", "result": "1, 98, 19 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 21.5 -90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 21.500000\n"}
+{"command": "data get block 1 98 21 ls_armed", "result": "1, 98, 21 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 23.5 -90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 23.500000\n"}
+{"command": "data get block 1 98 23 ls_armed", "result": "1, 98, 23 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 25.5 -90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 25.500000\n"}
+{"command": "data get block 1 98 25 ls_armed", "result": "1, 98, 25 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 27.5 -90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 27.500000\n"}
+{"command": "data get block 1 98 27 ls_armed", "result": "1, 98, 27 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 29.5 -90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 29.500000\n"}
+{"command": "data get block 1 98 29 ls_armed", "result": "1, 98, 29 has the following block data: 1b\n"}
+{"command": "tp Dev 0.5 97 31.5 -90 -24.7024", "result": "Teleported Dev to 0.500000, 97.000000, 31.500000\n"}
+{"command": "data get block 1 98 31 ls_armed", "result": "1, 98, 31 has the following block data: 1b\n"}
+{"command": "item replace entity Dev hotbar.0 with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 16.5 97 28.5 90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 28.500000\n"}
+{"command": "data get block 15 98 28 ls_armed", "result": "15, 98, 28 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 26.5 90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 26.500000\n"}
+{"command": "data get block 15 98 26 ls_armed", "result": "15, 98, 26 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 24.5 90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 24.500000\n"}
+{"command": "data get block 15 98 24 ls_armed", "result": "15, 98, 24 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 21.5 90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 21.500000\n"}
+{"command": "data get block 15 98 21 ls_armed", "result": "15, 98, 21 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 19.5 90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 19.500000\n"}
+{"command": "data get block 15 98 19 ls_armed", "result": "15, 98, 19 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 17.5 90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 17.500000\n"}
+{"command": "data get block 15 98 17 ls_armed", "result": "15, 98, 17 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 15.5 90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 15.500000\n"}
+{"command": "data get block 15 98 15 ls_armed", "result": "15, 98, 15 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 13.5 90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 13.500000\n"}
+{"command": "data get block 15 98 13 ls_armed", "result": "15, 98, 13 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 11.5 90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 11.500000\n"}
+{"command": "data get block 15 98 11 ls_armed", "result": "15, 98, 11 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 9.5 90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 9.500000\n"}
+{"command": "data get block 15 98 9 ls_armed", "result": "15, 98, 9 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 7.5 90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 7.500000\n"}
+{"command": "data get block 15 98 7 ls_armed", "result": "15, 98, 7 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 5.5 90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 5.500000\n"}
+{"command": "data get block 15 98 5 ls_armed", "result": "15, 98, 5 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 3.5 90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 3.500000\n"}
+{"command": "data get block 15 98 3 ls_armed", "result": "15, 98, 3 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 1.5 90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 1.500000\n"}
+{"command": "data get block 15 98 1 ls_armed", "result": "15, 98, 1 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 28.5 -90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 28.500000\n"}
+{"command": "data get block 17 98 28 ls_armed", "result": "17, 98, 28 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 26.5 -90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 26.500000\n"}
+{"command": "data get block 17 98 26 ls_armed", "result": "17, 98, 26 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 24.5 -90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 24.500000\n"}
+{"command": "data get block 17 98 24 ls_armed", "result": "17, 98, 24 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 19.5 -90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 19.500000\n"}
+{"command": "data get block 17 98 19 ls_armed", "result": "17, 98, 19 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 17.5 -90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 17.500000\n"}
+{"command": "data get block 17 98 17 ls_armed", "result": "17, 98, 17 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 15.5 -90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 15.500000\n"}
+{"command": "data get block 17 98 15 ls_armed", "result": "17, 98, 15 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 13.5 -90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 13.500000\n"}
+{"command": "data get block 17 98 13 ls_armed", "result": "17, 98, 13 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 11.5 -90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 11.500000\n"}
+{"command": "data get block 17 98 11 ls_armed", "result": "17, 98, 11 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 9.5 -90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 9.500000\n"}
+{"command": "data get block 17 98 9 ls_armed", "result": "17, 98, 9 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 7.5 -90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 7.500000\n"}
+{"command": "data get block 17 98 7 ls_armed", "result": "17, 98, 7 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 5.5 -90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 5.500000\n"}
+{"command": "data get block 17 98 5 ls_armed", "result": "17, 98, 5 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 3.5 -90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 3.500000\n"}
+{"command": "data get block 17 98 3 ls_armed", "result": "17, 98, 3 has the following block data: 1b\n"}
+{"command": "tp Dev 16.5 97 1.5 -90 -24.7024", "result": "Teleported Dev to 16.500000, 97.000000, 1.500000\n"}
+{"command": "data get block 17 98 1 ls_armed", "result": "17, 98, 1 has the following block data: 1b\n"}
+{"command": "item replace entity Dev hotbar.0 with coasterslaunchsystems:span_tool 1", "result": "Replaced a slot on Dev with [Launch Span Tool]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:clock", "result": "Replaced a slot on Dev with [Clock]\n"}
+{"command": "tp Dev 5.5 97 2.5 0 4.5739", "result": "Teleported Dev to 5.500000, 97.000000, 2.500000\n"}
+{"command": "data get block 5 98 4 station_capture", "result": "5, 98, 4 has the following block data: 1b\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 5.5 97 2.5 0 -8.717", "result": "Teleported Dev to 5.500000, 97.000000, 2.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:controller_selection\": {pos: [I; 5, 98, 4], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 21.5 97 26.5 0 4.5739", "result": "Teleported Dev to 21.500000, 97.000000, 26.500000\n"}
+{"command": "data get block 5 98 4 destination", "result": "5, 98, 4 has the following block data: {pos: 5772436160610L, id: [I; 206887987, -1533787541, -1625766488, -2043218469]}\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:clock", "result": "Replaced a slot on Dev with [Clock]\n"}
+{"command": "tp Dev 21.5 97 26.5 0 4.5739", "result": "Teleported Dev to 21.500000, 97.000000, 26.500000\n"}
+{"command": "data get block 21 98 28 station_capture", "result": "21, 98, 28 has the following block data: 1b\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 21.5 97 26.5 0 -8.717", "result": "Teleported Dev to 21.500000, 97.000000, 26.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:controller_selection\": {pos: [I; 21, 98, 28], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 5.5 97 2.5 0 4.5739", "result": "Teleported Dev to 5.500000, 97.000000, 2.500000\n"}
+{"command": "data get block 21 98 28 destination", "result": "21, 98, 28 has the following block data: {pos: 1374389551202L, id: [I; 1150285247, -1683732462, -1178077440, 474531932]}\n"}
+{"command": "item replace entity Dev hotbar.0 with minecraft:lever 2", "result": "Replaced a slot on Dev with [Lever]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "setblock 7 99 4 stone", "result": "Changed the block at 7, 99, 4\n"}
+{"command": "tp Dev 7.5 100 4.5 90 48.6141", "result": "Teleported Dev to 7.500000, 100.000000, 4.500000\n"}
+{"command": "execute if block 5 99 4 minecraft:lever[face=floor,powered=false]", "result": "Test passed\n"}
+{"command": "setblock 23 99 28 stone", "result": "Changed the block at 23, 99, 28\n"}
+{"command": "tp Dev 23.5 100 28.5 90 48.6141", "result": "Teleported Dev to 23.500000, 100.000000, 28.500000\n"}
+{"command": "execute if block 21 99 28 minecraft:lever[face=floor,powered=false]", "result": "Test passed\n"}
+{"command": "item replace entity Dev hotbar.0 with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 21.5 97 26.5 0 -8.717", "result": "Teleported Dev to 21.500000, 97.000000, 26.500000\n"}
+{"command": "data get block 21 98 28 armed", "result": "21, 98, 28 has the following block data: 1b\n"}
+{"command": "data get block 21 98 28 phase", "result": "21, 98, 28 has the following block data: \"HOLD\"\n"}
+{"command": "data get block 21 98 28 fault", "result": "21, 98, 28 has the following block data: \"\"\n"}
+{"command": "data get block 21 98 28 boarding_ready", "result": "21, 98, 28 has the following block data: 0b\n"}
+{"command": "data get block 21 98 28 reservation", "result": "21, 98, 28 has the following block data: []\n"}
+{"command": "item replace entity Dev hotbar.0 with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 5.5 97 2.5 0 -8.717", "result": "Teleported Dev to 5.500000, 97.000000, 2.500000\n"}
+{"command": "data get block 5 98 4 armed", "result": "5, 98, 4 has the following block data: 1b\n"}
+{"command": "data get block 5 98 4 phase", "result": "5, 98, 4 has the following block data: \"READY\"\n"}
+{"command": "data get block 5 98 4 fault", "result": "5, 98, 4 has the following block data: \"\"\n"}
+{"command": "data get block 5 98 4 boarding_ready", "result": "5, 98, 4 has the following block data: 1b\n"}
+{"command": "data get block 5 98 4 reservation", "result": "5, 98, 4 has the following block data: [{id: [I; -890325595, -1167962236, -1965381066, -816511994]}]\n"}
+{"command": "item replace entity Dev hotbar.0 with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 5.5 97 2.5 0 -14.8415", "result": "Teleported Dev to 5.500000, 97.000000, 2.500000\n"}
+{"command": "execute if block 5 99 4 minecraft:lever[powered=true]", "result": "Test failed\n"}
+{"command": "execute if block 5 99 4 minecraft:lever[powered=true]", "result": "Test passed\n"}
+{"command": "data get block 5 98 4 phase", "result": "5, 98, 4 has the following block data: \"RUNNING\"\n"}
+{"command": "data get block 5 98 4 fault", "result": "5, 98, 4 has the following block data: \"\"\n"}
+{"command": "data get block 5 98 4 boarding_ready", "result": "5, 98, 4 has the following block data: 0b\n"}
+{"command": "data get block 5 98 4 reservation", "result": "5, 98, 4 has the following block data: [{id: [I; -890325595, -1167962236, -1965381066, -816511994]}]\n"}
+{"command": "item replace entity Dev hotbar.0 with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 5.5 97 2.5 0 -14.8415", "result": "Teleported Dev to 5.500000, 97.000000, 2.500000\n"}
+{"command": "execute if block 5 99 4 minecraft:lever[powered=true]", "result": "Test passed\n"}
+{"command": "execute if block 5 99 4 minecraft:lever[powered=false]", "result": "Test passed\n"}
+{"command": "data get block 5 98 4 phase", "result": "5, 98, 4 has the following block data: \"READY_EXIT\"\n"}
+{"command": "data get block 5 98 4 fault", "result": "5, 98, 4 has the following block data: \"\"\n"}
+{"command": "data get block 5 98 4 boarding_ready", "result": "5, 98, 4 has the following block data: 1b\n"}
+{"command": "data get block 5 98 4 reservation", "result": "5, 98, 4 has the following block data: [{id: [I; -890325595, -1167962236, -1965381066, -816511994]}]\n"}
+{"command": "item replace entity Dev hotbar.0 with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 5.5 97 2.5 0 -14.8415", "result": "Teleported Dev to 5.500000, 97.000000, 2.500000\n"}
+{"command": "execute if block 5 99 4 minecraft:lever[powered=true]", "result": "Test failed\n"}
+{"command": "execute if block 5 99 4 minecraft:lever[powered=true]", "result": "Test passed\n"}
+{"command": "data get block 5 98 4 phase", "result": "5, 98, 4 has the following block data: \"EXITING\"\n"}
+{"command": "data get block 5 98 4 fault", "result": "5, 98, 4 has the following block data: \"\"\n"}
+{"command": "data get block 5 98 4 boarding_ready", "result": "5, 98, 4 has the following block data: 0b\n"}
+{"command": "data get block 5 98 4 reservation", "result": "5, 98, 4 has the following block data: [{id: [I; -890325595, -1167962236, -1965381066, -816511994]}]\n"}
+{"command": "item replace entity Dev hotbar.0 with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 21.5 97 26.5 0 -14.8415", "result": "Teleported Dev to 21.500000, 97.000000, 26.500000\n"}
+{"command": "execute if block 21 99 28 minecraft:lever[powered=true]", "result": "Test failed\n"}
+{"command": "execute if block 21 99 28 minecraft:lever[powered=true]", "result": "Test passed\n"}
+{"command": "data get block 21 98 28 phase", "result": "21, 98, 28 has the following block data: \"EXITING\"\n"}
+{"command": "data get block 21 98 28 fault", "result": "21, 98, 28 has the following block data: \"\"\n"}
+{"command": "data get block 21 98 28 boarding_ready", "result": "21, 98, 28 has the following block data: 0b\n"}
+{"command": "data get block 21 98 28 reservation", "result": "21, 98, 28 has the following block data: [{id: [I; -890325595, -1167962236, -1965381066, -816511994]}]\n"}
+{"command": "item replace entity Dev hotbar.0 with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 5.5 97 2.5 0 -8.717", "result": "Teleported Dev to 5.500000, 97.000000, 2.500000\n"}
+{"command": "data get block 5 98 4 armed", "result": "5, 98, 4 has the following block data: 1b\n"}
+{"command": "data get block 5 98 4 phase", "result": "5, 98, 4 has the following block data: \"HOLD\"\n"}
+{"command": "data get block 5 98 4 fault", "result": "5, 98, 4 has the following block data: \"\"\n"}
+{"command": "data get block 5 98 4 boarding_ready", "result": "5, 98, 4 has the following block data: 0b\n"}
+{"command": "data get block 5 98 4 reservation", "result": "5, 98, 4 has the following block data: []\n"}
+{"command": "item replace entity Dev hotbar.0 with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 21.5 97 26.5 0 -8.717", "result": "Teleported Dev to 21.500000, 97.000000, 26.500000\n"}
+{"command": "data get block 21 98 28 armed", "result": "21, 98, 28 has the following block data: 1b\n"}
+{"command": "data get block 21 98 28 phase", "result": "21, 98, 28 has the following block data: \"READY_EXIT\"\n"}
+{"command": "data get block 21 98 28 fault", "result": "21, 98, 28 has the following block data: \"\"\n"}
+{"command": "data get block 21 98 28 boarding_ready", "result": "21, 98, 28 has the following block data: 1b\n"}
+{"command": "data get block 21 98 28 reservation", "result": "21, 98, 28 has the following block data: [{id: [I; -890325595, -1167962236, -1965381066, -816511994]}]\n"}
+{"command": "item replace entity Dev hotbar.0 with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 21.5 97 26.5 0 -14.8415", "result": "Teleported Dev to 21.500000, 97.000000, 26.500000\n"}
+{"command": "execute if block 21 99 28 minecraft:lever[powered=true]", "result": "Test passed\n"}
+{"command": "execute if block 21 99 28 minecraft:lever[powered=false]", "result": "Test passed\n"}
+{"command": "data get block 21 98 28 phase", "result": "21, 98, 28 has the following block data: \"READY_EXIT\"\n"}
+{"command": "data get block 21 98 28 fault", "result": "21, 98, 28 has the following block data: \"\"\n"}
+{"command": "data get block 21 98 28 boarding_ready", "result": "21, 98, 28 has the following block data: 1b\n"}
+{"command": "data get block 21 98 28 reservation", "result": "21, 98, 28 has the following block data: [{id: [I; -890325595, -1167962236, -1965381066, -816511994]}]\n"}
+{"command": "item replace entity Dev hotbar.0 with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "item replace entity Dev weapon.offhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 21.5 97 26.5 0 -14.8415", "result": "Teleported Dev to 21.500000, 97.000000, 26.500000\n"}
+{"command": "execute if block 21 99 28 minecraft:lever[powered=true]", "result": "Test failed\n"}
+{"command": "execute if block 21 99 28 minecraft:lever[powered=true]", "result": "Test passed\n"}
+{"command": "data get block 21 98 28 phase", "result": "21, 98, 28 has the following block data: \"EXITING\"\n"}
+{"command": "data get block 21 98 28 fault", "result": "21, 98, 28 has the following block data: \"\"\n"}
+{"command": "data get block 21 98 28 boarding_ready", "result": "21, 98, 28 has the following block data: 0b\n"}
+{"command": "data get block 21 98 28 reservation", "result": "21, 98, 28 has the following block data: [{id: [I; -890325595, -1167962236, -1965381066, -816511994]}]\n"}

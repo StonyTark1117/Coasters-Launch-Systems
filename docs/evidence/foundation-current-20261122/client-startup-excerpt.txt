@@ -1,0 +1,10 @@
+[12:07:16] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgeclientdev, --version, 21.1.256, --assetIndex, 17, --assetsDir, /home/braydon/.gradle/caches/neoformruntime/assets, --gameDir, ., --fml.fmlVersion, 4.0.45, --fml.mcVersion, 1.21.1, --fml.neoForgeVersion, 21.1.256, --fml.neoFormVersion, 20240808.144430, --quickPlayMultiplayer, 127.0.0.1:25731]
+[12:07:19] [main/INFO] [cp.mo.mo.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgeclientdev' with arguments [--version, 21.1.256, --gameDir, ., --assetsDir, /home/braydon/.gradle/caches/neoformruntime/assets, --assetIndex, 17, --quickPlayMultiplayer, 127.0.0.1:25731]
+Launch Systems Veil scheduler repair: standalone
+[12:07:24] [modloading-worker-0/INFO] [Veil/]: Veil is initializing.
+[12:07:32] [Render thread/INFO] [Veil/]: Compiled 58 vanilla shaders in 67.40 ms
+[12:07:33] [Render thread/INFO] [minecraft/ConnectScreen]: Connecting to 127.0.0.1, 25731
+[12:07:33] [Netty Epoll Client IO #1/INFO] [de.ry.sa.Sable/]: Client UDP channel active
+[12:07:34] [Render thread/INFO] [Veil/]: Finished uploading vanilla shaders
+[12:07:35] [Render thread/INFO] [de.ry.sa.Sable/]: Received UDP authentication request, sending response over UDP to localhost/127.0.0.1:25731
+[12:08:16] [Netty Epoll Client IO #1/INFO] [de.ry.sa.Sable/]: Client UDP channel inactive

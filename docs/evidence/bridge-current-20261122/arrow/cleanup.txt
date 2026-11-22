@@ -1,0 +1,20 @@
+Id=fd-ls-arrow-20261122-server.service
+ActiveState=inactive
+MainPID=0
+Result=success
+MemoryPeak=[not set]
+MemoryMax=infinity
+
+Id=fd-ls-arrow-20261122-client.service
+ActiveState=inactive
+MainPID=0
+Result=success
+MemoryPeak=[not set]
+MemoryMax=infinity
+
+Id=fd-ls-arrow-20261122-xvfb.service
+ActiveState=inactive
+MainPID=0
+Result=success
+MemoryPeak=[not set]
+MemoryMax=infinity

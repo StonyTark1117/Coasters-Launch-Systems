@@ -1,5 +1,62 @@
 # Launch Systems validation status
 
+## Current status overlay — 2026-11-22
+
+The **0.1** assignment is accepted; its validated source is being integrated
+and pushed on the existing task branch. The
+broader [roadmap](../ROADMAP.md) retains 0.4 as the six-launch release outcome;
+modern FD families and shared multi-train operations remain later 0.5/0.6 scope.
+Use [CURRENT-WORK](CURRENT-WORK.md) for owners and remaining cases, and
+[VALIDATION-POLICY](VALIDATION-POLICY.md) before scheduling another run.
+
+The [current-core foundation](evidence/foundation-current-20261122/README.md)
+passed packaged standalone client/server startup, **4/4** affected native
+mass/force/catch/ticket tests and **1/1 prepare + 1/1 verify** across a real saved
+world restart. The selected 0.1 set is NeoForge 21.1.256 / Sable 2.0.6 / Veil
+4.3.2 / Coasters 0.1.5. Coasters 0.1.6 and newer loader/renderer candidates were
+explicitly audited/deferred; see the record for hashes and reasons. All foundation
+runtimes stopped after preserving logs, saved worlds and client evidence.
+
+The registered Fourth Dimension API 1 facade is integrated and pushed upstream.
+The [handoff](FOURTH-DIMENSION-HANDOFF.md#registered-authority-handoff--2026-11-22)
+identifies the exact schema-8 JAR. The [bridge record](evidence/bridge-current-20261122/README.md)
+adds **3/3** current LS native checks plus **1/1** serialized authority/token
+recovery. That serialized check is supplemented by the [player-built Arrow
+ride](evidence/bridge-current-20261122/arrow/README.md): empty and real occupied
+circuits, normal restraint/exit/reboard, fresh dispatch, and an actual separate-JVM
+saved-world restart with retained ownership, explicit rearm and no powered-input
+replay all passed. The [ordinary ride](evidence/ls01-rides-20261122/README.md)
+also passed empty/occupied operation and real disconnect/rejoin/fresh dispatch.
+The [Free Spin ride](evidence/ls01-freespin-20261122/README.md) also passed
+normal Survival construction, empty/occupied full circuits, native capture,
+normal exit/reboard and fresh occupied dispatch. The initial turn fault retained
+both reservations; a read-only geometry check found the fin sweep crossing
+supplied temporary stone. The corrected construction cleared both walking strips
+and passed with unchanged guards. All ride/observer worlds and evidence are
+saved, and every owned client/server/display is stopped. These results close
+LS001–LS005 and LS101–LS106 together with the retained mechanics and lifecycle
+evidence. [Final package and reconciliation](evidence/0.1/integration-20261122/README.md).
+
+The latest prior gameplay checkpoint is dev.72. All historical entries below
+retain their original artifact, dependency and evidence scope. Old “still open”
+prose is not a new assignment. Legacy combined results used NeoForge 21.1.248 /
+Sable 2.0.3 and FD dev.1/schema 4. Existing unchanged mechanics evidence carries
+forward; the current bridge uses focused affected-contract checks. The earlier
+[workflow preparation](evidence/workflow-refresh-20261115.md) was compile/launch
+preparation only, superseded by the bounded runtime results above.
+
+## 0.1 foundation clearance — 2026-11-22
+
+The [LS005 clearance record](evidence/0.1/clearance-20261122/README.md) closes
+obstructed tire/fin/magnetic running-corridor binding and re-arm: **1/1** focused
+packaged current-core GameTest passed, with both span directions, actual collision
+shapes and retained binding/UUID. All dimensions saved and the server exited.
+Existing interval sweep, wrong-interface rejection, handle-edit invalidation and
+identity evidence remain applicable. The current FD bridge and three complete rides have separate accepted evidence
+linked above; this focused check does not replace their claims.
+
+## Historical acceptance and checkpoint records
+
 Updated October 2, 2026. The goal is a complete 0.4.0 release validated and pushed to this addon's own private GitHub repository. Foundation checkpoints do not satisfy that release goal.
 
 | Requirement | Current state |

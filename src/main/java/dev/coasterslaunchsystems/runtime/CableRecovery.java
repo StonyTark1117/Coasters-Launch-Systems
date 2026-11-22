@@ -96,7 +96,7 @@ public final class CableRecovery {
     var candidates = new LinkedHashSet<>(cabinets);
     var container = SubLevelContainer.getContainer(level);
     if (container != null) for (var info : container.getAllTickets().values()) for (var ticket : info.tickets()) {
-      if (ticket.getType() != CableTickets.CARRIAGE || !(ticket.getKey() instanceof CableTickets.Key key)
+      if (CableTickets.typeOf(ticket) != CableTickets.CARRIAGE || !(CableTickets.keyOf(ticket) instanceof CableTickets.Key key)
           || CableControllers.hasLiveCarriage(level, key.carriage())
           || Math.abs((long) key.cabinet().getX()) > 1024 || Math.abs((long) key.cabinet().getZ()) > 1024) continue;
       // A force-loaded native carriage must bring its owning cabinet into memory before the first physics step.
@@ -201,8 +201,8 @@ public final class CableRecovery {
       throw new IllegalArgumentException("Native carriage hardware changed after its passive hold was restored");
     var info = container.getAllTickets().get(id);
     var key = new CableTickets.Key(id, cabinet.getBlockPos());
-    boolean modern = info != null && info.tickets().stream().anyMatch(t -> t.getType() == CableTickets.CARRIAGE && key.equals(t.getKey()));
-    boolean legacy = info != null && info.tickets().stream().anyMatch(t -> t.getType() == CableTickets.LEGACY_CARRIAGE && id.equals(t.getKey()));
+    boolean modern = info != null && info.tickets().stream().anyMatch(t -> CableTickets.typeOf(t) == CableTickets.CARRIAGE && key.equals(CableTickets.keyOf(t)));
+    boolean legacy = info != null && info.tickets().stream().anyMatch(t -> CableTickets.typeOf(t) == CableTickets.LEGACY_CARRIAGE && id.equals(CableTickets.keyOf(t)));
     if (info == null || info.tickets().size() != 1 || modern == legacy)
       throw new IllegalArgumentException("Native carriage loading ticket is missing, foreign or ambiguous");
     var pipeline = container.physicsSystem().getPipeline();
@@ -276,9 +276,9 @@ public final class CableRecovery {
     if (container == null) return null;
     var id = cabinet.cableCarriage();
     var ticket = container.getAllTickets().get(id);
-    if (ticket == null || ticket.tickets().stream().noneMatch(entry -> entry.getType() == CableTickets.CARRIAGE
-        && new CableTickets.Key(id, cabinet.getBlockPos()).equals(entry.getKey())
-        || entry.getType() == CableTickets.LEGACY_CARRIAGE && id.equals(entry.getKey()))) return null;
+    if (ticket == null || ticket.tickets().stream().noneMatch(entry -> CableTickets.typeOf(entry) == CableTickets.CARRIAGE
+        && new CableTickets.Key(id, cabinet.getBlockPos()).equals(CableTickets.keyOf(entry))
+        || CableTickets.typeOf(entry) == CableTickets.LEGACY_CARRIAGE && id.equals(CableTickets.keyOf(entry)))) return null;
     if (!(container.getSubLevel(id) instanceof ServerSubLevel carriage) || carriage.isRemoved()) return null;
     var track = cabinet.resolve(level);
     if (track == null || cabinet.cableHome() + 20 > track.length()) return null;
@@ -392,7 +392,7 @@ public final class CableRecovery {
     var key = new CableTickets.Key(cabinet.cableCarriage(), cabinet.getBlockPos());
     var carriageTicket = container.getAllTickets().get(cabinet.cableCarriage());
     if (carriageTicket == null || carriageTicket.tickets().stream().noneMatch(
-        t -> t.getType() == CableTickets.CARRIAGE && key.equals(t.getKey())))
+        t -> CableTickets.typeOf(t) == CableTickets.CARRIAGE && key.equals(CableTickets.keyOf(t))))
       throw new IllegalStateException("Saved carriage loading ticket changed before active inspection");
     if (!(container.getSubLevel(chassisId) instanceof ServerSubLevel chassis) || chassis.isRemoved())
       throw new IllegalStateException("Saved captured chassis is not loaded");
@@ -412,7 +412,7 @@ public final class CableRecovery {
     }
     var ticketed = new HashSet<UUID>();
     for (var entry : container.getAllTickets().entrySet())
-      if (entry.getValue().tickets().stream().anyMatch(t -> t.getType() == CableTickets.CAPTURED_BODY && key.equals(t.getKey())))
+      if (entry.getValue().tickets().stream().anyMatch(t -> CableTickets.typeOf(t) == CableTickets.CAPTURED_BODY && key.equals(CableTickets.keyOf(t))))
         ticketed.add(entry.getKey());
     if (!ticketed.equals(bodies) || bodies.isEmpty() || !bodies.contains(chassisId)
         || bodies.stream().anyMatch(id -> !(container.getSubLevel(id) instanceof ServerSubLevel loaded) || loaded.isRemoved()))

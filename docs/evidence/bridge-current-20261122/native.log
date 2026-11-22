@@ -1,0 +1,371 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.2.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :createMinecraftArtifacts UP-TO-DATE
+> Task :compileJava
+> Task :compileApi4Fixture UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes
+> Task :downloadAssets UP-TO-DATE
+> Task :writeGameTestServerLegacyClasspath UP-TO-DATE
+> Task :prepareGameTestServerRun UP-TO-DATE
+
+> Task :runGameTestServer
+WARN StatusConsoleListener Advanced terminal features are not available in this environment
+[12:15:06] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgeserverdev, --gameDir, ., --fml.fmlVersion, 4.0.45, --fml.mcVersion, 1.21.1, --fml.neoForgeVersion, 21.1.256, --fml.neoFormVersion, 20240808.144430]
+[12:15:06] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: JVM identified as Arch Linux OpenJDK 64-Bit Server VM 21.0.13.1+2
+[12:15:06] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: ModLauncher 11.0.5+main.901c6ea8 starting: java version 21.0.13.1 by Arch Linux; OS Linux arch amd64 version 7.3.4-zen2-2-zen
+[12:15:06] [main/INFO] [ne.ne.fm.lo.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgeserverdev
+[12:15:06] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=union:/home/braydon/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.16.4+mixin.0.8.7/26d01f0567ab46e9ca0d2ed89d0ecc11aadbd433/sponge-mixin-0.16.4+mixin.0.8.7.jar%2394!/ Service=ModLauncher Env=SERVER
+[12:15:06] [main/WARN] [ne.ne.ja.se.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: veil. Using Mod File: /home/braydon/.gradle/caches/modules-2/files-2.1/foundry.veil/veil-neoforge-1.21.1/4.3.2/3d4056e31dd8a06e35901c3b82210c3d471e1e48/veil-neoforge-1.21.1-4.3.2.jar
+[12:15:06] [main/WARN] [ne.ne.ja.se.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: sablecompanion. Using Mod File: /home/braydon/.gradle/caches/modules-2/files-2.1/dev.ryanhcode.sable-companion/sable-companion-common-1.21.1/1.6.0/370be7db705926176e05c0215ed676150c45daae/sable-companion-common-1.21.1-1.6.0.jar
+[12:15:06] [main/WARN] [ne.ne.ja.se.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: library:sable_rapier. Using Mod File: /home/braydon/.gradle/caches/modules-2/files-2.1/dev.ryanhcode.sable/sable-sable_rapier-1.21.1/2.0.6/d095eff41df82fbd8b321c2467b712ff35cb6bf1/sable-sable_rapier-1.21.1-2.0.6.jar
+[12:15:06] [main/INFO] [ne.ne.fm.lo.mo.lo.JarInJarDependencyLocator/]: Found 4 dependencies adding them to mods collection
+[12:15:06] [main/INFO] [ne.ne.fm.lo.mo.ModDiscoverer/]: 
+     Mod List:
+		Name Version (Mod Id)
+
+		Coasters: Fourth Dimension 1.1.0 (fourthdimension)
+		Coasters: Launch Systems 0.0.1-dev.72 (coasterslaunchsystems)
+		Create 6.0.10 (create)
+		Create: Coasters Simulated 0.1.5 (simulatedcoasters)
+		Flywheel 1.0.6 (flywheel)
+		Minecraft 1.21.1 (minecraft)
+		NeoForge 21.1.256 (neoforge)
+		Ponder 1.0.82+mc1.21.1 (ponder)
+		Sable 2.0.6 (sable)
+		Sable Companion 1.6.0 (sablecompanion)
+		Veil 4.3.2 (veil)
+[12:15:06] [main/INFO] [mixin/]: Compatibility level set to JAVA_21
+[12:15:06] [main/INFO] [cp.mo.mo.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgeserverdev' with arguments [--gameDir, .]
+[12:15:06] [main/WARN] [mixin/]: Reference map 'ponder.refmap.json' for ponder-common.mixins.json could not be read. If this is a development environment you can ignore this message
+[12:15:06] [main/INFO] [de.ry.sa.mi.AbstractSableMixinPlugin/]: Using Vanilla renderer mixins
+[12:15:06] [main/INFO] [de.ry.sa.mi.AbstractSableMixinPlugin/]: Using Vanilla renderer mixins
+[12:15:07] [main/WARN] [mixin/]: Error loading class: dev/simulated_team/simulated/content/blocks/merging_glue/MergingGlueBlockEntity (java.lang.ClassNotFoundException: dev.simulated_team.simulated.content.blocks.merging_glue.MergingGlueBlockEntity)
+[12:15:07] [main/WARN] [mixin/]: @Mixin target dev.simulated_team.simulated.content.blocks.merging_glue.MergingGlueBlockEntity was not found simulatedcoasters.mixins.json:compat.MergingGlueBlockEntityRivetMixin from mod simulatedcoasters
+[12:15:07] [main/WARN] [mixin/]: Error loading class: dev/jwaterfall/coastersengineered/MotorDrive (java.lang.ClassNotFoundException: dev.jwaterfall.coastersengineered.MotorDrive)
+[12:15:07] [main/WARN] [mixin/]: Error loading class: dev/jwaterfall/coastersengineered/CartAssembly (java.lang.ClassNotFoundException: dev.jwaterfall.coastersengineered.CartAssembly)
+[12:15:07] [main/WARN] [mixin/]: Error loading class: dev/plushivr/coasterfins/block/StationBlockEntity (java.lang.ClassNotFoundException: dev.plushivr.coasterfins.block.StationBlockEntity)
+[12:15:07] [main/WARN] [mixin/]: Error loading class: dev/notzyvex/coasters_extras/track/TrackRepaint (java.lang.ClassNotFoundException: dev.notzyvex.coasters_extras.track.TrackRepaint)
+[12:15:07] [main/WARN] [mixin/]: Error loading class: dev/notzyvex/coasters_extras/net/ModNetwork (java.lang.ClassNotFoundException: dev.notzyvex.coasters_extras.net.ModNetwork)
+[12:15:07] [main/WARN] [mixin/]: Error loading class: medev/coaster/skins/skin/CartSkinTargets (java.lang.ClassNotFoundException: medev.coaster.skins.skin.CartSkinTargets)
+[12:15:07] [main/WARN] [mixin/]: Error loading class: medev/coaster/skins/skin/LinkedCartSkins (java.lang.ClassNotFoundException: medev.coaster.skins.skin.LinkedCartSkins)
+[12:15:07] [main/WARN] [mixin/]: Error loading class: medev/coaster/skins/skin/CartSkinData (java.lang.ClassNotFoundException: medev.coaster.skins.skin.CartSkinData)
+[12:15:07] [main/WARN] [mixin/]: Error loading class: medev/coaster/skins/item/ScrewDriverItem (java.lang.ClassNotFoundException: medev.coaster.skins.item.ScrewDriverItem)
+[12:15:07] [main/WARN] [mixin/]: Error loading class: dev/plushivr/coasterfins/block/CoasterSeatBlockEntity (java.lang.ClassNotFoundException: dev.plushivr.coasterfins.block.CoasterSeatBlockEntity)
+[12:15:07] [main/WARN] [mixin/]: Error loading class: dev/plushivr/coasterfins/event/SeatDismountHandler (java.lang.ClassNotFoundException: dev.plushivr.coasterfins.event.SeatDismountHandler)
+[12:15:07] [main/WARN] [mixin/]: Error loading class: org/jetbrains/annotations/ApiStatus$ScheduledForRemoval (java.lang.ClassNotFoundException: org.jetbrains.annotations.ApiStatus$ScheduledForRemoval)
+[12:15:07] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.5).
+[12:15:11] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[12:15:11] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[12:15:11] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[12:15:11] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[12:15:11] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[12:15:11] [modloading-worker-0/INFO] [Veil/]: Veil is initializing.
+[12:15:11] [modloading-worker-0/INFO] [ne.ne.ne.co.NeoForgeMod/NEOFORGE-MOD]: NeoForge mod loading, version 21.1.256, for MC 1.21.1
+[12:15:11] [modloading-worker-0/INFO] [co.si.cr.Create/]: Create 6.0.10 initializing! Commit hash: ac0c444d9828da3453ae8cc65338e8de063286fb
+[12:15:12] [modloading-worker-0/INFO] [de.ry.sa.Sable/]: Sable loaded!
+[12:15:12] [modloading-worker-0/INFO] [de.fo.FourthDimension/]: Coasters: Fourth Dimension loaded from union:/mnt/NVME4/launchsystems-runs/bridge-20261122/artifacts/fourthdimension-authority-api1.jar%23129!/
+[12:15:13] [modloading-worker-0/INFO] [de.co.LaunchSystems/]: Coasters: Launch Systems loaded from union:/mnt/NVME4/launchsystems-runs/bridge-20261122/ls-build/classes/java/main/%23127!/
+[12:15:14] [main/INFO] [mojang/YggdrasilAuthenticationService]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[12:15:14] [NeoForge Version Check/INFO] [ne.ne.fm.VersionChecker/]: [create] Starting version check at https://api.modrinth.com/updates/create/forge_updates.json?neoforge=only
+[12:15:14] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/mnt/NVME4/launchsystems-runs/bridge-20261122/ls-build/moddev/artifacts/neoforge-21.1.256.jar%23125!/assets/.mcassetsroot' uses unexpected schema
+[12:15:14] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/mnt/NVME4/launchsystems-runs/bridge-20261122/ls-build/moddev/artifacts/neoforge-21.1.256.jar%23125!/data/.mcassetsroot' uses unexpected schema
+[12:15:14] [main/INFO] [co.si.cr.Create/]: Created 157 recipes which will be injected into the game
+[12:15:14] [main/INFO] [co.si.cr.Create/]: Created 0 tags which will be injected into the game
+[12:15:14] [main/INFO] [ne.ne.ne.ga.GameTestHooks/]: Enabled Gametest Namespaces: [coasterslaunchsystems_authority]
+[12:15:14] [NeoForge Version Check/INFO] [ne.ne.fm.VersionChecker/]: [create] Found status: OUTDATED Current: 6.0.10 Target: 6.0.10+mc1.21.1
+[12:15:15] [main/INFO] [minecraft/RecipeManager]: Loaded 2886 recipes
+[12:15:15] [main/INFO] [minecraft/AdvancementTree]: Loaded 2522 advancements
+[12:15:16] [Server thread/INFO] [de.ry.sa.Sable/]: Creating physics pipeline for ResourceKey[minecraft:dimension / minecraft:overworld] using RapierPhysicsPipelineProvider
+[12:15:16] [Server thread/INFO] [de.ry.sa.Sable/]: Using game directory relative Sable Rapier native directory /mnt/NVME4/launchsystems-runs/bridge-20261122/ls-native/.sable/natives
+[2026-11-22T19:15:16.525974327Z] [[32mINFO[0m] (sable_rapier) Rapier scene initialized
+[12:15:16] [Server thread/INFO] [de.ry.sa.Sable/]: Creating physics pipeline for ResourceKey[minecraft:dimension / minecraft:the_end] using RapierPhysicsPipelineProvider
+[2026-11-22T19:15:16.874584150Z] [[32mINFO[0m] (sable_rapier) Rapier scene initialized
+[12:15:16] [Server thread/INFO] [de.ry.sa.Sable/]: Creating physics pipeline for ResourceKey[minecraft:dimension / minecraft:the_nether] using RapierPhysicsPipelineProvider
+[2026-11-22T19:15:16.905882292Z] [[32mINFO[0m] (sable_rapier) Rapier scene initialized
+[12:15:16] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing start region for dimension minecraft:overworld
+[12:15:16] [worldgen/INFO] [minecraft/LoggerChunkProgressListener]: Preparing spawn area: 2%
+[12:15:17] [Server thread/INFO] [minecraft/LoggerChunkProgressListener]: Time elapsed: 132 ms
+[12:15:17] [Server thread/INFO] [minecraft/GameTestServer]: Started game test server
+[12:15:17] [Server thread/INFO] [ne.ne.ne.se.pe.PermissionAPI/]: Successfully initialized permission handler neoforge:default_handler
+[12:15:17] [Server thread/INFO] [minecraft/GameTestServer]: 3 tests are now running at position -14779996, -59, -10131842!
+[12:15:17] [Server thread/INFO] [minecraft/GameTestRunner]: Running test batch 'launchsystems_authority:0' (3 tests)...
+[12:15:17] [Server thread/INFO] [minecraft/GameTestServer]: [   ]
+[12:15:17] [Server thread/INFO] [minecraft/GameTestServer]: [   ]
+[12:15:17] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:18] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:18] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:18] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:18] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:18] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:18] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:18] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:19] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+LS_CIRCUIT_JOIN mode=arrow_forward a_end=(128.5, 304.8125, -831.5) a_forward=(0.0, 0.0, 1.0) curve_start=(128.5, 304.8125, -831.5) curve_forward=(3.000199838144937E-4, 0.0, 0.9999999549940036) curve_end_forward=(2.9998035841003856E-4, 0.0, -0.9999999550058912) b_forward=(-0.0, -0.0, -1.0)
+[12:15:19] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:19] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:20] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:20] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:20] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:20] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:21] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:21] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:21] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=2 source=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture true, swing off, boarding ready false.  receiver=Ride controller: RECEIVING, reserved chassis 1, required brake length 0.00/0.00, transfer false, station capture false, swing off, boarding ready false.  curve_steps=0 peak_speed=2.6452082672005113 position=( 1.284E+2  3.062E+2 -8.745E+2)
+[12:15:22] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:22] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:22] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:22] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:23] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:23] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:23] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:23] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:24] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:24] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=2 source=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture true, swing off, boarding ready false.  receiver=Ride controller: RECEIVING, reserved chassis 1, required brake length 0.00/0.00, transfer false, station capture false, swing off, boarding ready false.  curve_steps=0 peak_speed=2.645799109529677 position=( 1.284E+2  3.062E+2 -8.506E+2)
+[12:15:24] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:24] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:25] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:25] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:25] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:25] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:25] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:26] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:26] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:26] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=2 source=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture true, swing off, boarding ready false.  receiver=Ride controller: RECEIVING, reserved chassis 1, required brake length 0.00/0.00, transfer false, station capture false, swing off, boarding ready false.  curve_steps=109 peak_speed=2.6506894819579667 position=( 1.309E+2  3.062E+2 -8.254E+2)
+[12:15:26] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:27] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:27] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:27] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:27] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:27] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:28] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:28] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:28] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:28] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=2 source=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture true, swing off, boarding ready false.  receiver=Ride controller: RECEIVING, reserved chassis 1, required brake length 0.00/0.00, transfer false, station capture false, swing off, boarding ready false.  curve_steps=509 peak_speed=2.6506894819579667 position=( 1.446E+2  3.062E+2 -8.306E+2)
+[12:15:28] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:29] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:29] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:29] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+[12:15:29] [Server thread/INFO] [minecraft/GameTestServer]: [___]
+LS_CONTROLLER mode=arrow_forward cars=1 riders=4 mass=20.2 state=Ride controller: HOLD, reserved chassis 1, required brake length 13.41/22.00, transfer false, station capture false, swing off, boarding ready false.  distance=20.94946381897148 speed=3.5482735256664455E-5 work=97.25401593065297 peak_speed=2.6451901788227112 drive_steps=197 joint_error=1.6363579108028104E-4 coupler_error=0.0 rotor_response=2.1384038037235473E-4
+LS_CONTROLLER mode=free_spin_forward cars=1 riders=8 mass=45.400000000000006 state=Ride controller: HOLD, reserved chassis 1, required brake length 15.51/22.00, transfer false, station capture false, swing off, boarding ready false.  distance=20.8056650050775 speed=8.378729689866304E-4 work=190.3332894939158 peak_speed=2.5824069420269593 drive_steps=239 joint_error=1.7405995270671816E-4 coupler_error=0.0 rotor_response=0.8037693479797792
+[12:15:29] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:30] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:30] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:30] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:30] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=2 source=Ride controller: HOLD, reserved chassis 0, required brake length 13.41/44.00, transfer false, station capture true, swing off, boarding ready false.  receiver=Ride controller: READY_EXIT, reserved chassis 1, required brake length 13.41/44.00, transfer false, station capture false, swing off, boarding ready false.  curve_steps=536 peak_speed=2.6506894819579667 position=( 1.446E+2  3.062E+2 -8.525E+2)
+[12:15:30] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:30] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:30] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:30] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:30] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:31] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:31] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:31] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:31] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:31] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=3 source=Ride controller: RECEIVING, reserved chassis 1, required brake length 13.41/44.00, transfer false, station capture true, swing off, boarding ready false.  receiver=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture false, swing off, boarding ready false.  curve_steps=536 peak_speed=2.6506894819579667 position=( 1.446E+2  3.062E+2 -8.751E+2)
+[12:15:31] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:31] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:31] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:31] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:31] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:31] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:32] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:32] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:32] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:32] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=3 source=Ride controller: RECEIVING, reserved chassis 1, required brake length 13.41/44.00, transfer false, station capture true, swing off, boarding ready false.  receiver=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture false, swing off, boarding ready false.  curve_steps=627 peak_speed=2.6506894819579667 position=( 1.429E+2  3.062E+2 -9.007E+2)
+[12:15:32] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:32] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:32] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:32] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:32] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:33] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:33] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:33] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:33] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:33] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=3 source=Ride controller: RECEIVING, reserved chassis 1, required brake length 13.41/44.00, transfer false, station capture true, swing off, boarding ready false.  receiver=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture false, swing off, boarding ready false.  curve_steps=1027 peak_speed=2.6506894819579667 position=( 1.285E+2  3.062E+2 -8.972E+2)
+[12:15:33] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:33] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:33] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:33] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:33] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:33] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:34] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:34] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:34] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:34] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=3 source=Ride controller: RECEIVING, reserved chassis 1, required brake length 13.41/44.00, transfer false, station capture true, swing off, boarding ready false.  receiver=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture false, swing off, boarding ready false.  curve_steps=1078 peak_speed=2.6506894819579667 position=( 1.284E+2  3.062E+2 -8.825E+2)
+[12:15:34] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:34] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:34] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:34] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:34] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:34] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:34] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:35] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:35] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:35] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=4 source=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture true, swing off, boarding ready false.  receiver=Ride controller: RECEIVING, reserved chassis 1, required brake length 13.41/44.00, transfer false, station capture false, swing off, boarding ready false.  curve_steps=1078 peak_speed=2.6506894819579667 position=( 1.284E+2  3.062E+2 -8.620E+2)
+[12:15:35] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:35] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:35] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:35] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:35] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:35] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:36] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:36] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:36] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:36] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=4 source=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture true, swing off, boarding ready false.  receiver=Ride controller: RECEIVING, reserved chassis 1, required brake length 13.41/44.00, transfer false, station capture false, swing off, boarding ready false.  curve_steps=1078 peak_speed=2.6506894819579667 position=( 1.284E+2  3.062E+2 -8.357E+2)
+[12:15:36] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:36] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:36] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:36] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:36] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:36] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:37] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:37] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:37] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:37] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=4 source=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture true, swing off, boarding ready false.  receiver=Ride controller: RECEIVING, reserved chassis 1, required brake length 13.41/44.00, transfer false, station capture false, swing off, boarding ready false.  curve_steps=1415 peak_speed=2.6506894819579667 position=( 1.414E+2  3.062E+2 -8.249E+2)
+[12:15:37] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:37] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:37] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:37] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:37] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:38] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:38] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:38] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:38] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:38] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=4 source=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture true, swing off, boarding ready false.  receiver=Ride controller: RECEIVING, reserved chassis 1, required brake length 13.41/44.00, transfer false, station capture false, swing off, boarding ready false.  curve_steps=1618 peak_speed=2.6506894819579667 position=( 1.446E+2  3.062E+2 -8.428E+2)
+[12:15:38] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:38] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:38] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:38] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:38] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:39] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:39] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:39] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:39] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:39] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=5 source=Ride controller: RECEIVING, reserved chassis 1, required brake length 13.41/44.00, transfer false, station capture true, swing off, boarding ready false.  receiver=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture false, swing off, boarding ready false.  curve_steps=1618 peak_speed=2.6506894819579667 position=( 1.446E+2  3.062E+2 -8.634E+2)
+[12:15:39] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:39] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:39] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:39] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:39] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:40] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:40] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:40] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:40] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:40] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=5 source=Ride controller: RECEIVING, reserved chassis 1, required brake length 13.41/44.00, transfer false, station capture true, swing off, boarding ready false.  receiver=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture false, swing off, boarding ready false.  curve_steps=1618 peak_speed=2.6506894819579667 position=( 1.446E+2  3.062E+2 -8.898E+2)
+[12:15:40] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:40] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:40] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:40] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:41] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:41] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:41] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:41] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:41] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:41] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=5 source=Ride controller: RECEIVING, reserved chassis 1, required brake length 13.41/44.00, transfer false, station capture true, swing off, boarding ready false.  receiver=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture false, swing off, boarding ready false.  curve_steps=1931 peak_speed=2.6506894819579667 position=( 1.325E+2  3.062E+2 -9.027E+2)
+[12:15:41] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:42] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:42] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:42] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:42] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:42] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:42] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:42] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:42] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:42] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=5 source=Ride controller: RECEIVING, reserved chassis 1, required brake length 13.41/44.00, transfer false, station capture true, swing off, boarding ready false.  receiver=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture false, swing off, boarding ready false.  curve_steps=2158 peak_speed=2.6506894819579667 position=( 1.284E+2  3.062E+2 -8.904E+2)
+[12:15:43] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:43] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:43] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:43] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:43] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:43] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:43] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:43] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:43] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:43] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=6 source=Ride controller: BOARDING, reserved chassis 1, required brake length 13.41/44.00, transfer false, station capture true, swing off, boarding ready true.  receiver=Ride controller: HOLD, reserved chassis 0, required brake length 13.41/44.00, transfer false, station capture false, swing off, boarding ready false.  curve_steps=2158 peak_speed=2.6506894819579667 position=( 1.284E+2  3.062E+2 -8.745E+2)
+[12:15:43] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:43] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:44] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:44] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:44] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:44] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:44] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:44] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:44] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:44] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=8 source=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture true, swing off, boarding ready false.  receiver=Ride controller: RECEIVING, reserved chassis 1, required brake length 13.41/44.00, transfer false, station capture false, swing off, boarding ready false.  curve_steps=2158 peak_speed=2.6506894819579667 position=( 1.284E+2  3.062E+2 -8.556E+2)
+[12:15:45] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:45] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:45] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:45] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:45] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:45] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:45] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:46] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:46] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:46] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=8 source=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture true, swing off, boarding ready false.  receiver=Ride controller: RECEIVING, reserved chassis 1, required brake length 13.41/44.00, transfer false, station capture false, swing off, boarding ready false.  curve_steps=2193 peak_speed=2.6506894819579667 position=( 1.286E+2  3.062E+2 -8.293E+2)
+[12:15:46] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:46] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:46] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:46] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:46] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:46] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:47] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:47] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:47] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:47] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=8 source=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture true, swing off, boarding ready false.  receiver=Ride controller: RECEIVING, reserved chassis 1, required brake length 13.41/44.00, transfer false, station capture false, swing off, boarding ready false.  curve_steps=2593 peak_speed=2.6506894819579667 position=( 1.439E+2  3.062E+2 -8.279E+2)
+[12:15:47] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:47] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:47] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:47] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:48] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:48] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:48] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:48] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:48] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+[12:15:48] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT_PROGRESS mode=arrow_forward stage=8 source=Ride controller: EXITING, reserved chassis 1, required brake length 13.41/44.00, transfer true, station capture true, swing off, boarding ready false.  receiver=Ride controller: RECEIVING, reserved chassis 1, required brake length 13.41/44.00, transfer false, station capture false, swing off, boarding ready false.  curve_steps=2698 peak_speed=2.6506894819579667 position=( 1.446E+2  3.062E+2 -8.493E+2)
+[12:15:48] [Server thread/INFO] [minecraft/GameTestServer]: [++_]
+LS_CIRCUIT mode=arrow_forward departures=6 cars=1 riders=4 curve_steps=2698 retained_steps=8317 boarded_steps=1626 work=1503.1084774823 peak_speed=2.6506894819579667 joint_error=0.0029343539964300732 coupler_error=0.0 rotor_response=0.005441020519391201 loaded_mass=20.2 empty_mass=17.0 capturing_steps=1 boarding_denied_steps=120 moving_capture_denied=true
+[12:15:48] [Server thread/INFO] [minecraft/GameTestServer]: [+++]
+[12:15:48] [Server thread/INFO] [minecraft/GameTestServer]: ========= 3 GAME TESTS COMPLETE IN 31.81 s ======================
+[12:15:48] [Server thread/INFO] [minecraft/GameTestServer]: All 3 required tests passed :)
+[12:15:48] [Server thread/INFO] [minecraft/GameTestServer]: ====================================================
+[12:15:48] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server
+[12:15:48] [Server thread/INFO] [minecraft/MinecraftServer]: Saving players
+[12:15:48] [Server thread/INFO] [minecraft/MinecraftServer]: Saving worlds
+[12:15:49] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:overworld
+[12:15:49] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:overworld
+[12:15:52] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_end
+[12:15:52] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:the_end
+[12:15:52] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[12:15:52] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[12:15:52] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[12:15:52] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[12:15:52] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[12:15:52] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved
+[12:15:52] [Server thread/INFO] [minecraft/GameTestServer]: Game test server shutting down
+
+BUILD SUCCESSFUL in 52s
+8 actionable tasks: 2 executed, 6 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.2.1/userguide/configuration_cache_enabling.html

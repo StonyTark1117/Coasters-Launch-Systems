@@ -35,7 +35,7 @@ import org.joml.Vector3d;
 public final class CircuitGameTests {
   private static final List<Scene> SCENES = new ArrayList<>();
   private static boolean registered;
-  private static final class Scene {
+  static final class Scene {
     final RideControllerGameTests.Scene source;
     final String guard;
     ServerSubLevel foreign;
@@ -293,7 +293,7 @@ public final class CircuitGameTests {
     for (var guard : List.of("occupied_curve", "edited_curve")) { int index = slot++; tests.add(new TestFunction("launchsystems_circuit", "coasterslaunchsystems_routes.guard_" + guard, "coasterslaunchsystems_routes:empty", 1500, 0, true, h -> run(new Scene(h, index, "linked_forward", guard)))); }
     return tests;
   }
-  private static void run(Scene s) {
+  static void run(Scene s) {
     if (!registered) { NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, CircuitGameTests::before); NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, CircuitGameTests::after); registered = true; }
     s.source.at(40, () -> { if (s.source.fourthDimension) s.source.boardFourthDimension(); else for (var c : s.source.base.parents) for (int seat = 0; seat < 4; seat++) s.source.base.board(c, seat); });
     s.source.at(55, () -> {

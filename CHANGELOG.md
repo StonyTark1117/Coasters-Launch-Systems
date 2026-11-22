@@ -1,5 +1,40 @@
 # Changelog
 
+## 0.1.0 — current-core usable rides (2026-11-22)
+
+- Select NeoForge 21.1.256, Sable 2.0.6 and Veil 4.3.2 by default, retaining
+  Coasters 0.1.5 and an explicit reproducible legacy profile. Repair standalone
+  Veil startup conditionally; combined runs use Fourth Dimension's repair.
+- Register the current Fourth Dimension external authority API 1 provider with
+  native owner/epoch/sequence validation, whole-train capture and transfer,
+  explicit restart rearm, and family, restraint and managed-route vetoes.
+  Preserve the original schema-4 adapter separately.
+- Reject blocked tire/fin/magnetic bearing corridors during binding and fresh
+  arming, using actual collision shapes without dropping retained identities.
+- Qualify the current foundation, saved catch/ticket recovery, native bridge,
+  real ordinary reconnect, and occupied Arrow construction/operation/restart.
+  Complete all three player-built empty/occupied rides, including normal
+  exit/reboard and fresh dispatch. Diagnose and remove temporary Free Spin
+  construction obstructions while retaining rollback protection.
+- Add an opt-in read-only vehicle geometry diagnostic for private validation.
+  It does not apply forces or alter vehicle/controller authority.
+
+## Unreleased — workflow and dependency preparation (2026-11-15)
+
+- Add branch continuity, Java 21, evidence reuse, private display/input,
+  resource budgeting and mandatory runtime shutdown instructions.
+- Move colon-safe build output off RAM-backed `/tmp`; add isolated build/run
+  directories and client/server heap settings to generated launches.
+- Adapt Sable loading-ticket reads to the public getters (2.0.3) or record
+  accessors (2.0.6), preserving both dependency profiles.
+- Make packaged launch-script generation build its consumed JAR automatically.
+- Add the explicit NeoForge 21.1.256 / Sable 2.0.6 migration candidate profile,
+  preserving the working legacy default and exact schema-4 adapter guard.
+- Link the current Fourth Dimension dependency/authority source and evidence;
+  define the remaining bridge and scheduler migration instead of treating old
+  combined results as current compatibility.
+
+
 ## 0.0.1-dev.7 occupied ordinary cart development
 
 - Add equal declared native mass/inertia for real ordinary Create seat passengers before equipment force collection, respecting primary-provider mass ownership.

@@ -1,0 +1,13 @@
+{
+  "profile": "fd-current",
+  "launch_systems_original_sha256": "67b2b08f571c78224be87b421010518c4cdc812362a1addf6b47ec68043b1d98",
+  "launch_systems_diagnostic_sha256": "046993cecf9837081023992c5fda5512fd06ae3163df9fde527e7bc8219eef6e",
+  "fourth_dimension_sha256": "df3662828a106efe6542abee735b26c7254a9a218e9c1e45783d2e979e63256e",
+  "runtime": "/mnt/NVME4/launchsystems-runs/ls01-freespin-20261122",
+  "world": "/mnt/NVME4/launchsystems-runs/ls01-freespin-20261122/server/ls01-freespin-survival",
+  "fault_backup": "/mnt/NVME4/launchsystems-runs/ls01-freespin-20261122/fault-world-195041Z",
+  "owner": "/root/rides",
+  "display": ":395",
+  "server_port": 25761,
+  "rcon_port": 25762
+}

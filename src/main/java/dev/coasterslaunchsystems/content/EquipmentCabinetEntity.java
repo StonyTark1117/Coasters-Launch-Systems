@@ -273,6 +273,11 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
       throw new IllegalArgumentException("Cable launch controls require a connected catch and controller");
     if (value && from == null) throw new IllegalArgumentException("Use the span tool to bind this module first");
     if (value && !fault.isEmpty()) throw new IllegalArgumentException("Inspect and rebind the faulted module before arming");
+    if (value && !armed && level instanceof ServerLevel server) {
+      var resolved = resolve(server);
+      if (resolved == null) throw new IllegalArgumentException("Inspect and rebind the unavailable track before arming");
+      dev.coasterslaunchsystems.track.EquipmentClearance.validate(server, resolved, start, end, mechanism());
+    }
     if (!value && cableInUse) throw new IllegalArgumentException("Retained cable catch cannot be manually disarmed");
     if (!value && level instanceof ServerLevel server && !dev.coasterslaunchsystems.runtime.RideControllers.editingAllowed(server, this))
       throw new IllegalArgumentException("Occupied controller equipment cannot be manually disarmed");
@@ -315,6 +320,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
             ? "Brake module requires unbanked rail, at most 1-in-4 grade, and a transverse shaft"
             : "This module requires level unbanked rail and a transverse shaft");
     }
+    dev.coasterslaunchsystems.track.EquipmentClearance.validate(level, resolved, beginning, ending, mechanism());
     from = first.immutable(); to = second.immutable(); geometry = resolved.fingerprint();
     start = beginning; end = ending; track = resolved;
     boundAxis = shaftAxis;

@@ -3,6 +3,16 @@
   "minVersion": "0.8",
   "package": "dev.coasterslaunchsystems.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": ["EngagedContactMixin", "EngagedFrameAccessor", "OrdinaryMassRebuildMixin"],
-  "injectors": {"defaultRequire": 1}
+  "mixins": [
+    "EngagedContactMixin",
+    "EngagedFrameAccessor",
+    "OrdinaryMassRebuildMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "plugin": "dev.coasterslaunchsystems.mixin.SchedulerMixinPlugin",
+  "client": [
+    "VeilSchedulerStartupMixin"
+  ]
 }

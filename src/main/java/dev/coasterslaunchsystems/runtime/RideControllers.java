@@ -41,6 +41,11 @@ public final class RideControllers {
   public static void register(ServerLevel level, RideControllerEntity controller) {
     CONTROLLERS.computeIfAbsent(level, ignored -> new LinkedHashMap<>()).put(controller.getBlockPos(), new Entry(controller, level.getGameTime()));
   }
+  public static boolean available(ServerLevel level, RideControllerEntity controller) {
+    var entry = CONTROLLERS.getOrDefault(level, Map.of()).get(controller.getBlockPos());
+    return entry != null && entry.controller() == controller && entry.tick() >= level.getGameTime() - 1
+        && !controller.isRemoved() && loadedBlockEntity(level, controller.getBlockPos()) == controller;
+  }
   public static void unload(LevelEvent.Unload event) { if (event.getLevel() instanceof ServerLevel level) { CONTROLLERS.remove(level); REGISTRATION_GRACE.remove(level); CableControllers.unload(level); CableRecovery.unload(level); } }
   static boolean awaitingRegistration(ServerLevel level, RideControllerEntity controller) {
     if (!controller.reservation().isEmpty() || controller.phase() != State.HOLD) return false;
@@ -281,6 +286,9 @@ public final class RideControllers {
     if (!members.containsAll(occupying.keySet())) { controller.fail("Another consist occupies the reserved stopping region"); return; }
     // Reserve on approach/hold as well as launch. A rollback or missing contact never clears ownership.
     controller.reserve(members);
+    if (!MotionProviders.reserveAuthority(level, members.iterator().next(), controller.getBlockPos())) {
+      controller.fail("Vehicle authority unavailable; inspect and explicitly re-arm the retained controller"); return;
+    }
     boolean allClear = true, held = true, ready = true, running = controller.phase() == State.RUNNING || controller.phase() == State.BRAKING;
     double mass = 0, minimumForce = 256, maximumSpeed = 0, smallest = Double.POSITIVE_INFINITY, largest = Double.NEGATIVE_INFINITY, radius = 0;
     var bodyIds = new HashSet<UUID>();

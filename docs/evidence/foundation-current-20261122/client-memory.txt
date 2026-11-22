@@ -1,0 +1,3 @@
+MemoryCurrent=2317209600
+MemoryPeak=2321981440
+MemoryMax=6442450944

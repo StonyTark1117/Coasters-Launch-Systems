@@ -1,0 +1,28 @@
+{
+  "owner": "ls-foundation-freespin-observer-20261122",
+  "root": "/mnt/NVME4/launchsystems-runs/ls01-freespin-observer-20261122",
+  "display": 394,
+  "unit_prefix": "fd-ls-freeobserver-20261122",
+  "player": "Observer",
+  "client_script": "/mnt/NVME4/launchsystems-runs/ls01-freespin-observer-20261122/client.sh",
+  "client_limit": "6G",
+  "server_owner": "/root/rides",
+  "server_root": "/mnt/NVME4/launchsystems-runs/ls01-freespin-20261122",
+  "server_unit": "fd-ls-freespin-20261122-server.service",
+  "endpoint": "127.0.0.1:25761",
+  "status": "PASS: occupied full circuit and normal reboard fresh dispatch; client/display stopped",
+  "ls_sha256": "046993cecf9837081023992c5fda5512fd06ae3163df9fde527e7bc8219eef6e",
+  "fd_sha256": "df3662828a106efe6542abee735b26c7254a9a218e9c1e45783d2e979e63256e",
+  "original_ls_sha256": "67b2b08f571c78224be87b421010518c4cdc812362a1addf6b47ec68043b1d98",
+  "corrected_source": [
+    69,
+    98,
+    4
+  ],
+  "corrected_receiver": [
+    85,
+    98,
+    28
+  ],
+  "corrected_chassis": "006fd447-22ab-4bb8-801f-aab0e7a8fe20"
+}

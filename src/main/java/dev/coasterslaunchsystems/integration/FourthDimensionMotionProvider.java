@@ -22,24 +22,24 @@ import java.util.UUID;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 
-/** Isolated schema-4 adapter; dispatch delegates to the upstream public operation after reservation. */
+/** Pinned schema-8 vehicle snapshot with a registered, token-checked native authority facade. */
 public final class FourthDimensionMotionProvider implements VehicleMotionProvider {
   private static final Map<String, String> HARDWARE_VARIANTS = Map.of(
       "ARROW", "arrow_four_rail_v1", "ZACSPIN", "zacspin_legacy_v1",
       "FREE_SPIN", "sns_magnetic_v1", "ZACSPIN_REVISED", "zacspin_revised_v1");
-  private final Method data, markers, allows, ready, dispatchOperation, captureOperation;
+  private final Method data, markers, allows, ready;
+  private final FourthDimensionAuthority authority;
   private final Field vehicles, carriers, carrierBody, capture, family, restraints, stopping,
       maintenance, fault, variant;
 
   public FourthDimensionMotionProvider() {
     try {
       var foundation = Class.forName("dev.fourthdimension.runtime.FoundationData");
-      if (foundation.getField("SCHEMA").getInt(null) != 4)
+      if (foundation.getField("SCHEMA").getInt(null) != 8)
         throw new ReflectiveOperationException("Unsupported Fourth Dimension save/API schema");
       var vehicle = Class.forName("dev.fourthdimension.runtime.FoundationData$Vehicle");
       var carrier = Class.forName("dev.fourthdimension.runtime.FoundationData$Carrier");
-      dispatchOperation = Class.forName("dev.fourthdimension.vehicle.VehicleOperations").getMethod("dispatch", ServerLevel.class, vehicle);
-      captureOperation = Class.forName("dev.fourthdimension.vehicle.VehicleOperations").getMethod("capture", ServerLevel.class, vehicle);
+      authority = new FourthDimensionAuthority();
       data = foundation.getMethod("get", ServerLevel.class);
       vehicles = foundation.getField("vehicles");
       carriers = vehicle.getField("carriers"); carrierBody = carrier.getField("body");
@@ -60,7 +60,7 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
   }
 
   @Override public int apiVersion() { return API_VERSION; }
-  @Override public String id() { return "fourthdimension:schema4"; }
+  @Override public String id() { return "fourthdimension:authority1"; }
 
   @Override public Optional<MotionVehicle> resolve(ServerLevel level, UUID chassis) {
     var body = CoasterCartResolve.findCartById(level, chassis);
@@ -92,13 +92,14 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
         var contact = EngagedContacts.current(level, cart).orElse(null);
         boolean support = contact != null && carriersAvailable(level, member)
             && (boolean) allows.invoke(null, cart, level, contact.hit());
-        boolean retained = maintenance.getBoolean(member) || !((String) fault.get(member)).isEmpty();
+        boolean retained = maintenance.getBoolean(member) || !((String) fault.get(member)).isEmpty()
+            || !authority.supported(level, member) || authority.denied(level, member);
         boolean closed = restraints.getBoolean(member);
         dispatch &= support && !retained && closed && (boolean) ready.invoke(null, level, member);
         boolean released = support && !retained && closed && !stopping.getBoolean(member)
             && ((List<?>) carriers.get(member)).stream().noneMatch(this::captured);
-        propel &= released;
-        brake &= released;
+        propel &= released && authority.permitted(level, member);
+        brake &= released && authority.permitted(level, member);
       }
       if (!operator.isEmpty()) { dispatch = false; propel = false; brake = false; }
       String expected = HARDWARE_VARIANTS.get(((Enum<?>) family.get(vehicle)).name());
@@ -129,7 +130,7 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
     try {
       var vehicle = ((Map<?, ?>) vehicles.get(data.invoke(null, level))).get(chassis);
       if (vehicle == null) return false;
-      dispatchOperation.invoke(null, level, vehicle);
+      if (!authority.dispatch(level, vehicle)) return false;
       return resolve(level, chassis).map(MotionVehicle::propulsionAllowed).orElse(false);
     } catch (ReflectiveOperationException failure) { throw new IllegalStateException("Fourth Dimension dispatch request was rejected", failure); }
   }
@@ -143,7 +144,8 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
       for (var id : snapshot.consist()) {
         var member = map.get(id); var cart = CoasterCartResolve.findCartById(level, id);
         var contact = cart == null ? null : EngagedContacts.current(level, cart).orElse(null);
-        if (member == null || contact == null || !carriersAvailable(level, member) || maintenance.getBoolean(member)
+        if (member == null || contact == null || !authority.supported(level, member) || authority.denied(level, member)
+            || !carriersAvailable(level, member) || maintenance.getBoolean(member)
             || !((String) fault.get(member)).isEmpty() || !(boolean) allows.invoke(null, cart, level, contact.hit()))
           return dev.coasterslaunchsystems.api.CaptureState.DENIED;
         captured &= stopping.getBoolean(member) && ((List<?>) carriers.get(member)).stream().allMatch(this::captured);
@@ -160,11 +162,21 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
     try {
       var vehicle = ((Map<?, ?>) vehicles.get(data.invoke(null, level))).get(chassis);
       if (vehicle == null) return false;
-      captureOperation.invoke(null, level, vehicle);
+      if (!authority.capture(level, vehicle)) return false;
       var after = captureState(level, chassis);
       return after == dev.coasterslaunchsystems.api.CaptureState.ALIGNING || after == dev.coasterslaunchsystems.api.CaptureState.READY;
     } catch (ReflectiveOperationException failure) { throw new IllegalStateException("Fourth Dimension capture request rejected", failure); }
   }
+
+  @Override public boolean reserveAuthority(ServerLevel level, UUID chassis, net.minecraft.core.BlockPos controller) {
+    return authority.reserve(level, chassis, controller);
+  }
+
+  @Override public void resumeAuthority(ServerLevel level, net.minecraft.core.BlockPos controller) {
+    authority.requestResume(level, controller);
+  }
+  @Override public boolean transferAuthority(ServerLevel level, UUID chassis, net.minecraft.core.BlockPos source,
+      net.minecraft.core.BlockPos target) { return authority.transfer(level, chassis, source, target); }
 
   private boolean captured(Object carrier) {
     try { return capture.getBoolean(carrier); }

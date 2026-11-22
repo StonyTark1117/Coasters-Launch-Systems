@@ -236,7 +236,9 @@ public final class RideTransfers {
       if (train.speed() > ceiling + .1) throw new IllegalStateException("Transfer exceeded certified speed");
       boolean clear = train.rows().stream().allMatch(r -> second.track().matches(r.contact().hit())
           && second.track().distance(r.contact().hit()) > r.radius() + 1);
-      if (clear) { controller.finishTransfer(target); controller.consumeRequest(); return true; }
+      if (clear && MotionProviders.transferAuthority(level, controller.reservation().iterator().next(), controller.getBlockPos(), target.getBlockPos())) {
+        controller.finishTransfer(target); controller.consumeRequest(); return true;
+      }
       if (train.rows().stream().anyMatch(r -> second.track().matches(r.contact().hit()) && second.track().distance(r.contact().hit()) >= second.brakeStart() - .6))
         controller.state(State.TRANSFER_BRAKING);
       controller.consumeRequest(); return true;

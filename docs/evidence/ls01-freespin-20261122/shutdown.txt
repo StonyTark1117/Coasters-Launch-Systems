@@ -1,0 +1,23 @@
+Id=fd-ls-freespin-20261122-client.service
+ActiveState=inactive
+SubState=dead
+MainPID=0
+Result=success
+ExecMainStatus=0
+MemoryPeak=[not set]
+
+Id=fd-ls-freespin-20261122-server.service
+ActiveState=inactive
+SubState=dead
+MainPID=0
+Result=success
+ExecMainStatus=0
+MemoryPeak=[not set]
+
+Id=fd-ls-freespin-20261122-xvfb.service
+ActiveState=inactive
+SubState=dead
+MainPID=0
+Result=success
+ExecMainStatus=0
+MemoryPeak=[not set]

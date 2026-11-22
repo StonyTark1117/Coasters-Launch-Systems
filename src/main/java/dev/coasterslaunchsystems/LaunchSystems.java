@@ -12,6 +12,16 @@ import dev.coasterslaunchsystems.integration.FourthDimensionMotionProvider;
 public final class LaunchSystems {
   public static final String ID = "coasterslaunchsystems";
 
+  private static dev.coasterslaunchsystems.api.VehicleMotionProvider fourthDimensionProvider() {
+    try {
+      if (Class.forName("dev.fourthdimension.runtime.FoundationData").getField("SCHEMA").getInt(null) == 4)
+        return new dev.coasterslaunchsystems.integration.LegacyFourthDimensionMotionProvider();
+      return new FourthDimensionMotionProvider();
+    } catch (ReflectiveOperationException mismatch) {
+      throw new IllegalStateException("Unsupported Fourth Dimension API; launches disabled", mismatch);
+    }
+  }
+
   public LaunchSystems(IEventBus bus) {
     dev.coasterslaunchsystems.runtime.CableTickets.bootstrap();
     dev.coasterslaunchsystems.content.EquipmentContent.register(bus);
@@ -26,7 +36,7 @@ public final class LaunchSystems {
     net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(dev.coasterslaunchsystems.runtime.RideControllers::wrenching);
     MotionProviders.registerOrdinaryFallback(new OrdinaryMotionProvider());
     if (ModList.get().isLoaded("fourthdimension"))
-      MotionProviders.register(new FourthDimensionMotionProvider());
+      MotionProviders.register(fourthDimensionProvider());
     LogUtils.getLogger().info("Coasters: Launch Systems loaded from {}",
         LaunchSystems.class.getProtectionDomain().getCodeSource().getLocation());
   }

@@ -1,0 +1,11 @@
+Id=fd-ls-freeobserver-20261122-client.service
+ActiveState=inactive
+SubState=dead
+MainPID=0
+Result=success
+
+Id=fd-ls-freeobserver-20261122-xvfb.service
+ActiveState=inactive
+SubState=dead
+MainPID=0
+Result=success

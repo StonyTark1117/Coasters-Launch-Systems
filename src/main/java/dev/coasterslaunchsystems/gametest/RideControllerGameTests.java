@@ -53,7 +53,7 @@ public final class RideControllerGameTests {
     String failure = "";
     Scene(GameTestHelper helper, int slot, String mode) { this(helper, slot, mode, 240); }
     Scene(GameTestHelper helper, int slot, String mode, int height) {
-      base = new OrdinaryPassengerGameTests.Scene(helper, slot, height, -896, mode.equals("single_tool_bound")); this.mode = mode;
+      base = new OrdinaryPassengerGameTests.Scene(helper, slot, height, -896, mode.endsWith("_tool_bound")); this.mode = mode;
       reverse = mode.contains("reverse"); linked = mode.contains("linked"); fourthDimension = mode.startsWith("arrow") || mode.startsWith("legacy") || mode.startsWith("free_spin") || mode.startsWith("revised") || mode.startsWith("pax"); controllerPosition = base.from.offset(4, -2, 8);
       if (!fourthDimension) { base.cart(mode.contains("swing_") ? 14 : reverse ? 56 : 8); if (linked) base.cart(reverse ? 50 : 14); }
       else prepareFourthDimension();
@@ -107,13 +107,13 @@ public final class RideControllerGameTests {
       var level = base.level;
       level.setBlockAndUpdate(controllerPosition, EquipmentContent.CONTROLLER.get().defaultBlockState());
       controller = (RideControllerEntity) level.getBlockEntity(controllerPosition);
-      if (!mode.equals("single_tool_bound")) {
+      if (!mode.endsWith("_tool_bound")) {
         var first = reverse ? base.to : base.from; var second = reverse ? base.from : base.to;
         controller.bind(level, first, second);
       }
       for (int s = 8; s <= 16; s += 2) { module(s, false); module(s, true); }
       for (int s = 21; s <= (shortBank ? 21 : 41); s += 2) module(s, true);
-      if (mode.equals("single_tool_bound")) bindWithSpanTool();
+      if (mode.endsWith("_tool_bound")) bindWithSpanTool();
       track = DirectedTrack.resolve(level, reverse ? base.to : base.from, reverse ? base.from : base.to).orElseThrow();
     }
     void bindWithSpanTool() {
@@ -154,7 +154,7 @@ public final class RideControllerGameTests {
       var cabinet = (EquipmentCabinetEntity) level.getBlockEntity(pos);
       cabinet.bind(level, reverse ? base.to : base.from, reverse ? base.from : base.to);
       if (mode.contains("swing_") && cabinet.mechanism().linear()) cabinet.tuneLinear(1.5, cabinet.accelerationLimit(), cabinet.jerkLimit());
-      if (!mode.equals("single_tool_bound")) {
+      if (!mode.endsWith("_tool_bound")) {
         controller.link(cabinet, exit);
         cabinet.setArmed(true);
       }
@@ -234,7 +234,7 @@ public final class RideControllerGameTests {
   @GameTestGenerator public static List<TestFunction> nativeControllerTests() {
     var tests = new ArrayList<TestFunction>(); int slot = 0;
     var modes = new ArrayList<>(List.of("single_forward", "single_reverse", "single_tool_bound", "linked_forward", "linked_reverse", "occupied_stop", "short_bank", "power_loss", "reload", "module_loss", "owned_module"));
-    if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of("arrow_forward", "arrow_reverse", "arrow_linked_forward", "arrow_linked_reverse", "free_spin_forward", "free_spin_reverse"));
+    if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.addAll(List.of("arrow_forward", "arrow_reverse", "arrow_tool_bound", "arrow_linked_forward", "arrow_linked_reverse", "free_spin_forward", "free_spin_reverse", "free_spin_tool_bound"));
     for (String mode : modes) {
       int index = slot++;
       tests.add(new TestFunction("launchsystems_controller", "coasterslaunchsystems.controller_" + mode,
@@ -242,7 +242,7 @@ public final class RideControllerGameTests {
     }
     return tests;
   }
-  private static void run(Scene s) {
+  static void run(Scene s) {
     if (!registered) { NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, RideControllerGameTests::observe); NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, RideControllerGameTests::afterPhysics); registered = true; }
     s.at(40, () -> { if (s.fourthDimension) s.boardFourthDimension(); else for (var cart : s.base.parents) for (int seat = 0; seat < 4; seat++) s.base.board(cart, seat); if (s.mode.equals("occupied_stop")) s.base.cart(32); });
     s.at(55, () -> {

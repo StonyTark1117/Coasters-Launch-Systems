@@ -1,0 +1,2 @@
+MemoryPeak=2434306048
+MemoryMax=6442450944

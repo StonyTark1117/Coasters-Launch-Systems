@@ -1,0 +1,16 @@
+{
+  "base_commit": "1ac51d7b1dc7c3dffdb672b6df9ab7b9b875fb09",
+  "profile": "fd-current",
+  "minecraft": "1.21.1",
+  "java": "21.0.13.1",
+  "neoforge": "21.1.256",
+  "sable": "2.0.6",
+  "coasters": "0.1.5",
+  "working_tree": "Concurrent foundation/authority changes were present. This evidence covers only the clearance guard; it does not qualify the adapter.",
+  "preserved_jar": "/mnt/NVME4/launchsystems-runs/ls01-coordinator-20261122/clearance-tested.jar",
+  "sha256": {
+    "/home/braydon/.local/state/launchsystems-runs/ls01-coordinator-20261122/build/libs/coasters-launch-systems-0.0.1-dev.72.jar": "af0b5605252f97f94e68d5f3d6e11a173669613e33912cae440ef9ea22b7e709",
+    "src/main/java/dev/coasterslaunchsystems/track/EquipmentClearance.java": "a7d16825e7dc2156e124ba4e390c0ce5ff23d7bab00779a03538c6e222e7da50",
+    "src/main/java/dev/coasterslaunchsystems/gametest/EquipmentClearanceGameTests.java": "f5c6cb7f2a31992e5a43713ef55741722618d55390a9b5b4dae42fa50ec36763"
+  }
+}

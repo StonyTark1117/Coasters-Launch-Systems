@@ -1,0 +1,15 @@
+{
+  "LaunchSystems.java": "7db1f36a77fd269646d8cc3dc12a2c1f2a765bd29114f0eaf6317e6702b4a927",
+  "api/MotionProviders.java": "345ba327ee60ec0ba9203f4060203a203a913a16dbb1d07ad2e7cf56d28e80dd",
+  "api/VehicleMotionProvider.java": "ddd7100a691a4f16565bdf1fcde3ea486b3a61735317edecba6a87c7a9a2e79f",
+  "content/RideControllerEntity.java": "87b1ff261b3631cf0e2820dd827c6aac2ee91fc7e7d1c154fa4d4bd1bbdad534",
+  "runtime/RideControllers.java": "ffc8c6fd63fd192f361b810e0446ed250814783473d543b5873304bf0c8a2795",
+  "runtime/RideTransfers.java": "25cc596aa4fbd4daa455a026ebd4f1f734f0b49f6c1d4a2764a8621a9f32b38d",
+  "integration/FourthDimensionAuthority.java": "94599f2492ef140350318c235ec0dbcb83c17b10e9c1952e3117f2db4b41d577",
+  "integration/FourthDimensionMotionProvider.java": "352afa35b64e8122f6d6eff1c8c0235402474bddead4b7e49e85e5f622249964",
+  "integration/LegacyFourthDimensionMotionProvider.java": "e0db19601911d10890ee348265c2cd57230561ccaac261cfd5ad498835557a30",
+  "gametest/CurrentAuthorityGameTests.java": "bbf9a52ea7da116bf48cde7ffa6dc11f7082d9d90e0c5ea0cc99107947a8853d",
+  "gametest/CurrentAuthorityRecoveryGameTests.java": "204a91aa4f39d249c85b58e1e40e3cb45e0bb58803f311430cbb91b586649e07",
+  "gametest/RideControllerGameTests.java": "64398da27f0c97f9de28c4d21de4a07093c8f9cbee0246cd66e14da649fa7cf1",
+  "gametest/CircuitGameTests.java": "2daa15e079765e024e6e464fa582c1bc7b3f0bfbe2d77d083d1673e93a52ec36"
+}

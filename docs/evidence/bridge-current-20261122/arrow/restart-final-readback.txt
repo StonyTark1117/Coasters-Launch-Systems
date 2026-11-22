@@ -1,0 +1,32 @@
+data get block 5 98 4 phase => 5, 98, 4 has the following block data: "READY_EXIT"
+
+data get block 5 98 4 fault => 5, 98, 4 has the following block data: ""
+
+data get block 5 98 4 identity => 5, 98, 4 has the following block data: [I; 1150285247, -1683732462, -1178077440, 474531932]
+
+data get block 5 98 4 reservation => 5, 98, 4 has the following block data: [{id: [I; -890325595, -1167962236, -1965381066, -816511994]}]
+
+data get block 5 98 4 boarding_ready => 5, 98, 4 has the following block data: 1b
+
+data get block 21 98 28 reservation => 21, 98, 28 has the following block data: []
+
+execute as Dev at @s run sable info @e[distance=0..80,limit=20,sort=nearest] => Found 3 sub-levels:
+3c989e64-ad2f-4697-b858-2dfc402c5848:
+    Position: 3.999999761581421 102.46854400634766 13.222993850708008
+    Orientation: 2.5356560945510864E-4 -9.241816769645084E-7 4.93402353640704E-7 -1.0
+    Mass: 4.0
+    Linear Velocity: 5.306170351104811E-5 7.563575054518878E-4 -0.0011921076802536845
+    Angular Velocity: 0.00343328807502985 -9.518643491901457E-5 -4.487789192353375E-5
+caeeb5a5-ba62-4f84-8ada-aa36cf550406:
+    Position: 0.6111111044883728 102.1736068725586 13.535168647766113
+    Orientation: 5.5591037551039335E-8 -4.1247751880746364E-8 -1.3719131608525004E-8 -1.0
+    Mass: 9.0
+    Linear Velocity: 1.6641779509996013E-8 -4.686937609221786E-4 8.516069501638412E-4
+    Angular Velocity: -4.557217107503675E-5 7.131938673410332E-6 8.908547897590324E-6
+31fac2cb-4057-48ba-9e7c-58064452677b:
+    Position: -3.0000057220458984 102.46849822998047 13.22298526763916
+    Orientation: 2.4270811991300434E-4 5.230654664956091E-7 -1.0343068424845114E-5 -1.0
+    Mass: 4.0
+    Linear Velocity: -2.2228961825021543E-5 0.0013386313803493977 -7.240066770464182E-4
+    Angular Velocity: 0.0034248854499310255 2.3538076493423432E-4 -2.2809825895819813E-4
+

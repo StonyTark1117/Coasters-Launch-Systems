@@ -6,10 +6,27 @@ plugins {
 version = mod_version
 group = 'dev.coasterslaunchsystems'
 base { archivesName = 'coasters-launch-systems' }
-// Java classpaths use ':' as a separator on Unix. Keep compiled outputs outside a
-// colon-containing checkout (such as the project's human-readable title).
-if (projectDir.absolutePath.contains(':') && File.pathSeparator == ':') {
-    layout.buildDirectory = file("${System.getProperty('java.io.tmpdir')}/coasterslaunchsystems-${Integer.toHexString(projectDir.absolutePath.hashCode())}/build")
+// Keep owned runs persistent and isolated; /tmp is RAM-backed on this host.
+if (project.hasProperty('lsBuildDirectory')) {
+    layout.buildDirectory = file(project.property('lsBuildDirectory'))
+} else if (projectDir.absolutePath.contains(':') && File.pathSeparator == ':') {
+    layout.buildDirectory = file("${System.getProperty('user.home')}/.local/state/coasterslaunchsystems-${Integer.toHexString(projectDir.absolutePath.hashCode())}/build")
+}
+// Current standalone/FD stack is qualified; retain legacy for exact historical reproduction.
+// Optional Fourth Dimension is still selected explicitly and validated by its provider guard.
+def dependencyProfile = providers.gradleProperty('lsDependencyProfile').getOrElse('fd-current')
+def dependencyPins = [
+    'legacy': [neo: neo_version, sable: '2.0.3', veil: '4.1.4', fd: '0.9.0-dev.1'],
+    'fd-current': [neo: '21.1.256', sable: '2.0.6', veil: '4.3.2', fd: '1.1.0']
+][dependencyProfile]
+if (dependencyPins == null) throw new GradleException('lsDependencyProfile must be legacy or fd-current')
+def gameDirectoryFor = { String property, String fallback ->
+    project.hasProperty(property) ? file(project.property(property)) : layout.buildDirectory.dir(fallback).get().asFile
+}
+def clientHeap = providers.gradleProperty('lsClientMaxHeap').getOrElse('1536M')
+def serverHeap = providers.gradleProperty('lsServerMaxHeap').getOrElse('2048M')
+[lsClientMaxHeap: clientHeap, lsServerMaxHeap: serverHeap].each { name, value ->
+    if (!(value ==~ /[1-9][0-9]*[mMgG]/)) throw new GradleException("${name} must be a positive heap size such as 1536M or 2G")
 }
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 if (project.hasProperty('lsPackaged')) {
@@ -31,29 +48,32 @@ repositories {
 }
 
 neoForge {
-    version = neo_version
+    version = dependencyPins.neo
     if (project.hasProperty('lsPackaged')) addModdingDependenciesTo sourceSets.packaged
     runs {
         client {
-            client(); gameDirectory = layout.buildDirectory.dir(project.hasProperty('lsPackaged') ? (project.hasProperty('lsValidation') ? 'runs/packaged-client-validation' : 'runs/packaged-client') : 'runs/client').get().asFile
+            client(); gameDirectory = gameDirectoryFor('lsClientGameDirectory', project.hasProperty('lsPackaged') ? (project.hasProperty('lsValidation') ? 'runs/packaged-client-validation' : 'runs/packaged-client') : 'runs/client')
+            jvmArgument "-Xmx${clientHeap}"
             if (project.hasProperty('lsConnect')) programArguments.addAll '--quickPlayMultiplayer', project.property('lsConnect')
             if (project.hasProperty('lsWorld')) programArguments.addAll '--quickPlaySingleplayer', project.property('lsWorld')
             systemProperty 'coasterslaunchsystems.validation', project.hasProperty('lsValidation').toString()
         }
         observer {
-            client(); gameDirectory = layout.buildDirectory.dir(project.hasProperty('lsPackaged') ? (project.hasProperty('lsValidation') ? 'runs/packaged-observer-validation' : 'runs/packaged-observer') : 'runs/observer').get().asFile
+            client(); gameDirectory = gameDirectoryFor('lsObserverGameDirectory', project.hasProperty('lsPackaged') ? (project.hasProperty('lsValidation') ? 'runs/packaged-observer-validation' : 'runs/packaged-observer') : 'runs/observer')
+            jvmArgument "-Xmx${clientHeap}"
             programArguments.addAll '--username', 'Observer'
             if (project.hasProperty('lsConnect')) programArguments.addAll '--quickPlayMultiplayer', project.property('lsConnect')
             systemProperty 'coasterslaunchsystems.validation', project.hasProperty('lsValidation').toString()
         }
         server {
-            server(); gameDirectory = layout.buildDirectory.dir(project.hasProperty('lsPackaged') ? 'runs/packaged-server' : 'runs/server').get().asFile; programArgument '--nogui'
+            server(); gameDirectory = gameDirectoryFor('lsServerGameDirectory', project.hasProperty('lsPackaged') ? 'runs/packaged-server' : 'runs/server'); programArgument '--nogui'
+            jvmArgument "-Xmx${serverHeap}"
             systemProperty 'coasterslaunchsystems.freezeOnStart', project.hasProperty('lsFrozen').toString()
         }
         gameTestServer {
             type = 'gameTestServer'
-            gameDirectory = layout.buildDirectory.dir('runs/gametest').get().asFile
-            def testNamespaces = 'coasterslaunchsystems,coasterslaunchsystems_routes,coasterslaunchsystems_recovery,coasterslaunchsystems_linear_motors,coasterslaunchsystems_linear,coasterslaunchsystems_4d_linear,coasterslaunchsystems_thermal_linear,coasterslaunchsystems_cable'
+            gameDirectory = gameDirectoryFor('lsGameTestGameDirectory', 'runs/gametest')
+            def testNamespaces = 'coasterslaunchsystems,coasterslaunchsystems_routes,coasterslaunchsystems_recovery,coasterslaunchsystems_linear_motors,coasterslaunchsystems_linear,coasterslaunchsystems_4d_linear,coasterslaunchsystems_thermal_linear,coasterslaunchsystems_cable,coasterslaunchsystems_clearance'
             if (project.hasProperty('lsEngineeredJar')) testNamespaces += ',coasterslaunchsystems_engineered'
             systemProperty 'neoforge.enabledGameTestNamespaces', project.findProperty('lsTestNamespaces') ?: testNamespaces
             systemProperty 'coasterslaunchsystems.engineeredTests', project.hasProperty('lsEngineeredJar').toString()
@@ -92,7 +112,7 @@ dependencies {
     compileOnly 'dev.engine-room.flywheel:flywheel-neoforge-api-1.21.1:1.0.6'
     runtimeOnly 'dev.engine-room.flywheel:flywheel-neoforge-1.21.1:1.0.6'
     implementation 'com.tterrag.registrate:Registrate:MC1.21-1.3.0+67'
-    implementation 'dev.ryanhcode.sable:sable-neoforge-1.21.1:2.0.3'
+    implementation "dev.ryanhcode.sable:sable-neoforge-1.21.1:${dependencyPins.sable}"
     implementation 'curse.maven:create-coasters-simulated-1601871:8655742'
     // Optional, compile-only public API for the fail-closed Engineered 1.1.1 overlap bridge.
     compileOnly 'curse.maven:coasters-engineered-1643631:8863559'
@@ -113,11 +133,13 @@ tasks.named('jar') {
     from('LICENSE') { into 'META-INF'; rename { 'LICENSE-coasterslaunchsystems.txt' } }
 }
 tasks.named('runGameTestServer') {
-    if (!project.hasProperty('lsKeepGameTestWorld')) doFirst { delete layout.buildDirectory.dir('runs/gametest/world') }
+    if (!project.hasProperty('lsKeepGameTestWorld')) doFirst { delete new File(gameDirectoryFor('lsGameTestGameDirectory', 'runs/gametest'), 'world') }
 }
 if (project.hasProperty('lsPackaged')) {
     // Packaged runs consume our binary and must build it even when invoked directly.
-    ['runClient', 'runObserver', 'runServer', 'runGameTestServer'].each { runTask ->
+    ['runClient', 'runObserver', 'runServer', 'runGameTestServer',
+     'createClientLaunchScript', 'createObserverLaunchScript', 'createServerLaunchScript',
+     'createGameTestServerLaunchScript'].each { runTask ->
         tasks.named(runTask) { dependsOn tasks.named('jar') }
     }
 }
@@ -134,5 +156,11 @@ tasks.named('processResources') {
     dependsOn api4Fixture
     from(api4Fixture.flatMap { it.destinationDirectory.file('dev/coasterslaunchsystems/compat/Api4ImplicitProvider.class') }) { into 'fixtures/api4' }
     inputs.property 'version', project.version
-    filesMatching('META-INF/neoforge.mods.toml') { expand version: project.version }
+    inputs.property 'neo_version', dependencyPins.neo
+    inputs.property 'sable_version', dependencyPins.sable
+    inputs.property 'fd_supported_version', dependencyPins.fd
+    inputs.property 'veil_version', dependencyPins.veil
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand version: project.version, neo_version: dependencyPins.neo, sable_version: dependencyPins.sable, fd_supported_version: dependencyPins.fd, veil_version: dependencyPins.veil
+    }
 }
