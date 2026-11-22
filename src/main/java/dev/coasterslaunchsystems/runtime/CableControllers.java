@@ -126,6 +126,9 @@ final class CableControllers {
       controller.fail("Another consist occupies the reserved cable section"); return;
     }
     controller.reserve(members);
+    if (!MotionProviders.reserveAuthority(level, members.iterator().next(), controller.getBlockPos())) {
+      controller.fail("Vehicle authority unavailable; inspect and explicitly re-arm the retained controller"); return;
+    }
     boolean held = true, ready = true; double mass = 0, brakeForce = 256, minimum = Double.POSITIVE_INFINITY, maximum = 0, speed = 0, radius = 0;
     var bodies = new HashSet<UUID>();
     for (var id : members) {

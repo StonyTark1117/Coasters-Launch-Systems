@@ -3,8 +3,9 @@
 Updated **2026-11-22 (America/Phoenix)**. **0.1.0 is accepted**: foundation
 LS001–LS005 and usable-ride packages LS101–LS106 are complete, with exact scope
 and inputs in the [integration record](docs/evidence/0.1/integration-20261122/README.md).
-The broader **0.4.0 six-launch outcome** remains open; later packages retain
-their existing scope and are not part of the completed 0.1 assignment.
+The **0.4.0 six-launch outcome is accepted**, including LS201–LS205,
+LS301–LS303 and LS401–LS403; see the [combined integration record](docs/evidence/0.4/integration-20261122/README.md).
+Packages 0.5 onward retain their scope and are unassigned.
 [Validation](docs/VALIDATION.md) owns accepted evidence;
 [CURRENT-WORK](docs/CURRENT-WORK.md) owns assignments. Stable LS IDs retain
 scope and acceptance. Version milestones express outcomes and order, not dates.
@@ -15,9 +16,9 @@ scope and acceptance. Version milestones express outcomes and order, not dates.
 | --- | --- | --- |
 | Foundation refresh | A working modern standalone stack and an explicit current Fourth Dimension bridge | LS001–LS005 accepted, including standalone startup, current FD authority and clearance. |
 | 0.1 — Usable rides | Tire transport/launch, final-hold fin clamps, passive magnetic trim, local controller, three player-built ordinary/Arrow/Free Spin rides | LS101–LS106 accepted: three player-built empty/occupied rides, normal exit/reboard and packaged lifecycle evidence. |
-| 0.2 — Linear launches | Distinct LSM and LIM, bounded swing launches, skid/thermal braking and original-family certification | LS201–LS205; substantial native evidence, remaining mechanism/player/lifecycle criteria open. |
-| 0.3 — Physical cable launch | Finite flywheel energy, constrained catch/carriage, release, physical return and inspected recovery | LS301–LS303; substantial implementation, service and current-Arrow recovery remain to reconcile. |
-| 0.4 — Complete six-launch release | Hydraulic and pneumatic equipment join tire, LSM, LIM and flywheel; coherent usable content and interruption behavior | LS401–LS403 plus preceding gates; first complete release target, not a rename of dev.72. |
+| 0.2 — Linear launches | Distinct LSM and LIM, bounded swing launches, skid/thermal braking and original-family certification | LS201–LS205 accepted: native original-family coverage, actual occupied swing/skid and persistence. |
+| 0.3 — Physical cable launch | Finite flywheel energy, constrained catch/carriage, release, physical return and inspected recovery | LS301–LS303 accepted: occupied pull, finite work, physical return/service and current Arrow recovery. |
+| 0.4 — Complete six-launch release | Hydraulic and pneumatic equipment join tire, LSM, LIM and flywheel; coherent usable content and interruption behavior | LS401–LS403 and preceding gates accepted: distinct occupied pressure operation, recharge, service and interruption. |
 | 0.5 — Expanded FD vehicle support | Explicit launch/brake certificates for the modern FD catalog, preserving each family's mechanics and body choices | LS501–LS504; newly planned, after 0.4. No automatic eligibility for every launcher. |
 | 0.6 — Shared ride operation | Launch Systems equipment respects FD's bounded multi-train reservations and operator controls | LS601–LS602; newly planned, after LS004 and relevant vehicle/equipment certificates. |
 | 0.9 — Release candidate | Reconciled advertised matrix, migration/multiplayer, measured costs and finished instructions | LS901–LS904; planned. Reuse accepted evidence and run only remaining/affected coverage. |
@@ -100,15 +101,19 @@ Acceptance remains three usable demonstration rides: ordinary, Arrow and individ
 
 ## Version 0.2 linear motors and local block operation
 
+Accepted with [current linear/skid evidence](docs/evidence/ls02-linear-20261122/README.md) and its explicitly retained native/shared lifecycle cases.
+
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |
 | LS201 | Original LSM drive, buffer, vehicle reaction interface and tuning | 0.1. Finite power, target/jerk limits, rolling entry, reverse propulsion and braking pass loaded tests. |
 | LS202 | Distinct LIM hardware and slip/loss curve | LS201. Force/resource behavior differs meaningfully from LSM under the same test load and configured supply. |
-| LS203 | Bounded swing-launch program and direction-aware block reservations | LS201–LS202. Scoped LSM/LIM forward/backward/forward ordinary plus pinned Arrow, Legacy, Free Spin and Revised fixtures pass after the correct midpoint tail clearance. Linked Arrow normal operation also passes only after the full consist tail clears midpoint. Eligible single-car families and linked Arrow reversed-leg authority-loss cases retain the full-section lease and fin hold after power returns. Broader lifecycle and player-operation acceptance remains. |
-| LS204 | Skid brake and heat/cooling limits | LS102–LS103. A standalone skid cabinet, separately placed shoe, ordinary/4D adapters and bounded heat-derated force path are implemented. Focused optional-provider and fail-closed saved-world interruption acceptance passed; wider lifecycle/gameplay acceptance remains. |
-| LS205 | All eligible 4D family linear-drive/brake fixtures | LS004, LS201–LS204. Focused LSM/LIM fixtures cover Arrow, Legacy, Free Spin and Revised with loaded independent carrier rotation; coupled reverse Arrow remains within native limits. Arrow rollback/profile behavior and broader lifecycle/gameplay acceptance remain. PAX retains its declared restrictions. |
+| LS203 | Bounded swing-launch program and direction-aware block reservations | LS201–LS202. Scoped LSM/LIM forward/backward/forward ordinary plus pinned Arrow, Legacy, Free Spin and Revised fixtures pass after the correct midpoint tail clearance. Linked Arrow normal operation also passes only after the full consist tail clears midpoint. Eligible single-car families and linked Arrow reversed-leg authority-loss cases retain the full-section lease and fin hold after power returns. Current authority, persistence and occupied player-operation acceptance is complete; unchanged shared lifecycle evidence carries forward. |
+| LS204 | Skid brake and heat/cooling limits | LS102–LS103. A standalone skid cabinet, separately placed shoe, ordinary/4D adapters and bounded heat-derated force path are implemented. Focused optional-provider and fail-closed saved-world interruption acceptance passed; current Arrow skid and actual occupied trim complete gameplay acceptance. |
+| LS205 | All eligible 4D family linear-drive/brake fixtures | LS004, LS201–LS204. Focused LSM/LIM fixtures cover Arrow, Legacy, Free Spin and Revised with loaded independent carrier rotation; coupled reverse Arrow remains within native limits. Current authority-loss, Arrow persistence and occupied gameplay checks complete the assigned original-family outcome. PAX retains its declared restrictions. |
 
 ## Version 0.3 physical flywheel launch
+
+Accepted with [current native/restart evidence](docs/evidence/0.3/cable-current-20261122/README.md), normal occupied construction/pull, corrected physical return and shared pressure service proof.
 
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |
@@ -117,6 +122,8 @@ Acceptance remains three usable demonstration rides: ordinary, Arrow and individ
 | LS303 | Cable-system interruption and 4D catch certification | LS302. Loaded ordinary and eligible Arrow consists survive power loss/restart within measured catch/drum limits. Unsupported individual-car sockets are rejected. |
 
 ## Version 0.4 hydraulic and pneumatic launch
+
+Accepted with [pressure evidence](docs/evidence/ls04-pressure-20261122/README.md): distinct finite stores, actual occupied operation/recharge/service, current interruption checks and rendered instructions.
 
 | ID | Work | Prerequisites and acceptance |
 | --- | --- | --- |

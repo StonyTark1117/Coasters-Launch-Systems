@@ -1,0 +1,21 @@
+{
+  "LSM": {
+    "peak_heat": 0.7576736216010449,
+    "min_energy": 2047.0591881891262
+  },
+  "LIM": {
+    "peak_heat": 24.29977552826846,
+    "min_energy": 2044.9113865948198
+  },
+  "phases": [
+    "HOLD",
+    "READY",
+    "RUNNING"
+  ],
+  "passes": [
+    0,
+    1,
+    2
+  ],
+  "samples": 100
+}

@@ -1,0 +1,7 @@
+{
+  "sha256": "ee80b2125f9a27c208c43226122093eac81bf2fb2070b8d6f32ddced6058c6d0",
+  "jar": "/mnt/NVME4/launchsystems-runs/ls04-pressure-20261122/artifacts/pressure-player-ee80b2125f9a.jar",
+  "profile": "fd-current",
+  "FD": "df3662828a106efe6542abee735b26c7254a9a218e9c1e45783d2e979e63256e",
+  "buildLog": "pressure-player-build.log"
+}

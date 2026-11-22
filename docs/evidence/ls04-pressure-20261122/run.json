@@ -1,0 +1,12 @@
+{
+  "root": "/mnt/NVME4/launchsystems-runs/ls04-pressure-20261122",
+  "owner": "ls04-pressure-foundation-20261122",
+  "display": 398,
+  "unit_prefix": "fd-ls04-pressure-20261122",
+  "player": "Dev",
+  "client_script": "/mnt/NVME4/launchsystems-runs/ls04-pressure-20261122/build/moddev/runClient.sh",
+  "server_script": "/mnt/NVME4/launchsystems-runs/ls04-pressure-20261122/build/moddev/runServer.sh",
+  "client_limit": "6G",
+  "server_limit": "4G",
+  "status": "PASS LS401\u2013LS403; client/server/display stopped, all MainPID0/success; worlds saved"
+}

@@ -1,0 +1,9 @@
+Id=fd-ls03-pressure-observer-20261122-client.service
+ActiveState=failed
+MainPID=0
+Result=exit-code
+
+Id=fd-ls03-pressure-observer-20261122-xvfb.service
+ActiveState=inactive
+MainPID=0
+Result=success

@@ -1,0 +1,18 @@
+execute positioned 0.5 100 16 run sable info @e[distance=0..60,limit=5] => Found 2 sub-levels:
+3c897670-d524-4c37-b3ed-856d210cd389:
+    Position: 0.5000000596046448 97.35250091552734 8.291664123535156
+    Orientation: -1.9726653590623755E-6 3.0834812037028314E-8 1.9461508956025025E-13 1.0
+    Mass: 25.0
+    Linear Velocity: 0.0 0.0 0.0
+    Angular Velocity: 0.0 0.0 0.0
+45605f08-e2d1-459c-a457-3ec1f84ad5af:
+    Position: 0.2777777910232544 100.47916412353516 22.058700561523438
+    Orientation: 3.3473920640516793E-38 1.0 2.946119879183632E-38 2.915949437465315E-8
+    Mass: 4.5
+    Linear Velocity: 0.0 -2.481281408108771E-4 -2.6818289464129933E-36
+    Angular Velocity: -0.0 -0.0 0.0
+
+data get block -1 98 8 => -1, 98, 8 has the following block data: {ls_cable_returning: 0b, ls_flywheel_energy: 5000.0d, ls_cable_moving: 0b, ls_geometry: 9095987158672417537L, Source: [I; -2, 98, 8], ls_schema: 12, ls_to: 180324L, Network: {Capacity: 1048576.0f, Size: 2, AddedStress: 16.0f, Id: -549755781022L, Stress: 1024.0f}, ls_armed: 0b, id: "coasterslaunchsystems:equipment_cabinet", ls_controller_pos: 1099511660642L, ls_axis: "X", Speed: 64.0f, ls_heat: 0.0d, ls_controller: [I; -1991486021, 624642349, -1302961661, 781966888], ls_from: 100L, ls_cable_installed: 1b, ls_end: 9.0000005508463d, ls_cable_in_use: 0b, ls_identity: [I; -1040124685, -1881979562, -1453396123, -561405797], ls_start: 7.0000005508463d, x: -1, ls_cable_home: 7.791666103803302d, ls_fault: "Cable return completed under inspection; verify and rebind the guide before arming", y: 98, z: 8, ls_cable_carriage: [I; 1015641712, -719041481, -1276279443, 554488713]}
+
+data get block 4 98 8 => 4, 98, 8 has the following block data: {swing_forward_tail_clear: 0b, available: 21.99999965646188d, required: 7.309243845599616d, transferring: 0b, identity: [I; -1991486021, 624642349, -1302961661, 781966888], transfer_route: [], reservation: [{id: [I; 1163943688, -489601636, -1537786175, -129313361]}], from: 100L, id: "coasterslaunchsystems:ride_controller", phase: "INSPECTION", fault: "Reloaded controller requires inspection; reservation retained", swing_backward_tail_clear: 0b, modules: [{pos: -274877874078L, exit_drive: 0b, id: [I; -1040124685, -1881979562, -1453396123, -561405797]}, {pos: 274877939810L, exit_drive: 0b, id: [I; -470961611, -939832282, -2140572353, -332099911]}, {pos: 274878001250L, exit_drive: 0b, id: [I; 789770639, 1304314979, -1360618833, -438428700]}, {pos: 274878009442L, exit_drive: 0b, id: [I; 1458136135, 908084485, -1818550965, -1295693103]}, {pos: 274878017634L, exit_drive: 0b, id: [I; 390442794, -40679195, -1894569924, 20732639]}, {pos: 274878025826L, exit_drive: 0b, id: [I; 1230350309, 1060981860, -1416563195, -836013705]}, {pos: 274878034018L, exit_drive: 0b, id: [I; 536411833, -76264799, -2049812665, 888426731]}, {pos: 274878042210L, exit_drive: 0b, id: [I; 377087065, 1125467085, -1651204801, -510537711]}, {pos: 274878050402L, exit_drive: 0b, id: [I; -819297973, 155602929, -2021392833, -1694096060]}, {pos: 274878058594L, exit_drive: 0b, id: [I; 427736896, -1976089579, -1913236268, 755850267]}, {pos: 274878066786L, exit_drive: 0b, id: [I; -164501775, -494514744, -1605596950, 1958247329]}, {pos: 274878074978L, exit_drive: 0b, id: [I; 43379786, 1621378898, -1885701719, -220744693]}, {pos: 274878083170L, exit_drive: 0b, id: [I; 299449222, -644856818, -2030025348, -82276248]}], swing_program: 0b, ls_controller_schema: 6, boarding_ready: 0b, receiver_manifest: [], armed: 0b, x: 4, receiver_station_capture: 0b, y: 98, swing_pass: 0, geometry: 9095987158672417537L, z: 8, station_capture: 0b, transfer_speed_limit: 0.0d, to: 180324L}
+

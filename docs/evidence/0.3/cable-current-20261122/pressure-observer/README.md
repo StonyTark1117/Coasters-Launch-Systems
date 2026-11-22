@@ -1,0 +1,11 @@
+# Independent pressure operator, 2026-11-22
+
+Owner `/root/bridge`, display397, client usernameObserver, independent game/argfile/artifact directories. Foundation owns server25791 and Dev. Exact corrected LS SHA2564ec667333242a50b77d8a2555003ae787d7c96fb2bf7a8506b81b561c05b3a5e and FDdf366 snapshot. Java21,1536M heap,6GiB Minecraft-only service. Normal binding/RawInput settings retained; camera yaw0→6.15 separately verified before normal lever use. A pre-world launch failed because copied NeoForge classpath paths were relocated; exact existing artifacts were restored, everyclasspath JAR was verified present, then the client joined correctly. No world action happened in the failed launch.
+
+The separately recorded flywheel world is closed; this Observer only operates the foundation-owned pressure server under explicit handoff. Each fresh high edge follows low-state and occupied readbacks; no unrequested lever input or server lifecycle action.
+
+Hydraulic: normal fresh high at21:21:33.909Z changed leverfalse→true and controllerREADY→RUNNING, with unchanged Devseat. Exterior video preserves the occupied stop and physical return. Foundation confirmed HOME at21:21:59Z and normal exit/controller-disarm retirement at21:22:17Z. Observer then stopped at21:22:47Z; MainPID0 for client/display. The client exit143 was the requested systemctl SIGTERM (this hand-created unit omitted SuccessExitStatus143), not a game crash. Foundation alone saved/stopped/switched the world.
+
+Pneumatic: same exact artifacts, separate foundation-owned immutable prelaunch copy; reconnected without extra operator input.
+
+Pneumatic normal fresh high at21:25:32.973Z passed low→high/RUNNING with the same Devseat; the receiver started naturally partially charged. Independent readback shows returning0/HOLD and the rider retained at the downstream stop. Foundation confirmed normal exit and HOME controller-disarm retirement at21:26:17Z, retaining the parked train reservation. Observer was explicitly released and stopped at21:26:33Z. Both owned client/display PIDs are0; client exit143 is the requested SIGTERM as above, Xvfb is inactive/success. No owned server belongs to this observer; foundation retained sole ownership through saving its world. Peak client memory was2.2GiB within6GiB.

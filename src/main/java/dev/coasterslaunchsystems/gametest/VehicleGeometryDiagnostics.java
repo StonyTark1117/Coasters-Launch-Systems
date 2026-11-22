@@ -51,16 +51,20 @@ public final class VehicleGeometryDiagnostics {
   }
   private static List<Map<String, Object>> inspect(ServerLevel level, UUID chassis, BlockPos sourcePos)
       throws ReflectiveOperationException {
-    var foundation = Class.forName("dev.fourthdimension.runtime.FoundationData");
-    var data = foundation.getMethod("get", ServerLevel.class).invoke(null, level);
-    var vehicle = ((Map<?, ?>) field(data, "vehicles")).get(chassis);
-    if (vehicle == null) throw new IllegalArgumentException("No registered native chassis " + chassis);
+    Object vehicle = null;
+    if (net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) {
+      var foundation = Class.forName("dev.fourthdimension.runtime.FoundationData");
+      var data = foundation.getMethod("get", ServerLevel.class).invoke(null, level);
+      vehicle = ((Map<?, ?>) field(data, "vehicles")).get(chassis);
+    }
     var ids = new LinkedHashSet<UUID>(); ids.add(chassis);
-    for (var carrier : (List<?>) field(vehicle, "carriers")) ids.add((UUID) field(carrier, "body"));
+    if (vehicle != null)
+      for (var carrier : (List<?>) field(vehicle, "carriers")) ids.add((UUID) field(carrier, "body"));
     var container = SubLevelContainer.getContainer(level); var pipeline = container.physicsSystem().getPipeline();
     var result = new ArrayList<Map<String, Object>>();
     result.add(Map.of("kind", "header", "tick", level.getGameTime(), "chassis", chassis,
-        "family", field(vehicle, "family").toString(), "variant", field(vehicle, "variant"),
+        "family", vehicle == null ? "NATIVE_BODY" : field(vehicle, "family").toString(),
+        "variant", vehicle == null ? "loaded body UUID only" : field(vehicle, "variant"),
         "note", "Current static-world intersections, not swept or body/body contacts; unloaded cells reported, never loaded"));
     for (var id : ids) {
       if (!(container.getSubLevel(id) instanceof ServerSubLevel body)) throw new IllegalArgumentException("Missing body " + id);

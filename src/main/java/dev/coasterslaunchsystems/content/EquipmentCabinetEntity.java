@@ -361,6 +361,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   private String padStatus() {
     if (mechanism().cable())
       return cableLabel() + " " + Math.round(cableStore().energy()) + "/" + Math.round(cableStore().capacity()) + " work; "
+          + pressureStatus() + "Phase " + cablePhase + "; " + (cableReady() ? "charge ready. " : "charging required. ")
           + (cableInUse ? "Catch retained for physical return or inspection. "
               : cableInstalled ? "Carriage installed at its physical home. "
               : controllerIdentity != null ? "Controller linked; awaiting a supported catch and guide. "
@@ -383,6 +384,16 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
       case HYDRAULIC -> "Hydraulic accumulator";
       case PNEUMATIC -> "Pneumatic receiver";
       default -> throw new IllegalStateException("Not a cable store");
+    };
+  }
+  private String pressureStatus() {
+    return switch (mechanism()) {
+      case HYDRAULIC -> "Pressure " + Math.round(hydraulic.pressure()) + "; oil "
+          + Math.round(hydraulic.oilVolume() * 100) / 100.0 + " charged / "
+          + Math.round(hydraulic.returnOilVolume() * 100) / 100.0 + " returned in the closed loop. ";
+      case PNEUMATIC -> "Receiver pressure " + Math.round(pneumatic.pressure())
+          + "; actuator force falls as air expands. ";
+      default -> "";
     };
   }
   private void changed() { setChanged(); sendData(); }

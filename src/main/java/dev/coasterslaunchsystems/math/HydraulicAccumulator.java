@@ -34,6 +34,9 @@ public final class HydraulicAccumulator implements EnergyStore {
 
   public double pressure() { return prechargePressure * Math.pow(gasVolume / gasVolume(), exponent); }
   public double oilVolume() { return gasVolume - gasVolume(); }
+  /** Fixed oil inventory moves between the accumulator and its return reservoir. */
+  public double oilCapacity() { return gasVolume - minimumVolume; }
+  public double returnOilVolume() { return oilCapacity() - oilVolume(); }
   public double force(double pistonArea) {
     return energy() == 0 ? 0 : (pressure() - ambientPressure) * Numbers.positive(pistonArea, "area");
   }

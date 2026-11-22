@@ -107,6 +107,12 @@ public final class CableControllerGameTests {
         helper -> run(new Scene(helper, selected, mode)))); }
     return tests;
   }
+  static TestFunction currentCase(String mode, int slot) {
+    return new TestFunction("launchsystems_cable_current", "coasterslaunchsystems_cable_current." + mode,
+        "coasterslaunchsystems_cable_current:empty", 1350, 0, true,
+        helper -> run(new Scene(helper, slot, mode)));
+  }
+
   private static void run(Scene s) {
     var r = s.ride; var level = r.base.level;
     if (!registered) { NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, CableControllerGameTests::observe); registered = true; }

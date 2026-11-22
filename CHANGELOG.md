@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.4.0 — six launch mechanisms (2026-11-22)
+
+- Complete the cumulative linear/swing/skid, physical flywheel and pressure
+  milestones using targeted native, saved-world and occupied-player evidence.
+- Preserve exact-owner safety braking after Fourth Dimension authority
+  suspension without restoring propulsion or replaying a dispatch. Acquire
+  native cable authority before engaging the retained train.
+- Inset cabinet collision and visible housings to clear the returning carriage;
+  verify physical home and normal/inspected service without moving bodies by command.
+- Show finite pressure, work, phase, readiness and charged/returned hydraulic
+  oil; update cable/pressure Ponder and operating instructions.
+- Add focused current-provider regression selectors and extend the opt-in
+  read-only geometry diagnostic to exact loaded ordinary bodies.
+- Retain the accepted 0.1 dependency baseline and explicit vehicle certificates.
+  Modern FD catalog and shared multi-train operation remain 0.5/0.6 work.
+
 ## 0.1.0 — current-core usable rides (2026-11-22)
 
 - Select NeoForge 21.1.256, Sable 2.0.6 and Veil 4.3.2 by default, retaining

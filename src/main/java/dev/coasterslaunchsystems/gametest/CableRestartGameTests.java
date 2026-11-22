@@ -130,9 +130,9 @@ public final class CableRestartGameTests {
         || phase.equals("prepareActiveArrow") || phase.equals("verifyActiveArrow")
         || phase.equals("prepareActiveMidGuide") || phase.equals("verifyActiveMidGuide")
         || phase.equals("prepareActiveMidGuideArrow") || phase.equals("verifyActiveMidGuideArrow")
-        || phase.equals("prepareActiveRelease") || phase.equals("prepareActiveReleaseHydraulic") || phase.equals("prepareActiveReleasePneumatic")
-        || phase.equals("verifyActiveRelease") || phase.equals("verifyActiveReleaseHydraulic") || phase.equals("verifyActiveReleasePneumatic")
-        || phase.equals("verifyActiveReleased") || phase.equals("verifyActiveReleasedHydraulic") || phase.equals("verifyActiveReleasedPneumatic")
+        || (phase.equals("prepareActiveRelease") || phase.equals("prepareActiveReleaseArrow")) || phase.equals("prepareActiveReleaseHydraulic") || phase.equals("prepareActiveReleasePneumatic")
+        || (phase.equals("verifyActiveRelease") || phase.equals("verifyActiveReleaseArrow")) || phase.equals("verifyActiveReleaseHydraulic") || phase.equals("verifyActiveReleasePneumatic")
+        || (phase.equals("verifyActiveReleased") || phase.equals("verifyActiveReleasedArrow")) || phase.equals("verifyActiveReleasedHydraulic") || phase.equals("verifyActiveReleasedPneumatic")
         || phase.equals("prepareActiveMoving") || phase.equals("verifyActiveMoving")
         || phase.equals("prepareActiveMovingArrow") || phase.equals("verifyActiveMovingArrow")
         || phase.equals("prepareActiveHydraulic") || phase.equals("verifyActiveHydraulic")
@@ -142,14 +142,14 @@ public final class CableRestartGameTests {
         "Set lsCableRestartPhase to an idle or active restart phase");
     if (phase.equals("prepare")) prepare(helper);
     else if (phase.equals("prepareActive") || phase.equals("prepareActiveMissingSocket") || phase.equals("prepareActiveArrow")
-        || phase.equals("prepareActiveMidGuide") || phase.equals("prepareActiveMidGuideArrow") || phase.equals("prepareActiveRelease")
+        || phase.equals("prepareActiveMidGuide") || phase.equals("prepareActiveMidGuideArrow") || (phase.equals("prepareActiveRelease") || phase.equals("prepareActiveReleaseArrow"))
         || phase.equals("prepareActiveReleaseHydraulic") || phase.equals("prepareActiveReleasePneumatic")
         || phase.equals("prepareActiveMoving") || phase.equals("prepareActiveMovingArrow")
         || phase.equals("prepareActiveHydraulic") || phase.equals("prepareActivePneumatic"))
       prepareActive(helper, phase.equals("prepareActiveMissingSocket"),
-          phase.equals("prepareActiveArrow") || phase.equals("prepareActiveMidGuideArrow") || phase.equals("prepareActiveMovingArrow"),
+          phase.equals("prepareActiveArrow") || phase.equals("prepareActiveMidGuideArrow") || phase.equals("prepareActiveMovingArrow") || phase.equals("prepareActiveReleaseArrow"),
           phase.equals("prepareActiveMidGuide") || phase.equals("prepareActiveMidGuideArrow"),
-          phase.equals("prepareActiveRelease") || phase.equals("prepareActiveReleaseHydraulic") || phase.equals("prepareActiveReleasePneumatic"),
+          (phase.equals("prepareActiveRelease") || phase.equals("prepareActiveReleaseArrow")) || phase.equals("prepareActiveReleaseHydraulic") || phase.equals("prepareActiveReleasePneumatic"),
           phase.equals("prepareActiveMoving") || phase.equals("prepareActiveMovingArrow"),
           phase.equals("prepareActiveHydraulic") || phase.equals("prepareActiveReleaseHydraulic") ? Mechanism.HYDRAULIC
               : phase.equals("prepareActivePneumatic") || phase.equals("prepareActiveReleasePneumatic") ? Mechanism.PNEUMATIC : Mechanism.FLYWHEEL);
@@ -162,8 +162,8 @@ public final class CableRestartGameTests {
     else if (phase.equals("verifyActiveHydraulic") || phase.equals("verifyActivePneumatic")) verifyActive(helper, false, false);
     else if (phase.equals("verifyReturningHydraulic") || phase.equals("verifyReturningPneumatic")) verifyReturning(helper);
     else if (phase.equals("verifyActiveMoving") || phase.equals("verifyActiveMovingArrow")) verifyActive(helper, false, true);
-    else if (phase.equals("verifyActiveRelease") || phase.equals("verifyActiveReleaseHydraulic") || phase.equals("verifyActiveReleasePneumatic")) verifyActiveRelease(helper);
-    else if (phase.equals("verifyActiveReleased") || phase.equals("verifyActiveReleasedHydraulic") || phase.equals("verifyActiveReleasedPneumatic")) verifyActiveReleased(helper);
+    else if ((phase.equals("verifyActiveRelease") || phase.equals("verifyActiveReleaseArrow")) || phase.equals("verifyActiveReleaseHydraulic") || phase.equals("verifyActiveReleasePneumatic")) verifyActiveRelease(helper);
+    else if ((phase.equals("verifyActiveReleased") || phase.equals("verifyActiveReleasedArrow")) || phase.equals("verifyActiveReleasedHydraulic") || phase.equals("verifyActiveReleasedPneumatic")) verifyActiveReleased(helper);
     else if (phase.equals("verifyActiveMissingSocket")) verifyActiveMissingSocket(helper);
     else if (phase.equals("verifyRetired")) verifyRetired(helper);
     else verify(helper, phase.equals("reclaim"));
@@ -251,7 +251,14 @@ public final class CableRestartGameTests {
       if (release) {
         var controller = (dev.coasterslaunchsystems.content.RideControllerEntity) level.getBlockEntity(RECOVERY_CONTROLLER);
         controller.reserve(java.util.Set.of(cart[0].getUniqueId()));
-        helper.assertTrue(controller.reservation().equals(java.util.Set.of(cart[0].getUniqueId())) && !controller.armed(),
+        if (arrow) {
+          controller.setArmed(true);
+          helper.assertTrue(dev.coasterslaunchsystems.api.MotionProviders.reserveAuthority(level,
+              cart[0].getUniqueId(), RECOVERY_CONTROLLER), "Current Arrow recovery fixture could not claim its real controller");
+          controller.fail("Saved-world active catch inspection fixture");
+        }
+        helper.assertTrue(controller.reservation().equals(java.util.Set.of(cart[0].getUniqueId()))
+            && (arrow ? !controller.fault().isEmpty() : !controller.armed()),
             "Active release fixture did not retain the captured controller reservation");
       }
       System.out.println("LS_CABLE_ACTIVE_RESTART prepared carriage=" + cabinet.cableCarriage()

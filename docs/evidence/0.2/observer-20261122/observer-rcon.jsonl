@@ -1,0 +1,19 @@
+{"at": "2026-11-22T21:06:49.542881+00:00", "server_owner": "/root/rides", "command": "give Observer minecraft:cobblestone 1", "result": "Gave 1 [Cobblestone] to Observer\n"}
+{"at": "2026-11-22T21:06:49.590958+00:00", "server_owner": "/root/rides", "command": "tp Observer 7.5 97 -4.5 180 60", "result": "Teleported Observer to 7.500000, 97.000000, -4.500000\n"}
+{"at": "2026-11-22T21:07:16.198821+00:00", "server_owner": "/root/rides", "command": "execute if block 7 97 -6 minecraft:cobblestone run say LS02_OBSERVER_NORMAL_USE_CONFIRMED", "result": ""}
+{"at": "2026-11-22T21:07:24.450512+00:00", "server_owner": "/root/rides", "command": "data get entity Observer SelectedItem", "result": "Found no elements matching SelectedItem\n"}
+{"at": "2026-11-22T21:07:24.495325+00:00", "server_owner": "/root/rides", "command": "execute if block 7 97 -6 minecraft:cobblestone", "result": "Test passed\n"}
+{"at": "2026-11-22T21:07:24.537871+00:00", "server_owner": "/root/rides", "command": "execute if block 7 97 -5 minecraft:cobblestone", "result": "Test failed\n"}
+{"at": "2026-11-22T21:10:08.656896+00:00", "server_owner": "/root/rides", "command": "give Observer minecraft:lever 1", "result": "Gave 1 [Lever] to Observer\n"}
+{"at": "2026-11-22T21:10:08.694188+00:00", "server_owner": "/root/rides", "command": "setblock 7 99 8 minecraft:stone", "result": "Changed the block at 7, 99, 8\n"}
+{"at": "2026-11-22T21:10:08.738263+00:00", "server_owner": "/root/rides", "command": "tp Observer 7.5 100 8.5 90 48.614", "result": "Teleported Observer to 7.500000, 100.000000, 8.500000\n"}
+{"at": "2026-11-22T21:10:20.591890+00:00", "server_owner": "/root/rides", "command": "execute if block 5 99 8 minecraft:lever[face=floor,powered=false]", "result": "Test passed\n"}
+{"at": "2026-11-22T21:12:49.572468+00:00", "server_owner": "/root/rides", "command": "execute if block 5 99 8 minecraft:lever[powered=true]", "result": "Test passed\n"}
+{"at": "2026-11-22T21:15:14.405274+00:00", "server_owner": "/root/rides", "command": "data get entity Dev Pos", "result": "Dev has the following entity data: [19.5d, 100.0d, 8.5d]\n"}
+{"at": "2026-11-22T21:15:14.447773+00:00", "server_owner": "/root/rides", "command": "data get block 5 98 8 Phase", "result": "Found no elements matching Phase\n"}
+{"at": "2026-11-22T21:15:41.194135+00:00", "server_owner": "/root/rides", "command": "tp Observer 7.5 97 -4.5 0 0", "result": "Teleported Observer to 7.500000, 97.000000, -4.500000\n"}
+{"at": "2026-11-22T21:15:41.235000+00:00", "server_owner": "/root/rides", "command": "setblock 7 99 8 minecraft:air", "result": "Changed the block at 7, 99, 8\n"}
+{"at": "2026-11-22T21:16:47.915345+00:00", "server_owner": "/root/rides", "command": "tp Observer 16.5 97 8.5 90 -24.7024", "result": "Teleported Observer to 16.500000, 97.000000, 8.500000\n"}
+{"at": "2026-11-22T21:16:47.959025+00:00", "server_owner": "/root/rides", "command": "data get block 15 98 8 ls_armed", "result": "15, 98, 8 has the following block data: 0b\n"}
+{"at": "2026-11-22T21:17:27.402754+00:00", "server_owner": "/root/rides", "command": "data get block 15 98 8 ls_armed", "result": "15, 98, 8 has the following block data: 1b\n"}
+{"at": "2026-11-22T21:21:03.039749+00:00", "server_owner": "/root/rides", "command": "list", "result": "There are 1 of a max of 20 players online: Dev\n"}

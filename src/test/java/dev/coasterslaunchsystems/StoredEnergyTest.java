@@ -17,11 +17,14 @@ class StoredEnergyTest {
     var store = new HydraulicAccumulator(4, 2, 100, 10, 1.4, 0);
     store.charge(store.capacity());
     assertEquals(2, store.oilVolume(), 1e-10);
+    assertEquals(0, store.returnOilVolume(), 1e-10);
     double initial = store.pressure();
     store.draw(store.capacity() * .75);
     assertTrue(store.pressure() < initial); assertTrue(store.oilVolume() < 2);
+    assertEquals(store.oilCapacity(), store.oilVolume() + store.returnOilVolume(), 1e-10);
     store.draw(store.capacity());
     assertEquals(0, store.oilVolume(), 1e-10); assertEquals(0, store.force(1));
+    assertEquals(2, store.returnOilVolume(), 1e-10);
     assertEquals(0, store.outputForce(0));
   }
 

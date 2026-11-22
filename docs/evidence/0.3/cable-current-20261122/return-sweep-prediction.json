@@ -1,0 +1,29 @@
+{
+  "scope": "Offline 0.0001m homeward translation of observed geometry; overlap prediction only, not solver contact or world mutation",
+  "hits": [
+    {
+      "movingBlock": "20481032, 127, 20483080",
+      "currentAabb": [
+        8.837447851295366e-08,
+        97.62500091552734,
+        9.000028579394682,
+        1.0000001500441007,
+        98.62500091552734,
+        10.000028641064302
+      ],
+      "predictedAabb": [
+        8.837447851295366e-08,
+        97.62500091552734,
+        8.999928579394682,
+        1.0000001500441007,
+        98.62500091552734,
+        9.999928641064303
+      ],
+      "worldBlock": [
+        1,
+        98,
+        8
+      ]
+    }
+  ]
+}

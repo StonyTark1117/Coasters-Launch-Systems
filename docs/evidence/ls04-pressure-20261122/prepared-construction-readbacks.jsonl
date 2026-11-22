@@ -1,0 +1,40 @@
+{"command": "item replace entity Dev hotbar.0 with coasterslaunchsystems:span_tool 1", "result": "Replaced a slot on Dev with [Launch Span Tool]\n"}
+{"command": "item replace entity Dev weapon.offhand with air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 44.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 44.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 44], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "execute positioned -0.5 98.5 8.5 anchored eyes run tp Dev -0.5 96 6.5 facing ~ ~ ~", "result": "Teleported Dev to -0.500000, 96.000000, 6.500000\n"}
+{"command": "data get block -1 98 8 ls_from", "result": "-1, 98, 8 has the following block data: 100L\n"}
+{"command": "execute positioned 4.5 98.7 8.5 anchored eyes run tp Dev 4.5 98 6.5 facing ~ ~ ~", "result": "Teleported Dev to 4.500000, 98.000000, 6.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:controller_selection\": {pos: [I; 4, 98, 8], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "execute positioned -0.5 98.5 8.5 anchored eyes run tp Dev -0.5 96 6.5 facing ~ ~ ~", "result": "Teleported Dev to -0.500000, 96.000000, 6.500000\n"}
+{"command": "data get block -1 98 8 ls_controller", "result": "-1, 98, 8 has the following block data: [I; -1991486021, 624642349, -1302961661, 781966888]\n"}
+{"command": "item replace entity Dev hotbar.0 with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "item replace entity Dev weapon.offhand with air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "execute positioned -0.5 98.7 8.5 anchored eyes run tp Dev -0.5 96 6.5 facing ~ ~ ~", "result": "Teleported Dev to -0.500000, 96.000000, 6.500000\n"}
+{"command": "data get block -1 98 8 ls_armed", "result": "-1, 98, 8 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 8.5 anchored eyes run tp Dev 1.5 96 6.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 6.500000\n"}
+{"command": "data get block 1 98 8 ls_armed", "result": "1, 98, 8 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 23.5 anchored eyes run tp Dev 1.5 96 21.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 21.500000\n"}
+{"command": "data get block 1 98 23 ls_armed", "result": "1, 98, 23 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 25.5 anchored eyes run tp Dev 1.5 96 23.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 23.500000\n"}
+{"command": "data get block 1 98 25 ls_armed", "result": "1, 98, 25 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 27.5 anchored eyes run tp Dev 1.5 96 25.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 25.500000\n"}
+{"command": "data get block 1 98 27 ls_armed", "result": "1, 98, 27 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 29.5 anchored eyes run tp Dev 1.5 96 27.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 27.500000\n"}
+{"command": "data get block 1 98 29 ls_armed", "result": "1, 98, 29 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 31.5 anchored eyes run tp Dev 1.5 96 29.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 29.500000\n"}
+{"command": "data get block 1 98 31 ls_armed", "result": "1, 98, 31 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 33.5 anchored eyes run tp Dev 1.5 96 31.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 31.500000\n"}
+{"command": "data get block 1 98 33 ls_armed", "result": "1, 98, 33 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 35.5 anchored eyes run tp Dev 1.5 96 33.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 33.500000\n"}
+{"command": "data get block 1 98 35 ls_armed", "result": "1, 98, 35 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 37.5 anchored eyes run tp Dev 1.5 96 35.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 35.500000\n"}
+{"command": "data get block 1 98 37 ls_armed", "result": "1, 98, 37 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 39.5 anchored eyes run tp Dev 1.5 96 37.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 37.500000\n"}
+{"command": "data get block 1 98 39 ls_armed", "result": "1, 98, 39 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 41.5 anchored eyes run tp Dev 1.5 96 39.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 39.500000\n"}
+{"command": "data get block 1 98 41 ls_armed", "result": "1, 98, 41 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 43.5 anchored eyes run tp Dev 1.5 96 41.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 41.500000\n"}
+{"command": "data get block 1 98 43 ls_armed", "result": "1, 98, 43 has the following block data: 1b\n"}

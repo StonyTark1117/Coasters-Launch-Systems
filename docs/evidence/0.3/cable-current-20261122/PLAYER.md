@@ -1,0 +1,29 @@
+# Occupied flywheel construction and return inspection
+
+The source and native evidence are in README.md. The pressure package supplies the complementary normal live-home disarm/service proof.
+
+Owner `/root/bridge`; persistent run `/mnt/NVME4/launchsystems-runs/ls03-cable-20261122/player`, display 397, game/RCON 25781/25782, Java 21, client 1536M heap in a Minecraft-only 6GiB service. Gameplay artifact SHA256 `45027587f7d87e8672c0d39a7c8bc1795d289af363e37e6e11a76ea5d6a34877`; exact accepted FD artifact from README. The later diagnostic artifact 89e69604046f6f720ded59da18c4b770a3c90f31e91eab4b028a8a926d082030 adds read-only generic body geometry and teaching text.
+
+## Player actions and disclosed setup
+
+Survival normal use placed the two directed anchors and 44m straight, 23 low guide blocks, flywheel cabinet,12 friction fins, controller and lever. Normal span-tool use bound and linked equipment; empty-hand shift-use armed modules/controller. The upstream item rejected the initial 64m span at its configured 45m limit, so the route was corrected to 44m through normal construction. Supplied commands provided item kits, fixed platform/access stones, 64 RPM Creative Motors, daylight/weather and poses. They did not install track, cart, interfaces, bindings, joints, ownership, energy or completion flags. Setup/readback and one-input assertions are preserved in construction-readbacks.jsonl at the persistent run.
+
+Anchors are (0,100,0)→(0,100,44); guide (0,96,7..29); flywheel (-1,98,8); home fin (1,98,8); downstream fins (1,98,23..43 step 2); controller (4,98,8). The actual normal cart (UUID 45605f08-e2d1-459c-a457-3ec1f84ad5af) carries normally attached tire, socket, fin and red Create seat. Normal use boarded Dev; mass increased 4.5→5.3. The installed carriage UUID is 3c897670-d524-4c37-b3ed-856d210cd389, native mass 25.
+
+Foundation supplied a separately owned Observer client, with exact artifacts, and operated the actual lever by normal Survival use at 21:03:30Z. `occupied-pull.jsonl` shows READY→RUNNING→HOLD, the same seat throughout, finite flywheel energy 5000→4859.698638051556 and recharge, native catch pull/release and a stationary downstream train at z22.05870056. Observer preserves an independent 40s exterior video. Dev exited using normal Shift; the seat attachment cleared. There was no teleport or velocity write to either body.
+
+## Return diagnosis
+
+The physical carriage returned until z9.50002861, then stopped 1.208m short of its saved home. The journal correctly retained returning/in-use; no HOME credit was awarded. Removing the supplied motor-support stones(-2,97,8),(2,97,8) did not change it, disproving that setup hypothesis. A clean save/stop preserves `return-stall-world`; the earlier clean `prelaunch-world` was handed to the pressure owner.
+
+Read-only geometry in `return-geometry.jsonl` reports no static intersection at the final stopped pose. The upper iron spine has world AABB x0.000000088..1.000000150,y97.625..98.625,z9.000028579..10.000028641. The home fin has a full-block collision box x1..2,y98..99,z8..9. `return-sweep-prediction.json` translates the measured geometry 0.0001m toward home offline and predicts their intersection. This is a geometric prediction, not a recorded solver contact. The layout has zero nominal lateral clearance, allowing native floating-point displacement to snag its returning spine against the cabinet. Force, capture ratings and home tolerances remain unchanged.
+
+## Final service and cleanup
+
+The corrected cabinet uses a symmetric 1/16-block inset outline/collision housing; matching concrete model exterior coordinates move 0→1 and 16→15. Hydraulic/pneumatic inherit the flywheel model. Shaft behavior, force, mass, ratings and home thresholds are unchanged. Candidate SHA256 `0acc2bf681602cb418d0f0d8e2ecb161c566ff1adc0c67caf2806dfe6e815eff` compiled successfully; all seven concrete housing models have nondegenerate element endpoints inside 1..15.
+
+After clean reopening, normal Span Tool use with offhand compass at21:16:43Z explicitly resumed the saved ordinary released carriage. It physically reached position(0.50000006,97.35250092,8.29166412), within0.000002m longitudinally of saved home, with zero linear/angular velocity and no current static intersections. The journal reports returning0/in-use0 and “Cable return completed under inspection; verify and rebind the guide before arming.” Original carriage UUID/mass25 and downstream train reservation remain unchanged. See completed-return-state.txt, return-completed-geometry.jsonl and home-housing-clearance.png. The visible housing/shaft/carriage clearance was inspected in the actual corrected client.
+
+The reloaded idle installation remains safely held and faulted: retirement still requires the empty, disarmed, matching controller and clear section. No occupied reservation was silently cleared. Complementary live-HOME normal controller-disarm retirement passed in the hydraulic player cycle at21:22:17Z on the pressure owner’s independent saved prelaunch copy: normal rider exit cleared the seat attachment; normal controller Shift-disarm removed the carriage and journal while preserving the original train reservation. This combines service evidence without weakening restart guards; see [pressure evidence](../../ls04-pressure-20261122/README.md).
+
+Dev exited before the restart and was not reseated or dispatched during inspection. After final readback the client stopped, server saved all dimensions and exited, then Xvfb stopped. All three owned units report inactive/MainPID0/Resultsuccess in cleanup.txt. The preserved world remains at `player/server/ls03-cable-survival`; both earlier clean snapshots remain available. Display397 was subsequently reused by a separately recorded pressure Observer task, not by this closed flywheel runtime.

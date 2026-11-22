@@ -99,7 +99,10 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
         boolean released = support && !retained && closed && !stopping.getBoolean(member)
             && ((List<?>) carriers.get(member)).stream().noneMatch(this::captured);
         propel &= released && authority.permitted(level, member);
-        brake &= released && authority.permitted(level, member);
+        // Safety braking retains the exact local lease across a fault/restart. It does not
+        // authorize traction, dispatch, capture, or an implicit native Resume.
+        brake &= support && (released && authority.permitted(level, member)
+            || authority.retainsBrakeLease(level, member, consist));
       }
       if (!operator.isEmpty()) { dispatch = false; propel = false; brake = false; }
       String expected = HARDWARE_VARIANTS.get(((Enum<?>) family.get(vehicle)).name());

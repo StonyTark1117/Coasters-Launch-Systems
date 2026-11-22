@@ -18,9 +18,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 public final class EquipmentCabinetBlock extends RotatedPillarKineticBlock implements IBE<EquipmentCabinetEntity> {
+  // Leave physical clearance around adjacent native carriage hardware in every shaft orientation.
+  private static final net.minecraft.world.phys.shapes.VoxelShape HOUSING = box(1, 1, 1, 15, 15, 15);
   public final Mechanism mechanism;
   public EquipmentCabinetBlock(Properties properties, Mechanism mechanism) {
     super(properties); this.mechanism = mechanism;
+  }
+  @Override protected net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state,
+      net.minecraft.world.level.BlockGetter level, BlockPos pos, net.minecraft.world.phys.shapes.CollisionContext context) {
+    return HOUSING;
+  }
+  @Override protected net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(BlockState state,
+      net.minecraft.world.level.BlockGetter level, BlockPos pos, net.minecraft.world.phys.shapes.CollisionContext context) {
+    return HOUSING;
   }
   @Override public Direction.Axis getRotationAxis(BlockState state) { return state.getValue(AXIS); }
   @Override public boolean hasShaftTowards(LevelReader level, BlockPos pos, BlockState state, Direction face) {

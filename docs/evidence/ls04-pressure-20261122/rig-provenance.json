@@ -1,0 +1,9 @@
+{
+  "source": "/mnt/NVME4/launchsystems-runs/ls03-cable-20261122/prelaunch-world",
+  "saved": "2026-11-22T21:01:06Z",
+  "source_owner": "/root/bridge",
+  "destination": "/mnt/NVME4/launchsystems-runs/ls04-pressure-20261122/server/pressure-rig",
+  "copy_state": "source client and server stopped; All dimensions saved",
+  "chassis": "45605f08-e2d1-459c-a457-3ec1f84ad5af",
+  "construction": "normal Survival placement/binding from bridge; inherited supplied flat platform/shafts/items; all modules disarmed"
+}

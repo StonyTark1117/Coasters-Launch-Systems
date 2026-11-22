@@ -1,0 +1,127 @@
+{"command": "item replace entity Dev hotbar.0 with coasterslaunchsystems:span_tool 1", "result": "Replaced a slot on Dev with [Launch Span Tool]\n"}
+{"command": "item replace entity Dev weapon.offhand with air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 44.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 44.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 44], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "execute positioned -0.5 98.5 8.5 anchored eyes run tp Dev -0.5 96 6.5 facing ~ ~ ~", "result": "Teleported Dev to -0.500000, 96.000000, 6.500000\n"}
+{"command": "data get block -1 98 8 ls_from", "result": "-1, 98, 8 has the following block data: 100L\n"}
+{"command": "execute positioned 4.5 98.7 8.5 anchored eyes run tp Dev 4.5 98 6.5 facing ~ ~ ~", "result": "Teleported Dev to 4.500000, 98.000000, 6.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:controller_selection\": {pos: [I; 4, 98, 8], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "execute positioned -0.5 98.5 8.5 anchored eyes run tp Dev -0.5 96 6.5 facing ~ ~ ~", "result": "Teleported Dev to -0.500000, 96.000000, 6.500000\n"}
+{"command": "data get block -1 98 8 ls_controller", "result": "-1, 98, 8 has the following block data: [I; -1991486021, 624642349, -1302961661, 781966888]\n"}
+{"command": "item replace entity Dev hotbar.0 with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "item replace entity Dev weapon.offhand with air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "execute positioned -0.5 98.7 8.5 anchored eyes run tp Dev -0.5 96 6.5 facing ~ ~ ~", "result": "Teleported Dev to -0.500000, 96.000000, 6.500000\n"}
+{"command": "data get block -1 98 8 ls_armed", "result": "-1, 98, 8 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 8.5 anchored eyes run tp Dev 1.5 96 6.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 6.500000\n"}
+{"command": "data get block 1 98 8 ls_armed", "result": "1, 98, 8 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 23.5 anchored eyes run tp Dev 1.5 96 21.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 21.500000\n"}
+{"command": "data get block 1 98 23 ls_armed", "result": "1, 98, 23 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 25.5 anchored eyes run tp Dev 1.5 96 23.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 23.500000\n"}
+{"command": "data get block 1 98 25 ls_armed", "result": "1, 98, 25 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 27.5 anchored eyes run tp Dev 1.5 96 25.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 25.500000\n"}
+{"command": "data get block 1 98 27 ls_armed", "result": "1, 98, 27 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 29.5 anchored eyes run tp Dev 1.5 96 27.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 27.500000\n"}
+{"command": "data get block 1 98 29 ls_armed", "result": "1, 98, 29 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 31.5 anchored eyes run tp Dev 1.5 96 29.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 29.500000\n"}
+{"command": "data get block 1 98 31 ls_armed", "result": "1, 98, 31 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 33.5 anchored eyes run tp Dev 1.5 96 31.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 31.500000\n"}
+{"command": "data get block 1 98 33 ls_armed", "result": "1, 98, 33 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 35.5 anchored eyes run tp Dev 1.5 96 33.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 33.500000\n"}
+{"command": "data get block 1 98 35 ls_armed", "result": "1, 98, 35 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 37.5 anchored eyes run tp Dev 1.5 96 35.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 35.500000\n"}
+{"command": "data get block 1 98 37 ls_armed", "result": "1, 98, 37 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 39.5 anchored eyes run tp Dev 1.5 96 37.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 37.500000\n"}
+{"command": "data get block 1 98 39 ls_armed", "result": "1, 98, 39 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 41.5 anchored eyes run tp Dev 1.5 96 39.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 39.500000\n"}
+{"command": "data get block 1 98 41 ls_armed", "result": "1, 98, 41 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 43.5 anchored eyes run tp Dev 1.5 96 41.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 41.500000\n"}
+{"command": "data get block 1 98 43 ls_armed", "result": "1, 98, 43 has the following block data: 1b\n"}
+{"command": "item replace entity Dev hotbar.0 with air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "execute positioned 4.5 98.7 8.5 anchored eyes run tp Dev 4.5 98 6.5 facing ~ ~ ~", "result": "Teleported Dev to 4.500000, 98.000000, 6.500000\n"}
+{"command": "data get block 4 98 8 armed", "result": "4, 98, 8 has the following block data: 1b\n"}
+{"command": "data get block 4 98 8", "result": "4, 98, 8 has the following block data: {swing_forward_tail_clear: 0b, available: 0.0d, required: 0.0d, transferring: 0b, identity: [I; -1991486021, 624642349, -1302961661, 781966888], transfer_route: [], reservation: [], from: 100L, id: \"coasterslaunchsystems:ride_controller\", phase: \"FAULT\", fault: \"Cable controller linked equipment is missing, disarmed or faulted\", swing_backward_tail_clear: 0b, modules: [{pos: 274877939810L, exit_drive: 0b, id: [I; -470961611, -939832282, -2140572353, -332099911]}, {pos: 274878001250L, exit_drive: 0b, id: [I; 789770639, 1304314979, -1360618833, -438428700]}, {pos: 274878009442L, exit_drive: 0b, id: [I; 1458136135, 908084485, -1818550965, -1295693103]}, {pos: 274878017634L, exit_drive: 0b, id: [I; 390442794, -40679195, -1894569924, 20732639]}, {pos: 274878025826L, exit_drive: 0b, id: [I; 1230350309, 1060981860, -1416563195, -836013705]}, {pos: 274878034018L, exit_drive: 0b, id: [I; 536411833, -76264799, -2049812665, 888426731]}, {pos: 274878042210L, exit_drive: 0b, id: [I; 377087065, 1125467085, -1651204801, -510537711]}, {pos: 274878050402L, exit_drive: 0b, id: [I; -819297973, 155602929, -2021392833, -1694096060]}, {pos: 274878058594L, exit_drive: 0b, id: [I; 427736896, -1976089579, -1913236268, 755850267]}, {pos: 274878066786L, exit_drive: 0b, id: [I; -164501775, -494514744, -1605596950, 1958247329]}, {pos: 274878074978L, exit_drive: 0b, id: [I; 43379786, 1621378898, -1885701719, -220744693]}, {pos: 274878083170L, exit_drive: 0b, id: [I; 299449222, -644856818, -2030025348, -82276248]}, {pos: -274877874078L, exit_drive: 0b, id: [I; 1587995413, -1033289728, -1655695223, -2078394555]}], swing_program: 0b, ls_controller_schema: 6, boarding_ready: 0b, receiver_manifest: [], armed: 1b, x: 4, receiver_station_capture: 0b, y: 98, swing_pass: 0, geometry: 9095987158672417537L, z: 8, station_capture: 0b, transfer_speed_limit: 0.0d, to: 180324L}\n"}
+{"command": "item replace entity Dev hotbar.0 with air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "execute positioned 4.5 98.7 8.5 anchored eyes run tp Dev 4.5 98 6.5 facing ~ ~ ~", "result": "Teleported Dev to 4.500000, 98.000000, 6.500000\n"}
+{"command": "data get block 4 98 8 armed", "result": "4, 98, 8 has the following block data: 0b\n"}
+{"command": "execute positioned -0.5 98.7 8.5 anchored eyes run tp Dev -0.5 96 6.5 facing ~ ~ ~", "result": "Teleported Dev to -0.500000, 96.000000, 6.500000\n"}
+{"command": "data get block -1 98 8 ls_armed", "result": "-1, 98, 8 has the following block data: 1b\n"}
+{"command": "execute positioned 4.5 98.7 8.5 anchored eyes run tp Dev 4.5 98 6.5 facing ~ ~ ~", "result": "Teleported Dev to 4.500000, 98.000000, 6.500000\n"}
+{"command": "data get block 4 98 8 armed", "result": "4, 98, 8 has the following block data: 1b\n"}
+{"command": "data get block 4 98 8 phase", "result": "4, 98, 8 has the following block data: \"READY\"\n"}
+{"command": "data get block -1 98 8", "result": "-1, 98, 8 has the following block data: {ls_cable_returning: 0b, ls_flywheel_energy: 0.0d, ls_cable_moving: 0b, ls_geometry: 9095987158672417537L, Source: [I; -2, 98, 8], ls_schema: 12, ls_to: 180324L, Network: {Capacity: 1048576.0f, Size: 2, AddedStress: 16.0f, Id: -549755781022L, Stress: 1024.0f}, ls_armed: 1b, id: \"coasterslaunchsystems:equipment_cabinet\", ls_controller_pos: 1099511660642L, ls_axis: \"X\", Speed: 64.0f, ls_heat: 0.0d, ls_cable_chassis: [I; 1163943688, -489601636, -1537786175, -129313361], ls_controller: [I; -1991486021, 624642349, -1302961661, 781966888], ls_from: 100L, ls_cable_installed: 1b, ls_end: 9.0000005508463d, ls_cable_in_use: 1b, ls_identity: [I; 1587995413, -1033289728, -1655695223, -2078394555], ls_start: 7.0000005508463d, x: -1, ls_cable_home: 7.791666103803302d, ls_fault: \"\", y: 98, z: 8, ls_cable_carriage: [I; 1653822865, 2000962157, -1849823480, 495666282], ls_hydraulic_work: 778.7697769322358d}\n"}
+{"command": "item replace entity Dev hotbar.0 with air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "execute positioned 4.5 98.7 8.5 anchored eyes run tp Dev 4.5 98 6.5 facing ~ ~ ~", "result": "Teleported Dev to 4.500000, 98.000000, 6.500000\n"}
+{"command": "data get block 4 98 8 armed", "result": "4, 98, 8 has the following block data: 0b\n"}
+{"command": "data get block -1 98 8", "result": "-1, 98, 8 has the following block data: {ls_cable_returning: 0b, ls_flywheel_energy: 0.0d, ls_cable_moving: 0b, ls_geometry: 9095987158672417537L, Source: [I; -2, 98, 8], ls_schema: 12, ls_to: 180324L, Network: {Capacity: 1048576.0f, Size: 2, AddedStress: 16.0f, Id: -549755781022L, Stress: 1024.0f}, ls_armed: 1b, id: \"coasterslaunchsystems:equipment_cabinet\", ls_controller_pos: 1099511660642L, ls_axis: \"X\", Speed: 64.0f, ls_heat: 0.0d, ls_controller: [I; -1991486021, 624642349, -1302961661, 781966888], ls_from: 100L, ls_cable_installed: 0b, ls_end: 9.0000005508463d, ls_cable_in_use: 0b, ls_identity: [I; 1587995413, -1033289728, -1655695223, -2078394555], ls_start: 7.0000005508463d, x: -1, ls_fault: \"\", y: 98, z: 8, ls_hydraulic_work: 778.7697769322358d}\n"}
+{"command": "data get block 4 98 8 reservation", "result": "4, 98, 8 has the following block data: [{id: [I; 1163943688, -489601636, -1537786175, -129313361]}]\n"}
+{"command": "execute positioned 0.5 100 16 run sable info @e[distance=0..60,limit=5]", "result": "Found 1 sub-levels:\n45605f08-e2d1-459c-a457-3ec1f84ad5af:\n    Position: 0.2777777910232544 100.47916412353516 22.053937911987305\n    Orientation: 0.0 1.0 -2.8641285047375226E-38 2.289803369137644E-8\n    Mass: 4.5\n    Linear Velocity: 0.0 -2.481281408108771E-4 2.4440607484090373E-36\n    Angular Velocity: 0.0 0.0 0.0\n"}
+{"command": "lsdiagnose geometry 62935591-7744-426d-91bd-ef081d8b446a 4 98 8", "result": "Unknown or incomplete command, see below for error\nlsdiagnose geometry 62935591-7744-426d-91bd-ef081d8b446a 4 98 8<--[HERE]\n"}
+{"command": "execute positioned -0.5 98.7 8.5 anchored eyes run tp Dev -0.5 96 6.5 facing ~ ~ ~", "result": "Teleported Dev to -0.500000, 96.000000, 6.500000\n"}
+{"command": "data get block -1 98 8 ls_hydraulic_work", "result": "-1, 98, 8 has the following block data: 778.7697769322358d\n"}
+{"command": "execute if block -1 98 8 minecraft:air", "result": "Test passed\n"}
+{"command": "item replace entity Dev hotbar.0 with coasterslaunchsystems:pneumatic_launch_cabinet", "result": "Replaced a slot on Dev with [Pneumatic Launch Cabinet]\n"}
+{"command": "execute if block -1 98 8 coasterslaunchsystems:pneumatic_launch_cabinet[axis=x]", "result": "Test passed\n"}
+{"command": "item replace entity Dev hotbar.0 with coasterslaunchsystems:span_tool 1", "result": "Replaced a slot on Dev with [Launch Span Tool]\n"}
+{"command": "item replace entity Dev weapon.offhand with air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "tp Dev 3.5 100 0.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 0.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "tp Dev 3.5 100 44.5 90 20.472", "result": "Teleported Dev to 3.500000, 100.000000, 44.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:span_from\": {pos: [I; 0, 100, 0], dimension: \"minecraft:overworld\"}, \"coasterslaunchsystems:span_to\": {pos: [I; 0, 100, 44], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "execute positioned -0.5 98.5 8.5 anchored eyes run tp Dev -0.5 96 6.5 facing ~ ~ ~", "result": "Teleported Dev to -0.500000, 96.000000, 6.500000\n"}
+{"command": "data get block -1 98 8 ls_from", "result": "-1, 98, 8 has the following block data: 100L\n"}
+{"command": "execute positioned 4.5 98.7 8.5 anchored eyes run tp Dev 4.5 98 6.5 facing ~ ~ ~", "result": "Teleported Dev to 4.500000, 98.000000, 6.500000\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {components: {\"coasterslaunchsystems:controller_selection\": {pos: [I; 4, 98, 8], dimension: \"minecraft:overworld\"}}, count: 1, id: \"coasterslaunchsystems:span_tool\"}\n"}
+{"command": "execute positioned -0.5 98.5 8.5 anchored eyes run tp Dev -0.5 96 6.5 facing ~ ~ ~", "result": "Teleported Dev to -0.500000, 96.000000, 6.500000\n"}
+{"command": "data get block -1 98 8 ls_controller", "result": "-1, 98, 8 has the following block data: [I; -1991486021, 624642349, -1302961661, 781966888]\n"}
+{"command": "item replace entity Dev hotbar.0 with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "item replace entity Dev weapon.offhand with air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "execute positioned -0.5 98.7 8.5 anchored eyes run tp Dev -0.5 96 6.5 facing ~ ~ ~", "result": "Teleported Dev to -0.500000, 96.000000, 6.500000\n"}
+{"command": "data get block -1 98 8 ls_armed", "result": "-1, 98, 8 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 8.5 anchored eyes run tp Dev 1.5 96 6.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 6.500000\n"}
+{"command": "data get block 1 98 8 ls_armed", "result": "1, 98, 8 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 23.5 anchored eyes run tp Dev 1.5 96 21.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 21.500000\n"}
+{"command": "data get block 1 98 23 ls_armed", "result": "1, 98, 23 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 25.5 anchored eyes run tp Dev 1.5 96 23.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 23.500000\n"}
+{"command": "data get block 1 98 25 ls_armed", "result": "1, 98, 25 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 27.5 anchored eyes run tp Dev 1.5 96 25.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 25.500000\n"}
+{"command": "data get block 1 98 27 ls_armed", "result": "1, 98, 27 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 29.5 anchored eyes run tp Dev 1.5 96 27.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 27.500000\n"}
+{"command": "data get block 1 98 29 ls_armed", "result": "1, 98, 29 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 31.5 anchored eyes run tp Dev 1.5 96 29.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 29.500000\n"}
+{"command": "data get block 1 98 31 ls_armed", "result": "1, 98, 31 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 33.5 anchored eyes run tp Dev 1.5 96 31.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 31.500000\n"}
+{"command": "data get block 1 98 33 ls_armed", "result": "1, 98, 33 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 35.5 anchored eyes run tp Dev 1.5 96 33.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 33.500000\n"}
+{"command": "data get block 1 98 35 ls_armed", "result": "1, 98, 35 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 37.5 anchored eyes run tp Dev 1.5 96 35.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 35.500000\n"}
+{"command": "data get block 1 98 37 ls_armed", "result": "1, 98, 37 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 39.5 anchored eyes run tp Dev 1.5 96 37.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 37.500000\n"}
+{"command": "data get block 1 98 39 ls_armed", "result": "1, 98, 39 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 41.5 anchored eyes run tp Dev 1.5 96 39.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 39.500000\n"}
+{"command": "data get block 1 98 41 ls_armed", "result": "1, 98, 41 has the following block data: 1b\n"}
+{"command": "execute positioned 1.5 98.7 43.5 anchored eyes run tp Dev 1.5 96 41.5 facing ~ ~ ~", "result": "Teleported Dev to 1.500000, 96.000000, 41.500000\n"}
+{"command": "data get block 1 98 43 ls_armed", "result": "1, 98, 43 has the following block data: 1b\n"}
+{"command": "execute positioned -0.5 98.7 8.5 anchored eyes run tp Dev -0.5 96 6.5 facing ~ ~ ~", "result": "Teleported Dev to -0.500000, 96.000000, 6.500000\n"}
+{"command": "data get block -1 98 8 ls_pneumatic_work", "result": "-1, 98, 8 has the following block data: 802.8402858101584d\n"}
+{"command": "item replace entity Dev hotbar.0 with minecraft:lever", "result": "Replaced a slot on Dev with [Lever]\n"}
+{"command": "tp Dev 4.5 98 6.5 0 7.69", "result": "Teleported Dev to 4.500000, 98.000000, 6.500000\n"}
+{"command": "execute if block 4 99 8 minecraft:lever[face=floor,powered=false]", "result": "Test passed\n"}
+{"command": "item replace entity Dev hotbar.0 with air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "execute positioned 4.5 98.7 8.5 anchored eyes run tp Dev 4.5 98 6.5 facing ~ ~ ~", "result": "Teleported Dev to 4.500000, 98.000000, 6.500000\n"}
+{"command": "data get block 4 98 8 armed", "result": "4, 98, 8 has the following block data: 1b\n"}
+{"command": "data get block 4 98 8 phase", "result": "4, 98, 8 has the following block data: \"READY\"\n"}
+{"command": "data get block -1 98 8", "result": "-1, 98, 8 has the following block data: {ls_cable_returning: 0b, ls_flywheel_energy: 0.0d, ls_pneumatic_work: 843.9775566533214d, ls_cable_moving: 0b, ls_geometry: 9095987158672417537L, Source: [I; -2, 98, 8], ls_schema: 12, ls_to: 180324L, Network: {Capacity: 1048576.0f, Size: 2, AddedStress: 16.0f, Id: -549755781022L, Stress: 1024.0f}, ls_armed: 1b, id: \"coasterslaunchsystems:equipment_cabinet\", ls_controller_pos: 1099511660642L, ls_axis: \"X\", Speed: 64.0f, ls_heat: 0.0d, ls_cable_chassis: [I; 1163943688, -489601636, -1537786175, -129313361], ls_controller: [I; -1991486021, 624642349, -1302961661, 781966888], ls_from: 100L, ls_cable_installed: 1b, ls_end: 9.0000005508463d, ls_cable_in_use: 1b, ls_identity: [I; 2606127, -651738923, -1799218241, 1286585247], ls_start: 7.0000005508463d, x: -1, ls_cable_home: 7.791666103803302d, ls_fault: \"\", y: 98, z: 8, ls_cable_carriage: [I; -1573955761, -1575140996, -1876808979, 1403449237]}\n"}
+{"command": "execute positioned 20481032.5 129.35 20481032.5 out_sub_level @i anchored eyes run tp Dev 3.5 102 8.291666 facing ~ ~ ~", "result": "Teleported Dev to 3.500000, 102.000000, 8.291666\n"}
+{"command": "data get entity Dev RootVehicle", "result": "Dev has the following entity data: {Entity: {Motion: [0.0d, 0.0d, 0.0d], FallDistance: 0.0f, \"neoforge:attachments\": {\"create:minecart_controller\": {Type: \"EMPTY\"}}, Pos: [2.04810325E7d, 129.0d, 2.04810325E7d], Fire: -1s, Invulnerable: 0b, id: \"create:seat\", Air: 300s, OnGround: 0b, PortalCooldown: 0, UUID: [I; -1087491583, -617659115, -1315371628, 478477126], Rotation: [0.0f, 0.0f]}, Attach: [I; -1087491583, -617659115, -1315371628, 478477126]}\n"}
+{"command": "item replace entity Dev hotbar.0 with air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "execute positioned 4.5 98.7 8.5 anchored eyes run tp Dev 4.5 98 6.5 facing ~ ~ ~", "result": "Teleported Dev to 4.500000, 98.000000, 6.500000\n"}
+{"command": "data get block 4 98 8 armed", "result": "4, 98, 8 has the following block data: 0b\n"}
+{"command": "data get block -1 98 8", "result": "-1, 98, 8 has the following block data: {ls_cable_returning: 0b, ls_flywheel_energy: 0.0d, ls_pneumatic_work: 1275.2529873647327d, ls_cable_moving: 0b, ls_geometry: 9095987158672417537L, Source: [I; -2, 98, 8], ls_schema: 12, ls_to: 180324L, Network: {Capacity: 1048576.0f, Size: 2, AddedStress: 16.0f, Id: -549755781022L, Stress: 1024.0f}, ls_armed: 1b, id: \"coasterslaunchsystems:equipment_cabinet\", ls_controller_pos: 1099511660642L, ls_axis: \"X\", Speed: 64.0f, ls_heat: 0.0d, ls_controller: [I; -1991486021, 624642349, -1302961661, 781966888], ls_from: 100L, ls_cable_installed: 0b, ls_end: 9.0000005508463d, ls_cable_in_use: 0b, ls_identity: [I; 2606127, -651738923, -1799218241, 1286585247], ls_start: 7.0000005508463d, x: -1, ls_fault: \"\", y: 98, z: 8}\n"}
+{"command": "data get block 4 98 8 reservation", "result": "4, 98, 8 has the following block data: [{id: [I; 1163943688, -489601636, -1537786175, -129313361]}]\n"}
+{"command": "execute positioned 0.5 100 16 run sable info @e[distance=0..60,limit=5]", "result": "Found 1 sub-levels:\n45605f08-e2d1-459c-a457-3ec1f84ad5af:\n    Position: 0.2777777910232544 100.47916412353516 22.057777404785156\n    Orientation: -1.3035026852786667E-38 1.0 2.8641371927880014E-38 3.895349109939161E-8\n    Mass: 4.5\n    Linear Velocity: 0.0 -2.481281408108771E-4 -2.4440689992543952E-36\n    Angular Velocity: -0.0 0.0 1.223671412415314E-38\n"}
+{"command": "execute positioned -0.5 98.7 8.5 anchored eyes run tp Dev -0.5 96 6.5 facing ~ ~ ~", "result": "Teleported Dev to -0.500000, 96.000000, 6.500000\n"}
+{"command": "data get block -1 98 8 ls_pneumatic_work", "result": "-1, 98, 8 has the following block data: 1636.5858188431926d\n"}
+{"command": "data get block 4 98 8 phase", "result": "4, 98, 8 has the following block data: \"INSPECTION\"\n"}
+{"command": "list", "result": "There are 1 of a max of 20 players online: Dev\n"}

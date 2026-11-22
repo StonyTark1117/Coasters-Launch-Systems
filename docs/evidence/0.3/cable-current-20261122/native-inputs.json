@@ -1,0 +1,11 @@
+{
+  "scope": "Retained compiled classes from selected native/restart build; source was the shared base974c2c8 plus scoped current cable changes, not a separate packaged LS JAR",
+  "buildRoot": "/mnt/NVME4/launchsystems-runs/ls03-cable-20261122/build",
+  "classes": {
+    "runtime/CableControllers.class": "1f6e53ff9ae865c4d97d9a6347ddb2c7f7cf3df168c63224366a2cd1538558b5",
+    "integration/FourthDimensionAuthority.class": "a58384ce7df278283a01054ad6a90079c14f112d2fda9cf9a17d072236120f43",
+    "integration/FourthDimensionMotionProvider.class": "815e3c6ede156301e7cbf6530df0fa9308aec763e58271b2719504460837c35e",
+    "gametest/CurrentCableGameTests.class": "de9b62500c22bd1c0cc37eca2ac5fefcf6c0b804b5f5001ee20be51ab6af1597",
+    "gametest/CableRestartGameTests.class": "ea7832df1d2b36cd84df6845164f1dccd17db9b6f2e45021f22bca65c7014d05"
+  }
+}

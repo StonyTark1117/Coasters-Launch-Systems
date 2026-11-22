@@ -2,11 +2,14 @@
 
 ## Current status overlay — 2026-11-22
 
-The **0.1** assignment is accepted; its validated source and evidence are
-committed on the existing task branch for delivery. The
-broader [roadmap](../ROADMAP.md) retains 0.4 as the six-launch release outcome;
-modern FD families and shared multi-train operations remain later 0.5/0.6 scope.
-Use [CURRENT-WORK](CURRENT-WORK.md) for owners and remaining cases, and
+The cumulative **0.1–0.4** outcome is accepted. The [0.4 integration record](evidence/0.4/integration-20261122/README.md)
+combines final Java 21 package/unit validation with targeted current-provider,
+physical-return and occupied-player evidence. [Linear/skid](evidence/ls02-linear-20261122/README.md),
+[cable](evidence/0.3/cable-current-20261122/README.md) and
+[pressure](evidence/ls04-pressure-20261122/README.md) close LS201–LS205,
+LS301–LS303 and LS401–LS403 while preserving the accepted foundation below.
+Modern FD families and shared multi-train operations remain later 0.5/0.6 scope.
+Use [CURRENT-WORK](CURRENT-WORK.md) for assignment state and
 [VALIDATION-POLICY](VALIDATION-POLICY.md) before scheduling another run.
 
 The [current-core foundation](evidence/foundation-current-20261122/README.md)

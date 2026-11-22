@@ -3,9 +3,8 @@
 Updated **2026-11-22**. Build a standalone Create: Coasters Simulated addon
 with physical tire, LSM, LIM, flywheel, hydraulic and pneumatic launches,
 distinct brakes, finite resources and explicit vehicle/ride ownership. Native
-mechanics and tool workflows are already substantially implemented at
-`0.1.0`; the foundation and usable-ride milestone are accepted. Later mechanisms
-retain their separate acceptance work.
+mechanics and tool workflows are accepted through `0.4.0`, including the
+foundation, usable rides, linear/skid, physical cable and pressure outcomes.
 
 The [version roadmap](ROADMAP.md) is authoritative for scope and acceptance;
 [current work](docs/CURRENT-WORK.md) assigns remaining outcomes, and the
@@ -24,10 +23,10 @@ player-tool evidence. Original design provenance remains in
    registered schema-8 external authority API 1 bridge; preserve the legacy adapter separately. FD has accepted 1.1 tools, 1.2 bounded multi-train operation and
    1.3 model/body work, but still labels its current artifact 1.1.0/schema 8.
    Pin source and artifact identity using [the handoff](docs/FOURTH-DIMENSION-HANDOFF.md).
-3. Preserve the completed **0.1** assignment: three player-built rides and
-   real-client/saved-world lifecycle. Later 0.2–0.4 work stays outside this
-   assignment. The broader product target
-   remains the complete six-launch 0.4 release.
+3. Preserve completed **0.1–0.4**: three player-built rides, real-client/saved-world
+   lifecycle, linear/skid operation, physical cable return and distinct pressure
+   operation/service. [The integration record](docs/evidence/0.4/integration-20261122/README.md)
+   reconciles this completed six-launch outcome.
 4. Extend certificates to the finite modern FD catalog in 0.5, then integrate
    the actual bounded Arrow reservation/controls contract in 0.6. Cosmetic
    variants never create new mechanical eligibility. Optional operating and
@@ -37,7 +36,7 @@ player-tool evidence. Original design provenance remains in
 
 Use **Coasters: Launch Systems**, mod ID `coasterslaunchsystems`, and original models, sounds, and recipes. Add equipment to existing coaster curves instead of replacing the track graph or introducing another vehicle solver. Start with fixed-world tracks; moving contraption tracks remain future work.
 
-| Component | Reproducible legacy | Selected current 0.1 stack |
+| Component | Reproducible legacy | Selected current 0.1–0.4 stack |
 | --- | --- | --- |
 | Minecraft / Java | 1.21.1 / 21 | Same |
 | NeoForge / Sable | 21.1.248 / 2.0.3 | 21.1.256 / 2.0.6 |

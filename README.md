@@ -1,25 +1,28 @@
 # Coasters: Launch Systems
 
-A standalone Create: Coasters Simulated addon in development toward **0.4.0**. The planned release includes tire, LIM, LSM, flywheel, hydraulic and pneumatic launches, distinct friction/skid/magnetic brakes, local ride control and explicit compatibility with Fourth Dimension vehicles.
+A standalone Create: Coasters Simulated addon with **0.4.0 accepted**: tire,
+LSM, LIM, finite flywheel, hydraulic and pneumatic launches; friction-fin,
+skid and passive magnetic brakes; local ride control; and explicit original
+Fourth Dimension vehicle certificates.
 
-**0.1.0 is accepted:** tire drives, final-hold fin clamps, passive magnetic
-brakes and local control have usable, player-built ordinary, Arrow and Free Spin
-rides. Empty/occupied circuits, normal exit/reboard/fresh dispatch, multiplayer
-reconnect and current Fourth Dimension saved-world authority recovery passed.
-The [integration record](docs/evidence/0.1/integration-20261122/README.md) links
-exact artifacts and evidence. Later six-launch 0.4 work remains in development.
+Normal-built occupied rides, linear swing launches, physical cable return,
+pressure recharge/service and targeted interruption/restart checks passed.
+The [0.4 integration record](docs/evidence/0.4/integration-20261122/README.md)
+links exact artifacts, accepted evidence and exclusions. It builds on the
+[accepted 0.1 foundation and three usable rides](docs/evidence/0.1/integration-20261122/README.md).
+Modern FD catalog support and bounded multi-train operation remain 0.5/0.6 work.
 
 ## Previous accepted checkpoint
 
 The `0.0.1-dev.72` checkpoint contains independent tire, LSM, LIM, flywheel, hydraulic and pneumatic launches; friction-fin, skid and eddy-current brakes; a local controller; a versioned Fourth Dimension provider adapter; and a fail-closed Coasters: Engineered 1.1.1 active-span bridge. It includes 21 original recipes and four standalone Ponder guides covering controller/span binding, linear-motor hardware, brake interfaces and cable launches. The latest combined Engineered/Fourth Dimension packaged matrix passed 215 required GameTests, including a real active-controller contact predicate. All four Ponder guides render from the packaged client with localized scene text. The dev.67 focused lifecycle checks prove active ordinary, Arrow, and individual Free Spin reserved vehicles can become unavailable through normal chunk scheduling while their controllers retain ownership and stay faulted. Dev.69 also restores normal player Span Tool binding and linking on equipment cabinets and ride controllers under Minecraft 1.21 block-interaction ordering; its focused packaged GameTests passed 66/66 and its full standalone matrix passed 131/131. Dev.70 adds a regression for a player-buildable level/unbanked span: mount both Coasters Simulated anchors on the floor, then connect them with Coaster Track; side-mounted anchors retain a banked frame and are intentionally refused by the equipment guards. The dev.70 packaged standalone build passed 29 JUnit tests and 132/132 required GameTests; its JAR SHA-256 is `46ec7a6d772d1ae98bda5ac3ce320934522f857fc5e6ce315136900219f4d08f`. Dev.71 carries the same floor-anchor instruction into the in-game controller Ponder guide; the focused packaged build and normal Ponder entrypoint render are recorded in [the dev.71 evidence](docs/evidence/ponder-dev71-floor-anchor.txt). Dev.72 adds a composed floor-anchor Span Tool installation and occupied ordinary dispatch fixture; the packaged standalone build passed 29 JUnit tests and 133/133 required GameTests in 4.820 minutes.
 
-That historical checkpoint preceded the accepted 0.1 work above. The complete six-launch 0.4.0 outcome remains in development. The adapter preserves Fourth Dimension ownership of carrier rotation, mass, restraints, retention and PAX winch state; Launch Systems only owns an accepted translation operation. See [cable scope](docs/CABLE-MECHANICS.md), [linear equipment and limits](docs/LINEAR-MOTORS.md), the [optional integration audit](docs/OPTIONAL-INTEGRATIONS.md), [release roadmap](ROADMAP.md), and [validation status](docs/VALIDATION.md).
+That historical checkpoint preceded the accepted 0.1–0.4 work above. The adapter preserves Fourth Dimension ownership of carrier rotation, mass, restraints, retention and PAX winch state; Launch Systems only owns an accepted translation operation. See [cable scope](docs/CABLE-MECHANICS.md), [linear equipment and limits](docs/LINEAR-MOTORS.md), [pressure operation](docs/PRESSURE-MECHANICS.md), the [optional integration audit](docs/OPTIONAL-INTEGRATIONS.md), [release roadmap](ROADMAP.md), and [validation status](docs/VALIDATION.md).
 
 ## Updated version plan
 
 The [November 22 roadmap](ROADMAP.md) keeps **0.4** as the first complete
-six-launch release: build on accepted 0.1 core/FD authority and player rides
-to finish the remaining equipment/lifecycle criteria. **0.5** adds explicit certificates for
+six-launch milestone, now accepted with its core/FD authority, player rides
+and equipment/lifecycle criteria. **0.5** adds explicit certificates for
 the expanded FD catalog; **0.6** integrates its bounded multi-train operation;
 **0.9/1.0** reconcile and ship the supported package. Accepted evidence carries
 forward. See [upstream dependency findings](docs/DEPENDENCY-REVIEW-2026-11-22.md)

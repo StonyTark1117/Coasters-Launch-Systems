@@ -90,13 +90,19 @@ final class LaunchSystemsPonderScenes {
     scene.idle(10);
     scene.world().showSection(util.select().fromTo(0, 1, 0, 4, 1, 4), Direction.DOWN);
     scene.overlay().showText(90).attachKeyFrame().placeNearTarget().pointAt(util.vector().topOf(1, 1, 2))
-        .text("Install a socket, carriage and a continuous verified guide along the straight launch route.");
+        .text("Install a chassis socket and a continuous guide five blocks below straight, level rail. The bound controller installs the physical carriage.");
     scene.idle(100);
     scene.overlay().showText(100).attachKeyFrame().placeNearTarget().pointAt(util.vector().topOf(2, 1, 2))
-        .text("Flywheel, hydraulic and pneumatic cabinets are distinct finite-energy cable stores. Bind only one to the section.");
+        .text("Bind one finite-energy cable cabinet, a powered home fin, and a downstream fin stop. The 12-block pull needs a 20-block guide.");
     scene.idle(110);
-    scene.overlay().showText(110).colored(PonderPalette.RED).attachKeyFrame().placeNearTarget().pointAt(util.vector().topOf(3, 1, 2))
-        .text("After any interruption, inspect the retained carriage and guide before rebinding or arming. Never bypass the downstream fin hold.");
+    scene.overlay().showText(110).attachKeyFrame().placeNearTarget().pointAt(util.vector().topOf(2, 1, 2))
+        .text("The flywheel spends stored rotation during the pull. The catch releases before its end stop; shaft power returns the carriage before reset.");
+    scene.idle(120);
+    scene.overlay().showText(120).attachKeyFrame().placeNearTarget().pointAt(util.vector().topOf(2, 1, 2))
+        .text("Shaft power charges the pump or compressor. Hydraulic oil returns to its reservoir; pneumatic force falls as the receiver expands. Stored pressure can finish a pull with the shaft stopped.");
+    scene.idle(130);
+    scene.overlay().showText(130).colored(PonderPalette.RED).attachKeyFrame().placeNearTarget().pointAt(util.vector().topOf(3, 1, 2))
+        .text("After a restart, inspect the retained catch and guide. At home, use the Span Tool with an offhand redstone torch to release onto linked fin clamps; an offhand compass retires the idle carriage.");
     scene.idle(120);
     scene.markAsFinished();
   }

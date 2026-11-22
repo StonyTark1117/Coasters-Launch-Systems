@@ -76,6 +76,27 @@ final class FourthDimensionAuthority {
         || !Objects.equals(token(v), tokens.getOrDefault(level, Map.of()).get((UUID) field(v, "chassis")));
   }
 
+  /** A retained owner may stop its train without reviving a suspended drive token. */
+  boolean retainsBrakeLease(ServerLevel level, Object v, Set<UUID> consist) throws ReflectiveOperationException {
+    var state = field(v, "authority");
+    if (!(boolean) field(state, "suspended")) return false;
+    if (!PROVIDER.equals(field(state, "provider")) || field(state, "owner") == null
+        || !(field(state, "controller") instanceof BlockPos pos)
+        || !(RideControllers.loadedBlockEntity(level, pos) instanceof RideControllerEntity bound)
+        || !RideControllers.available(level, bound) || !bound.identity().equals(field(state, "owner"))
+        || !bound.reservation().equals(consist)
+        || !new HashSet<>((List<?>) field(state, "cars")).equals(consist)) return false;
+    for (var id : consist) {
+      var member = find(level, id);
+      if (member == null || !supported(level, member)) return false;
+      var other = field(member, "authority");
+      if (!PROVIDER.equals(field(other, "provider")) || !bound.identity().equals(field(other, "owner"))
+          || !pos.equals(field(other, "controller"))
+          || !new HashSet<>((List<?>) field(other, "cars")).equals(consist)) return false;
+    }
+    return true;
+  }
+
   boolean permitted(ServerLevel level, Object v) throws ReflectiveOperationException {
     var id = (UUID) field(v, "chassis"); var token = tokens.getOrDefault(level, Map.of()).get(id);
     return token != null && (boolean) call("permits", new Class<?>[] {ServerLevel.class, UUID.class, tokenType, String.class}, level, id, token, PROVIDER);

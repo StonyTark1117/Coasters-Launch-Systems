@@ -35,6 +35,8 @@ public final class LinearControllerGameTests {
     int interruptedSteps;
     boolean interrupted, restored;
     String failure = "";
+    EquipmentCabinetEntity skid;
+    double skidPeakHeat;
     Scene(GameTestHelper helper, int slot, String mode, Mechanism mechanism) {
       ride = new RideControllerGameTests.Scene(helper, slot, mode, 192); this.mechanism = mechanism; ride.driveMechanism = mechanism;
     }
@@ -46,6 +48,7 @@ public final class LinearControllerGameTests {
     for (var s : List.copyOf(SCENES)) {
       var r = s.ride; if (r.closed || r.base.level != event.getPhysicsSystem().getLevel()) continue;
       try {
+        if (s.skid != null) s.skidPeakHeat = Math.max(s.skidPeakHeat, s.skid.heat());
         // Interrupt the return leg only after the first end-bank reversal has become live. This
         // proves a swing program cannot silently replay after authority is restored.
         double work = 0, spent = 0, heat = 0; double dt = event.getTimeStep();
@@ -68,7 +71,7 @@ public final class LinearControllerGameTests {
           var impulse = group == null ? new Vector3d() : new Vector3d(group.getForceTotal().getLocalForce());
           var torque = group == null ? new Vector3d() : new Vector3d(group.getForceTotal().getLocalTorque());
           double force = new Vector3d(impulse).rotate(body.logicalPose().orientation()).dot(direction) / dt;
-          if (Math.abs(force) > 1e-8) {
+          if (Math.abs(force) > 1e-8 && (s.skid == null || s.skidPeakHeat == 0)) {
             r.base.helper.assertTrue(r.controller.phase() == RideControllerEntity.State.RUNNING && r.controller.reservation().contains(body.getUniqueId()), "Linear impulse bypassed a local lease or ready request");
             r.base.helper.assertTrue(Math.abs(force) <= Math.min(motion.maximumForce(), NativeForces.mass(r.base.level, motion) * motion.maximumAcceleration()) + 1e-8,
                 "Adjacent linear pads duplicated a chassis rating"); s.steps++;
@@ -88,7 +91,9 @@ public final class LinearControllerGameTests {
           spent += s.energy.get(c.getBlockPos()) + charge - c.energy(); heat += c.heat() - (active ? Math.max(0, s.heat.get(c.getBlockPos()) - 8 * dt) : s.heat.get(c.getBlockPos()));
         }
         s.maxError = Math.max(s.maxError, Math.abs(spent - heat - work));
-        r.base.helper.assertTrue(s.maxError < 1e-7, "Coordinated linear bank duplicated native work/resources: " + s.maxError);
+        // The new passive trim fixture shares PROPULSION's native force group with the field.
+        // Once the shoe dissipates work, that group's impulse is no longer linear-only accounting.
+        if (s.skid == null || s.skidPeakHeat == 0) r.base.helper.assertTrue(s.maxError < 1e-7, "Coordinated linear bank duplicated native work/resources: " + s.maxError);
         s.work += work; s.spent += spent; s.thermal += heat; s.snapshot();
         r.base.helper.assertTrue(r.base.riders.stream().allMatch(net.minecraft.world.entity.animal.Pig::isPassenger), "Linear launch lost a passenger");
         if (swingPowerLoss(r.mode) && s.interrupted && !s.restored && r.controller.phase() == RideControllerEntity.State.FAULT) {
@@ -128,7 +133,11 @@ public final class LinearControllerGameTests {
           "legacy_swing_forward", "legacy_swing_power_loss",
           "free_spin_swing_forward", "free_spin_swing_power_loss",
           "revised_swing_forward", "revised_swing_power_loss"));
+      if (mechanism == Mechanism.LSM && net.neoforged.fml.ModList.get().isLoaded("fourthdimension")) modes.add("arrow_skid_trim");
       for (String mode : modes) {
+        String selection = System.getProperty("coasterslaunchsystems.linearCases", "");
+        String caseName = mechanism.name().toLowerCase(Locale.ROOT) + "_section_" + mode;
+        if (!selection.isBlank() && !List.of(selection.split(",")).contains(caseName)) continue;
         boolean fourthDimension = mode.startsWith("arrow") || mode.startsWith("legacy") || mode.startsWith("free_spin")
             || mode.startsWith("revised") || mode.startsWith("pax");
         // Optional-provider fixtures have their own compact lane; do not let an added provider
@@ -147,6 +156,15 @@ public final class LinearControllerGameTests {
     }
     return tests;
   }
+  private static String faultState(Scene s) {
+    var r = s.ride;
+    return r.controller.status() + " steps=" + s.steps + "/" + s.interruptedSteps
+        + " interrupted=" + s.interrupted + " restored=" + s.restored
+        + " bodies=" + r.base.parents.stream().map(body -> body.getUniqueId()
+            + ":speed=" + r.base.speed(body) + ":clamps=" + EquipmentRuntime.activeFinClamps(r.base.level, body.getUniqueId())
+            + ":brake=" + MotionProviders.resolve(r.base.level, body.getUniqueId()).map(v -> v.brakingAllowed()).orElse(false)
+            + ":propel=" + MotionProviders.resolve(r.base.level, body.getUniqueId()).map(v -> v.propulsionAllowed()).orElse(false)).toList();
+  }
   private static void run(Scene s) {
     var r = s.ride;
     if (!registered) { NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, LinearControllerGameTests::physics); NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, LinearControllerGameTests::after); registered = true; }
@@ -154,6 +172,8 @@ public final class LinearControllerGameTests {
     r.at(55, () -> {
       if (r.linked) r.base.helper.assertTrue(CoasterCartTrainLinkConstraint.linkCarts(r.base.level, r.base.parents.getFirst(), r.base.parents.getLast(), 6), "Linear native consist did not couple");
       for (var body : r.base.parents) {
+        if (r.mode.equals("arrow_skid_trim")) body.getPlot().getEmbeddedLevelAccessor().setBlock(
+            new BlockPos(0, -2, -1), EquipmentContent.SKID_SHOE.get().defaultBlockState(), 3);
         for (var mechanism : r.mode.equals("mixed_forward") ? List.of(Mechanism.LSM, Mechanism.LIM) : List.of(s.mechanism)) {
           var plot = body.getPlot().getEmbeddedLevelAccessor(); var plate = LinearMotorGameTests.reactionPosition(mechanism);
           r.base.helper.assertTrue(plot.getBlockState(plate).isAir(), "Linear plate would overwrite vehicle-family hardware");
@@ -179,7 +199,15 @@ public final class LinearControllerGameTests {
           if (r.mode.equals("mixed_forward")) r.driveMechanism = distance % 4 == 0 ? Mechanism.LSM : Mechanism.LIM;
           r.module(distance, false); r.module(distance, true);
         }
-        for (int distance = 21; distance <= 61; distance += 2) r.module(distance, true);
+        for (int distance = r.mode.equals("arrow_skid_trim") ? 29 : 21; distance <= 61; distance += 2) r.module(distance, true);
+      }
+      if (r.mode.equals("arrow_skid_trim")) {
+        var position = r.base.from.offset(1, -2, 20);
+        r.base.level.setBlockAndUpdate(position, EquipmentContent.SKID.get().defaultBlockState()
+            .setValue(net.minecraft.world.level.block.RotatedPillarBlock.AXIS, net.minecraft.core.Direction.Axis.X));
+        s.skid = (EquipmentCabinetEntity) r.base.level.getBlockEntity(position);
+        s.skid.bind(r.base.level, r.base.from, r.base.to); s.skid.setArmed(true);
+        r.equipment.add(position);
       }
       r.controller.setArmed(true); s.snapshot(); SCENES.add(s);
     });
@@ -212,10 +240,20 @@ public final class LinearControllerGameTests {
       if (!r.mode.equals("power_loss") && !r.mode.equals("arrow_plate_loss") && !r.mode.endsWith("thermal_loss")) return;
       r.base.helper.assertTrue(r.controller.phase() == RideControllerEntity.State.FAULT && r.controller.reservation().size() == r.base.parents.size()
           && r.base.parents.stream().allMatch(b -> Math.abs(r.base.speed(b)) < .03 && EquipmentRuntime.activeFinClamps(r.base.level, b.getUniqueId()) > 0),
-          "Lost linear authority did not retain the held train");
+          "Lost linear authority did not retain the held train: " + faultState(s));
       s.interruptedSteps = s.steps;
       if (r.mode.equals("power_loss"))
         for (var p : r.motors) ((com.simibubi.create.content.kinetics.motor.CreativeMotorBlockEntity) r.base.level.getBlockEntity(p)).generatedSpeed.setValue(64);
+    });
+    r.at(700, () -> {
+      if (s.skid == null) return;
+      r.base.helper.assertTrue(s.skidPeakHeat > 1 && s.skid.fault().isEmpty()
+          && r.controller.reservation().contains(r.base.parents.getFirst().getUniqueId()),
+          "Current-authority skid did not dissipate work under the retained linear lease: peak=" + s.skidPeakHeat
+              + " heat=" + s.skid.heat() + " cabinet=" + s.skid.status() + " " + faultState(s));
+      System.out.println("LS_CURRENT_SKID peak_heat=" + s.skidPeakHeat + " heat=" + s.skid.heat() + " phase=" + r.controller.phase()
+          + " speed=" + r.base.speed(r.base.parents.getFirst()));
+      s.skid.setArmed(false);
     });
     r.at(swing(r.mode) ? (r.linked ? 11000 : 7600) : 1250, () -> {
       try {
@@ -223,9 +261,15 @@ public final class LinearControllerGameTests {
           r.base.helper.assertTrue(s.failure.isEmpty() && r.controller.phase() == RideControllerEntity.State.FAULT && s.steps == s.interruptedSteps
               && r.controller.reservation().size() == r.base.parents.size() && s.drives().stream().allMatch(c -> c.energy() > 0)
               && r.base.parents.stream().allMatch(b -> Math.abs(r.base.speed(b)) < .03 && EquipmentRuntime.activeFinClamps(r.base.level, b.getUniqueId()) > 0)
-              && (!swingPowerLoss(r.mode) || s.interrupted && s.restored), "Interrupted linear field replayed a launch: " + s.failure);
+              && (!swingPowerLoss(r.mode) || s.interrupted && s.restored), "Interrupted linear field replayed a launch: " + s.failure + " " + faultState(s));
           System.out.println("LS_LINEAR_INTERRUPTION mechanism=" + s.mechanism + " mode=" + r.mode + " phase=" + r.controller.phase() + " lease=" + r.controller.reservation().size()
               + " steps=" + s.steps + " spent=" + s.spent + " work=" + s.work + " accounting_error=" + s.maxError);
+          r.base.helper.succeed(); return;
+        }
+        if (s.skid != null) {
+          r.base.helper.assertTrue(s.skidPeakHeat > 1 && s.failure.isEmpty() && r.controller.fault().isEmpty()
+              && r.controller.reservation().contains(r.base.parents.getFirst().getUniqueId()),
+              "Separate skid trim lost work or retained controller lease: " + s.failure + " " + faultState(s));
           r.base.helper.succeed(); return;
         }
         r.base.helper.assertTrue(s.failure.isEmpty() && r.controller.fault().isEmpty() && r.controller.phase() == RideControllerEntity.State.HOLD, "Linear section did not stop in its reserved fin bank: " + r.controller.status() + " " + s.failure);

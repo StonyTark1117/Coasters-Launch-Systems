@@ -1,0 +1,18 @@
+{
+  "source_head": "974c2c8",
+  "profile": "fd-current",
+  "launch_systems": {
+    "path": "/mnt/NVME4/launchsystems-runs/ls04-pressure-20261122/native-build/libs/coasters-launch-systems-0.1.0.jar",
+    "sha256": "c06a750ab59dc09411a2b7e4fcf738ee5d74b7c82cf07cd160af52ef87b2e3ea"
+  },
+  "fourth_dimension": {
+    "path": "/mnt/NVME4/launchsystems-runs/bridge-20261122/artifacts/fourthdimension-authority-api1.jar",
+    "sha256": "df3662828a106efe6542abee735b26c7254a9a218e9c1e45783d2e979e63256e"
+  },
+  "owned_changed_sources": [
+    "EquipmentCabinetEntity pressureStatus",
+    "HydraulicAccumulator oil inventory readout",
+    "PressureGameTests focused wrapper"
+  ],
+  "shared_changes": "CableControllers native authority claim and FourthDimensionMotionProvider retained-brake authority by bridge"
+}

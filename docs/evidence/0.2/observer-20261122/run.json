@@ -1,0 +1,27 @@
+{
+  "owner": "/root",
+  "root": "/mnt/NVME4/launchsystems-runs/ls02-observer-20261122",
+  "display": 399,
+  "unit_prefix": "fd-ls-linear-observer-20261122",
+  "player": "Observer",
+  "client_script": "/mnt/NVME4/launchsystems-runs/ls02-observer-20261122/build/moddev/runObserver.sh",
+  "client_limit": "6G",
+  "server_owner": "/root/rides",
+  "server_root": "/mnt/NVME4/launchsystems-runs/ls02-linear-20261122",
+  "server_unit": "fd-ls-linear-20261122-server.service",
+  "endpoint": "127.0.0.1:25771",
+  "status": "Complete: occupied swing and passive skid passed; Observer disconnected; client and Xvfb inactive MainPID0 success.",
+  "ls_sha256": "45027587f7d87e8672c0d39a7c8bc1795d289af363e37e6e11a76ea5d6a34877",
+  "input_proof": {
+    "camera": "evidence/20261122T210620.614842Z-after.png",
+    "vanilla_use": "evidence/20261122T210715.575267Z-after.png",
+    "placed_block": [
+      7,
+      97,
+      -6
+    ]
+  },
+  "dispatch_input": "evidence/20261122T211248.909641Z-after.png",
+  "temporary_operator_platform": "7,99,8 removed after dispatch",
+  "skid_arm_input": "evidence/20261122T211726.539747Z-after.png"
+}

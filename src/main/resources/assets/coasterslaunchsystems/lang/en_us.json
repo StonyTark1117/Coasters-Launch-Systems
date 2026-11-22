@@ -33,7 +33,9 @@
   "coasterslaunchsystems.ponder.brake_hardware.text_2": "The magnetic brake uses the conductive fin and dissipates motion; it does not hold a stopped train.",
   "coasterslaunchsystems.ponder.brake_hardware.text_3": "Skid hardware needs its matching shoe. Bind every cabinet to its local span and leave a friction hold downstream.",
   "coasterslaunchsystems.ponder.cable_launch.header": "Preparing a cable launch",
-  "coasterslaunchsystems.ponder.cable_launch.text_1": "Install a socket, carriage and a continuous verified guide along the straight launch route.",
-  "coasterslaunchsystems.ponder.cable_launch.text_2": "Flywheel, hydraulic and pneumatic cabinets are distinct finite-energy cable stores. Bind only one to the section.",
-  "coasterslaunchsystems.ponder.cable_launch.text_3": "After any interruption, inspect the retained carriage and guide before rebinding or arming. Never bypass the downstream fin hold."
+  "coasterslaunchsystems.ponder.cable_launch.text_1": "Install a chassis socket and a continuous guide five blocks below straight, level rail. The bound controller installs the physical carriage.",
+  "coasterslaunchsystems.ponder.cable_launch.text_2": "Bind one finite-energy cable cabinet, a powered home fin, and a downstream fin stop. The 12-block pull needs a 20-block guide.",
+  "coasterslaunchsystems.ponder.cable_launch.text_3": "The flywheel spends stored rotation during the pull. The catch releases before its end stop; shaft power returns the carriage before reset.",
+  "coasterslaunchsystems.ponder.cable_launch.text_4": "Shaft power charges the pump or compressor. Hydraulic oil returns to its reservoir; pneumatic force falls as the receiver expands. Stored pressure can finish a pull with the shaft stopped.",
+  "coasterslaunchsystems.ponder.cable_launch.text_5": "After a restart, inspect the retained catch and guide. At home, use the Span Tool with an offhand redstone torch to release onto linked fin clamps; an offhand compass retires the idle carriage."
 }
