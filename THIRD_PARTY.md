@@ -2,7 +2,7 @@
 
 Launch Systems gameplay code and models are original except for the specific adaptations identified below; tests also reuse selected sister-project fixture patterns. The Gradle wrapper originates from the NeoForge ModDevGradle MDK via the sibling Fourth Dimension checkout and retains its Apache 2.0 notices. Runtime libraries are resolved from their publishers and are not bundled. The sibling project and inspected Engineered release informed API usage. No Engineered implementation or third-party artwork is bundled.
 
-The addon is MIT licensed. Minecraft textures referenced by original model JSON remain provided by the installed game. Manufacturer names describe mechanism concepts; no manufacturer assets are distributed.
+The addon is dedicated under CC0 1.0 Universal; third-party components retain their own licenses. Minecraft textures referenced by original model JSON remain provided by the installed game. Manufacturer names describe mechanism concepts; no manufacturer assets are distributed.
 
 The 2026-11-15 workflow refresh references Fourth Dimension's local instructions,
 dependency audit and private Xvfb helper in place. The helper and gameplay code
