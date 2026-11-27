@@ -1,0 +1,134 @@
+{"command": "list", "result": "There are 1 of a max of 20 players online: Dev\n"}
+{"command": "op Dev", "result": "Made Dev a server operator\n"}
+{"command": "gamerule doDaylightCycle false", "result": "Gamerule doDaylightCycle is now set to: false\n"}
+{"command": "time set day", "result": "Set the time to 1000\n"}
+{"command": "gamemode survival Dev", "result": ""}
+{"command": "test run coasterslaunchsystems_articulated.suspended_tire", "result": "Running 1 tests...\nStarting batch: launchsystems_articulated_tire:0\n"}
+{"command": "lsarticulated status", "result": "{\"family\":\"suspended\",\"chassis\":\"1aa5f26a-f395-4079-be81-4ef26459c5c9\",\"controller\":\"36, 210, -888\",\"state\":\"Ride controller: HOLD, reserved chassis 1, required brake length 15.51/22.00, transfer false, station capture false, swing off, boarding ready false. \",\"work\":0.0,\"steps\":0,\"distance\":7.999953501261659,\"nativeFault\":\"\",\"restraints\":false,\"stopping\":true,\"carrierIds\":[\"b0999578-937c-4dbf-bbdc-7a7678d5a02a\"],\"occupants\":[[]],\"nativeAngles\":[-1.1970549122542425E-7],\"players\":[{\"riding\":false,\"seat\":\"380df991-f603-344c-a090-369bad2a924a\",\"name\":\"Dev\"}]}\n"}
+{"command": "setblock 40 205 -900 minecraft:stone", "result": "Changed the block at 40, 205, -900\n"}
+{"command": "setblock 40 204 -897 minecraft:stone", "result": "Changed the block at 40, 204, -897\n"}
+{"command": "tp Dev 40.5 205 -896.5 180 22", "result": "Teleported Dev to 40.500000, 205.000000, -896.500000\n"}
+{"command": "item replace entity Dev weapon.mainhand with minecraft:cobblestone 16", "result": "Replaced a slot on Dev with [Cobblestone]\n"}
+{"command": "execute if block 40 205 -899 minecraft:cobblestone run say vanilla_use_verified", "result": ""}
+{"command": "item replace entity Dev weapon.mainhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "execute if block 40 206 -900 minecraft:cobblestone run say vanilla_top_placement_verified", "result": ""}
+{"command": "data get entity Dev SelectedItem", "result": "Found no elements matching SelectedItem\n"}
+{"command": "data get entity Dev Pos", "result": "Dev has the following entity data: [40.5d, 205.0d, -896.5d]\n"}
+{"command": "execute centered_in_sub_level b0999578-937c-4dbf-bbdc-7a7678d5a02a positioned ~ ~-1.25 ~ out_sub_level @i anchored eyes run tp Dev 35.5 204 -888.5 facing ~ ~ ~", "result": "Teleported Dev to 35.500000, 204.000000, -888.500000\n"}
+{"command": "setblock 35 203 -889 minecraft:stone", "result": "Changed the block at 35, 203, -889\n"}
+{"command": "execute centered_in_sub_level b0999578-937c-4dbf-bbdc-7a7678d5a02a positioned ~ ~-1.25 ~ out_sub_level @i anchored eyes run tp Dev 35.5 204 -888.5 facing ~ ~ ~", "result": "Teleported Dev to 35.500000, 204.000000, -888.500000\n"}
+{"command": "execute centered_in_sub_level b0999578-937c-4dbf-bbdc-7a7678d5a02a positioned ~ ~-2 ~ out_sub_level @i anchored eyes run tp Dev 35.5 204 -888.5 facing ~ ~ ~", "result": "Teleported Dev to 35.500000, 204.000000, -888.500000\n"}
+{"command": "lsarticulated status", "result": "{\"family\":\"suspended\",\"chassis\":\"1aa5f26a-f395-4079-be81-4ef26459c5c9\",\"controller\":\"36, 210, -888\",\"state\":\"Ride controller: HOLD, reserved chassis 1, required brake length 15.51/22.00, transfer false, station capture false, swing off, boarding ready false. \",\"work\":0.0,\"steps\":0,\"distance\":7.999953501261659,\"nativeFault\":\"\",\"restraints\":false,\"stopping\":true,\"carrierIds\":[\"b0999578-937c-4dbf-bbdc-7a7678d5a02a\"],\"occupants\":[[\"380df991-f603-344c-a090-369bad2a924a\"]],\"nativeAngles\":[-8.67970021435806E-7],\"players\":[{\"riding\":true,\"seat\":\"23fbd75e-a874-44b8-9ea4-67cb9019e32d\",\"name\":\"Dev\"}]}\n"}
+{"command": "item replace entity Dev weapon.mainhand with fourthdimension:rotation_wrench", "result": "Unknown item 'fourthdimension:rotation_wrench'\n...hand with fourthdimension:rotation_wrench<--[HERE]\n"}
+{"command": "item replace entity Dev weapon.mainhand with fourthdimension:rotation_tool", "result": "Replaced a slot on Dev with [Rotation Tool]\n"}
+{"command": "lsarticulated status", "result": "{\"family\":\"suspended\",\"chassis\":\"1aa5f26a-f395-4079-be81-4ef26459c5c9\",\"controller\":\"36, 210, -888\",\"state\":\"Ride controller: READY, reserved chassis 1, required brake length 15.51/22.00, transfer false, station capture false, swing off, boarding ready false. \",\"work\":0.0,\"steps\":0,\"distance\":7.999953501261659,\"nativeFault\":\"\",\"restraints\":true,\"stopping\":true,\"carrierIds\":[\"b0999578-937c-4dbf-bbdc-7a7678d5a02a\"],\"occupants\":[[\"380df991-f603-344c-a090-369bad2a924a\"]],\"nativeAngles\":[-6.503007392265465E-7],\"players\":[{\"riding\":true,\"seat\":\"23fbd75e-a874-44b8-9ea4-67cb9019e32d\",\"name\":\"Dev\"}]}\n"}
+{"command": "setblock 36 211 -888 minecraft:lever[face=floor,facing=east,powered=false]", "result": "Changed the block at 36, 211, -888\n"}
+{"command": "setblock 39 211 -888 minecraft:stone", "result": "Changed the block at 39, 211, -888\n"}
+{"command": "setblock 35 203 -889 minecraft:air", "result": "Changed the block at 35, 203, -889\n"}
+{"command": "test run coasterslaunchsystems_articulated.axis_tire", "result": "Running 1 tests...\nStarting batch: launchsystems_articulated_tire:0\n"}
+{"command": "test run coasterslaunchsystems_articulated.pipeline_tire", "result": "Running 1 tests...\nStarting batch: launchsystems_articulated_tire:0\n"}
+{"command": "test run coasterslaunchsystems_articulated.dive_tire", "result": "Running 1 tests...\nStarting batch: launchsystems_articulated_tire:0\n"}
+{"command": "test run coasterslaunchsystems_articulated.flying_tire", "result": "Running 1 tests...\nStarting batch: launchsystems_articulated_tire:0\n"}
+{"command": "test run coasterslaunchsystems_articulated.new_generation_flying_tire", "result": "Running 1 tests...\nStarting batch: launchsystems_articulated_tire:0\n"}
+{"command": "lsarticulated status", "result": "{\"family\":\"suspended\",\"chassis\":\"1aa5f26a-f395-4079-be81-4ef26459c5c9\",\"controller\":\"36, 210, -888\",\"state\":\"Ride controller: READY, reserved chassis 1, required brake length 15.51/22.00, transfer false, station capture false, swing off, boarding ready false. \",\"work\":0.0,\"steps\":0,\"distance\":7.999953501261659,\"nativeFault\":\"\",\"restraints\":true,\"stopping\":true,\"carrierIds\":[\"b0999578-937c-4dbf-bbdc-7a7678d5a02a\"],\"occupants\":[[\"380df991-f603-344c-a090-369bad2a924a\"]],\"nativeAngles\":[-4.068477776734058E-7],\"players\":[{\"riding\":true,\"seat\":\"23fbd75e-a874-44b8-9ea4-67cb9019e32d\",\"name\":\"Dev\"}]}\n{\"family\":\"new_generation_flying\",\"chassis\":\"a316dc3a-7644-49f9-8c57-c479adec9047\",\"controller\":\"276, 210, -888\",\"state\":\"Ride controller: HOLD, reserved chassis 1, required brake length 13.37/22.00, transfer false, station capture false, swing off, boarding ready false. \",\"work\":0.0,\"steps\":0,\"distance\":7.999959692412563,\"nativeFault\":\"\",\"restraints\":false,\"stopping\":true,\"carrierIds\":[\"4b64b4e9-691d-43b9-bd09-869f4352e4db\"],\"occupants\":[[]],\"nativeAngles\":[-2.5970693391717304E-4],\"players\":[{\"riding\":true,\"seat\":\"23fbd75e-a874-44b8-9ea4-67cb9019e32d\",\"name\":\"Dev\"}],\"postureLock\":\"SEATED\",\"body\":false,\"legs\":false,\"deck\":\"26694ef9-f91d-496e-a465-078b9ce2bd6f\",\"yaw\":-6.499445202415339E-8}\n"}
+{"command": "test run coasterslaunchsystems_articulated.axis_tire", "result": "Running 1 tests...\nStarting batch: launchsystems_articulated_tire:0\n"}
+{"command": "lsarticulated status", "result": "{\"family\":\"suspended\",\"chassis\":\"1aa5f26a-f395-4079-be81-4ef26459c5c9\",\"controller\":\"36, 210, -888\",\"state\":\"Ride controller: READY, reserved chassis 1, required brake length 15.51/22.00, transfer false, station capture false, swing off, boarding ready false. \",\"work\":0.0,\"steps\":0,\"distance\":7.999953501261659,\"nativeFault\":\"\",\"restraints\":true,\"stopping\":true,\"carrierIds\":[\"b0999578-937c-4dbf-bbdc-7a7678d5a02a\"],\"occupants\":[[\"380df991-f603-344c-a090-369bad2a924a\"]],\"nativeAngles\":[-6.348345813156316E-7],\"players\":[{\"riding\":true,\"seat\":\"23fbd75e-a874-44b8-9ea4-67cb9019e32d\",\"name\":\"Dev\"}]}\n{\"family\":\"new_generation_flying\",\"chassis\":\"a316dc3a-7644-49f9-8c57-c479adec9047\",\"controller\":\"276, 210, -888\",\"state\":\"Ride controller: HOLD, reserved chassis 1, required brake length 13.37/22.00, transfer false, station capture false, swing off, boarding ready false. \",\"work\":0.0,\"steps\":0,\"distance\":7.999959692412563,\"nativeFault\":\"\",\"restraints\":false,\"stopping\":true,\"carrierIds\":[\"4b64b4e9-691d-43b9-bd09-869f4352e4db\"],\"occupants\":[[]],\"nativeAngles\":[-2.59913572929354E-4],\"players\":[{\"riding\":true,\"seat\":\"23fbd75e-a874-44b8-9ea4-67cb9019e32d\",\"name\":\"Dev\"}],\"postureLock\":\"SEATED\",\"body\":false,\"legs\":false,\"deck\":\"26694ef9-f91d-496e-a465-078b9ce2bd6f\",\"yaw\":-5.438602766420683E-8}\n{\"family\":\"axis\",\"chassis\":\"ba46fcaa-05bc-4bb8-b062-ddd3596cf01e\",\"controller\":\"84, 205, -888\",\"state\":\"Ride controller: HOLD, reserved chassis 1, required brake length 13.79/22.00, transfer false, station capture false, swing off, boarding ready false. \",\"work\":0.0,\"steps\":0,\"distance\":8.000000453561528,\"nativeFault\":\"\",\"restraints\":false,\"stopping\":true,\"carrierIds\":[\"026e8f60-b6a7-459c-b792-f395a6e68e7b\"],\"occupants\":[[]],\"nativeAngles\":[0.0016945756558931296],\"players\":[{\"riding\":true,\"seat\":\"23fbd75e-a874-44b8-9ea4-67cb9019e32d\",\"name\":\"Dev\"}]}\n"}
+{"command": "test run coasterslaunchsystems_articulated.pipeline_tire", "result": "Running 1 tests...\nStarting batch: launchsystems_articulated_tire:0\n"}
+{"command": "lsarticulated status", "result": "{\"family\":\"suspended\",\"chassis\":\"1aa5f26a-f395-4079-be81-4ef26459c5c9\",\"controller\":\"36, 210, -888\",\"state\":\"Ride controller: READY, reserved chassis 1, required brake length 15.51/22.00, transfer false, station capture false, swing off, boarding ready false. \",\"work\":0.0,\"steps\":0,\"distance\":7.999953501261659,\"nativeFault\":\"\",\"restraints\":true,\"stopping\":true,\"carrierIds\":[\"b0999578-937c-4dbf-bbdc-7a7678d5a02a\"],\"occupants\":[[\"380df991-f603-344c-a090-369bad2a924a\"]],\"nativeAngles\":[-6.502995260768093E-7],\"players\":[{\"riding\":true,\"seat\":\"23fbd75e-a874-44b8-9ea4-67cb9019e32d\",\"name\":\"Dev\"}]}\n{\"family\":\"new_generation_flying\",\"chassis\":\"a316dc3a-7644-49f9-8c57-c479adec9047\",\"controller\":\"276, 210, -888\",\"state\":\"Ride controller: HOLD, reserved chassis 1, required brake length 13.37/22.00, transfer false, station capture false, swing off, boarding ready false. \",\"work\":0.0,\"steps\":0,\"distance\":7.999959692412563,\"nativeFault\":\"\",\"restraints\":false,\"stopping\":true,\"carrierIds\":[\"4b64b4e9-691d-43b9-bd09-869f4352e4db\"],\"occupants\":[[]],\"nativeAngles\":[-2.621679546930057E-4],\"players\":[{\"riding\":true,\"seat\":\"23fbd75e-a874-44b8-9ea4-67cb9019e32d\",\"name\":\"Dev\"}],\"postureLock\":\"SEATED\",\"body\":false,\"legs\":false,\"deck\":\"26694ef9-f91d-496e-a465-078b9ce2bd6f\",\"yaw\":-6.563503428136647E-8}\n{\"family\":\"axis\",\"chassis\":\"ba46fcaa-05bc-4bb8-b062-ddd3596cf01e\",\"controller\":\"84, 205, -888\",\"state\":\"Ride controller: HOLD, reserved chassis 1, required brake length 13.79/22.00, transfer false, station capture false, swing off, boarding ready false. \",\"work\":0.0,\"steps\":0,\"distance\":8.000000453561528,\"nativeFault\":\"\",\"restraints\":false,\"stopping\":true,\"carrierIds\":[\"026e8f60-b6a7-459c-b792-f395a6e68e7b\"],\"occupants\":[[]],\"nativeAngles\":[0.0016938980562061603],\"players\":[{\"riding\":true,\"seat\":\"23fbd75e-a874-44b8-9ea4-67cb9019e32d\",\"name\":\"Dev\"}]}\n{\"family\":\"pipeline\",\"chassis\":\"dac88d8c-8f3b-408f-9e9f-02defe124009\",\"controller\":\"132, 210, -888\",\"state\":\"Ride controller: HOLD, reserved chassis 1, required brake length 16.44/22.00, transfer false, station capture false, swing off, boarding ready false. \",\"work\":0.0,\"steps\":0,\"distance\":8.000102513841798,\"nativeFault\":\"\",\"restraints\":false,\"stopping\":true,\"carrierIds\":[\"dac88d8c-8f3b-408f-9e9f-02defe124009\"],\"occupants\":[[]],\"nativeAngles\":[0.0],\"players\":[{\"riding\":true,\"seat\":\"23fbd75e-a874-44b8-9ea4-67cb9019e32d\",\"name\":\"Dev\"}]}\n"}
+{"command": "test run coasterslaunchsystems_articulated.dive_tire", "result": "Running 1 tests...\nStarting batch: launchsystems_articulated_tire:0\n"}
+{"command": "test run coasterslaunchsystems_articulated.flying_tire", "result": "Running 1 tests...\nStarting batch: launchsystems_articulated_tire:0\n"}
+{"command": "setblock 84 206 -888 minecraft:lever[face=floor,facing=east,powered=false]", "result": "Changed the block at 84, 206, -888\n"}
+{"command": "setblock 87 206 -888 minecraft:stone", "result": "Changed the block at 87, 206, -888\n"}
+{"command": "setblock 132 211 -888 minecraft:lever[face=floor,facing=east,powered=false]", "result": "Changed the block at 132, 211, -888\n"}
+{"command": "setblock 135 211 -888 minecraft:stone", "result": "Changed the block at 135, 211, -888\n"}
+{"command": "setblock 180 207 -888 minecraft:lever[face=floor,facing=east,powered=false]", "result": "Changed the block at 180, 207, -888\n"}
+{"command": "setblock 183 207 -888 minecraft:stone", "result": "Changed the block at 183, 207, -888\n"}
+{"command": "setblock 228 211 -888 minecraft:lever[face=floor,facing=east,powered=false]", "result": "Changed the block at 228, 211, -888\n"}
+{"command": "setblock 231 211 -888 minecraft:stone", "result": "Changed the block at 231, 211, -888\n"}
+{"command": "setblock 276 211 -888 minecraft:lever[face=floor,facing=east,powered=false]", "result": "Changed the block at 276, 211, -888\n"}
+{"command": "setblock 279 211 -888 minecraft:stone", "result": "Changed the block at 279, 211, -888\n"}
+{"command": "data get entity Dev Pos", "result": "Dev has the following entity data: [32.00000585810005d, 204.8749650566185d, -879.6027249999049d]\n"}
+{"command": "fill 30 202 -882 35 202 -878 minecraft:stone", "result": "Successfully filled 30 block(s)\n"}
+{"command": "setblock 87 207 -889 minecraft:stone", "result": "Changed the block at 87, 207, -889\n"}
+{"command": "item replace entity Dev weapon.mainhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "execute centered_in_sub_level 026e8f60-b6a7-459c-b792-f395a6e68e7b positioned ~ ~-1 ~ out_sub_level @i anchored eyes run tp Dev 87.5 208 -888.5 facing ~ ~ ~", "result": "Teleported Dev to 87.500000, 208.000000, -888.500000\n"}
+{"command": "item replace entity Dev weapon.mainhand with fourthdimension:rotation_tool", "result": "Replaced a slot on Dev with [Rotation Tool]\n"}
+{"command": "setblock 87 207 -889 minecraft:air", "result": "Changed the block at 87, 207, -889\n"}
+{"command": "list", "result": "There are 1 of a max of 20 players online: Dev\n"}
+{"command": "op Dev", "result": "Nothing changed. The player already is an operator\n"}
+{"command": "gamemode survival Dev", "result": ""}
+{"command": "gamerule doDaylightCycle false", "result": "Gamerule doDaylightCycle is now set to: false\n"}
+{"command": "time set day", "result": "Set the time to 1000\n"}
+{"command": "test run coasterslaunchsystems_articulated.axis_tire", "result": "Running 1 tests...\nStarting batch: launchsystems_articulated_tire:0\n"}
+{"command": "data get entity Dev Rotation", "result": "Dev has the following entity data: [9.150001f, 0.0f]\n"}
+{"command": "setblock 40 205 -900 minecraft:stone", "result": "Changed the block at 40, 205, -900\n"}
+{"command": "setblock 40 204 -897 minecraft:stone", "result": "Changed the block at 40, 204, -897\n"}
+{"command": "tp Dev 40.5 205 -896.5 180 22", "result": "Teleported Dev to 40.500000, 205.000000, -896.500000\n"}
+{"command": "item replace entity Dev weapon.mainhand with minecraft:cobblestone 16", "result": "Replaced a slot on Dev with [Cobblestone]\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Dev has the following entity data: {count: 15, id: \"minecraft:cobblestone\"}\n"}
+{"command": "test run coasterslaunchsystems_articulated.pipeline_tire", "result": "Running 1 tests...\nStarting batch: launchsystems_articulated_tire:0\n"}
+{"command": "setblock 87 207 -889 minecraft:stone", "result": "Changed the block at 87, 207, -889\n"}
+{"command": "item replace entity Dev weapon.mainhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "execute centered_in_sub_level 79074283-a6b7-4654-9b91-15252145e29b positioned ~ ~-1 ~ out_sub_level @i anchored eyes run tp Dev 87.5 208 -888.5 facing ~ ~ ~", "result": "Teleported Dev to 87.500000, 208.000000, -888.500000\n"}
+{"command": "setblock 84 206 -888 minecraft:lever[face=floor,facing=east,powered=false]", "result": "Changed the block at 84, 206, -888\n"}
+{"command": "setblock 87 206 -888 minecraft:stone", "result": "Changed the block at 87, 206, -888\n"}
+{"command": "item replace entity Dev weapon.mainhand with fourthdimension:rotation_tool", "result": "Replaced a slot on Dev with [Rotation Tool]\n"}
+{"command": "setblock 87 207 -889 minecraft:air", "result": "Changed the block at 87, 207, -889\n"}
+{"command": "test run coasterslaunchsystems_articulated.dive_tire", "result": "Running 1 tests...\nStarting batch: launchsystems_articulated_tire:0\n"}
+{"command": "test run coasterslaunchsystems_articulated.flying_tire", "result": "Running 1 tests...\nStarting batch: launchsystems_articulated_tire:0\n"}
+{"command": "test run coasterslaunchsystems_articulated.new_generation_flying_tire", "result": "Running 1 tests...\nStarting batch: launchsystems_articulated_tire:0\n"}
+{"command": "fill 81 204 -877 87 204 -872 minecraft:stone", "result": "Successfully filled 42 block(s)\n"}
+{"command": "setblock 132 205 -888 minecraft:stone", "result": "Changed the block at 132, 205, -888\n"}
+{"command": "setblock 132 211 -888 minecraft:lever[face=floor,facing=east,powered=false]", "result": "Changed the block at 132, 211, -888\n"}
+{"command": "setblock 135 211 -888 minecraft:stone", "result": "Changed the block at 135, 211, -888\n"}
+{"command": "item replace entity Dev weapon.mainhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "execute centered_in_sub_level a364cd4f-b787-4fcb-b7ac-af77f5650509 positioned ~-1 ~-2 ~-1 out_sub_level @i anchored eyes run tp Dev 132.5 206 -887.5 facing ~ ~ ~", "result": "Teleported Dev to 132.500000, 206.000000, -887.500000\n"}
+{"command": "item replace entity Dev weapon.mainhand with fourthdimension:rotation_tool", "result": "Replaced a slot on Dev with [Rotation Tool]\n"}
+{"command": "setblock 132 205 -888 minecraft:air", "result": "Changed the block at 132, 205, -888\n"}
+{"command": "setblock 180 207 -888 minecraft:lever[face=floor,facing=east,powered=false]", "result": "Changed the block at 180, 207, -888\n"}
+{"command": "setblock 183 207 -888 minecraft:stone", "result": "Changed the block at 183, 207, -888\n"}
+{"command": "fill 125 203 -882 132 203 -877 minecraft:stone", "result": "Successfully filled 48 block(s)\n"}
+{"command": "setblock 181 208 -889 minecraft:stone", "result": "Changed the block at 181, 208, -889\n"}
+{"command": "execute centered_in_sub_level 104617b7-0a66-4f0b-9521-07660d50f9c7 positioned ~-2 ~1 ~ out_sub_level @i anchored eyes run tp Dev 181.5 209 -888.5 facing ~ ~ ~", "result": "Teleported Dev to 181.500000, 209.000000, -888.500000\n"}
+{"command": "setblock 181 208 -889 minecraft:air", "result": "Changed the block at 181, 208, -889\n"}
+{"command": "data get entity Dev SelectedItem", "result": "Found no elements matching SelectedItem\n"}
+{"command": "data get entity Dev Pos", "result": "Dev has the following entity data: [181.5d, -60.0d, -888.5d]\n"}
+{"command": "data get entity Dev Inventory", "result": "Dev has the following entity data: []\n"}
+{"command": "setblock 181 208 -889 minecraft:stone", "result": "Changed the block at 181, 208, -889\n"}
+{"command": "item replace entity Dev weapon.mainhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "execute centered_in_sub_level 104617b7-0a66-4f0b-9521-07660d50f9c7 positioned ~-2 ~1 ~ out_sub_level @i anchored eyes run tp Dev 181.5 209 -888.5 facing ~ ~ ~", "result": "Teleported Dev to 181.500000, 209.000000, -888.500000\n"}
+{"command": "setblock 181 208 -889 minecraft:air", "result": "Changed the block at 181, 208, -889\n"}
+{"command": "item replace entity Dev weapon.mainhand with fourthdimension:rotation_tool", "result": "Replaced a slot on Dev with [Rotation Tool]\n"}
+{"command": "setblock 228 211 -888 minecraft:lever[face=floor,facing=east,powered=false]", "result": "Changed the block at 228, 211, -888\n"}
+{"command": "setblock 231 211 -888 minecraft:stone", "result": "Changed the block at 231, 211, -888\n"}
+{"command": "setblock 276 211 -888 minecraft:lever[face=floor,facing=east,powered=false]", "result": "Changed the block at 276, 211, -888\n"}
+{"command": "setblock 279 211 -888 minecraft:stone", "result": "Changed the block at 279, 211, -888\n"}
+{"command": "fill 173 207 -877 180 207 -872 minecraft:stone", "result": "Successfully filled 48 block(s)\n"}
+{"command": "fill 173 207 -877 180 207 -872 minecraft:air", "result": "Successfully filled 48 block(s)\n"}
+{"command": "fill 173 204 -877 180 204 -872 minecraft:stone", "result": "Successfully filled 48 block(s)\n"}
+{"command": "setblock 228 204 -888 minecraft:stone", "result": "Changed the block at 228, 204, -888\n"}
+{"command": "item replace entity Dev weapon.mainhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "execute centered_in_sub_level ef07192c-396d-431a-816f-87522ecb45df positioned ~-2 ~ ~ out_sub_level @i anchored eyes run tp Dev 228.5 205 -887.5 facing ~ ~ ~", "result": "Teleported Dev to 228.500000, 205.000000, -887.500000\n"}
+{"command": "execute centered_in_sub_level ef07192c-396d-431a-816f-87522ecb45df positioned ~-2 ~0.8 ~ out_sub_level @i anchored eyes run tp Dev 228.5 205 -887.5 facing ~ ~ ~", "result": "Teleported Dev to 228.500000, 205.000000, -887.500000\n"}
+{"command": "execute centered_in_sub_level ef07192c-396d-431a-816f-87522ecb45df positioned ~-2 ~ ~ out_sub_level @i run summon minecraft:marker ~ ~ ~ {Tags:[\"ls502_flying_seat_point\"]}", "result": "Summoned new Marker\n"}
+{"command": "data get entity @e[type=minecraft:marker,tag=ls502_flying_seat_point,limit=1] Pos", "result": "Marker has the following entity data: [226.0000143425298d, 206.3124577856126d, -887.5000271839777d]\n"}
+{"command": "execute centered_in_sub_level ef07192c-396d-431a-816f-87522ecb45df positioned ~-2 ~0.5 ~0.45 out_sub_level @i anchored eyes run tp Dev 228.5 205 -887.5 facing ~ ~ ~", "result": "Teleported Dev to 228.500000, 205.000000, -887.500000\n"}
+{"command": "setblock 228 204 -888 minecraft:air", "result": "Changed the block at 228, 204, -888\n"}
+{"command": "item replace entity Dev weapon.mainhand with fourthdimension:rotation_tool", "result": "Replaced a slot on Dev with [Rotation Tool]\n"}
+{"command": "execute centered_in_sub_level 0dc39416-e187-43fd-b13c-0ec95055ebe0 positioned ~-1 ~0.5 ~0.45 out_sub_level @i run summon minecraft:marker ~ ~ ~ {Tags:[\"ls502_ng_seat_point\"]}", "result": "Summoned new Marker\n"}
+{"command": "data get entity @e[type=minecraft:marker,tag=ls502_ng_seat_point,limit=1] Pos", "result": "Marker has the following entity data: [272.9999988546081d, 206.31252002031349d, -887.949906329083d]\n"}
+{"command": "data get block 228 211 -888", "result": "The target block is not a block entity\n"}
+{"command": "list", "result": "There are 2 of a max of 20 players online: Observer, Dev\n"}
+{"command": "data get block 228 210 -888 armed", "result": "228, 210, -888 has the following block data: 1b\n"}
+{"command": "data get block 228 210 -888 phase", "result": "228, 210, -888 has the following block data: \"FAULT\"\n"}
+{"command": "fill 221 202 -882 228 202 -877 minecraft:stone", "result": "Successfully filled 48 block(s)\n"}
+{"command": "setblock 276 204 -888 minecraft:stone", "result": "Changed the block at 276, 204, -888\n"}
+{"command": "item replace entity Dev weapon.mainhand with minecraft:air", "result": "Replaced a slot on Dev with [Air]\n"}
+{"command": "execute centered_in_sub_level 0dc39416-e187-43fd-b13c-0ec95055ebe0 positioned ~-1 ~0.5 ~0.45 out_sub_level @i anchored eyes run tp Dev 276.5 205 -887.5 facing ~ ~ ~", "result": "Teleported Dev to 276.500000, 205.000000, -887.500000\n"}
+{"command": "setblock 276 204 -888 minecraft:air", "result": "Changed the block at 276, 204, -888\n"}
+{"command": "item replace entity Dev weapon.mainhand with fourthdimension:rotation_tool", "result": "Replaced a slot on Dev with [Rotation Tool]\n"}
+{"command": "fill 269 202 -884 276 202 -879 minecraft:stone", "result": "Successfully filled 48 block(s)\n"}
+{"command": "save-all flush", "result": "Saving the game (this may take a moment!)\nSaved the game\n"}
+{"command": "list", "result": "There are 0 of a max of 20 players online: \n"}
+{"command": "save-all flush", "result": "Saving the game (this may take a moment!)\nSaved the game\n"}
+{"command": "stop", "result": "Stopping the server\n"}

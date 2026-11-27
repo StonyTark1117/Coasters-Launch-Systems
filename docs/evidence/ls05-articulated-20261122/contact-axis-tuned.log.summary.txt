@@ -1,0 +1,7 @@
+LS_ARTICULATED_LOAD family=axis kind=passive riders=2 empty=10.0 loaded=11.6
+LS_ARTICULATED_LOAD family=axis kind=lsm riders=2 empty=9.0 loaded=10.6
+LS_ARTICULATED_PASS family=axis kind=lsm riders=2 work=28.625184918462075 peak=1.9958716129950058 steps=204 distance=20.273266781798824 posture=0.0335625187352903 yaw=0.0 native_guard=true held_input=true
+LS_ARTICULATED_LOAD family=axis kind=lim riders=2 empty=9.0 loaded=10.6
+LS_ARTICULATED_PASS family=axis kind=lim riders=2 work=30.68879610822032 peak=1.9957559806075311 steps=253 distance=20.359974841169645 posture=0.0335157003762187 yaw=0.0 native_guard=true held_input=true
+[15:05:17] [Server thread/INFO] [minecraft/GameTestServer]: 1 required tests failed :(
+BUILD FAILED in 1m 12s

@@ -1,0 +1,30 @@
+{
+  "owner": "/root",
+  "curator": "/root/foundation",
+  "source_directory": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/observer/evidence",
+  "curated_at_utc": "2026-11-27T02:45:30.289057+00:00",
+  "input_filter": "All completed sent records from stopped owner run; original JSON lines preserved",
+  "readback_filter": "All original records from stopped owner run through final disconnect",
+  "input_records": 49,
+  "readback_records": 115,
+  "files": {
+    "20261122T220229.802963Z-after.png": "3e75e045ab6ce66b8ae866ca7ca50dbfd2e1c9e6a663cec19c508cf4f8599ed4",
+    "20261122T221100.802166Z-before.png": "18c8c1aef59e23ab422e020ca12eb8cd5323ed33525a7a0f5320915ca4fc2289",
+    "20261122T221132.036235Z-state.png": "ee4bb99de5241b42c1495e64d731c7c32412a4f1d6c9ce2bdf48f290712195d1",
+    "20261122T221201.586288Z-after.png": "76ed64f549ee73ec8e2c8e58749e3e6ddca1d0e9745e04c2843e10eef797d076",
+    "20261122T221343.059779Z-after.png": "1149c1d2928e7b4b1c9e0f5dffa28e88b08f88e8c9b13517e3b4ff1f652194fb",
+    "20261127T022442.712945Z-before.png": "6a00cb33911448204113eece113b3034b0f479fc7790926f9726e5e0c3617412",
+    "20261127T022501.106771Z-state.png": "76035675c771e0b156bd8fe75e52c7f67ed7bfbced5109b5c68afe26f4918f7e",
+    "20261127T022913.458492Z-state.png": "aa325f76ea04d87ca3dfa387c1842cf28dccbd95e0bdb434a84092afd615bfdd",
+    "20261127T023109.876487Z-state.png": "11f4c15b342492a92fea41263b3f3aaefc28a2f639468c339d817054f96d92b8",
+    "20261127T023623.408457Z-after.png": "5de1af230e6549a6f94ed7094a7195129a7c5ef6a1b4d35cfed46799f33425ad",
+    "20261127T023949.119073Z-state.png": "435b4ddac83458b433e726c9adbdc76a33f799088af3f834f3ba61b05fd78840",
+    "README.md": "e423df303113bfc5223c1f6fb0ec0e52840078166b0692faf8cbd8ea77ca9abb",
+    "input.jsonl": "a47605fb0eea840b235d1e0a5cb8927397430a2868b177ff6473637c6973544f",
+    "observer-setup-fall.txt": "0becc5dc027b604bf6e3a92056590469a7f76a9b5dbd1ec58b8f65e5fc7cd0f4",
+    "readbacks.jsonl": "1fdd22522fc24b21c933b26749ff0d84910b88390d3fd8f1b7505bfec5445ae6",
+    "runtime-cleanup.txt": "9516c2decb2712fedbc495057a5f971c1914f2056d34715cbfda7ea73ebe1fef",
+    "stone-readback.json": "157de9d921ce58150ecfae3358aad834a92c45671e04711b94c17a005c2cbca9",
+    "wing-run.json": "022a041af994f9da2a0c14128019a00e9f4e8a2599efe59ed7ba060b3c5c066a"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "owner": "/root",
+  "root": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/observer",
+  "display": 399,
+  "player": "Observer",
+  "unit_prefix": "fd-ls05-wing-observer-20261122",
+  "client_script": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/observer/build/moddev/runClient.sh",
+  "server_root": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/player/server",
+  "server_unit": "fd-ls05-fixed-20261122-server.service",
+  "endpoint": "127.0.0.1:25801",
+  "client_limit": "6G"
+}

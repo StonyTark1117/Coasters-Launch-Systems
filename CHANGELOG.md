@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.5.0 — expanded Fourth Dimension certificates (2026-11-26)
+
+- Publish the complete seventeen-variant family × equipment disposition: fourteen
+  positive tire/fin/linear/skid/eddy rows, twelve cable rows, and evidenced native
+  ownership or physical guide exclusions.
+- Resolve forces and stopping regions at installed chassis contacts; support
+  translated rear catches, physical HOME return and saved-world recovery.
+- Preserve native restraints, posture, yaw, drop and retention controls. The
+  additive FD family-power contract supplies S2/Flying accessories through the
+  same verified owner without granting propulsion or clearing native faults.
+- Verify loaded native contacts, occupied operation/service, explicit recovery,
+  appearance invariance and targeted boundaries. Java 21 integration: 29/29 unit
+  checks. Exact artifacts, exclusions and cleanup are in the
+  [integration record](docs/evidence/0.5/integration-20261126/README.md).
+- Bounded multi-train interoperability, later FD catalog additions and positive
+  PAX delegation remain outside this milestone.
+
 ## 0.4.0 — six launch mechanisms (2026-11-22)
 
 - Complete the cumulative linear/swing/skid, physical flywheel and pressure

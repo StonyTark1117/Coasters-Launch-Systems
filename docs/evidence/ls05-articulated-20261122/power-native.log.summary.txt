@@ -1,0 +1,4 @@
+LS_ARTICULATED_LOAD family=flying kind=power riders=4 empty=28.0 loaded=31.2
+LS_ARTICULATED_POWER family=flying riders=4 actual_source_stopped=true restored_no_restart=true fault=Flying power lost; retained, explicitly resume after repair
+[15:00:28] [Server thread/INFO] [minecraft/GameTestServer]: All 1 required tests passed :)
+BUILD SUCCESSFUL in 26s

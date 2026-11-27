@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-26",
+  "command": "Java21 ./gradlew --no-daemon --max-workers=2 test assemble (isolated build/cache)",
+  "tests": 29,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "report": "/mnt/NVME4/launchsystems-runs/ls05-integration-20261126/build/reports/tests/test/index.html",
+  "scope": "Non-Minecraft unit suite and final-source compilation; native and occupied evidence is recorded separately."
+}

@@ -282,6 +282,9 @@ public final class CableRecovery {
     if (!(container.getSubLevel(id) instanceof ServerSubLevel carriage) || carriage.isRemoved()) return null;
     var track = cabinet.resolve(level);
     if (track == null || cabinet.cableHome() + 20 > track.length()) return null;
+    // cableHome is the saved physical socket/guide station, not a vehicle bearing position.
+    // This remains sufficient for translated mounting arms; restored socket alignment is
+    // independently checked against the actual native body below.
     var hit = track.hitAtDistance(level, cabinet.cableHome());
     var forward = track.forward(level, hit);
     var direction = new Vector3d(forward.x, forward.y, forward.z);

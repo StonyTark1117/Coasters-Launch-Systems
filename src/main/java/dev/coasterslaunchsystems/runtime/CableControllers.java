@@ -20,11 +20,17 @@ import org.joml.Vector3d;
 /** A placed controller owns exactly one physical carriage and one stored-energy cable drive. */
 final class CableControllers {
   private record Key(ServerLevel level, BlockPos position, UUID identity) {}
-  private record Installation(BlockPos cabinetPosition, UUID cabinet, double home, NativeCableRig rig) {}
+  private record Installation(BlockPos cabinetPosition, UUID cabinet, double home, double brakeHome, NativeCableRig rig) {}
   private record Occupant(ServerSubLevel cart, MotionVehicle motion, double distance, double speed) {}
   private static final Map<Key, Installation> INSTALLED = new HashMap<>();
   private static final double RELEASE_TRAVEL = 12, GUIDE_TRAVEL = 20;
   private CableControllers() {}
+
+  static boolean launchPad(ServerLevel level, RideControllerEntity controller, EquipmentCabinetEntity module) {
+    var installed = INSTALLED.get(new Key(level, controller.getBlockPos(), controller.identity()));
+    return installed != null && module.interval().start() <= installed.brakeHome()
+        && module.interval().end() >= installed.brakeHome();
+  }
 
   static boolean applies(ServerLevel level, RideControllerEntity controller) {
     return INSTALLED.containsKey(new Key(level, controller.getBlockPos(), controller.identity()))
@@ -151,13 +157,30 @@ final class CableControllers {
       ready &= occupant.motion().dispatchReady();
     }
     if (mass > 64 || brakeForce <= 0) { controller.fail("Cable consist exceeds its mass or friction-fin rating"); return; }
-    double home = installed == null ? lead.distance() : installed.home();
-    if (installed == null && Math.abs(lead.distance() - (cabinet.interval().start() + 1)) > 1.1) {
+    // The journal stores the physical carriage/socket station. A rigid mounting arm may
+    // place it ahead of the bearing; train occupancy and stopping length remain bearing-based.
+    double socketDistance = NativeCableRig.socketDistance(level, track, lead.cart());
+    if (socketDistance < 0 || socketDistance > track.length()) {
+      controller.fail("Cable socket left its fixed guide rail"); return;
+    }
+    var bearing = dev.silvergold.simulatedcoasters.track.cart.CoasterCartTrackSnap.representativeBearingPlotPos(lead.cart());
+    var socketPoint = VehicleInterfaces.catchPoint(lead.cart());
+    boolean extended = Math.abs(socketPoint.z() - bearing.getZ() - .5) > 1;
+    if (extended && installed == null && socketDistance - lead.distance() > 1) {
+      controller.fail("Extended catch must trail the car in the cable pull direction"); return;
+    }
+    double home = installed == null ? socketDistance : installed.home();
+    if (installed == null && Math.abs(socketDistance - (cabinet.interval().start() + 1)) > 1.1) {
       controller.fail("Catch must start beside its cable cabinet"); return;
     }
-    double releaseEnd = home + RELEASE_TRAVEL;
+    // The fin may be on the opposite mounting arm. Its stationary pad and first
+    // downstream stop must follow its own physical contact, not the socket/bearing.
+    double frontFin = occupying.stream().mapToDouble(o -> NativeCableRig.pointDistance(level, track,
+        o.cart(), VehicleInterfaces.brakePoint(o.cart()))).max().orElseThrow();
+    double brakeHome = home + frontFin - socketDistance;
+    double releaseEnd = brakeHome + RELEASE_TRAVEL;
     var launchFins = cabinets.stream().filter(c -> c.mechanism() == Mechanism.FIN_BRAKE
-        && c.interval().start() <= cabinet.interval().end() && c.interval().end() >= cabinet.interval().start()).toList();
+        && c.interval().start() <= brakeHome && c.interval().end() >= brakeHome).toList();
     var stops = cabinets.stream().filter(c -> c.mechanism() == Mechanism.FIN_BRAKE && c.interval().start() > releaseEnd)
         .sorted(Comparator.comparingDouble(c -> c.interval().start())).toList();
     if (launchFins.isEmpty() || stops.isEmpty() || cabinets.size() != 1 + launchFins.size() + stops.size()) {
@@ -177,9 +200,9 @@ final class CableControllers {
     boolean padPower = launchFins.stream().allMatch(c -> Math.abs(c.getSpeed()) >= 32);
     if (installed == null && held && ready) {
       try {
-        var rig = new NativeCableRig(level, track, lead.distance(), RELEASE_TRAVEL, GUIDE_TRAVEL, cabinet.getBlockPos(), cabinet.mechanism());
+        var rig = new NativeCableRig(level, track, home, RELEASE_TRAVEL, GUIDE_TRAVEL, cabinet.getBlockPos(), cabinet.mechanism());
         try { cabinet.installCable(rig); } catch (RuntimeException failure) { rig.close(); throw failure; }
-        installed = new Installation(cabinet.getBlockPos(), cabinet.identity(), lead.distance(), rig); INSTALLED.put(key, installed);
+        installed = new Installation(cabinet.getBlockPos(), cabinet.identity(), home, brakeHome, rig); INSTALLED.put(key, installed);
       } catch (RuntimeException failure) { controller.fail("Cable carriage installation failed: " + failure.getMessage()); return; }
     }
     if (installed == null) { controller.state(State.HOLD); controller.consumeRequest(); return; }
@@ -192,9 +215,9 @@ final class CableControllers {
       if (speed > cabinet.targetSpeed() + .1 && controller.phase() == State.RUNNING) {
         rig.emergencyHold("Cable speed exceeded its certificate"); controller.fail("Cable speed exceeded its certificate"); return;
       }
-      if (maximum >= stopStart - .6) controller.state(State.BRAKING);
+      if (frontFin >= stopStart - .6) controller.state(State.BRAKING);
       if (controller.phase() == State.BRAKING && held && speed < .03) controller.state(State.HOLD);
-    } else if (rig.phase() == NativeCableRig.Phase.HOME && Math.abs(lead.distance() - home) < .6 && held && ready && launchPower && padPower
+    } else if (rig.phase() == NativeCableRig.Phase.HOME && Math.abs(socketDistance - home) < .6 && held && ready && launchPower && padPower
         && !cabinet.cableInUse()
         && Math.abs(rig.travel()) < .03 && Math.abs(rig.speed()) < .03) {
       try { cabinet.engageCable(rig, lead.cart().getUniqueId()); }
@@ -202,7 +225,8 @@ final class CableControllers {
     }
     if (controller.phase() != State.RUNNING && controller.phase() != State.BRAKING) {
       boolean dispatchable = held && ready && launchPower && padPower
-          && cabinet.cableInUse() && rig.phase() == NativeCableRig.Phase.ENGAGED && maximum + radius < stopStart;
+          && cabinet.cableInUse() && rig.phase() == NativeCableRig.Phase.ENGAGED
+          && Math.max(frontFin, maximum + radius) < stopStart;
       controller.state(dispatchable ? State.READY : State.HOLD);
       if (controller.consumeRequest() && dispatchable) {
         try { rig.beginPull(); controller.state(State.RUNNING); }

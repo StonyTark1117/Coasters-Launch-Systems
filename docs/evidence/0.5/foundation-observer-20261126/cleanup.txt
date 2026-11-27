@@ -1,0 +1,21 @@
+2026-11-27T02:46:32.050045+00:00
+Owner /root/foundation; normal menu disconnect confirmed only Dev connected before client stop.
+Id=fd-ls05-foundation-observer-20261126-client.service
+ActiveState=inactive
+SubState=dead
+MainPID=0
+Result=success
+ExecMainStatus=0
+ControlGroup=
+
+Id=fd-ls05-foundation-observer-20261126-xvfb.service
+ActiveState=inactive
+SubState=dead
+MainPID=0
+Result=success
+ExecMainStatus=0
+ControlGroup=
+
+Original Java PID387619 present: False
+Display400 socket present: False
+Client stopped by requested service shutdown after normal disconnect; both units exited successfully.

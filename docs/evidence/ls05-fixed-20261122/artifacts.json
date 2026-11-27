@@ -1,0 +1,9 @@
+{
+  "base": "2d625b9407023be5989b1d2093e91ac1bac1d4cf",
+  "run": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122",
+  "player_ls_sha256": "f88d06a3af4aa0185d488c2fe403bec7a33fd3f0faafb84d7e40d1eae29769e8",
+  "fd_sha256": "3dbbc7a77e1b0cd02b3e5fa3a69e4b4823c5c5a3befca6f0e1e35d72381b7fba",
+  "nov26_player_ls_sha256": "b5f838e7258df46cfb95031cb574dab623671f24e0e167fbafb37f2c466b4a56",
+  "nov26_run": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/fixed-player",
+  "observer_run": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/foundation-observer"
+}

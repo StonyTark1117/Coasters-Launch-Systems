@@ -1,0 +1,51 @@
+{
+  "world": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/fixed-player/server/ls05-fixed-occupied-corrected",
+  "run_manifest": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/fixed-player/run.json",
+  "files": [
+    {
+      "path": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/fixed-player/server/logs/latest.log",
+      "bytes": 473674,
+      "sha256": "804b5f38419300a3902e0dfe3d25d4440fbaef0b062d69dee3514692693af30d"
+    },
+    {
+      "path": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/fixed-player/evidence/input.jsonl",
+      "bytes": 138115,
+      "sha256": "16d46b8a2371e19997a07563509904276ca28eb8dfbc905b792beae0e91bb37e"
+    },
+    {
+      "path": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/fixed-player/evidence/construction-readbacks.jsonl",
+      "bytes": 74024,
+      "sha256": "923785dae0bfad378f70df9afb62e566a24df60e42d492b1d1fdfdce6c7d000c"
+    },
+    {
+      "path": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/fixed-player/evidence/fixed-occupied-telemetry.jsonl",
+      "bytes": 331867,
+      "sha256": "606553fa9a681e78c1f02a7ce5978082cc0360bb9760b1190e5efcdf89ab93e6"
+    },
+    {
+      "path": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/fixed-player/evidence/classic-occupied-telemetry.jsonl",
+      "bytes": 335479,
+      "sha256": "c720c988af5928b4ad74b83cafce7e8634cdf95d99188c58323f5077f8889b24"
+    },
+    {
+      "path": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/fixed-player/evidence/s2-occupied-telemetry.jsonl",
+      "bytes": 336085,
+      "sha256": "b196a0401df59d9d8ef20707c1afab701c1f64b71b9b52a762d45f9877f45710"
+    },
+    {
+      "path": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/fixed-player/evidence/fixed-occupied.mp4",
+      "bytes": 842465,
+      "sha256": "a83281203cd6c18d79ca3d2bcdd8354cb50f512f7d80e413dc304514efbcbe7d"
+    },
+    {
+      "path": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/fixed-player/evidence/classic-occupied.mp4",
+      "bytes": 1679007,
+      "sha256": "a7988976970840c5f3502b582e6bc0caa77151f18c03b35cf66fc8a26668b269"
+    },
+    {
+      "path": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/fixed-player/evidence/s2-occupied.mp4",
+      "bytes": 2503268,
+      "sha256": "010906be4d351fda6180023e813a0adb86a1afc23c3bf40bed0197ce10e38124"
+    }
+  ]
+}

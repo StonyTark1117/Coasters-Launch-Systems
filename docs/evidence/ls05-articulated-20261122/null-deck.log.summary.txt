@@ -1,0 +1,4 @@
+LS_ARTICULATED_LOAD family=new_generation_flying kind=tire riders=2 empty=34.0 loaded=35.6
+LS_ARTICULATED_PASS family=new_generation_flying kind=tire riders=2 work=35.68236428391214 peak=1.3072934671160579 steps=174 distance=14.815206031000086 posture=0.21341945187494496 yaw=0.2135483125328354 native_guard=true held_input=true
+[15:16:43] [Server thread/INFO] [minecraft/GameTestServer]: All 1 required tests passed :)
+BUILD SUCCESSFUL in 38s

@@ -1,0 +1,54 @@
+LS_ARTICULATED_LOAD family=suspended kind=eddy riders=2 empty=32.0 loaded=33.6
+LS_ARTICULATED_LOAD family=axis kind=eddy riders=2 empty=9.0 loaded=10.6
+LS_ARTICULATED_LOAD family=pipeline kind=eddy riders=4 empty=25.0 loaded=28.200000000000003
+LS_ARTICULATED_LOAD family=dive kind=eddy riders=6 empty=22.0 loaded=26.800000000000004
+LS_ARTICULATED_LOAD family=flying kind=eddy riders=4 empty=29.0 loaded=32.2
+LS_ARTICULATED_LOAD family=new_generation_flying kind=eddy riders=2 empty=35.0 loaded=36.6
+LS_ARTICULATED_PASSIVE family=suspended kind=eddy riders=2 skidHeat=0.0 eddyHeat=86.15218491516538 distance=15.140618782327694 peak=2.4623110488824356
+LS_ARTICULATED_PASSIVE family=axis kind=eddy riders=2 skidHeat=0.0 eddyHeat=22.286654468836783 distance=20.15618990204203 peak=2.6640742346858812
+LS_ARTICULATED_PASSIVE family=pipeline kind=eddy riders=4 skidHeat=0.0 eddyHeat=81.69061138330015 distance=15.212614520777809 peak=2.5770924211328152
+LS_ARTICULATED_PASSIVE family=dive kind=eddy riders=6 skidHeat=0.0 eddyHeat=80.815815518656 distance=20.360718718895455 peak=2.680030834292034
+LS_ARTICULATED_PASSIVE family=new_generation_flying kind=eddy riders=2 skidHeat=0.0 eddyHeat=21.014950560382086 distance=14.122436982176701 peak=1.3065386325765302
+LS_ARTICULATED_PASSIVE family=flying kind=eddy riders=4 skidHeat=0.0 eddyHeat=82.73533607624236 distance=15.116577610781425 peak=2.476989528371247
+LS_ARTICULATED_LOAD family=pipeline kind=skid riders=4 empty=25.0 loaded=28.200000000000003
+LS_ARTICULATED_LOAD family=dive kind=skid riders=6 empty=22.0 loaded=26.800000000000004
+LS_ARTICULATED_LOAD family=flying kind=skid riders=4 empty=29.0 loaded=32.2
+LS_ARTICULATED_LOAD family=new_generation_flying kind=skid riders=2 empty=35.0 loaded=36.6
+LS_ARTICULATED_LOAD family=suspended kind=skid riders=2 empty=32.0 loaded=33.6
+LS_ARTICULATED_LOAD family=axis kind=skid riders=2 empty=9.0 loaded=10.6
+LS_ARTICULATED_PASSIVE family=pipeline kind=skid riders=4 skidHeat=83.12193589435434 eddyHeat=0.0 distance=15.030242423692759 peak=2.5770924211328374
+LS_ARTICULATED_PASSIVE family=dive kind=skid riders=6 skidHeat=77.0690671106112 eddyHeat=0.0 distance=20.216837879792678 peak=2.6800308342919665
+LS_ARTICULATED_PASSIVE family=new_generation_flying kind=skid riders=2 skidHeat=22.809207845987522 eddyHeat=0.0 distance=13.809854027786514 peak=1.3059983761383807
+LS_ARTICULATED_PASSIVE family=suspended kind=skid riders=2 skidHeat=87.45521137010624 eddyHeat=0.0 distance=14.875981790342706 peak=2.462331314461734
+LS_ARTICULATED_PASSIVE family=axis kind=skid riders=2 skidHeat=22.84969684045395 eddyHeat=0.0 distance=20.061963055599932 peak=2.663968615392805
+LS_ARTICULATED_PASSIVE family=flying kind=skid riders=4 skidHeat=83.27237688978616 eddyHeat=0.0 distance=14.878457543050153 peak=2.477037688929184
+LS_ARTICULATED_LOAD family=suspended kind=lsm riders=2 empty=32.0 loaded=33.6
+LS_ARTICULATED_LOAD family=pipeline kind=lsm riders=4 empty=25.0 loaded=28.200000000000003
+LS_ARTICULATED_LOAD family=dive kind=lsm riders=6 empty=22.0 loaded=26.800000000000004
+LS_ARTICULATED_LOAD family=flying kind=lsm riders=4 empty=29.0 loaded=32.2
+LS_ARTICULATED_LOAD family=new_generation_flying kind=lsm riders=2 empty=35.0 loaded=36.6
+LS_ARTICULATED_PASS family=suspended kind=lsm riders=2 work=67.98993021239494 peak=1.9723384623137292 steps=131 distance=15.326055030862497 posture=1.5889978591454139E-6 yaw=0.0 native_guard=true held_input=true
+LS_ARTICULATED_PASS family=pipeline kind=lsm riders=4 work=55.43884277452322 peak=1.9958280479871033 steps=123 distance=15.419219467258952 posture=0.0 yaw=0.0 native_guard=true held_input=true
+LS_ARTICULATED_PASS family=dive kind=lsm riders=6 work=52.80242269188735 peak=2.0000000154611928 steps=156 distance=20.43088817330647 posture=0.0 yaw=0.0 native_guard=true held_input=true
+LS_ARTICULATED_PASS family=flying kind=lsm riders=4 work=65.75162757465141 peak=1.9745630285389657 steps=129 distance=15.315347176698399 posture=1.5556924436052535 yaw=0.0 native_guard=true held_input=true
+LS_ARTICULATED_PASS family=new_generation_flying kind=lsm riders=2 work=44.42534029796301 peak=1.4795585135664127 steps=148 distance=14.909951661751837 posture=0.21595560745717818 yaw=0.21604313218421436 native_guard=true held_input=true
+LS_ARTICULATED_LOAD family=suspended kind=lim riders=2 empty=32.0 loaded=33.6
+LS_ARTICULATED_LOAD family=pipeline kind=lim riders=4 empty=25.0 loaded=28.200000000000003
+LS_ARTICULATED_LOAD family=dive kind=lim riders=6 empty=22.0 loaded=26.800000000000004
+LS_ARTICULATED_LOAD family=flying kind=lim riders=4 empty=29.0 loaded=32.2
+LS_ARTICULATED_LOAD family=new_generation_flying kind=lim riders=2 empty=35.0 loaded=36.6
+LS_ARTICULATED_PASS family=suspended kind=lim riders=2 work=71.10122455661414 peak=1.9852501395163265 steps=199 distance=15.386640048270717 posture=1.615015464875419E-6 yaw=0.0 native_guard=true held_input=true
+LS_ARTICULATED_PASS family=pipeline kind=lim riders=4 work=55.78199771881632 peak=1.999930754864492 steps=186 distance=15.42440652350154 posture=0.0 yaw=0.0 native_guard=true held_input=true
+LS_ARTICULATED_PASS family=dive kind=lim riders=6 work=53.10571512759027 peak=2.000000015461182 steps=215 distance=20.417624446802588 posture=0.0 yaw=0.0 native_guard=true held_input=true
+LS_ARTICULATED_PASS family=flying kind=lim riders=4 work=68.81433695818522 peak=1.9872532148719868 steps=196 distance=15.369895433923851 posture=1.5556959602204186 yaw=0.0 native_guard=true held_input=true
+LS_ARTICULATED_PASS family=new_generation_flying kind=lim riders=2 work=47.68030305424224 peak=1.4925742593458953 steps=225 distance=14.941672786934337 posture=0.21674551271901848 yaw=0.21687160715708637 native_guard=true held_input=true
+LS_ARTICULATED_LOAD family=flying kind=tire riders=4 empty=28.0 loaded=31.2
+LS_ARTICULATED_LOAD family=new_generation_flying kind=tire riders=2 empty=34.0 loaded=35.6
+LS_ARTICULATED_LOAD family=suspended kind=tire riders=2 empty=31.0 loaded=32.6
+LS_ARTICULATED_LOAD family=pipeline kind=tire riders=4 empty=24.0 loaded=27.200000000000003
+LS_ARTICULATED_PASS family=new_generation_flying kind=tire riders=2 work=35.68226634158738 peak=1.3072941823719435 steps=174 distance=14.815206031000086 posture=0.21341943583999176 yaw=0.21354835997412577 native_guard=true held_input=true
+LS_ARTICULATED_PASS family=suspended kind=tire riders=2 work=104.4422048348597 peak=2.480064173273254 steps=126 distance=15.908645126363249 posture=4.666801358319739E-6 yaw=0.0 native_guard=true held_input=true
+LS_ARTICULATED_PASS family=pipeline kind=tire riders=4 work=90.27784657931801 peak=2.5910310864583392 steps=117 distance=16.141060810182218 posture=0.0 yaw=0.0 native_guard=true held_input=true
+LS_ARTICULATED_PASS family=flying kind=tire riders=4 work=101.75810346537452 peak=2.4941246718835526 steps=124 distance=15.91231298152738 posture=1.5556960650516873 yaw=0.0 native_guard=true held_input=true
+[15:10:40] [Server thread/INFO] [minecraft/GameTestServer]: All 26 required tests passed :)
+BUILD SUCCESSFUL in 5m 4s

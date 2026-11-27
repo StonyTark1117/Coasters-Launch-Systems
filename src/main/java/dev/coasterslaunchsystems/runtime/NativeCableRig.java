@@ -117,6 +117,21 @@ public final class NativeCableRig implements AutoCloseable {
   /** Provider identity remains available through release and physical return for restart journaling. */
   public String provider() { return provider; }
   public double homeDistance() { return homeDistance; }
+  /** Physical socket station, independent of an outboard/longitudinal chassis mounting arm. */
+  public static double socketDistance(ServerLevel level, DirectedTrack track, ServerSubLevel cart) {
+    var socket = VehicleInterfaces.catchPoint(cart);
+    if (socket == null) throw new IllegalArgumentException("Cable cart has no certified socket");
+    return pointDistance(level, track, cart, socket);
+  }
+  /** Project a real installed interface onto the directed, fixed guide rail. */
+  public static double pointDistance(ServerLevel level, DirectedTrack track, ServerSubLevel cart, org.joml.Vector3dc point) {
+    var contact = EngagedContacts.current(level, cart).orElseThrow(() -> new IllegalArgumentException("Cable cart lost rail contact"));
+    if (!track.matches(contact.hit())) throw new IllegalArgumentException("Cable interface is on another rail");
+    var direction = track.forward(level, contact.hit());
+    var hit = contact.hit().point();
+    var offset = worldPoint(cart, new Vector3d(point)).sub(hit.x, hit.y, hit.z);
+    return Numbers.finite(track.distance(contact.hit()) + offset.dot(direction.x, direction.y, direction.z), "interface station");
+  }
   /** Bed top stays below the carriage's lowest steel ballast block. */
   public static BlockPos guideBlockAt(ServerLevel level, DirectedTrack track, double distance) {
     var hit = track.hitAtDistance(level, distance);

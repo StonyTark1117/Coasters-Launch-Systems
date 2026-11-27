@@ -1,0 +1,5 @@
+LS_POWERED_YAW_BOUNDARY PASS riders=2 exactMassDelta=1.5999999999999996 nativeLease={cars:[[I;201017408,-1323283400,-1570642365,-669413366]],controller:-218802813927264L,direction:1,epoch:1L,held:1b,owner:[I;-1011430033,-929479622,-1596455308,98580016],provider:"native_chain",reason:"",sequence:0L,suspended:0b} allLocalMechanismsDenied=true reserveDispatchCaptureUnchanged=true
+LS_ARTICULATED_LOAD family=axis riders=2 empty=8.0 loaded=9.6
+LS_ARTICULATED_PASS family=axis riders=2 work=44.86882961185033 peak=2.663640804375591 steps=183 distance=21.07446381828844 native_guard=true held_input=true
+[14:48:53] [Server thread/INFO] [minecraft/GameTestServer]: All 2 required tests passed :)
+BUILD SUCCESSFUL in 38s

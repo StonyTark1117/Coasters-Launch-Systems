@@ -55,10 +55,37 @@ also passed its empty/occupied, capture, exit/reboard and fresh-dispatch criteri
 implementation notes below describe the original migration and its invariants;
 this handoff supersedes their statements that no facade exists.
 
+## 0.5 family-power extension — accepted
+
+The selected 0.5 overlay is source commit
+`dc1c83a543256a5ffeab6d7958e9a3656c132f74` on the existing
+`codex/launch-systems-authority` branch, atop `8cebab77`. Its frozen JAR is
+`/mnt/NVME4/launchsystems-runs/ls05-fd-family-20261122/fourthdimension-family-api1.jar`,
+SHA-256 `3dbbc7a77e1b0cd02b3e5fa3a69e4b4823c5c5a3befca6f0e1e35d72381b7fba`.
+It preserves schema 8 and external API 1 and adds `EXTERNAL_FAMILY_API = 1`.
+S2 can select a registered external longitudinal owner without also commanding
+its native governor. Flying/New-generation Flying can consume actual external
+accessory power while retaining native posture/yaw and power-loss guards.
+Held or suspended travel authority alone does not remove physical accessory
+supply, and accessory supply never grants a travel permit.
+
+The focused external owner/transfer/reload/loss and accessory-supply test passed
+1/1; its server saved and exited. Actual-family native and occupied acceptance
+is complete in LS501/LS502; see the [0.5 integration record](evidence/0.5/integration-20261126/README.md). On November 26 the FD coordinator selectively integrated the overlay
+into current main as `22ea6e37046b5932e11ad670643e0b409bad2a59`, preserving
+1.5 guards. Its focused authority test passed 1/1; final remote main
+`6f482d9d69e0b613eed5b1a8c30b5f818fbf9436` was verified. See the
+[main integration receipt](<../../Coasters: Fourth Dimension/docs/evidence/launch-systems-family-power-20261126/README.md>).
+Published 1.5.0 artifacts were not replaced. LS keeps the frozen selected JAR above;
+this integration does not broaden its tested vehicle catalog. Older family/body evidence stays
+valid where these narrow changes do not affect its claim. Powered Inverted Yaw
+retains its mandatory native whole-circuit Chain/governor ownership and is not
+included in this extension.
+
 ## Select an integrated source and artifact
 
-The 2026-11-22 primary checkout has ongoing uncommitted 1.4 specialty-vehicle
-work on top of the accepted `59c40d11` baseline. A link into that checkout can
+The primary checkout has since published 1.5.0 and integrated the family-power
+overlay beyond the selected 1.3 baseline. A link into that checkout can
 therefore show later work than the selected 1.3 JAR. Recheck `git status` and
 the relevant diff; use `git show <selected-commit>:<path>` to inspect the accepted
 source when necessary. Never reset the sibling checkout to obtain that view.

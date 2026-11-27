@@ -1,0 +1,10 @@
+2026-11-27T02:28:43.931087+00:00
+               total        used        free      shared  buff/cache   available
+Mem:            61Gi        25Gi       4.2Gi       262Mi        32Gi        36Gi
+Swap:             0B          0B          0B
+
+caller cgroup memory.max=max
+memory.current=25347735552
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/nvme3n1p1  932G  786G  146G  85% /mnt/NVME4
+display400 socket and lock absent before preparation

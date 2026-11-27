@@ -24,10 +24,7 @@ import net.minecraft.world.level.Level;
 
 /** Pinned schema-8 vehicle snapshot with a registered, token-checked native authority facade. */
 public final class FourthDimensionMotionProvider implements VehicleMotionProvider {
-  private static final Map<String, String> HARDWARE_VARIANTS = Map.of(
-      "ARROW", "arrow_four_rail_v1", "ZACSPIN", "zacspin_legacy_v1",
-      "FREE_SPIN", "sns_magnetic_v1", "ZACSPIN_REVISED", "zacspin_revised_v1");
-  private final Method data, markers, allows, ready;
+  private final Method data, markers, allows, ready, validateDispatch;
   private final FourthDimensionAuthority authority;
   private final Field vehicles, carriers, carrierBody, capture, family, restraints, stopping,
       maintenance, fault, variant;
@@ -54,6 +51,17 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
               dev.silvergold.simulatedcoasters.track.graph.CoasterPathTrackFrame.GraphHit.class);
       ready = Class.forName("dev.fourthdimension.vehicle.Boarding")
           .getMethod("ready", ServerLevel.class, vehicle);
+      validateDispatch = Class.forName("dev.fourthdimension.vehicle.VehicleOperations")
+          .getMethod("validateDispatch", ServerLevel.class, vehicle);
+      VehicleInterfaces.installLayoutResolver((body, mechanism) -> {
+        try {
+          if (!(body.getLevel() instanceof ServerLevel level)) return null;
+          var member = ((Map<?, ?>) vehicles.get(data.invoke(null, level))).get(body.getUniqueId());
+          if (member == null) return null;
+          var certificate = certificate(member);
+          return certificate == null ? null : certificate.offset(mechanism);
+        } catch (ReflectiveOperationException failure) { throw new IllegalStateException("Native mounting layout unavailable", failure); }
+      });
     } catch (ReflectiveOperationException failure) {
       throw new IllegalStateException("Fourth Dimension adapter does not match installed API; launches disabled", failure);
     }
@@ -78,9 +86,8 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
       if (!owned) return Optional.empty();
       var vehicle = map.get(chassis);
       if (vehicle == null) return Optional.of(veto(chassis, consist, "fourthdimension:mixed_or_unbound"));
-      var bodies = new LinkedHashSet<UUID>();
-      bodies.add(chassis);
-      for (var carrier : (List<?>) carriers.get(vehicle)) bodies.add((UUID) carrierBody.get(carrier));
+      var bodies = nativeBodies(vehicle);
+      if (bodies == null) return Optional.of(veto(chassis, consist, "fourthdimension:missing_native_body"));
       boolean dispatch = true, propel = true, brake = true;
       String operator = "";
       for (var id : consist) {
@@ -89,15 +96,16 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
         if (member == null || !family.get(vehicle).equals(family.get(member)) || !variant.get(vehicle).equals(variant.get(member)))
           return Optional.of(veto(chassis, consist, "fourthdimension:mixed_or_unbound"));
         if (((Enum<?>) family.get(member)).name().equals("PAX")) operator = "fourthdimension:pax_winch";
+        if (((Enum<?>) family.get(member)).name().equals("POWERED_INVERTED")) operator = "fourthdimension:powered_yaw_governor";
         var contact = EngagedContacts.current(level, cart).orElse(null);
         boolean support = contact != null && carriersAvailable(level, member)
             && (boolean) allows.invoke(null, cart, level, contact.hit());
         boolean retained = maintenance.getBoolean(member) || !((String) fault.get(member)).isEmpty()
             || !authority.supported(level, member) || authority.denied(level, member);
         boolean closed = restraints.getBoolean(member);
-        dispatch &= support && !retained && closed && (boolean) ready.invoke(null, level, member);
+        dispatch &= support && !retained && closed && dispatchReady(level, member);
         boolean released = support && !retained && closed && !stopping.getBoolean(member)
-            && ((List<?>) carriers.get(member)).stream().noneMatch(this::captured);
+            && nativeReleased(member);
         propel &= released && authority.permitted(level, member);
         // Safety braking retains the exact local lease across a fault/restart. It does not
         // authorize traction, dispatch, capture, or an implicit native Resume.
@@ -105,15 +113,15 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
             || authority.retainsBrakeLease(level, member, consist));
       }
       if (!operator.isEmpty()) { dispatch = false; propel = false; brake = false; }
-      String expected = HARDWARE_VARIANTS.get(((Enum<?>) family.get(vehicle)).name());
+      var certificate = certificate(vehicle);
       var interfaces = java.util.EnumSet.noneOf(Mechanism.class);
-      if (expected != null && expected.equals(variant.get(vehicle))) {
+      if (certificate != null) {
         if (VehicleInterfaces.tirePoint(body) != null) interfaces.add(Mechanism.TIRE);
         if (VehicleInterfaces.brakePoint(body) != null) interfaces.add(Mechanism.FIN_BRAKE);
         if (VehicleInterfaces.skidPoint(body) != null) interfaces.add(Mechanism.SKID_BRAKE);
         if (VehicleInterfaces.conductivePoint(body) != null) interfaces.add(Mechanism.EDDY_BRAKE);
         for (var mechanism : List.of(Mechanism.LSM, Mechanism.LIM)) if (VehicleInterfaces.linearPoint(body, mechanism) != null) interfaces.add(mechanism);
-        if (((Enum<?>) family.get(vehicle)).name().equals("ARROW") && VehicleInterfaces.catchPoint(body) != null)
+        if (certificate.allowed(Mechanism.FLYWHEEL) && VehicleInterfaces.catchPoint(body) != null)
           interfaces.addAll(List.of(Mechanism.FLYWHEEL, Mechanism.HYDRAULIC, Mechanism.PNEUMATIC));
       }
       double loadedMass = dev.coasterslaunchsystems.runtime.NativeForces.mass(level, new ArrayList<>(bodies));
@@ -151,7 +159,7 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
             || !carriersAvailable(level, member) || maintenance.getBoolean(member)
             || !((String) fault.get(member)).isEmpty() || !(boolean) allows.invoke(null, cart, level, contact.hit()))
           return dev.coasterslaunchsystems.api.CaptureState.DENIED;
-        captured &= stopping.getBoolean(member) && ((List<?>) carriers.get(member)).stream().allMatch(this::captured);
+        captured &= nativeCaptured(member);
         aligned &= (boolean) ready.invoke(null, level, member);
       }
       return captured ? aligned ? dev.coasterslaunchsystems.api.CaptureState.READY : dev.coasterslaunchsystems.api.CaptureState.ALIGNING
@@ -181,20 +189,64 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
   @Override public boolean transferAuthority(ServerLevel level, UUID chassis, net.minecraft.core.BlockPos source,
       net.minecraft.core.BlockPos target) { return authority.transfer(level, chassis, source, target); }
 
+  private boolean nativeReleased(Object member) throws ReflectiveOperationException {
+    if ("route_changeover_yaw_v1".equals(variant.get(member))) {
+      var yaw = member.getClass().getField("yaw").get(member);
+      String mode = String.valueOf(yaw.getClass().getField("mode").get(yaw));
+      return yaw.getClass().getField("travelAuthorized").getBoolean(yaw)
+          && !yaw.getClass().getField("resumeRequired").getBoolean(yaw)
+          && !mode.equals("SHOW_STOP") && !mode.equals("HOLD_FAULT");
+    }
+    return ((List<?>) carriers.get(member)).stream().noneMatch(this::captured);
+  }
+  private boolean nativeCaptured(Object member) throws ReflectiveOperationException {
+    if (!stopping.getBoolean(member)) return false;
+    if ("route_changeover_yaw_v1".equals(variant.get(member))) {
+      var yaw = member.getClass().getField("yaw").get(member);
+      return !yaw.getClass().getField("travelAuthorized").getBoolean(yaw);
+    }
+    return ((List<?>) carriers.get(member)).stream().allMatch(this::captured);
+  }
+
   private boolean captured(Object carrier) {
     try { return capture.getBoolean(carrier); }
     catch (IllegalAccessException failure) { throw new IllegalStateException("Carrier capture unavailable", failure); }
   }
 
-  private boolean carriersAvailable(ServerLevel level, Object member) throws IllegalAccessException {
+  private boolean carriersAvailable(ServerLevel level, Object member) throws ReflectiveOperationException {
     var container = SubLevelContainer.getContainer(level);
     if (container == null) return false;
-    for (var carrier : (List<?>) carriers.get(member)) {
-      var loaded = container.getSubLevel((UUID) carrierBody.get(carrier));
+    var bodies = nativeBodies(member);
+    if (bodies == null) return false;
+    for (var id : bodies) {
+      var loaded = container.getSubLevel(id);
       if (!(loaded instanceof ServerSubLevel body) || body.isRemoved() || body.getMassTracker().isInvalid()
           || !Double.isFinite(body.getMassTracker().getMass()) || body.getMassTracker().getMass() <= 0) return false;
     }
     return true;
+  }
+
+  private FourthDimensionCertificates.Certificate certificate(Object member) throws IllegalAccessException {
+    return FourthDimensionCertificates.find(((Enum<?>) family.get(member)).name(), (String) variant.get(member));
+  }
+  private LinkedHashSet<UUID> nativeBodies(Object member) throws ReflectiveOperationException {
+    var result = new LinkedHashSet<UUID>();
+    result.add((UUID) member.getClass().getField("chassis").get(member));
+    for (var carrier : (List<?>) carriers.get(member)) result.add((UUID) carrierBody.get(carrier));
+    if ("route_changeover_yaw_v1".equals(variant.get(member))) {
+      var yaw = member.getClass().getField("yaw").get(member);
+      var deck = (UUID) yaw.getClass().getField("deck").get(yaw);
+      if (deck == null) return null;
+      result.add(deck);
+    }
+    return result;
+  }
+  private boolean dispatchReady(ServerLevel level, Object member) throws ReflectiveOperationException {
+    try { validateDispatch.invoke(null, level, member); return true; }
+    catch (java.lang.reflect.InvocationTargetException rejected) {
+      if (rejected.getCause() instanceof IllegalArgumentException || rejected.getCause() instanceof IllegalStateException) return false;
+      throw rejected;
+    }
   }
 
   private MotionVehicle veto(UUID chassis, Set<UUID> consist, String owner) {

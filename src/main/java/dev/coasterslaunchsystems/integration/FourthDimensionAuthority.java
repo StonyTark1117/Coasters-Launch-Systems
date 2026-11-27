@@ -12,8 +12,6 @@ import net.minecraft.server.level.ServerLevel;
 /** Optional, reflection-isolated API 1 bridge. Saved authority belongs to FD; live tokens belong here. */
 final class FourthDimensionAuthority {
   static final String PROVIDER = "coasterslaunchsystems:local_controller";
-  private static final Map<String, String> VARIANTS = Map.of("ARROW", "arrow_four_rail_v1",
-      "ZACSPIN", "zacspin_legacy_v1", "FREE_SPIN", "sns_magnetic_v1", "ZACSPIN_REVISED", "zacspin_revised_v1");
   private final Class<?> api, vehicle, controllerType, tokenType;
   private final Map<ServerLevel, Map<UUID, Object>> tokens = new WeakHashMap<>();
   private final Map<ServerLevel, Set<BlockPos>> resumes = new WeakHashMap<>();
@@ -27,6 +25,7 @@ final class FourthDimensionAuthority {
     if (api.getField("EXTERNAL_API").getInt(null) != 1) throw new ReflectiveOperationException("Unsupported external authority API");
     var bridge = Proxy.newProxyInstance(external.getClassLoader(), new Class<?>[] {external}, (proxy, method, args) -> switch (method.getName()) {
       case "supports" -> supported((ServerLevel) args[0], args[1]);
+      case "accessoryPowerAvailable" -> accessoryPowerAvailable((ServerLevel) args[0], args[1]);
       case "controller" -> controller((ServerLevel) args[0], (BlockPos) args[1]);
       case "toString" -> PROVIDER;
       default -> throw new UnsupportedOperationException(method.getName());
@@ -46,6 +45,21 @@ final class FourthDimensionAuthority {
     });
   }
 
+  private boolean accessoryPowerAvailable(ServerLevel level, Object member) throws ReflectiveOperationException {
+    var state = field(member, "authority");
+    if (!PROVIDER.equals(field(state, "provider")) || !(field(state, "controller") instanceof BlockPos pos)
+        || !(RideControllers.loadedBlockEntity(level, pos) instanceof RideControllerEntity bound)
+        || !bound.identity().equals(field(state, "owner")) || !RideControllers.available(level, bound)
+        || !bound.armed() || !bound.fault().isEmpty() || !bound.reservation().contains(field(member, "chassis"))) return false;
+    for (var link : bound.modules()) {
+      if (RideControllers.loadedBlockEntity(level, link.position()) instanceof EquipmentCabinetEntity module
+          && link.identity().equals(module.identity()) && EquipmentRuntime.available(level, module)
+          && RideControllers.owner(level, module) == bound && module.armed() && module.fault().isEmpty()
+          && !module.isOverStressed() && Math.abs(module.getSpeed()) >= 1 && Math.abs(module.getSpeed()) <= 128) return true;
+    }
+    return false;
+  }
+
   private void validateRelease(ServerLevel level, RideControllerEntity bound) {
     if (!RideControllers.available(level, bound) || !bound.armed() || !bound.fault().isEmpty()
         || bound.reservation().isEmpty() || bound.resolve(level) == null || bound.modules().isEmpty())
@@ -60,8 +74,8 @@ final class FourthDimensionAuthority {
 
   boolean supported(ServerLevel level, Object v) {
     try {
-      String expected = VARIANTS.get(((Enum<?>) field(v, "family")).name());
-      return expected != null && expected.equals(field(v, "variant")) && field(v, "recoveryCart") == null
+      var certificate = FourthDimensionCertificates.find(((Enum<?>) field(v, "family")).name(), (String) field(v, "variant"));
+      return certificate != null && field(v, "recoveryCart") == null
           && !(boolean) field(v, "alignmentRequired")
           && !(boolean) Class.forName("dev.fourthdimension.integration.RideLocalOperations")
               .getMethod("isManaged", ServerLevel.class, vehicle).invoke(null, level, v);

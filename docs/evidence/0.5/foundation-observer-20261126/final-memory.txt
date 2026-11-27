@@ -1,0 +1,13 @@
+2026-11-27T02:46:31.609677+00:00
+Id=fd-ls05-foundation-observer-20261126-client.service
+MainPID=387618
+ControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/fd-ls05-foundation-observer-20261126-client.service
+MemoryCurrent=2607734784
+MemoryPeak=2627121152
+MemoryMax=6442450944
+Id=fd-ls05-foundation-observer-20261126-xvfb.service
+MainPID=387607
+ControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/fd-ls05-foundation-observer-20261126-xvfb.service
+MemoryCurrent=14417920
+MemoryPeak=21188608
+MemoryMax=268435456

@@ -1,0 +1,14 @@
+LS_ARTICULATED_LOAD family=suspended kind=skid riders=2 empty=36.0 loaded=37.6
+LS_ARTICULATED_LOAD family=axis kind=skid riders=2 empty=13.0 loaded=14.6
+LS_ARTICULATED_LOAD family=pipeline kind=skid riders=4 empty=29.0 loaded=32.2
+LS_ARTICULATED_LOAD family=dive kind=skid riders=6 empty=26.0 loaded=30.800000000000004
+LS_ARTICULATED_LOAD family=flying kind=skid riders=4 empty=33.0 loaded=36.2
+LS_ARTICULATED_LOAD family=new_generation_flying kind=skid riders=2 empty=39.0 loaded=40.6
+LS_ARTICULATED_PASSIVE family=suspended kind=skid riders=2 skidHeat=94.49320026067873 eddyHeat=0.0 distance=14.789758204951816 peak=2.398526687514779
+LS_ARTICULATED_PASSIVE family=axis kind=skid riders=2 skidHeat=36.36349549641453 eddyHeat=0.0 distance=20.07249736281482 peak=2.662887603888462
+LS_ARTICULATED_PASSIVE family=pipeline kind=skid riders=4 skidHeat=91.71602833076842 eddyHeat=0.0 distance=14.977574809679286 peak=2.5170085552998898
+LS_ARTICULATED_PASSIVE family=dive kind=skid riders=6 skidHeat=92.35839159023114 eddyHeat=0.0 distance=20.199173910581386 peak=2.6783592816410806
+LS_ARTICULATED_PASSIVE family=new_generation_flying kind=skid riders=2 skidHeat=26.520595316808784 eddyHeat=0.0 distance=13.796720002433625 peak=1.3043983447299634
+LS_ARTICULATED_PASSIVE family=flying kind=skid riders=4 skidHeat=90.91995084536633 eddyHeat=0.0 distance=14.79867314870664 peak=2.413850088996457
+[15:14:08] [Server thread/INFO] [minecraft/GameTestServer]: All 6 required tests passed :)
+BUILD SUCCESSFUL in 1m 7s

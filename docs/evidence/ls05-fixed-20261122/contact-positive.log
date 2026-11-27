@@ -1,0 +1,265 @@
+> Task :createMinecraftArtifacts UP-TO-DATE
+> Task :compileJava
+> Task :compileApi4Fixture UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes
+> Task :downloadAssets UP-TO-DATE
+> Task :writeGameTestServerLegacyClasspath UP-TO-DATE
+> Task :prepareGameTestServerRun UP-TO-DATE
+
+> Task :runGameTestServer
+WARN StatusConsoleListener Advanced terminal features are not available in this environment
+[15:08:21] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgeserverdev, --gameDir, ., --fml.fmlVersion, 4.0.45, --fml.mcVersion, 1.21.1, --fml.neoForgeVersion, 21.1.256, --fml.neoFormVersion, 20240808.144430]
+[15:08:21] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: JVM identified as Arch Linux OpenJDK 64-Bit Server VM 21.0.13.1+2
+[15:08:21] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: ModLauncher 11.0.5+main.901c6ea8 starting: java version 21.0.13.1 by Arch Linux; OS Linux arch amd64 version 7.3.4-zen2-2-zen
+[15:08:21] [main/INFO] [ne.ne.fm.lo.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgeserverdev
+[15:08:21] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=union:/home/braydon/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.16.4+mixin.0.8.7/26d01f0567ab46e9ca0d2ed89d0ecc11aadbd433/sponge-mixin-0.16.4+mixin.0.8.7.jar%2394!/ Service=ModLauncher Env=SERVER
+[15:08:22] [main/WARN] [ne.ne.ja.se.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: veil. Using Mod File: /home/braydon/.gradle/caches/modules-2/files-2.1/foundry.veil/veil-neoforge-1.21.1/4.3.2/3d4056e31dd8a06e35901c3b82210c3d471e1e48/veil-neoforge-1.21.1-4.3.2.jar
+[15:08:22] [main/WARN] [ne.ne.ja.se.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: sablecompanion. Using Mod File: /home/braydon/.gradle/caches/modules-2/files-2.1/dev.ryanhcode.sable-companion/sable-companion-common-1.21.1/1.6.0/370be7db705926176e05c0215ed676150c45daae/sable-companion-common-1.21.1-1.6.0.jar
+[15:08:22] [main/WARN] [ne.ne.ja.se.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: library:sable_rapier. Using Mod File: /home/braydon/.gradle/caches/modules-2/files-2.1/dev.ryanhcode.sable/sable-sable_rapier-1.21.1/2.0.6/d095eff41df82fbd8b321c2467b712ff35cb6bf1/sable-sable_rapier-1.21.1-2.0.6.jar
+[15:08:22] [main/INFO] [ne.ne.fm.lo.mo.lo.JarInJarDependencyLocator/]: Found 4 dependencies adding them to mods collection
+[15:08:22] [main/INFO] [ne.ne.fm.lo.mo.ModDiscoverer/]: 
+     Mod List:
+		Name Version (Mod Id)
+
+		Coasters: Fourth Dimension 1.1.0 (fourthdimension)
+		Coasters: Launch Systems 0.4.0 (coasterslaunchsystems)
+		Create 6.0.10 (create)
+		Create: Coasters Simulated 0.1.5 (simulatedcoasters)
+		Flywheel 1.0.6 (flywheel)
+		Minecraft 1.21.1 (minecraft)
+		NeoForge 21.1.256 (neoforge)
+		Ponder 1.0.82+mc1.21.1 (ponder)
+		Sable 2.0.6 (sable)
+		Sable Companion 1.6.0 (sablecompanion)
+		Veil 4.3.2 (veil)
+[15:08:22] [main/INFO] [mixin/]: Compatibility level set to JAVA_21
+[15:08:22] [main/INFO] [cp.mo.mo.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgeserverdev' with arguments [--gameDir, .]
+[15:08:22] [main/WARN] [mixin/]: Reference map 'ponder.refmap.json' for ponder-common.mixins.json could not be read. If this is a development environment you can ignore this message
+[15:08:22] [main/INFO] [de.ry.sa.mi.AbstractSableMixinPlugin/]: Using Vanilla renderer mixins
+[15:08:22] [main/INFO] [de.ry.sa.mi.AbstractSableMixinPlugin/]: Using Vanilla renderer mixins
+[15:08:23] [main/WARN] [mixin/]: Error loading class: dev/simulated_team/simulated/content/blocks/merging_glue/MergingGlueBlockEntity (java.lang.ClassNotFoundException: dev.simulated_team.simulated.content.blocks.merging_glue.MergingGlueBlockEntity)
+[15:08:23] [main/WARN] [mixin/]: @Mixin target dev.simulated_team.simulated.content.blocks.merging_glue.MergingGlueBlockEntity was not found simulatedcoasters.mixins.json:compat.MergingGlueBlockEntityRivetMixin from mod simulatedcoasters
+[15:08:23] [main/WARN] [mixin/]: Error loading class: dev/jwaterfall/coastersengineered/MotorDrive (java.lang.ClassNotFoundException: dev.jwaterfall.coastersengineered.MotorDrive)
+[15:08:23] [main/WARN] [mixin/]: Error loading class: dev/jwaterfall/coastersengineered/CartAssembly (java.lang.ClassNotFoundException: dev.jwaterfall.coastersengineered.CartAssembly)
+[15:08:23] [main/WARN] [mixin/]: Error loading class: dev/plushivr/coasterfins/block/StationBlockEntity (java.lang.ClassNotFoundException: dev.plushivr.coasterfins.block.StationBlockEntity)
+[15:08:23] [main/WARN] [mixin/]: Error loading class: dev/notzyvex/coasters_extras/track/TrackRepaint (java.lang.ClassNotFoundException: dev.notzyvex.coasters_extras.track.TrackRepaint)
+[15:08:23] [main/WARN] [mixin/]: Error loading class: dev/notzyvex/coasters_extras/net/ModNetwork (java.lang.ClassNotFoundException: dev.notzyvex.coasters_extras.net.ModNetwork)
+[15:08:23] [main/WARN] [mixin/]: Error loading class: medev/coaster/skins/skin/CartSkinTargets (java.lang.ClassNotFoundException: medev.coaster.skins.skin.CartSkinTargets)
+[15:08:23] [main/WARN] [mixin/]: Error loading class: medev/coaster/skins/skin/LinkedCartSkins (java.lang.ClassNotFoundException: medev.coaster.skins.skin.LinkedCartSkins)
+[15:08:23] [main/WARN] [mixin/]: Error loading class: medev/coaster/skins/skin/CartSkinData (java.lang.ClassNotFoundException: medev.coaster.skins.skin.CartSkinData)
+[15:08:23] [main/WARN] [mixin/]: Error loading class: medev/coaster/skins/item/ScrewDriverItem (java.lang.ClassNotFoundException: medev.coaster.skins.item.ScrewDriverItem)
+[15:08:23] [main/WARN] [mixin/]: Error loading class: dev/plushivr/coasterfins/block/CoasterSeatBlockEntity (java.lang.ClassNotFoundException: dev.plushivr.coasterfins.block.CoasterSeatBlockEntity)
+[15:08:23] [main/WARN] [mixin/]: Error loading class: dev/plushivr/coasterfins/event/SeatDismountHandler (java.lang.ClassNotFoundException: dev.plushivr.coasterfins.event.SeatDismountHandler)
+[15:08:23] [main/WARN] [mixin/]: Error loading class: org/jetbrains/annotations/ApiStatus$ScheduledForRemoval (java.lang.ClassNotFoundException: org.jetbrains.annotations.ApiStatus$ScheduledForRemoval)
+[15:08:23] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.5).
+[15:08:28] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[15:08:28] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[15:08:28] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[15:08:28] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[15:08:28] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[15:08:28] [modloading-worker-0/INFO] [Veil/]: Veil is initializing.
+[15:08:28] [modloading-worker-0/INFO] [ne.ne.ne.co.NeoForgeMod/NEOFORGE-MOD]: NeoForge mod loading, version 21.1.256, for MC 1.21.1
+[15:08:28] [modloading-worker-0/INFO] [co.si.cr.Create/]: Create 6.0.10 initializing! Commit hash: ac0c444d9828da3453ae8cc65338e8de063286fb
+[15:08:29] [modloading-worker-0/INFO] [de.ry.sa.Sable/]: Sable loaded!
+[15:08:29] [modloading-worker-0/INFO] [de.fo.FourthDimension/]: Coasters: Fourth Dimension loaded from union:/mnt/NVME4/launchsystems-runs/ls05-fd-family-20261122/fourthdimension-family-api1.jar%23129!/
+[15:08:29] [modloading-worker-0/INFO] [de.co.LaunchSystems/]: Coasters: Launch Systems loaded from union:/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/build/classes/java/main/%23127!/
+[15:08:31] [main/ERROR] [minecraft/Settings]: Failed to load properties from file: server.properties
+java.nio.file.NoSuchFileException: server.properties
+	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:92) ~[?:?] {}
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:106) ~[?:?] {}
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111) ~[?:?] {}
+	at java.base/sun.nio.fs.UnixFileSystemProvider.newByteChannel(UnixFileSystemProvider.java:261) ~[?:?] {}
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:380) ~[?:?] {}
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:432) ~[?:?] {}
+	at java.base/java.nio.file.spi.FileSystemProvider.newInputStream(FileSystemProvider.java:420) ~[?:?] {}
+	at java.base/java.nio.file.Files.newInputStream(Files.java:160) ~[?:?] {}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.dedicated.Settings.loadFromFile(Settings.java:38) ~[neoforge-21.1.256.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.dedicated.DedicatedServerProperties.fromFile(DedicatedServerProperties.java:132) ~[neoforge-21.1.256.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.dedicated.DedicatedServerSettings.<init>(DedicatedServerSettings.java:12) ~[neoforge-21.1.256.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.Main.main(Main.java:125) ~[neoforge-21.1.256.jar%23125!/:?] {re:classloading}
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?] {}
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?] {}
+	at MC-BOOTSTRAP/fml_loader@4.0.45/net.neoforged.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:136) ~[loader-4.0.45.jar%23102!/:4.0] {}
+	at MC-BOOTSTRAP/fml_loader@4.0.45/net.neoforged.fml.loading.targets.CommonLaunchHandler.serverService(CommonLaunchHandler.java:128) ~[loader-4.0.45.jar%23102!/:4.0] {}
+	at MC-BOOTSTRAP/fml_loader@4.0.45/net.neoforged.fml.loading.targets.NeoForgeServerDevLaunchHandler.runService(NeoForgeServerDevLaunchHandler.java:23) ~[loader-4.0.45.jar%23102!/:4.0] {}
+	at MC-BOOTSTRAP/fml_loader@4.0.45/net.neoforged.fml.loading.targets.CommonLaunchHandler.lambda$launchService$4(CommonLaunchHandler.java:118) ~[loader-4.0.45.jar%23102!/:4.0] {}
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:30) [modlauncher-11.0.5.jar%2382!/:?] {}
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:53) [modlauncher-11.0.5.jar%2382!/:?] {}
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:71) [modlauncher-11.0.5.jar%2382!/:?] {}
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.Launcher.run(Launcher.java:103) [modlauncher-11.0.5.jar%2382!/:?] {}
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.Launcher.main(Launcher.java:74) [modlauncher-11.0.5.jar%2382!/:?] {}
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:26) [modlauncher-11.0.5.jar%2382!/:?] {}
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) [modlauncher-11.0.5.jar%2382!/:?] {}
+	at cpw.mods.bootstraplauncher@2.0.2/cpw.mods.bootstraplauncher.BootstrapLauncher.run(BootstrapLauncher.java:210) [bootstraplauncher-2.0.2.jar:?] {}
+	at cpw.mods.bootstraplauncher@2.0.2/cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:69) [bootstraplauncher-2.0.2.jar:?] {}
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?] {}
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?] {}
+	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?] {}
+[15:08:31] [main/INFO] [mojang/YggdrasilAuthenticationService]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[15:08:31] [NeoForge Version Check/INFO] [ne.ne.fm.VersionChecker/]: [create] Starting version check at https://api.modrinth.com/updates/create/forge_updates.json?neoforge=only
+[15:08:31] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/build/moddev/artifacts/neoforge-21.1.256.jar%23125!/assets/.mcassetsroot' uses unexpected schema
+[15:08:31] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/build/moddev/artifacts/neoforge-21.1.256.jar%23125!/data/.mcassetsroot' uses unexpected schema
+[15:08:31] [main/INFO] [co.si.cr.Create/]: Created 157 recipes which will be injected into the game
+[15:08:31] [main/INFO] [co.si.cr.Create/]: Created 0 tags which will be injected into the game
+[15:08:31] [main/INFO] [ne.ne.ne.ga.GameTestHooks/]: Enabled Gametest Namespaces: [coasterslaunchsystems_fixed]
+[15:08:31] [NeoForge Version Check/INFO] [ne.ne.fm.VersionChecker/]: [create] Found status: OUTDATED Current: 6.0.10 Target: 6.0.10+mc1.21.1
+[15:08:32] [main/INFO] [minecraft/RecipeManager]: Loaded 2886 recipes
+[15:08:32] [main/INFO] [minecraft/AdvancementTree]: Loaded 2522 advancements
+[15:08:33] [Server thread/INFO] [de.ry.sa.Sable/]: Creating physics pipeline for ResourceKey[minecraft:dimension / minecraft:overworld] using RapierPhysicsPipelineProvider
+[15:08:33] [Server thread/INFO] [de.ry.sa.Sable/]: Using game directory relative Sable Rapier native directory /mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/contact-positive/.sable/natives
+[2026-11-22T22:08:33.641099905Z] [[32mINFO[0m] (sable_rapier) Rapier scene initialized
+[15:08:34] [Server thread/INFO] [de.ry.sa.Sable/]: Creating physics pipeline for ResourceKey[minecraft:dimension / minecraft:the_nether] using RapierPhysicsPipelineProvider
+[2026-11-22T22:08:34.102715383Z] [[32mINFO[0m] (sable_rapier) Rapier scene initialized
+[15:08:34] [Server thread/INFO] [de.ry.sa.Sable/]: Creating physics pipeline for ResourceKey[minecraft:dimension / minecraft:the_end] using RapierPhysicsPipelineProvider
+[2026-11-22T22:08:34.142309859Z] [[32mINFO[0m] (sable_rapier) Rapier scene initialized
+[15:08:34] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing start region for dimension minecraft:overworld
+[15:08:34] [worldgen/INFO] [minecraft/LoggerChunkProgressListener]: Preparing spawn area: 2%
+[15:08:34] [Server thread/INFO] [minecraft/LoggerChunkProgressListener]: Time elapsed: 148 ms
+[15:08:34] [Server thread/INFO] [minecraft/GameTestServer]: Started game test server
+[15:08:34] [Server thread/INFO] [ne.ne.ne.se.pe.PermissionAPI/]: Successfully initialized permission handler neoforge:default_handler
+[15:08:34] [Server thread/INFO] [minecraft/GameTestServer]: 11 tests are now running at position 5604034, -59, 11979030!
+[15:08:34] [Server thread/INFO] [minecraft/GameTestRunner]: Running test batch 'launchsystems_fixed:0' (11 tests)...
+[15:08:34] [Server thread/INFO] [minecraft/GameTestServer]: [           ]
+[15:08:35] [Server thread/INFO] [minecraft/GameTestServer]: [__         ]
+[15:08:36] [Server thread/INFO] [minecraft/GameTestServer]: [___________]
+[15:08:37] [Server thread/INFO] [minecraft/GameTestServer]: [___________]
+[15:08:37] [Server thread/INFO] [minecraft/GameTestServer]: [___________]
+[15:08:37] [Server thread/INFO] [minecraft/GameTestServer]: [___________]
+[15:08:37] [Server thread/INFO] [minecraft/GameTestServer]: [___________]
+[15:08:38] [Server thread/INFO] [minecraft/GameTestServer]: [___________]
+[15:08:38] [Server thread/INFO] [minecraft/GameTestServer]: [___________]
+[15:08:38] [Server thread/INFO] [minecraft/GameTestServer]: [___________]
+[15:08:39] [Server thread/INFO] [minecraft/GameTestServer]: [___________]
+[15:08:41] [Server thread/INFO] [minecraft/GameTestServer]: [___________]
+[15:08:43] [Server thread/INFO] [minecraft/GameTestServer]: [___________]
+[15:08:45] [Server thread/INFO] [minecraft/GameTestServer]: [___________]
+LS_CONTROLLER_FAILURE mode=fixed_inverted_forward tick=120 Ride controller: RUNNING, reserved chassis 1, required brake length 18.13/22.00, transfer false, station capture false, swing off, boarding ready false. 
+net.minecraft.gametest.framework.GameTestAssertException: Controller native observer failed: net.minecraft.gametest.framework.GameTestAssertException: Adjacent tires created combined impulse work beyond their contacted shaft budget
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestHelper.assertTrue(GameTestHelper.java:896)
+	at TRANSFORMER/coasterslaunchsystems@0.4.0/dev.coasterslaunchsystems.gametest.RideControllerGameTests.lambda$run$8(RideControllerGameTests.java:353)
+	at TRANSFORMER/coasterslaunchsystems@0.4.0/dev.coasterslaunchsystems.gametest.RideControllerGameTests$Scene.lambda$at$6(RideControllerGameTests.java:206)
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.tickInternal(GameTestInfo.java:133)
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.tick(GameTestInfo.java:107)
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestTicker.lambda$tick$0(GameTestTicker.java:39)
+	at java.base/java.util.concurrent.CopyOnWriteArrayList.forEach(CopyOnWriteArrayList.java:891)
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestTicker.tick(GameTestTicker.java:39)
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:1055)
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:917)
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestServer.tickServer(GameTestServer.java:168)
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:707)
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:267)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+[15:08:45] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_fixed.fixed_inverted_tire failed at 5604050, -60, 11979030! Controller native observer failed: net.minecraft.gametest.framework.GameTestAssertException: Adjacent tires created combined impulse work beyond their contacted shaft budget
+[15:08:47] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:08:49] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:08:50] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:08:52] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:08:53] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:08:54] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:08:56] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:08:57] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:08:58] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:08:59] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:01] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:01] [Server thread/WARN] [minecraft/MinecraftServer]: Can't keep up! Is the server overloaded? Running 2002ms or 40 ticks behind
+[15:09:02] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:03] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:05] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:06] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:07] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:09] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:10] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:12] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:13] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:14] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:16] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:17] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:18] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:20] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:21] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:21] [Server thread/WARN] [minecraft/MinecraftServer]: Can't keep up! Is the server overloaded? Running 4997ms or 99 ticks behind
+[15:09:22] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:24] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:25] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:26] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:27] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:29] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:30] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:31] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:32] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:33] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:35] [Server thread/INFO] [minecraft/GameTestServer]: [__X________]
+[15:09:36] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_fixed.wing_skid failed at 5604034, -60, 11979030! No physical passive contact work: wing skid Ride controller: FAULT, reserved chassis 1, required brake length 13.79/22.00, transfer false, station capture false, swing off, boarding ready false. Linked module disarmed or faulted at BlockPos{x=31, y=238, z=-882}: Overlapping modules claim this consist; separate their contact zones
+[15:09:36] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_fixed.wing_eddy failed at 5604042, -60, 11979030! No physical passive contact work: wing eddy Ride controller: FAULT, reserved chassis 1, required brake length 12.60/22.00, transfer false, station capture false, swing off, boarding ready false. Linked module disarmed or faulted at BlockPos{x=79, y=238, z=-880}: Overlapping modules claim this consist; separate their contact zones
+[15:09:36] [Server thread/INFO] [minecraft/GameTestServer]: [XXX________]
+[15:09:36] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_fixed.fixed_inverted_skid failed at 5604066, -60, 11979030! No physical passive contact work: fixed_inverted skid Ride controller: FAULT, reserved chassis 1, required brake length 19.65/22.00, transfer false, station capture false, swing off, boarding ready false. Linked module disarmed or faulted at BlockPos{x=223, y=242, z=-882}: Overlapping modules claim this consist; separate their contact zones
+[15:09:36] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_fixed.fixed_inverted_eddy failed at 5604074, -60, 11979030! No physical passive contact work: fixed_inverted eddy Ride controller: FAULT, reserved chassis 1, required brake length 18.13/22.00, transfer false, station capture false, swing off, boarding ready false. Linked module disarmed or faulted at BlockPos{x=271, y=242, z=-880}: Overlapping modules claim this consist; separate their contact zones
+[15:09:36] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_fixed.classic_spinning_skid failed at 5604090, -60, 11979030! No physical passive contact work: classic_spinning skid Ride controller: FAULT, reserved chassis 1, required brake length 9.62/22.00, transfer false, station capture false, swing off, boarding ready false. Linked module disarmed or faulted at BlockPos{x=367, y=238, z=-882}: Overlapping modules claim this consist; separate their contact zones
+[15:09:37] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_fixed.classic_spinning_eddy failed at 5604034, -60, 11979039! No physical passive contact work: classic_spinning eddy Ride controller: FAULT, reserved chassis 1, required brake length 8.70/22.00, transfer false, station capture false, swing off, boarding ready false. Linked module disarmed or faulted at BlockPos{x=415, y=238, z=-880}: Overlapping modules claim this consist; separate their contact zones
+[15:09:37] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_fixed.s2_spinning_skid failed at 5604042, -60, 11979039! No physical passive contact work: s2_spinning skid Ride controller: FAULT, reserved chassis 1, required brake length 9.62/22.00, transfer false, station capture false, swing off, boarding ready false. Linked module disarmed or faulted at BlockPos{x=463, y=238, z=-882}: Overlapping modules claim this consist; separate their contact zones
+[15:09:37] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_fixed.s2_spinning_eddy failed at 5604050, -60, 11979039! No physical passive contact work: s2_spinning eddy Ride controller: FAULT, reserved chassis 1, required brake length 8.70/22.00, transfer false, station capture false, swing off, boarding ready false. Linked module disarmed or faulted at BlockPos{x=511, y=238, z=-880}: Overlapping modules claim this consist; separate their contact zones
+[15:09:37] [Server thread/INFO] [minecraft/GameTestServer]: [XXX_XX_XXXX]
+[15:09:37] [Server thread/INFO] [minecraft/GameTestServer]: [XXX_XX_XXXX]
+[15:09:38] [Server thread/INFO] [minecraft/GameTestServer]: [XXX_XX_XXXX]
+[15:09:38] [Server thread/INFO] [minecraft/GameTestServer]: [XXX_XX_XXXX]
+[15:09:39] [Server thread/INFO] [minecraft/GameTestServer]: [XXX_XX_XXXX]
+[15:09:39] [Server thread/INFO] [minecraft/GameTestServer]: [XXX_XX_XXXX]
+[15:09:39] [Server thread/INFO] [minecraft/GameTestServer]: [XXX_XX_XXXX]
+[15:09:40] [Server thread/INFO] [minecraft/GameTestServer]: [XXX_XX_XXXX]
+[15:09:40] [Server thread/INFO] [minecraft/GameTestServer]: [XXX_XX_XXXX]
+[15:09:41] [Server thread/INFO] [minecraft/GameTestServer]: [XXX_XX_XXXX]
+[15:09:41] [Server thread/INFO] [minecraft/GameTestServer]: [XXX_XX_XXXX]
+[15:09:41] [Server thread/INFO] [minecraft/GameTestServer]: [XXX_XX_XXXX]
+[15:09:42] [Server thread/INFO] [minecraft/GameTestServer]: [XXX_XX_XXXX]
+[15:09:42] [Server thread/INFO] [minecraft/GameTestServer]: [XXX_XX_XXXX]
+[15:09:43] [Server thread/INFO] [minecraft/GameTestServer]: [XXX_XX_XXXX]
+[15:09:43] [Server thread/INFO] [minecraft/GameTestServer]: [XXX_XX_XXXX]
+[15:09:44] [Server thread/INFO] [minecraft/GameTestServer]: [XXX_XX_XXXX]
+[15:09:44] [Server thread/INFO] [minecraft/GameTestServer]: [XXX_XX_XXXX]
+LS_LINEAR_SECTION mechanism=LSM mode=fixed_inverted_forward cars=1 riders=4 mass=32.2 work=96.62326013375153 spent=153.9770820513902 heat=57.35382191763896 peak_speed=2.4497416019443548 steps=124 accounting_error=2.227107387398064E-13 joint_error=0.0 coupler_error=0.0 rotor_response=0.0
+LS_LINEAR_SECTION mechanism=LIM mode=classic_spinning_forward cars=1 riders=4 mass=16.200000000000003 work=100.39968502712699 spent=211.63205767960358 heat=111.2323726524766 peak_speed=2.971205411562824 steps=222 accounting_error=2.2598589666245061E-13 joint_error=1.6024446743183597E-4 coupler_error=0.0 rotor_response=0.016165934598378992
+[15:09:44] [Server thread/INFO] [minecraft/GameTestServer]: [XXX+XX+XXXX]
+[15:09:44] [Server thread/INFO] [minecraft/GameTestServer]: ========= 11 GAME TESTS COMPLETE IN 1.172 min ======================
+[15:09:44] [Server thread/INFO] [minecraft/GameTestServer]: 9 required tests failed :(
+[15:09:44] [Server thread/INFO] [minecraft/GameTestServer]:    - coasterslaunchsystems_fixed.wing_skid
+[15:09:44] [Server thread/INFO] [minecraft/GameTestServer]:    - coasterslaunchsystems_fixed.wing_eddy
+[15:09:44] [Server thread/INFO] [minecraft/GameTestServer]:    - coasterslaunchsystems_fixed.fixed_inverted_tire
+[15:09:44] [Server thread/INFO] [minecraft/GameTestServer]:    - coasterslaunchsystems_fixed.fixed_inverted_skid
+[15:09:44] [Server thread/INFO] [minecraft/GameTestServer]:    - coasterslaunchsystems_fixed.fixed_inverted_eddy
+[15:09:44] [Server thread/INFO] [minecraft/GameTestServer]:    - coasterslaunchsystems_fixed.classic_spinning_skid
+[15:09:44] [Server thread/INFO] [minecraft/GameTestServer]:    - coasterslaunchsystems_fixed.classic_spinning_eddy
+[15:09:44] [Server thread/INFO] [minecraft/GameTestServer]:    - coasterslaunchsystems_fixed.s2_spinning_skid
+[15:09:44] [Server thread/INFO] [minecraft/GameTestServer]:    - coasterslaunchsystems_fixed.s2_spinning_eddy
+[15:09:44] [Server thread/INFO] [minecraft/GameTestServer]: ====================================================
+[15:09:44] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server
+[15:09:44] [Server thread/INFO] [minecraft/MinecraftServer]: Saving players
+[15:09:44] [Server thread/INFO] [minecraft/MinecraftServer]: Saving worlds
+[15:09:45] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:overworld
+[15:09:45] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:overworld
+[15:09:49] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[15:09:49] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[15:09:49] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_end
+[15:09:49] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:the_end
+[15:09:49] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[15:09:49] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[15:09:49] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[15:09:49] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved
+[15:09:49] [Server thread/INFO] [minecraft/GameTestServer]: Game test server shutting down
+
+> Task :runGameTestServer FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':runGameTestServer'.
+> Process 'command '/usr/lib/jvm/java-21-openjdk/bin/java'' finished with non-zero exit value 9
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to generate a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 30s
+8 actionable tasks: 2 executed, 6 up-to-date

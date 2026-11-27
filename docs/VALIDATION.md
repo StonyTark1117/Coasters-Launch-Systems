@@ -1,14 +1,21 @@
 # Launch Systems validation status
 
-## Current status overlay — 2026-11-22
+## Current status overlay — 2026-11-26
 
-The cumulative **0.1–0.4** outcome is accepted. The [0.4 integration record](evidence/0.4/integration-20261122/README.md)
+The cumulative **0.1–0.5** outcome is accepted. The
+[0.5 integration record](evidence/0.5/integration-20261126/README.md) closes
+LS501–LS504 through loaded family contacts, relevant occupied native operation,
+translated catch recovery, explicit exclusions and body-choice invariance.
+All owned runtimes are stopped and saved worlds are preserved.
+
+The preceding [0.4 integration record](evidence/0.4/integration-20261122/README.md)
 combines final Java 21 package/unit validation with targeted current-provider,
 physical-return and occupied-player evidence. [Linear/skid](evidence/ls02-linear-20261122/README.md),
 [cable](evidence/0.3/cable-current-20261122/README.md) and
 [pressure](evidence/ls04-pressure-20261122/README.md) close LS201–LS205,
 LS301–LS303 and LS401–LS403 while preserving the accepted foundation below.
-Modern FD families and shared multi-train operations remain later 0.5/0.6 scope.
+Shared multi-train operation remains later 0.6 scope; the exact seventeen-variant
+[certificate table](FD-VEHICLE-CERTIFICATES.md) defines 0.5 coverage.
 Use [CURRENT-WORK](CURRENT-WORK.md) for assignment state and
 [VALIDATION-POLICY](VALIDATION-POLICY.md) before scheduling another run.
 

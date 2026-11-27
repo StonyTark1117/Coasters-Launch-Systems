@@ -1,16 +1,18 @@
 # Coasters: Launch Systems
 
-A standalone Create: Coasters Simulated addon with **0.4.0 accepted**: tire,
+A standalone Create: Coasters Simulated addon with **0.5.0 accepted**: tire,
 LSM, LIM, finite flywheel, hydraulic and pneumatic launches; friction-fin,
-skid and passive magnetic brakes; local ride control; and explicit original
-Fourth Dimension vehicle certificates.
+skid and passive magnetic brakes; local ride control; and explicit certificates for the eligible Fourth Dimension catalog.
 
 Normal-built occupied rides, linear swing launches, physical cable return,
 pressure recharge/service and targeted interruption/restart checks passed.
 The [0.4 integration record](docs/evidence/0.4/integration-20261122/README.md)
 links exact artifacts, accepted evidence and exclusions. It builds on the
 [accepted 0.1 foundation and three usable rides](docs/evidence/0.1/integration-20261122/README.md).
-Modern FD catalog support and bounded multi-train operation remain 0.5/0.6 work.
+The [0.5 integration record](docs/evidence/0.5/integration-20261126/README.md)
+adds the [finite family × equipment table](docs/FD-VEHICLE-CERTIFICATES.md),
+actual mounted contacts, translated catches and occupied native controls.
+Bounded multi-train operation remains 0.6 work.
 
 ## Previous accepted checkpoint
 
@@ -22,8 +24,8 @@ That historical checkpoint preceded the accepted 0.1–0.4 work above. The adapt
 
 The [November 22 roadmap](ROADMAP.md) keeps **0.4** as the first complete
 six-launch milestone, now accepted with its core/FD authority, player rides
-and equipment/lifecycle criteria. **0.5** adds explicit certificates for
-the expanded FD catalog; **0.6** integrates its bounded multi-train operation;
+and equipment/lifecycle criteria. **0.5**, also accepted, adds explicit
+certificates for the expanded FD catalog; **0.6** integrates its bounded multi-train operation;
 **0.9/1.0** reconcile and ship the supported package. Accepted evidence carries
 forward. See [upstream dependency findings](docs/DEPENDENCY-REVIEW-2026-11-22.md)
 and the [execution guide](docs/ROADMAP-EXECUTION.md).
@@ -32,10 +34,11 @@ and the [execution guide](docs/ROADMAP-EXECUTION.md).
 
 Start with [AGENTS.md](AGENTS.md), [current work](docs/CURRENT-WORK.md), and
 [validation policy](docs/VALIDATION-POLICY.md). The old combined results above
-used Fourth Dimension `0.9.0-dev.1` / schema 4. Current Fourth Dimension is on
-schema 8 with ride-authority contracts and accepted implementation through the
-1.3 milestone (artifact label still 1.1.0). The current adapter now requires
-its separately integrated external authority API 1 facade; native checks have
+used Fourth Dimension `0.9.0-dev.1` / schema 4. The selected Fourth Dimension integration snapshot uses
+schema 8 and the accepted 1.3 implementation (artifact label 1.1.0), plus
+external authority API 1 and the additive family-power contract. The sibling
+project has since published 1.5.0; that does not expand this snapshot’s tested
+catalog. The adapter requires the registered facade; native checks have
 passed, including real occupied Arrow and separate-JVM saved-world restart. Follow the
 [pinned handoff](docs/FOURTH-DIMENSION-HANDOFF.md) for exact source/JAR identity.
 

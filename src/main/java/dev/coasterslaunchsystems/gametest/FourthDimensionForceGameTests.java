@@ -262,9 +262,15 @@ public final class FourthDimensionForceGameTests {
         pc.getX() + .5 + ((Number) read(carrier, "side")).doubleValue(),
         pc.getY() + .5 + ((Number) read(carrier, "pivotHeight")).doubleValue(),
         pc.getZ() + .5 + ((Number) read(carrier, "longitudinal")).doubleValue()));
-    var cp = nativePoint(child, new Vector3d(cc.getX() + .5,
-        cc.getY() + .5 + ((Number) read(carrier, "childPivotOffset")).doubleValue(), cc.getZ() + .5));
+    var cp = nativePoint(child, new Vector3d(cc.getX() + .5 + optionalPivot(carrier, "childPivotX"),
+        cc.getY() + .5 + ((Number) read(carrier, "childPivotOffset")).doubleValue(), cc.getZ() + .5 + optionalPivot(carrier, "childPivotZ")));
     return pp.distance(cp);
+  }
+
+  private static double optionalPivot(Object carrier, String field) {
+    try { return carrier.getClass().getField(field).getDouble(carrier); }
+    catch (NoSuchFieldException legacy) { return 0; }
+    catch (IllegalAccessException unavailable) { throw new IllegalStateException(unavailable); }
   }
 
   static Class<?> type(String name) {

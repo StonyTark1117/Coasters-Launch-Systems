@@ -156,6 +156,10 @@ public final class LinearControllerGameTests {
     }
     return tests;
   }
+  static TestFunction catalogCase(String mode, int slot, Mechanism mechanism) {
+    return new TestFunction("launchsystems_fixed", "coasterslaunchsystems_fixed." + mechanism.name().toLowerCase(java.util.Locale.ROOT) + "_" + mode,
+        "coasterslaunchsystems_fixed:empty", 1700, 0, true, helper -> run(new Scene(helper, slot, mode, mechanism)));
+  }
   private static String faultState(Scene s) {
     var r = s.ride;
     return r.controller.status() + " steps=" + s.steps + "/" + s.interruptedSteps
@@ -176,6 +180,11 @@ public final class LinearControllerGameTests {
             new BlockPos(0, -2, -1), EquipmentContent.SKID_SHOE.get().defaultBlockState(), 3);
         for (var mechanism : r.mode.equals("mixed_forward") ? List.of(Mechanism.LSM, Mechanism.LIM) : List.of(s.mechanism)) {
           var plot = body.getPlot().getEmbeddedLevelAccessor(); var plate = LinearMotorGameTests.reactionPosition(mechanism);
+          if (r.fourthDimension) {
+            var vehicle = r.vehicles.stream().filter(v -> read(v, "chassis").equals(body.getUniqueId())).findFirst().orElseThrow();
+            var certificate = dev.coasterslaunchsystems.integration.FourthDimensionCertificates.find(((Enum<?>) read(vehicle, "family")).name(), (String) read(vehicle, "variant"));
+            if (certificate != null) plate = certificate.offset(mechanism);
+          }
           r.base.helper.assertTrue(plot.getBlockState(plate).isAir(), "Linear plate would overwrite vehicle-family hardware");
           plot.setBlock(plate, (mechanism == Mechanism.LSM ? EquipmentContent.LSM_PLATE : EquipmentContent.LIM_PLATE).get().defaultBlockState(), 3);
         }

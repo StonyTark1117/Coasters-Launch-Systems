@@ -1,0 +1,12 @@
+{
+  "owner": "/root/foundation",
+  "root": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/foundation-observer",
+  "display": 400,
+  "player": "Observer",
+  "unit_prefix": "fd-ls05-foundation-observer-20261126",
+  "client_script": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/foundation-observer/build/moddev/runClient.sh",
+  "server_root": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/fixed-player/server",
+  "server_unit": "fd-ls05-translated-20261126-server.service",
+  "endpoint": "127.0.0.1:25801",
+  "client_limit": "6G"
+}

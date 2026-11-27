@@ -1,10 +1,10 @@
 # Coasters: Launch Systems implementation plan
 
-Updated **2026-11-22**. Build a standalone Create: Coasters Simulated addon
+Updated **2026-11-26**. Build a standalone Create: Coasters Simulated addon
 with physical tire, LSM, LIM, flywheel, hydraulic and pneumatic launches,
 distinct brakes, finite resources and explicit vehicle/ride ownership. Native
-mechanics and tool workflows are accepted through `0.4.0`, including the
-foundation, usable rides, linear/skid, physical cable and pressure outcomes.
+mechanics and tool workflows are accepted through `0.5.0`, including the foundation, usable rides, linear/skid,
+physical cable, pressure and finite modern FD family certificate outcomes.
 
 The [version roadmap](ROADMAP.md) is authoritative for scope and acceptance;
 [current work](docs/CURRENT-WORK.md) assigns remaining outcomes, and the
@@ -21,14 +21,17 @@ player-tool evidence. Original design provenance remains in
    artifacts; availability is not a blanket upgrade instruction.
 2. Retain the accepted occupied Arrow and saved-world qualification of the
    registered schema-8 external authority API 1 bridge; preserve the legacy adapter separately. FD has accepted 1.1 tools, 1.2 bounded multi-train operation and
-   1.3 model/body work, but still labels its current artifact 1.1.0/schema 8.
+   1.3 model/body work, and the selected snapshot retains artifact label 1.1.0/schema 8. Later published
+   FD 1.5.0 does not expand this snapshot’s tested scope.
    Pin source and artifact identity using [the handoff](docs/FOURTH-DIMENSION-HANDOFF.md).
 3. Preserve completed **0.1–0.4**: three player-built rides, real-client/saved-world
    lifecycle, linear/skid operation, physical cable return and distinct pressure
    operation/service. [The integration record](docs/evidence/0.4/integration-20261122/README.md)
    reconciles this completed six-launch outcome.
-4. Extend certificates to the finite modern FD catalog in 0.5, then integrate
-   the actual bounded Arrow reservation/controls contract in 0.6. Cosmetic
+4. The completed **0.5** assignment extends certificates to the finite modern FD
+   catalog; [integration evidence](docs/evidence/0.5/integration-20261126/README.md)
+   records the exact scope. A later assignment integrates the actual bounded
+   Arrow reservation/controls contract in 0.6. Cosmetic
    variants never create new mechanical eligibility. Optional operating and
    presentation adapters remain independent; 0.9/1.0 reconcile the adopted scope.
 
@@ -198,4 +201,4 @@ Validation must include ordinary carts, maximum declared consists, empty and une
 
 Record launch time/distance/speed, impulse/work budget, braking distance and creep, free rotor response, constraint error, coupling retention, and server/frame costs. Establish numerical tolerances from baseline fixtures before calling any gate complete. Every advertised mechanism requires an occupied gameplay demonstration and packaged dedicated-server evidence; a rendered model or command-applied velocity is insufficient.
 
-The next engineering outcome is current-core runtime qualification and LS004 authority migration. Reuse the existing force/catch prototypes; their measured limits guide certificates and hardware. Apply the roadmap's 0.5/0.6 extensions only after the original 0.4 outcome, then reconcile the adopted 1.0 support matrix.
+Current-core qualification, authority migration and the 0.5 family certificates are complete. The next unassigned engineering outcome is the roadmap’s 0.6 bounded route interoperability, followed by reconciliation of the adopted 1.0 support matrix.

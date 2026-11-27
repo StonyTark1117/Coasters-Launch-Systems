@@ -172,12 +172,11 @@ public final class RideControllers {
     }
     if (!running) return false;
     // Only the launch pads retract; downstream stop pads remain applied even with a powered shaft.
-    return controller.modules().stream().map(m -> level.getBlockEntity(m.position()))
+    return CableControllers.launchPad(level, controller, module)
+        || controller.modules().stream().map(m -> level.getBlockEntity(m.position()))
         .filter(EquipmentCabinetEntity.class::isInstance).map(EquipmentCabinetEntity.class::cast)
         .anyMatch(m -> (m.mechanism().drive() && !controller.exitDrive(m) && m.interval().end() >= module.interval().start()
-            && m.interval().start() <= module.interval().end())
-            || m.mechanism().cable() && module.interval().start() <= m.interval().end()
-                && module.interval().end() >= m.interval().start());
+            && m.interval().start() <= module.interval().end()));
   }
   public static void physics(ServerLevel level, double dt) {
     var entries = CONTROLLERS.get(level); if (entries == null) { CableControllers.audit(level, List.of()); return; }
@@ -291,6 +290,7 @@ public final class RideControllers {
     }
     boolean allClear = true, held = true, ready = true, running = controller.phase() == State.RUNNING || controller.phase() == State.BRAKING;
     double mass = 0, minimumForce = 256, maximumSpeed = 0, smallest = Double.POSITIVE_INFINITY, largest = Double.NEGATIVE_INFINITY, radius = 0;
+    double smallestFin = Double.POSITIVE_INFINITY, largestFin = Double.NEGATIVE_INFINITY;
     var bodyIds = new HashSet<UUID>();
     for (var id : members) {
       if (!(container.getSubLevel(id) instanceof ServerSubLevel cart) || cart.isRemoved()) { controller.fail("Reserved chassis unavailable; ownership retained"); return; }
@@ -318,11 +318,22 @@ public final class RideControllers {
         held = false; ready = false; continue;
       }
       double distance = track.distance(contact.hit()); smallest = Math.min(smallest, distance); largest = Math.max(largest, distance);
+      var finPoint = VehicleInterfaces.brakePoint(cart);
+      var finHit = finPoint == null ? null : VehicleInterfaces.contactHit(level, track, cart, finPoint);
+      if (finHit == null) { controller.fail("Reserved friction fin cannot meet the accepted rail"); return; }
+      double finDistance = track.distance(finHit);
+      smallestFin = Math.min(smallestFin, finDistance); largestFin = Math.max(largestFin, finDistance);
       var axis = track.forward(level, contact.hit()); var direction = new Vector3d(axis.x, axis.y, axis.z);
       double speed = NativeForces.pointDynamics(cart, container.physicsSystem().getPipeline(), VehicleInterfaces.tirePoint(cart), direction).speed();
       maximumSpeed = Math.max(maximumSpeed, Math.abs(speed));
       held &= Math.abs(speed) < .03 && ((EquipmentRuntime.activeFinClamps(level, id) > 0) || !motion.propulsionAllowed() && (motion.dispatchReady() || controller.stationCapture() && StationCapture.vehicleHeld(level, id)));
-      ready &= motion.dispatchReady() && drives.stream().anyMatch(m -> m.interval().intersects(distance, distance, .6));
+      ready &= motion.dispatchReady() && drives.stream().anyMatch(m -> {
+        var drivePoint = VehicleInterfaces.point(cart, m.mechanism());
+        var driveHit = drivePoint == null ? null : VehicleInterfaces.contactHit(level, track, cart, drivePoint);
+        if (driveHit == null) return false;
+        double at = track.distance(driveHit);
+        return m.interval().intersects(at, at, .6);
+      });
     }
     if (allClear) { controller.fail("Train left the section without a reserved transfer"); return; }
     if (!Double.isFinite(smallest) || !Double.isFinite(largest)) { controller.consumeRequest(); return; }
@@ -351,8 +362,8 @@ public final class RideControllers {
         boolean forward = controller.swingDirection().sign() > 0;
         boolean tailClear = forward ? smallest > swingBoundary : largest < swingBoundary;
         controller.observeSwingTailClear(tailClear);
-        if (tailClear && (forward ? largest >= forwardStopStart - .6 : smallest <= backwardStopEnd + .6)) controller.state(State.BRAKING);
-      } else if (largest >= forwardStopStart - .6) controller.state(State.BRAKING);
+        if (tailClear && (forward ? largestFin >= forwardStopStart - .6 : smallestFin <= backwardStopEnd + .6)) controller.state(State.BRAKING);
+      } else if (largestFin >= forwardStopStart - .6) controller.state(State.BRAKING);
       // Stop-bank arrival ends propulsion, while ownership remains until every native tail is clear.
       if (held && maximumSpeed < .03 && controller.phase() == State.BRAKING) {
         if (controller.swingProgram() && controller.swingPassIndex() < dev.coasterslaunchsystems.math.SwingLaunchProgram.PASSES - 1) {
@@ -369,7 +380,7 @@ public final class RideControllers {
             dev.coasterslaunchsystems.math.LinearMotor.launchReserve(m.mechanism(), launchMass, m.targetSpeed(), m.accelerationLimit(), m.jerkLimit()))
             : dev.coasterslaunchsystems.math.LinearMotor.launchReserve(m.mechanism(), launchMass, m.targetSpeed(), m.accelerationLimit(), m.jerkLimit())));
     // A swing may stage on its upstream end bank; holding there is the required starting pose.
-    boolean clearOfForward = largest + radius < forwardStopStart;
+    boolean clearOfForward = largest + radius < forwardStopStart && largestFin < forwardStopStart - .6;
     controller.state(held && ready && powered && charged && clearOfForward ? State.READY : State.HOLD);
     if (!controller.consumeRequest() || controller.phase() != State.READY) return;
     // The route has already been reserved. Delegate release to the uniquely resolved vehicle owner.

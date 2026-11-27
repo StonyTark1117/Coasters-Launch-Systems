@@ -131,8 +131,14 @@ public final class EquipmentRuntime {
             && dev.coasterslaunchsystems.integration.engineered.EngineeredInterop.appliesForce(level, contact.hit())) {
           module.fail("Coasters: Engineered owns active force at this rail contact"); continue;
         }
+        var point = VehicleInterfaces.point(cart, mechanism);
+        boolean missingHardware = point == null;
+        if (missingHardware) point = VehicleInterfaces.mountingPoint(cart, mechanism);
+        if (point == null) continue;
+        var interfaceHit = VehicleInterfaces.contactHit(level, track, cart, point);
+        if (interfaceHit == null) continue;
         var key = new Key(module.getBlockPos(), cart.getUniqueId());
-        double distance = track.distance(contact.hit());
+        double distance = track.distance(interfaceHit);
         var previous = history.get(key);
         double oldDistance = previous != null && previous.step() == step - 1 ? previous.distance() : distance;
         double oldAcceleration = previous != null && previous.step() == step - 1 ? previous.acceleration() : 0;
@@ -142,6 +148,7 @@ public final class EquipmentRuntime {
           var motion = MotionProviders.resolve(level, cart.getUniqueId()).orElse(null);
           if (motion == null || !permitted(motion, mechanism)
               || mechanism.drive() && !RideControllers.permitsDrive(level, module, cart.getUniqueId())) continue;
+          if (missingHardware) { module.fail("Chassis interface hardware was removed"); continue; }
           if (!motion.interfaces().contains(mechanism)) {
             module.fail(switch (mechanism) {
               case TIRE -> "Vehicle has no certified tire interface";
@@ -173,17 +180,9 @@ public final class EquipmentRuntime {
             }
           }
           if (!available) continue;
-          var point = switch (mechanism) {
-            case TIRE -> VehicleInterfaces.tirePoint(cart);
-            case FIN_BRAKE -> VehicleInterfaces.brakePoint(cart);
-            case SKID_BRAKE -> VehicleInterfaces.skidPoint(cart);
-            case LSM, LIM -> VehicleInterfaces.linearPoint(cart, mechanism);
-            default -> VehicleInterfaces.conductivePoint(cart);
-          };
-          if (point == null) { module.fail("Chassis interface hardware was removed"); continue; }
           double mass = NativeForces.mass(level, motion);
           if (mass <= 0) continue;
-          var axis = track.forward(level, contact.hit());
+          var axis = track.forward(level, interfaceHit);
           var direction = new Vector3d(axis.x, axis.y, axis.z);
           var dynamics = NativeForces.pointDynamics(cart, event.getPhysicsSystem().getPipeline(), point, direction);
           double speed = dynamics.speed();

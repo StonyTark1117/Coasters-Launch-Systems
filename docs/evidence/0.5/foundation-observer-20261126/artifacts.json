@@ -1,0 +1,8 @@
+{
+  "LS": "b5f838e7258df46cfb95031cb574dab623671f24e0e167fbafb37f2c466b4a56",
+  "FD": "3dbbc7a77e1b0cd02b3e5fa3a69e4b4823c5c5a3befca6f0e1e35d72381b7fba",
+  "source": "/mnt/NVME4/launchsystems-runs/ls05-fixed-20261122/fixed-player",
+  "client_heap": "1536M",
+  "memory_max": "6G",
+  "display": 400
+}

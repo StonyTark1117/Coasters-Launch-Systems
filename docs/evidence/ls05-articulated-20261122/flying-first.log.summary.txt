@@ -1,0 +1,6 @@
+LS_ARTICULATED_LOAD family=flying riders=4 empty=48.0 loaded=51.2
+LS_ARTICULATED_LOAD family=new_generation_flying riders=2 empty=54.0 loaded=55.6
+LS_ARTICULATED_PASS family=new_generation_flying riders=2 work=59.58676560505825 peak=1.3209743873569788 steps=365 distance=19.856286036511904 posture=0.35965422616143994 yaw=0.35978215031690897 native_guard=true held_input=true
+LS_ARTICULATED_PASS family=flying riders=4 work=185.7890272617732 peak=2.6064329307982033 steps=253 distance=21.12545107633543 posture=1.5556550355200884 yaw=0.0 native_guard=true held_input=true
+[14:50:55] [Server thread/INFO] [minecraft/GameTestServer]: All 2 required tests passed :)
+BUILD SUCCESSFUL in 31s

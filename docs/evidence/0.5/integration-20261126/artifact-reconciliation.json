@@ -1,0 +1,10 @@
+{
+  "comparison": "All production .class entries excluding gametest, ZIP bytes SHA256",
+  "final_source_build": "/mnt/NVME4/launchsystems-runs/ls05-integration-20261126/build/libs/coasters-launch-systems-0.5.0.jar",
+  "fixed_b5f838": "No production class differences",
+  "articulated_00276d": [
+    "EquipmentRuntime.class"
+  ],
+  "reason": "Final EquipmentRuntime restores a contact-local missing-hardware fault using the nominal certified mounting point. Positive installed contact behavior and all other production classes match the articulated occupied package. Shared boundary and later fixed native checks cover the current contact implementation. Test-only pause fixtures and metadata do not invalidate accepted positive cases.",
+  "final_sha256": "b969dc874a17d511d67c91552d8eae4531a2e49c858177addef3b27b1eba6e3a"
+}

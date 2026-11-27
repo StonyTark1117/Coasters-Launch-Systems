@@ -1,0 +1,61 @@
+2026-11-27T02:43:11.192469+00:00
+Owner /root/rides; private display396, endpoint25811.
+Id=fd-ls-articulated-20261122-client.service
+ActiveState=inactive
+SubState=dead
+MainPID=0
+Result=success
+
+Id=fd-ls-articulated-20261122-server.service
+ActiveState=inactive
+SubState=dead
+MainPID=0
+Result=success
+
+Id=fd-ls-articulated-20261122-xvfb.service
+ActiveState=inactive
+SubState=dead
+MainPID=0
+Result=success
+
+Clean server tail:
+[26Nov2026 19:42:07.560] [RCON Client /127.0.0.1 #471/INFO] [net.minecraft.server.rcon.thread.RconClient/]: Thread RCON Client /127.0.0.1 shutting down
+[26Nov2026 19:42:15.255] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: Observer lost connection: Disconnected
+[26Nov2026 19:42:15.255] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Observer left the game
+[26Nov2026 19:42:16.033] [RCON Listener #1/INFO] [net.minecraft.server.rcon.thread.GenericThread/]: Thread RCON Client /127.0.0.1 started
+[26Nov2026 19:42:16.050] [RCON Client /127.0.0.1 #472/INFO] [net.minecraft.server.rcon.thread.RconClient/]: Thread RCON Client /127.0.0.1 shutting down
+[26Nov2026 19:42:16.309] [Netty Epoll Server IO #2/ERROR] [net.minecraft.network.Connection/]: Exception caught in connection
+io.netty.channel.unix.Errors$NativeIoException: recvAddress(..) failed: Connection reset by peer
+[26Nov2026 19:42:16.349] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: Dev lost connection: Disconnected
+[26Nov2026 19:42:16.349] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Dev left the game
+[26Nov2026 19:42:16.360] [RCON Listener #1/INFO] [net.minecraft.server.rcon.thread.GenericThread/]: Thread RCON Client /127.0.0.1 started
+[26Nov2026 19:42:16.412] [RCON Client /127.0.0.1 #473/INFO] [net.minecraft.server.rcon.thread.RconClient/]: Thread RCON Client /127.0.0.1 shutting down
+[26Nov2026 19:42:21.338] [RCON Listener #1/INFO] [net.minecraft.server.rcon.thread.GenericThread/]: Thread RCON Client /127.0.0.1 started
+[26Nov2026 19:42:21.356] [Server thread/INFO] [dev.ryanhcode.sable.Sable/]: Saving sub-levels for level 'ServerLevel[ls05-articulated-resume-20261126]'/minecraft:overworld
+[26Nov2026 19:42:21.477] [Server thread/INFO] [dev.ryanhcode.sable.Sable/]: Saving sub-levels for level 'ServerLevel[ls05-articulated-resume-20261126]'/minecraft:the_nether
+[26Nov2026 19:42:21.490] [Server thread/INFO] [dev.ryanhcode.sable.Sable/]: Saving sub-levels for level 'ServerLevel[ls05-articulated-resume-20261126]'/minecraft:the_end
+[26Nov2026 19:42:21.511] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (ls05-articulated-resume-20261126): All chunks are saved
+[26Nov2026 19:42:21.511] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[26Nov2026 19:42:21.511] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[26Nov2026 19:42:21.511] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage: All dimensions are saved
+[26Nov2026 19:42:21.511] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: [Rcon: Saved the game]
+[26Nov2026 19:42:21.552] [RCON Client /127.0.0.1 #474/INFO] [net.minecraft.server.rcon.thread.RconClient/]: Thread RCON Client /127.0.0.1 shutting down
+[26Nov2026 19:42:21.552] [RCON Listener #1/INFO] [net.minecraft.server.rcon.thread.GenericThread/]: Thread RCON Client /127.0.0.1 started
+[26Nov2026 19:42:21.576] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: [Rcon: Stopping the server]
+[26Nov2026 19:42:21.577] [RCON Client /127.0.0.1 #475/INFO] [net.minecraft.server.rcon.thread.RconClient/]: Thread RCON Client /127.0.0.1 shutting down
+[26Nov2026 19:42:21.578] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Stopping server
+[26Nov2026 19:42:21.579] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving players
+[26Nov2026 19:42:21.579] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving worlds
+[26Nov2026 19:42:21.892] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[ls05-articulated-resume-20261126]'/minecraft:overworld
+[26Nov2026 19:42:21.893] [Server thread/INFO] [dev.ryanhcode.sable.Sable/]: Saving sub-levels for level 'ServerLevel[ls05-articulated-resume-20261126]'/minecraft:overworld
+[26Nov2026 19:42:30.192] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[ls05-articulated-resume-20261126]'/minecraft:the_nether
+[26Nov2026 19:42:30.192] [Server thread/INFO] [dev.ryanhcode.sable.Sable/]: Saving sub-levels for level 'ServerLevel[ls05-articulated-resume-20261126]'/minecraft:the_nether
+[26Nov2026 19:42:30.200] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[ls05-articulated-resume-20261126]'/minecraft:the_end
+[26Nov2026 19:42:30.200] [Server thread/INFO] [dev.ryanhcode.sable.Sable/]: Saving sub-levels for level 'ServerLevel[ls05-articulated-resume-20261126]'/minecraft:the_end
+[26Nov2026 19:42:30.216] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (ls05-articulated-resume-20261126): All chunks are saved
+[26Nov2026 19:42:30.216] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[26Nov2026 19:42:30.216] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[26Nov2026 19:42:30.216] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage: All dimensions are saved
+[26Nov2026 19:42:30.279] [Server thread/INFO] [net.minecraft.server.rcon.thread.GenericThread/]: Thread RCON Listener stopped
+
+Prior client/server launcher/Java PIDs absent: {377458: True, 377163: True, 377164: True}

@@ -38,6 +38,8 @@ public final class RideControllerGameTests {
     final OrdinaryPassengerGameTests.Scene base;
     final String mode;
     final boolean reverse, linked, fourthDimension;
+    final String designName;
+    final int cabinetY;
     final List<Object> vehicles = new ArrayList<>();
     final Map<UUID, UUID> riderBodies = new HashMap<>();
     final List<Double> initialAngles = new ArrayList<>();
@@ -47,46 +49,91 @@ public final class RideControllerGameTests {
     RideControllerEntity controller;
     Mechanism driveMechanism = Mechanism.TIRE;
     DirectedTrack track;
-    double work, peakSpeed, baseline, travel, measuredDistance, measuredFront, maxJointError, maxCouplerError, rotorResponse;
+    double work, peakSpeed, baseline, travel, measuredDistance, measuredFront, measuredBrakeFront, maxJointError, maxCouplerError, rotorResponse;
     int driveSteps, closedPadSteps, runSteps;
     boolean launched, closed;
     String failure = "";
     Scene(GameTestHelper helper, int slot, String mode) { this(helper, slot, mode, 240); }
     Scene(GameTestHelper helper, int slot, String mode, int height) {
       base = new OrdinaryPassengerGameTests.Scene(helper, slot, height, -896, mode.endsWith("_tool_bound")); this.mode = mode;
-      reverse = mode.contains("reverse"); linked = mode.contains("linked"); fourthDimension = mode.startsWith("arrow") || mode.startsWith("legacy") || mode.startsWith("free_spin") || mode.startsWith("revised") || mode.startsWith("pax"); controllerPosition = base.from.offset(4, -2, 8);
+      reverse = mode.contains("reverse"); linked = mode.contains("linked");
+      designName = design(mode);
+      fourthDimension = designName != null;
+      cabinetY = Set.of("SUSPENDED", "FIXED_INVERTED", "FLYING", "NEW_GENERATION_FLYING", "PIPELINE", "POWERED_INVERTED_YAW").contains(designName == null ? "" : designName) ? 2 : -2;
+      controllerPosition = base.from.offset(4, "AXIS".equals(designName) ? -3 : cabinetY, 8);
       if (!fourthDimension) { base.cart(mode.contains("swing_") ? 14 : reverse ? 56 : 8); if (linked) base.cart(reverse ? 50 : 14); }
       else prepareFourthDimension();
     }
+    static String design(String mode) {
+      var names = new java.util.LinkedHashMap<String, String>();
+      names.put("new_generation_flying", "NEW_GENERATION_FLYING"); names.put("powered_inverted", "POWERED_INVERTED_YAW");
+      names.put("fixed_inverted", "FIXED_INVERTED"); names.put("s2_spinning", "S2_SPINNING");
+      names.put("free_spin", "FREE_SPIN"); names.put("classic_spinning", "SPINNING");
+      for (var name : List.of("arrow", "legacy", "revised", "pax", "wing", "suspended", "axis", "flying", "pipeline", "dive")) names.put(name, name.toUpperCase(java.util.Locale.ROOT));
+      return names.entrySet().stream().filter(e -> mode.startsWith(e.getKey())).map(java.util.Map.Entry::getValue).findFirst().orElse(null);
+    }
     void prepareFourthDimension() {
       var level = base.level;
-      ((dev.silvergold.simulatedcoasters.track.anchor.CoasterAnchorpointBlockEntity) level.getBlockEntity(base.from)).removeAnchorPeerCurve(level, base.to);
+      if (!designName.equals("WING")) ((dev.silvergold.simulatedcoasters.track.anchor.CoasterAnchorpointBlockEntity) level.getBlockEntity(base.from)).removeAnchorPeerCurve(level, base.to);
       var designType = type("dev.fourthdimension.track.TrackDesign");
-      String designName = mode.startsWith("arrow") ? "ARROW" : mode.startsWith("legacy") ? "LEGACY"
-          : mode.startsWith("free_spin") ? "FREE_SPIN" : mode.startsWith("pax") ? "PAX" : "REVISED";
-      Object design = Arrays.stream(designType.getEnumConstants()).filter(v -> ((Enum<?>) v).name().equals(designName)).findFirst().orElseThrow();
+      Object design = Arrays.stream(designType.getEnumConstants()).filter(v -> ((Enum<?>) v).name().equals(designName)).findFirst().orElse(null);
+      if (!designName.equals("WING")) {
       var player = net.neoforged.neoforge.common.util.FakePlayerFactory.get(level,
           new com.mojang.authlib.GameProfile(UUID.randomUUID(), "LSController4D"));
       player.setGameMode(net.minecraft.world.level.GameType.CREATIVE); player.setPos(base.to.getX() + 2, base.to.getY() + 1, base.to.getZ());
-      var trackItem = (net.minecraft.world.item.Item) ((java.util.function.Supplier<?>) readStatic("dev.fourthdimension.track.TrackItems", designName)).get();
+      var trackHolder = designName.equals("DIVE") ? "dev.fourthdimension.vehicle.DiveContent"
+          : designName.equals("S2_SPINNING") ? "dev.fourthdimension.vehicle.S2SpinningContent"
+          : designName.equals("POWERED_INVERTED_YAW") ? "dev.fourthdimension.vehicle.PoweredInvertedYawContent" : "dev.fourthdimension.track.TrackItems";
+      var trackItem = (net.minecraft.world.item.Item) ((java.util.function.Supplier<?>) readStatic(trackHolder,
+          trackHolder.endsWith("TrackItems") ? designName : "TRACK")).get();
       player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, trackItem.getDefaultInstance());
       invoke("dev.fourthdimension.track.TrackPlacement", "connect", new Class<?>[] {net.minecraft.server.level.ServerLevel.class, BlockPos.class, BlockPos.class, designType,
           net.minecraft.world.entity.player.Player.class, net.minecraft.world.item.ItemStack.class}, level, base.from, base.to, design, player, player.getMainHandItem());
+      }
       base.helper.runAtTickTime(15, () -> {
         var track = DirectedTrack.resolve(level, base.from, base.to).orElseThrow();
         for (int car = 0; car < (linked ? 2 : 1); car++) {
-        var hit = track.hitAtDistance(level, reverse ? 56 - car * 6 : mode.contains("swing_") ? 14 + car * 6 : 8 + car * 6);
-        var vehicle = invoke("dev.fourthdimension.vehicle.VehicleFactory", "create",
+        var hit = track.hitAtDistance(level, reverse ? 56 - car * 6 : mode.contains("swing_") ? 14 + car * 8 : 8 + car * 6);
+        var vehicle = designName.equals("WING") ? invoke("dev.fourthdimension.vehicle.WingVehicle", "create", new Class<?>[] {net.minecraft.server.level.ServerLevel.class, dev.silvergold.simulatedcoasters.track.graph.CoasterPathTrackFrame.GraphHit.class}, level, hit) : invoke("dev.fourthdimension.vehicle.VehicleFactory", "create",
             new Class<?>[] {net.minecraft.server.level.ServerLevel.class, designType, dev.silvergold.simulatedcoasters.track.graph.CoasterPathTrackFrame.GraphHit.class}, level, design, hit);
         vehicles.add(vehicle);
         var parent = (dev.ryanhcode.sable.sublevel.ServerSubLevel) SubLevelContainer.getContainer(level).getSubLevel((UUID) read(vehicle, "chassis")); base.parents.add(parent);
         var plot = parent.getPlot().getEmbeddedLevelAccessor();
-        base.helper.assertTrue(plot.getBlockState(BlockPos.ZERO.below()).isAir() && plot.getBlockState(new BlockPos(1, -1, 0)).isAir(), "4D launch interfaces would replace family hardware");
-        plot.setBlock(BlockPos.ZERO.below(), EquipmentContent.TIRE_SURFACE.get().defaultBlockState(), 3);
-        plot.setBlock(new BlockPos(1, -1, 0), EquipmentContent.BRAKE_FIN.get().defaultBlockState(), 3);
+        var certificate = dev.coasterslaunchsystems.integration.FourthDimensionCertificates.find(((Enum<?>) read(vehicle, "family")).name(), (String) read(vehicle, "variant"));
+        var tire = certificate == null ? BlockPos.ZERO.below() : certificate.offset(Mechanism.TIRE);
+        var fin = certificate == null ? new BlockPos(1, -1, 0) : certificate.offset(Mechanism.FIN_BRAKE);
+        if (certificate != null && certificate.longitudinalOffset() < 0) for (int z = -1; z >= certificate.longitudinalOffset(); z--) {
+          var brace = new BlockPos(0, 0, z);
+          if (plot.getBlockState(brace).isAir()) plot.setBlock(brace, Blocks.IRON_BLOCK.defaultBlockState(), 3);
+          var rear = new BlockPos(0, 0, -z);
+          if (mode.contains("_controller_") && plot.getBlockState(rear).isAir()) plot.setBlock(rear, Blocks.IRON_BLOCK.defaultBlockState(), 3);
+        }
+        if (certificate != null && certificate.longitudinalOffset() < 0 && mode.contains("_controller_")) {
+          var connector = new BlockPos(0, -1, -certificate.longitudinalOffset());
+          if (plot.getBlockState(connector).isAir()) plot.setBlock(connector, Blocks.IRON_BLOCK.defaultBlockState(), 3);
+        }
+        base.helper.assertTrue(plot.getBlockState(tire).isAir() && plot.getBlockState(fin).isAir(), "4D launch interfaces would replace family hardware");
+        plot.setBlock(tire, EquipmentContent.TIRE_SURFACE.get().defaultBlockState(), 3);
+        plot.setBlock(fin, EquipmentContent.BRAKE_FIN.get().defaultBlockState(), 3);
         }
       });
-      base.helper.runAtTickTime(170, () -> { for (var vehicle : vehicles) invoke("dev.fourthdimension.vehicle.VehicleOperations", "restraints",
+      if (Set.of("FIXED_INVERTED", "SPINNING", "S2_SPINNING").contains(designName)) {
+        base.helper.runAtTickTime(25, () -> {
+          for (var vehicle : vehicles) {
+            var pos = base.from.offset(6, cabinetY, cabinetY == 2 ? 14 : 8);
+            var station = (net.minecraft.world.level.block.Block) ((java.util.function.Supplier<?>) readStatic("dev.fourthdimension.station.StationContent", "STATION")).get();
+            level.setBlockAndUpdate(pos, station.defaultBlockState());
+            try { level.getBlockEntity(pos).getClass().getField("vehicle").set(level.getBlockEntity(pos), read(vehicle, "chassis"));
+              vehicle.getClass().getField("dock").set(vehicle, pos);
+            } catch (ReflectiveOperationException failure) { throw new IllegalStateException(failure); }
+          }
+        });
+        if (Set.of("FIXED_INVERTED", "S2_SPINNING").contains(designName)) base.helper.runAtTickTime(100, () -> {
+          for (var vehicle : vehicles) invoke("dev.fourthdimension.vehicle." + (designName.equals("FIXED_INVERTED") ? "FixedInvertedRuntime" : "S2SpinningRuntime"), "rebindDock",
+              new Class<?>[] {net.minecraft.server.level.ServerLevel.class, type("dev.fourthdimension.runtime.FoundationData$Vehicle"), BlockPos.class}, level, vehicle, read(vehicle, "dock"));
+        });
+      }
+      if (!"true".equals(System.getenv("LS_CABLE_PLAYER")) && !"true".equals(System.getenv("LS_FIXED_PLAYER")) && Set.of("ARROW", "LEGACY", "FREE_SPIN", "REVISED", "PAX", "WING", "FIXED_INVERTED", "SPINNING", "S2_SPINNING").contains(designName)) base.helper.runAtTickTime(170, () -> { for (var vehicle : vehicles) invoke("dev.fourthdimension.vehicle.VehicleOperations", "restraints",
           new Class<?>[] {net.minecraft.server.level.ServerLevel.class, type("dev.fourthdimension.runtime.FoundationData$Vehicle"), boolean.class}, level, vehicle, true); });
     }
     void boardFourthDimension() {
@@ -146,7 +193,7 @@ public final class RideControllerGameTests {
     }
     void module(int distance, boolean fin) { module(distance, fin, false); }
     void module(int distance, boolean fin, boolean exit) {
-      var level = base.level; var pos = base.from.offset(fin ? 1 : -1, -2, reverse ? 64 - distance : distance);
+      var level = base.level; var pos = base.from.offset(fin ? 1 : -1, cabinetY, reverse ? 64 - distance : distance);
       var motor = fin ? pos.east() : pos.west(); equipment.add(pos); motors.add(motor);
       level.setBlockAndUpdate(pos, (fin ? EquipmentContent.FIN : driveMechanism == Mechanism.LSM ? EquipmentContent.LSM : driveMechanism == Mechanism.LIM ? EquipmentContent.LIM : EquipmentContent.TIRE).get().defaultBlockState().setValue(RotatedPillarBlock.AXIS, Direction.Axis.X));
       level.setBlockAndUpdate(motor, AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalBlock.FACING, fin ? Direction.WEST : Direction.EAST));
@@ -156,7 +203,7 @@ public final class RideControllerGameTests {
       if (mode.contains("swing_") && cabinet.mechanism().linear()) cabinet.tuneLinear(1.5, cabinet.accelerationLimit(), cabinet.jerkLimit());
       if (!mode.endsWith("_tool_bound")) {
         controller.link(cabinet, exit);
-        cabinet.setArmed(true);
+        if (!"true".equals(System.getenv("LS_CABLE_PLAYER")) && !"true".equals(System.getenv("LS_FIXED_PLAYER"))) cabinet.setArmed(true);
       }
     }
     void at(int tick, Runnable action) {
@@ -176,6 +223,12 @@ public final class RideControllerGameTests {
         if (container.getSubLevel((UUID) read(carrier, "body")) instanceof dev.ryanhcode.sable.sublevel.ServerSubLevel body && !body.isRemoved())
           container.removeSubLevel(body, dev.ryanhcode.sable.sublevel.storage.SubLevelRemovalReason.REMOVED);
       }
+      for (var vehicle : vehicles) if ("route_changeover_yaw_v1".equals(read(vehicle, "variant"))) {
+        var deck = (UUID) read(read(vehicle, "yaw"), "deck");
+        var container = SubLevelContainer.getContainer(base.level);
+        if (deck != null && container.getSubLevel(deck) instanceof dev.ryanhcode.sable.sublevel.ServerSubLevel body && !body.isRemoved())
+          container.removeSubLevel(body, dev.ryanhcode.sable.sublevel.storage.SubLevelRemovalReason.REMOVED);
+      }
       equipment.forEach(p -> base.level.removeBlock(p, false)); motors.forEach(p -> base.level.removeBlock(p, false)); base.cleanup();
     }
   }
@@ -184,17 +237,22 @@ public final class RideControllerGameTests {
       if (s.closed || s.base.level != event.getPhysicsSystem().getLevel()) continue;
       try {
         if (s.controller.phase() == RideControllerEntity.State.RUNNING) s.runSteps++;
-        s.measuredFront = 0; double stepWork = 0; var contacted = new HashSet<BlockPos>();
+        s.measuredFront = 0; s.measuredBrakeFront = 0; double stepWork = 0; var contacted = new HashSet<BlockPos>();
         for (var cart : s.base.parents) {
           var contact = EngagedContacts.current(s.base.level, cart).orElseThrow();
           s.base.helper.assertTrue(s.track.matches(contact.hit()), "Controller train lost accepted native rail contact");
           s.measuredFront = Math.max(s.measuredFront, s.track.distance(contact.hit()));
+          var brakeHit = VehicleInterfaces.contactHit(s.base.level, s.track, cart, VehicleInterfaces.brakePoint(cart));
+          s.base.helper.assertTrue(brakeHit != null, "Controller fin missed accepted rail");
+          s.measuredBrakeFront = Math.max(s.measuredBrakeFront, s.track.distance(brakeHit));
           if (cart == s.base.parents.getFirst()) s.measuredDistance = s.track.distance(contact.hit());
-          double distance = s.track.distance(contact.hit()), previous = s.oldDistances.getOrDefault(cart.getUniqueId(), distance);
+          var tireHit = VehicleInterfaces.contactHit(s.base.level, s.track, cart, VehicleInterfaces.tirePoint(cart));
+          s.base.helper.assertTrue(tireHit != null, "Controller tire interface missed accepted rail");
+          double distance = s.track.distance(tireHit), previous = s.oldDistances.getOrDefault(cart.getUniqueId(), distance);
           for (var pos : s.equipment) if (s.base.level.getBlockEntity(pos) instanceof EquipmentCabinetEntity cabinet
               && cabinet.mechanism() == Mechanism.TIRE && cabinet.interval().intersects(previous, distance, .6)) contacted.add(pos);
           s.oldDistances.put(cart.getUniqueId(), distance);
-          var axis = s.track.forward(s.base.level, contact.hit()); var dir = new Vector3d(axis.x, axis.y, axis.z);
+          var axis = s.track.forward(s.base.level, tireHit); var dir = new Vector3d(axis.x, axis.y, axis.z);
           var dynamics = NativeForces.pointDynamics(cart, event.getPhysicsSystem().getPipeline(), VehicleInterfaces.tirePoint(cart), dir);
           s.peakSpeed = Math.max(s.peakSpeed, Math.abs(dynamics.speed()));
           var group = cart.getQueuedForceGroups() == null ? null : cart.getQueuedForceGroups().get(ForceGroups.PROPULSION.get());
@@ -320,7 +378,7 @@ public final class RideControllerGameTests {
       if (s.closed) return;
       s.base.helper.assertTrue(s.failure.isEmpty() && s.controller.phase() == RideControllerEntity.State.HOLD && s.driveSteps > 20 && s.runSteps > 20,
           "Controlled native launch did not reach its held stop: " + s.controller.status() + " observer=" + s.failure + " position=" + s.distance());
-      s.base.helper.assertTrue(Math.abs(s.base.speed(s.base.parents.getFirst())) < .03 && s.measuredFront >= 19.4 && s.measuredFront < 42,
+      s.base.helper.assertTrue(Math.abs(s.base.speed(s.base.parents.getFirst())) < .03 && s.measuredBrakeFront >= 19.4 && s.measuredBrakeFront < 42,
           "Loaded train escaped the certified fin bank");
       s.base.helper.assertTrue(s.controller.reservation().size() == s.base.parents.size(), "Final hold released the whole-consist reservation");
       s.base.helper.assertTrue(s.maxJointError < .01 && s.maxCouplerError < .05, "Controlled launch lost native carrier/coupler constraints");

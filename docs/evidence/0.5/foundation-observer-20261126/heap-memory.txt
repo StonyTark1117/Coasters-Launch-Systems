@@ -1,0 +1,9 @@
+2026-11-27T02:35:52.651564+00:00
+387619:
+-XX:CICompilerCount=12 -XX:ConcGCThreads=5 -XX:G1ConcRefinementThreads=18 -XX:G1EagerReclaimRemSetThreshold=12 -XX:G1HeapRegionSize=1048576 -XX:G1RemSetArrayOfCardsEntries=12 -XX:G1RemSetHowlMaxNumBuckets=8 -XX:G1RemSetHowlNumBuckets=4 -XX:GCDrainStackTargetSize=64 -XX:InitialHeapSize=100663296 -XX:MarkStackSize=4194304 -XX:MaxHeapSize=1610612736 -XX:MaxNewSize=965738496 -XX:MinHeapDeltaBytes=1048576 -XX:MinHeapSize=8388608 -XX:NonNMethodCodeHeapSize=7602480 -XX:NonProfiledCodeHeapSize=122027880 -XX:ProfiledCodeHeapSize=122027880 -XX:ReservedCodeCacheSize=251658240 -XX:+SegmentedCodeCache -XX:SoftMaxHeapSize=1610612736 -XX:+UseCompressedOops -XX:+UseG1GC 
+
+MainPID=387618
+ControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/fd-ls05-foundation-observer-20261126-client.service
+MemoryCurrent=2538106880
+MemoryPeak=2543034368
+MemoryMax=6442450944

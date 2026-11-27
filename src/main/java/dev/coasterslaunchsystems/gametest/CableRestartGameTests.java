@@ -40,10 +40,11 @@ import org.joml.Vector3d;
 public final class CableRestartGameTests {
   // Controller pressure cases occupy slots 19/20; this slot stays below the native-coordinate limit and outside cable mechanics.
   private static final int SLOT = 15;
+  private static final boolean TRANSLATED = "fixed_inverted".equals(System.getenv("LS_CABLE_RESTART_FAMILY"));
   private static final BlockPos FROM = new BlockPos(32 + SLOT * 48, 224, -896);
-  private static final BlockPos FLYWHEEL = FROM.offset(-1, -2, 8);
-  private static final BlockPos RECOVERY_CONTROLLER = FROM.offset(4, -2, 8);
-  private static final BlockPos RECOVERY_FIN = FROM.offset(1, -2, 8);
+  private static final BlockPos FLYWHEEL = TRANSLATED ? FROM.offset(0, 2, 3) : FROM.offset(-1, -2, 8);
+  private static final BlockPos RECOVERY_CONTROLLER = FROM.offset(4, TRANSLATED ? 2 : -2, 8);
+  private static final BlockPos RECOVERY_FIN = FROM.offset(1, TRANSLATED ? 2 : -2, TRANSLATED ? 13 : 8);
   private static final BlockPos RECOVERY_FIN_MOTOR = RECOVERY_FIN.east();
   private static final List<ActiveFixture> ACTIVE = new ArrayList<>();
   private static boolean listenerRegistered;
@@ -81,7 +82,7 @@ public final class CableRestartGameTests {
         if (fixture.rig == null) {
           var contact = EngagedContacts.current(fixture.level, fixture.cart).orElse(null);
           if (contact != null) {
-            double home = fixture.track.distance(contact.hit());
+            double home = NativeCableRig.socketDistance(fixture.level, fixture.track, fixture.cart);
             fixture.rig = new NativeCableRig(fixture.level, fixture.track, home, 12, 20, FLYWHEEL, fixture.mechanism);
             fixture.cabinet.installCable(fixture.rig);
           }
@@ -178,7 +179,7 @@ public final class CableRestartGameTests {
       boolean moving, Mechanism mechanism, boolean returning) {
     helper.assertTrue(!arrow || net.neoforged.fml.ModList.get().isLoaded("fourthdimension"),
         "The Arrow saved-world fixture requires the pinned Fourth Dimension provider");
-    var ride = arrow ? new RideControllerGameTests.Scene(helper, SLOT, "arrow_controller_dispatch", 224) : null;
+    var ride = arrow ? new RideControllerGameTests.Scene(helper, SLOT, TRANSLATED ? "fixed_inverted_controller_dispatch" : "arrow_controller_dispatch", 224) : null;
     var scene = arrow ? ride.base : new OrdinaryPassengerGameTests.Scene(helper, SLOT, 224, -896);
     var level = scene.level;
     var cart = new ServerSubLevel[] {arrow ? null : scene.cart(8)};
@@ -191,10 +192,10 @@ public final class CableRestartGameTests {
       for (int step = 0; step <= 128; step++)
         level.setBlockAndUpdate(NativeCableRig.guideBlockAt(level, track, track.length() * step / 128),
             EquipmentContent.CABLE_GUIDE.get().defaultBlockState());
-      helper.assertTrue(cart[0].getPlot().getEmbeddedLevelAccessor().setBlock(BlockPos.ZERO.below(2),
+      helper.assertTrue(cart[0].getPlot().getEmbeddedLevelAccessor().setBlock(TRANSLATED ? new BlockPos(0, -2, 5) : BlockPos.ZERO.below(2),
           EquipmentContent.CATCH_SOCKET.get().defaultBlockState(), 3), "Loaded cart socket did not install");
     });
-    helper.runAtTickTime(40, () -> {
+    helper.runAtTickTime(TRANSLATED ? 160 : 40, () -> {
       if (arrow) ride.boardFourthDimension();
       else for (int seat = 0; seat < 4; seat++) scene.board(cart[0], seat);
     });
@@ -264,8 +265,8 @@ public final class CableRestartGameTests {
       System.out.println("LS_CABLE_ACTIVE_RESTART prepared carriage=" + cabinet.cableCarriage()
           + " chassis=" + cabinet.cableChassis() + " socket_error=" + fixture[0].rig.socketError()
           + " guide_error=" + fixture[0].rig.guideError() + " removed_socket=" + missingSocket + " arrow=" + arrow
-          + " mechanism=" + mechanism);
-      if (missingSocket) helper.assertTrue(cart[0].getPlot().getEmbeddedLevelAccessor().setBlock(BlockPos.ZERO.below(2),
+          + " mechanism=" + mechanism + " translated=" + TRANSLATED + " home=" + cabinet.cableHome());
+      if (missingSocket) helper.assertTrue(cart[0].getPlot().getEmbeddedLevelAccessor().setBlock(TRANSLATED ? new BlockPos(0, -2, 5) : BlockPos.ZERO.below(2),
           net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 3),
           "Captured socket could not be removed before saved-world negative case");
       ACTIVE.remove(fixture[0]);
@@ -310,7 +311,7 @@ public final class CableRestartGameTests {
               + " speed=" + fixture[0].rig.speed() + " phase=" + fixture[0].rig.phase()
               + " returning=" + cabinet.cableReturning() + " failure=" + fixture[0].failure);
       System.out.println("LS_CABLE_RETURN_RESTART prepared carriage=" + cabinet.cableCarriage()
-          + " travel=" + fixture[0].rig.travel() + " mechanism=" + mechanism);
+          + " travel=" + fixture[0].rig.travel() + " mechanism=" + mechanism + " translated=" + TRANSLATED + " home=" + cabinet.cableHome());
       ACTIVE.remove(fixture[0]); helper.succeed();
     });
   }
@@ -449,6 +450,14 @@ public final class CableRestartGameTests {
           + " controller=" + (controller == null ? "missing" : controller.phase() + "/" + controller.reservation() + "/" + controller.fault())
           + " restored=" + (cabinet != null && cabinet.cableChassis() != null
               && CableRecovery.catchRestored(level, cabinet.cableCarriage(), cabinet.cableChassis())));
+      if (TRANSLATED && cabinet != null && cabinet.cableChassis() != null) {
+        var diagnostic = dev.coasterslaunchsystems.api.MotionProviders.resolve(level, cabinet.cableChassis()).orElse(null);
+        var body = (ServerSubLevel) SubLevelContainer.getContainer(level).getSubLevel(cabinet.cableChassis());
+        var vehicle = CatalogBoundaryGameTests.vehicles(level).stream().filter(v -> FourthDimensionForceGameTests.read(v,"chassis").equals(cabinet.cableChassis())).findFirst().orElse(null);
+        var bearing = body == null ? null : dev.silvergold.simulatedcoasters.track.cart.CoasterCartTrackSnap.representativeBearingPlotPos(body);
+        System.out.println("LS_TRANSLATED_RELOAD motion="+diagnostic+" vehicle="+(vehicle==null?"missing":FourthDimensionForceGameTests.read(vehicle,"family")+"/"+FourthDimensionForceGameTests.read(vehicle,"variant"))
+            +" bearing="+bearing+" socket="+(body==null?null:VehicleInterfaces.catchPoint(body))+" block="+(bearing==null?null:body.getLevel().getBlockState(bearing.offset(0,-2,5))));
+      }
       helper.assertTrue(cabinet != null && fin != null && controller != null && cabinet.cableInUse()
           && CableRecovery.catchRestored(level, cabinet.cableCarriage(), cabinet.cableChassis())
           && !controller.armed()

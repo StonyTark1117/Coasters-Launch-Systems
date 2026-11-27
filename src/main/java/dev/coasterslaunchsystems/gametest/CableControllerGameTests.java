@@ -48,20 +48,22 @@ public final class CableControllerGameTests {
     final List<NativeFinClamp> preparation = new ArrayList<>();
     final BlockPos flywheel, motor;
     final Mechanism mechanism;
+    final boolean player;
     double peakSpeed, initialEnergy, minimumRunningEnergy = Double.POSITIVE_INFINITY, finalDistance;
     UUID carriage;
     boolean running, braking, interrupted;
     String failure = "";
     Scene(GameTestHelper helper, int slot, String mode) {
       this.mode = mode;
+      player = "true".equals(System.getenv("LS_CABLE_PLAYER")) && mode.equals("fixed_inverted_controller_dispatch");
       mechanism = mode.contains("hydraulic") ? Mechanism.HYDRAULIC
           : mode.contains("pneumatic") ? Mechanism.PNEUMATIC : Mechanism.FLYWHEEL;
       ride = new RideControllerGameTests.Scene(helper, slot, mode, 224);
-      flywheel = ride.base.from.offset(-1, -2, 8); motor = flywheel.west();
+      flywheel = ride.cabinetY == 2 ? ride.base.from.offset(0, 2, 3) : ride.base.from.offset(-1, -2, 8); motor = flywheel.west();
     }
     EquipmentCabinetEntity cabinet() { return (EquipmentCabinetEntity) ride.base.level.getBlockEntity(flywheel); }
     double cableEnergy() { return cabinet().cableEnergy(); }
-    void at(int tick, Runnable action) { ride.at(tick, action); }
+    void at(int tick, Runnable action) { ride.at(tick + ("FLYING".equals(ride.designName) && tick >= 420 ? 100 : 0), action); }
     void cleanup() { SCENES.remove(this); preparation.forEach(NativeFinClamp::close); preparation.clear(); ride.cleanup(); }
   }
   private static void observe(ForgeSablePrePhysicsTickEvent event) {
@@ -109,7 +111,7 @@ public final class CableControllerGameTests {
   }
   static TestFunction currentCase(String mode, int slot) {
     return new TestFunction("launchsystems_cable_current", "coasterslaunchsystems_cable_current." + mode,
-        "coasterslaunchsystems_cable_current:empty", 1350, 0, true,
+        "coasterslaunchsystems_cable_current:empty", 1500, 0, true,
         helper -> run(new Scene(helper, slot, mode)));
   }
 
@@ -121,10 +123,18 @@ public final class CableControllerGameTests {
       for (int step = 0; step <= 128; step++)
         level.setBlockAndUpdate(NativeCableRig.guideBlockAt(level, track, track.length() * step / 128), EquipmentContent.CABLE_GUIDE.get().defaultBlockState());
       var plot = r.base.parents.getFirst().getPlot().getEmbeddedLevelAccessor();
-      r.base.helper.assertTrue(plot.getBlockState(BlockPos.ZERO.below(2)).isAir(), "Cable socket would replace car hardware");
-      plot.setBlock(BlockPos.ZERO.below(2), EquipmentContent.CATCH_SOCKET.get().defaultBlockState(), 3);
+      var socket = BlockPos.ZERO.below(2);
+      if (r.fourthDimension) {
+        var vehicle = r.vehicles.getFirst();
+        var certificate = dev.coasterslaunchsystems.integration.FourthDimensionCertificates.find(
+            ((Enum<?>) FourthDimensionForceGameTests.read(vehicle, "family")).name(),
+            (String) FourthDimensionForceGameTests.read(vehicle, "variant"));
+        if (certificate != null) socket = certificate.offset(s.mechanism);
+      }
+      r.base.helper.assertTrue(plot.getBlockState(socket).isAir(), "Cable socket would replace car hardware");
+      plot.setBlock(socket, EquipmentContent.CATCH_SOCKET.get().defaultBlockState(), 3);
     });
-    s.at(40, () -> { if (r.fourthDimension) r.boardFourthDimension(); else for (int seat = 0; seat < 4; seat++) r.base.board(r.base.parents.getFirst(), seat); });
+    if (!s.player) s.at(java.util.Set.of("SUSPENDED", "PIPELINE", "FLYING", "NEW_GENERATION_FLYING").contains(r.designName == null ? "" : r.designName) ? 110 : 40, () -> { if (r.fourthDimension) r.boardFourthDimension(); else for (int seat = 0; seat < 4; seat++) r.base.board(r.base.parents.getFirst(), seat); });
     s.at(55, () -> {
       level.setBlockAndUpdate(r.controllerPosition, EquipmentContent.CONTROLLER.get().defaultBlockState());
       r.controller = (RideControllerEntity) level.getBlockEntity(r.controllerPosition);
@@ -140,15 +150,19 @@ public final class CableControllerGameTests {
       level.setBlockAndUpdate(s.motor, AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalBlock.FACING, Direction.EAST));
       ((CreativeMotorBlockEntity) level.getBlockEntity(s.motor)).generatedSpeed.setValue(64);
       r.equipment.add(s.flywheel); r.motors.add(s.motor);
-      s.cabinet().bind(level, r.base.from, r.base.to); r.controller.link(s.cabinet()); s.cabinet().setArmed(true);
-      r.module(8, true);
-      for (int distance = 23; distance <= 43; distance += 2) r.module(distance, true);
-      if (r.fourthDimension) for (var body : r.base.parents)
+      s.cabinet().bind(level, r.base.from, r.base.to); r.controller.link(s.cabinet());
+      if (!s.player) s.cabinet().setArmed(true);
+      r.module(r.cabinetY == 2 ? 13 : 8, true);
+      int stopStart = r.cabinetY == 2 ? 27 : 23;
+      for (int distance = stopStart; distance <= stopStart + 20; distance += 2) r.module(distance, true);
+      if (r.fourthDimension && !s.player) for (var body : r.base.parents)
         s.preparation.add(new NativeFinClamp(SubLevelContainer.getContainer(level).physicsSystem().getPipeline(), body,
             VehicleInterfaces.brakePoint(body), new Vector3d(0, 0, 1), 128));
-      r.controller.setArmed(true);
-      SCENES.add(s);
+      if (s.player) {
+        System.out.println("LS_CABLE_PLAYER prepared family=fixed_inverted from="+r.base.from+" controller="+r.controllerPosition+" cabinet="+s.flywheel+" chassis="+r.base.parents.getFirst().getUniqueId());
+      } else { r.controller.setArmed(true); SCENES.add(s); }
     });
+    if (s.player) { s.at(200, () -> r.base.helper.succeed()); return; }
     s.at(420, () -> {
       r.base.helper.assertTrue(s.failure.isEmpty() && r.controller.phase() == RideControllerEntity.State.READY
           && s.cabinet().cableInUse() && s.cabinet().cableInstalled() && s.cabinet().cableReady(),

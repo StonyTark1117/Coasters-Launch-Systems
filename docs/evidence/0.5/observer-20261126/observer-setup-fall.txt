@@ -1,0 +1,1 @@
+[22Nov2026 15:11:05.748] [Render thread/INFO] [net.minecraft.client.gui.components.ChatComponent/]: [System] [CHAT] Observer fell from a high place

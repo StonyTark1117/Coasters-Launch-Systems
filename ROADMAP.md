@@ -1,11 +1,12 @@
 # Coasters: Launch Systems version roadmap
 
-Updated **2026-11-22 (America/Phoenix)**. **0.1.0 is accepted**: foundation
+Updated **2026-11-26 (America/Phoenix)**. **0.1.0 is accepted**: foundation
 LS001–LS005 and usable-ride packages LS101–LS106 are complete, with exact scope
 and inputs in the [integration record](docs/evidence/0.1/integration-20261122/README.md).
 The **0.4.0 six-launch outcome is accepted**, including LS201–LS205,
 LS301–LS303 and LS401–LS403; see the [combined integration record](docs/evidence/0.4/integration-20261122/README.md).
-Packages 0.5 onward retain their scope and are unassigned.
+**0.5 (LS501–LS504)** is accepted; see the [family integration record](docs/evidence/0.5/integration-20261126/README.md).
+0.6 and later retain their scope and are unassigned.
 [Validation](docs/VALIDATION.md) owns accepted evidence;
 [CURRENT-WORK](docs/CURRENT-WORK.md) owns assignments. Stable LS IDs retain
 scope and acceptance. Version milestones express outcomes and order, not dates.
@@ -19,7 +20,7 @@ scope and acceptance. Version milestones express outcomes and order, not dates.
 | 0.2 — Linear launches | Distinct LSM and LIM, bounded swing launches, skid/thermal braking and original-family certification | LS201–LS205 accepted: native original-family coverage, actual occupied swing/skid and persistence. |
 | 0.3 — Physical cable launch | Finite flywheel energy, constrained catch/carriage, release, physical return and inspected recovery | LS301–LS303 accepted: occupied pull, finite work, physical return/service and current Arrow recovery. |
 | 0.4 — Complete six-launch release | Hydraulic and pneumatic equipment join tire, LSM, LIM and flywheel; coherent usable content and interruption behavior | LS401–LS403 and preceding gates accepted: distinct occupied pressure operation, recharge, service and interruption. |
-| 0.5 — Expanded FD vehicle support | Explicit launch/brake certificates for the modern FD catalog, preserving each family's mechanics and body choices | LS501–LS504; newly planned, after 0.4. No automatic eligibility for every launcher. |
+| 0.5 — Expanded FD vehicle support | Explicit launch/brake certificates for the modern FD catalog, preserving each family's mechanics and body choices | LS501–LS504 accepted: finite family certificates, occupied controls, body-choice invariance and explicit mechanical exclusions. |
 | 0.6 — Shared ride operation | Launch Systems equipment respects FD's bounded multi-train reservations and operator controls | LS601–LS602; newly planned, after LS004 and relevant vehicle/equipment certificates. |
 | 0.9 — Release candidate | Reconciled advertised matrix, migration/multiplayer, measured costs and finished instructions | LS901–LS904; planned. Reuse accepted evidence and run only remaining/affected coverage. |
 | 1.0 — Stable | A supported, documented package with all required core and adopted FD outcomes accepted | LS1001; planned. Optional LS801–LS807 adapters ship only when independently accepted. |
