@@ -18,6 +18,15 @@ public final class EngagedContacts {
   private EngagedContacts() {}
 
   public static void accepted(ServerLevel level, ServerSubLevel body, GraphHit hit) {
+    // The native guide briefly retains an extrapolated end frame while crossing
+    // a socket. Keep only its authenticated endpoint within the existing 0.6 m
+    // pad tolerance; this neither searches for nor grants a different rail.
+    if (hit != null && hit.edge() != null && hit.point() != null && Double.isFinite(hit.t())
+        && (hit.t() < 0 || hit.t() > 1)) {
+      double t = Math.max(0, Math.min(1, hit.t()));
+      var endpoint = CoasterPathGraphManager.sampleEdgePositionPlotLocal(level, hit.edge(), t);
+      hit = hit.point().distanceToSqr(endpoint) <= .36 ? new GraphHit(endpoint, hit.edge(), t) : null;
+    }
     if (!supported(hit) || body.isRemoved() || CoasterCartTrackSnap.isBearingDisengaged(body)) {
       forget(level, body);
       return;

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.coasterslaunchsystems.TrackDistanceTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-27T09:15:42.128Z" hostname="Hades" time="0.003">
+  <properties/>
+  <testcase name="sweptEntryCannotSkipShortSpanInEitherDirection()" classname="dev.coasterslaunchsystems.TrackDistanceTest" time="0.0"/>
+  <testcase name="nonuniformCurveUsesDistanceRatherThanParameter()" classname="dev.coasterslaunchsystems.TrackDistanceTest" time="0.001"/>
+  <testcase name="invalidGeometryAndIntervalsAreRejected()" classname="dev.coasterslaunchsystems.TrackDistanceTest" time="0.001"/>
+  <testcase name="curvedRailLengthConvergesAndKeepsMonotonicDistance()" classname="dev.coasterslaunchsystems.TrackDistanceTest" time="0.0"/>
+  <testcase name="tailMustClearBeforeOccupancyEnds()" classname="dev.coasterslaunchsystems.TrackDistanceTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

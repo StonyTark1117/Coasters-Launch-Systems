@@ -13,7 +13,8 @@ import net.minecraft.server.level.ServerLevel;
 final class FourthDimensionAuthority {
   static final String PROVIDER = "coasterslaunchsystems:local_controller";
   private final Class<?> api, vehicle, controllerType, tokenType;
-  private final boolean routes;
+  private final boolean routes, moving;
+  private final Map<ServerLevel,Map<BlockPos,Long>> movingAcknowledgements=new WeakHashMap<>();
   private final Map<ServerLevel, Map<UUID, Object>> tokens = new WeakHashMap<>();
   private final Map<ServerLevel, Set<BlockPos>> resumes = new WeakHashMap<>();
   private record RouteGeometry(List<dev.coasterslaunchsystems.track.DirectedRoute.Span> spans,
@@ -37,12 +38,18 @@ final class FourthDimensionAuthority {
       com.mojang.logging.LogUtils.getLogger().warn("Fourth Dimension managed routes disabled: native dispatch readiness query unavailable");
     }
     routes = routeApi;
+    boolean movingApi;
+    try { movingApi=api.getField("EXTERNAL_MOVING_API").getInt(null)==1;
+      if(movingApi)api.getMethod("returnFromMoving",ServerLevel.class,UUID.class,tokenType,BlockPos.class);
+    } catch(NoSuchFieldException oldApi) { movingApi=false; }
+    moving=movingApi;
     var external = Class.forName("dev.fourthdimension.integration.RideAuthority$ExternalProvider");
     if (api.getField("EXTERNAL_API").getInt(null) != 1) throw new ReflectiveOperationException("Unsupported external authority API");
     var bridge = Proxy.newProxyInstance(external.getClassLoader(), new Class<?>[] {external}, (proxy, method, args) -> switch (method.getName()) {
       case "supports" -> supported((ServerLevel) args[0], args[1]);
       case "accessoryPowerAvailable" -> accessoryPowerAvailable((ServerLevel) args[0], args[1]);
       case "supportsManagedRoutes" -> routes;
+      case "supportsMoving" -> supportsMoving((ServerLevel)args[0],(BlockPos)args[1],args[2]);
       case "routeDirection" -> routeDirection((ServerLevel) args[0], (BlockPos) args[1], args[2]);
       case "operatorStatus" -> {
         var bound = operatorController((ServerLevel) args[0], args[1]);
@@ -60,6 +67,35 @@ final class FourthDimensionAuthority {
       default -> throw new UnsupportedOperationException(method.getName());
     });
     api.getMethod("registerExternal", String.class, int.class, external).invoke(null, PROVIDER, 1, bridge);
+  }
+
+  private boolean supportsMoving(ServerLevel level,BlockPos pos,Object member) throws ReflectiveOperationException {
+    if(!moving||!supported(level,member)||managed(level,member)
+        ||!(RideControllers.loadedBlockEntity(level,pos) instanceof RideControllerEntity bound)
+        ||!RideControllers.available(level,bound)||!bound.armed()||!bound.fault().isEmpty()
+        ||bound.swingProgram()||bound.transferring()||bound.incoming()!=null
+        ||bound.resolve(level)==null||bound.modules().isEmpty()
+        ||!bound.reservation().equals(new HashSet<>((List<UUID>)field(field(member,"authority"),"cars"))))return false;
+    for(var link:bound.modules()){
+      if(!(RideControllers.loadedBlockEntity(level,link.position()) instanceof EquipmentCabinetEntity module)
+          ||!link.identity().equals(module.identity())||!EquipmentRuntime.available(level,module)
+          ||!module.armed()||!module.fault().isEmpty()||RideControllers.owner(level,module)!=bound
+          ||module.mechanism().cable()
+          ||!(module.mechanism()==dev.coasterslaunchsystems.math.Mechanism.TIRE
+            ||module.mechanism()==dev.coasterslaunchsystems.math.Mechanism.LSM
+            ||module.mechanism()==dev.coasterslaunchsystems.math.Mechanism.LIM
+            ||module.mechanism()==dev.coasterslaunchsystems.math.Mechanism.FIN_BRAKE))return false;
+    }
+    return true;
+  }
+  boolean movingRetained(ServerLevel level,Object member) throws ReflectiveOperationException {
+    return moving&&(boolean)call("movingRetained",new Class<?>[]{ServerLevel.class,UUID.class},level,field(member,"chassis"));
+  }
+  boolean movingDeparture(ServerLevel level,Object member) throws ReflectiveOperationException {
+    return moving&&(boolean)call("movingDeparture",new Class<?>[]{ServerLevel.class,UUID.class},level,field(member,"chassis"));
+  }
+  private boolean movingService(ServerLevel level,Object member) throws ReflectiveOperationException {
+    return moving&&(boolean)call("movingService",new Class<?>[]{ServerLevel.class,UUID.class},level,field(member,"chassis"));
   }
 
   /** The equipment owner declares direction, while FD alone decides whether that route is reserved. */
@@ -214,7 +250,10 @@ final class FourthDimensionAuthority {
     return routes && managed(level, v) && retainsBrakeLease(level, v, consist);
   }
 
-  void requestResume(ServerLevel level, BlockPos pos) { resumes.computeIfAbsent(level, ignored -> new HashSet<>()).add(pos.immutable()); }
+  void requestResume(ServerLevel level, BlockPos pos) {
+    resumes.computeIfAbsent(level, ignored -> new HashSet<>()).add(pos.immutable());
+    movingAcknowledgements.computeIfAbsent(level,ignored->new HashMap<>()).put(pos.immutable(),level.getGameTime());
+  }
 
   boolean reserve(ServerLevel level, UUID id, BlockPos pos) {
     try {
@@ -228,6 +267,29 @@ final class FourthDimensionAuthority {
             level, pos, id, PROVIDER);
         remember(level, v, call("claim", new Class<?>[] {ServerLevel.class, BlockPos.class, UUID.class, String.class}, level, pos, id, PROVIDER));
         return true;
+      }
+      // A fresh receiving-controller arm may accept a released native moving bridge.
+      // FD validates the exact old token, whole consist, bridge locks and receiving reservation.
+      if(movingService(level,v)&&PROVIDER.equals(field(state,"provider"))){
+        var pending=movingAcknowledgements.getOrDefault(level,Map.of()).get(pos);
+        boolean different=!pos.equals(field(state,"controller"))||!bound.identity().equals(field(state,"owner"));
+        // Same controller can also return after a round trip to its original dock.
+        var dataType=Class.forName("dev.fourthdimension.moving.MovingServiceRuntime");
+        var assembly=dataType.getMethod("owner",ServerLevel.class,vehicle).invoke(null,level,v);
+        boolean unreturned=assembly!=null&&field(field(assembly,"service"),"externalOwner")==null;
+        if(different||unreturned){
+          if(pending==null||level.getGameTime()-pending>5)return false;
+          movingAcknowledgements.get(level).remove(pos);
+          var oldPos=(BlockPos)field(state,"controller");var oldOwner=(UUID)field(state,"owner");
+          var oldCars=new HashSet<>((List<UUID>)field(state,"cars"));
+          var returned=call("returnFromMoving",new Class<?>[]{ServerLevel.class,UUID.class,tokenType,BlockPos.class},level,id,token(v),pos);
+          remember(level,v,returned);resumes.getOrDefault(level,new HashSet<>()).remove(pos);
+          if(!oldPos.equals(pos)&&RideControllers.loadedBlockEntity(level,oldPos) instanceof RideControllerEntity source
+              &&source.identity().equals(oldOwner)&&source.reservation().equals(oldCars)){
+            source.clearVerifiedReservation();source.setArmed(false);
+          }
+          return true;
+        }
       }
       if (!PROVIDER.equals(field(state, "provider")) || !pos.equals(field(state, "controller"))
           || !bound.identity().equals(field(state, "owner"))) return false;

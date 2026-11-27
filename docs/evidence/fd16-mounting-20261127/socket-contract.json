@@ -1,0 +1,28 @@
+{
+  "src/main/java/dev/fourthdimension/moving/MovingNativeAdapter.java": {
+    "sha256": "ded8907ab4cfd33cf0290c48e3241576170d99478483205ac182af84e3a96662",
+    "excerpts": [
+      {
+        "first_line": 31,
+        "text": "  public static final double POSITION_TOLERANCE = .025;\n  public static final double ANGLE_TOLERANCE = Math.toRadians(.25);"
+      },
+      {
+        "first_line": 316,
+        "text": "  /** Existing physically locked bridge only; this method never restores handles or looks up the graph. */\n  public static CoasterPathEdge liveDockEdge(ServerLevel level,MovingAssemblyState state){\n    return lockedDockEdge(level,state,true);\n  }\n  private static CoasterPathEdge lockedDockEdge(ServerLevel level,MovingAssemblyState state,boolean requireStopped){\n    if(dev.fourthdimension.runtime.FoundationData.get(level).moving.assemblies.get(state.id)!=state\n        ||!state.locksEngaged||state.restored)return null;\n    if(state.phase!=MovingAssemblyState.Phase.DOCKED&&state.phase!=MovingAssemblyState.Phase.RECONNECTED\n        &&state.phase!=MovingAssemblyState.Phase.RELEASING&&state.phase!=MovingAssemblyState.Phase.CAPTURED)return null;\n    var b=BINDINGS.getOrDefault(level,Map.of()).get(state.id);\n    if(b==null||b.state!=state||b.partialFaultHold||b.docked==null||b.actuator==null||!b.actuator.isValid()||b.dockLocks.size()!=4||b.dockLocks.stream().anyMatch(lock->!lock.isValid()))return null;\n    try{\n      boolean stopped=stopped(level,state);\n      if(requireStopped&&!stopped)return null;\n      for(var dock:state.docks.values())if(pair(b.docked,dock.from(),dock.to())\n          &&state.actualPose.position().distance(dock.pose().position())<=POSITION_TOLERANCE\n          &&angularError(state.actualPose.orientation(),dock.pose().orientation())<=ANGLE_TOLERANCE){\n        for(boolean last:new boolean[]{false,true}){\n          var actual=new Vector3d(0,-.1875,last?state.deckLength/2.0:-state.deckLength/2.0)\n              .rotate(state.actualPose.orientation()).add(state.actualPose.position());\n          var socket=socketFrame(state,dock,last);var expected=socket.rawPosition().add(socket.normal().scale(.0625));\n          if(actual.distance(new Vector3d(expected.x,expected.y,expected.z))>POSITION_TOLERANCE)return null;\n          if(!(level.getBlockEntity(last?dock.to():dock.from()) instanceof CoasterAnchorpointBlockEntity))return null;\n        }\n        return b.docked;\n      }\n    }catch(RuntimeException unavailable){return null;}\n    return null;"
+      },
+      {
+        "first_line": 411,
+        "text": "    if(state.actualPose.position().distance(dock.pose().position())>POSITION_TOLERANCE\n        ||angularError(state.actualPose.orientation(),dock.pose().orientation())>ANGLE_TOLERANCE\n        ||state.linearVelocity.length()>LOCK_SPEED||state.angularVelocity.length()>Math.toRadians(.1))\n      throw new IllegalArgumentException(\"Moving bed is not physically aligned and stationary\");\n    if(!(level.getBlockEntity(dock.from()) instanceof CoasterAnchorpointBlockEntity)\n        ||!(level.getBlockEntity(dock.to()) instanceof CoasterAnchorpointBlockEntity))\n      throw new IllegalArgumentException(\"Both fixed native dock anchors must remain present\");\n    var first=CoasterPathGraphManager.sampleEdgePosition(level,b.hosted,0);\n    var last=CoasterPathGraphManager.sampleEdgePosition(level,b.hosted,1);\n    var normal=new Vector3d(0,1,0).rotate(dock.pose().orientation());\n    var offset=new Vec3(normal.x,normal.y,normal.z).scale(.0625);\n    var expectedFirst=CoasterAnchorpointBlockEntity.worldCenterBase(level,dock.from()).add(offset);\n    var expectedLast=CoasterAnchorpointBlockEntity.worldCenterBase(level,dock.to()).add(offset);\n    if(first.distanceTo(expectedFirst)>POSITION_TOLERANCE||last.distanceTo(expectedLast)>POSITION_TOLERANCE)\n      throw new IllegalArgumentException(\"Dock socket endpoints do not match the physical rail span\");\n    var tangent=new Vector3d(0,0,1).rotate(dock.pose().orientation());\n    var forward=new Vec3(tangent.x,tangent.y,tangent.z);\n    var up=new Vec3(normal.x,normal.y,normal.z);\n    var curve=new BezierConnection(Couple.create(dock.from(),dock.to()),\n        Couple.create(first.subtract(offset),last.subtract(offset)),Couple.create(forward,forward.scale(-1)),\n        Couple.create(up,up),true,false,b.hosted.bezier().getMaterial());\n    // Lock both sides of each physical socket. Centerline joints leave roll loads\n    // on their angular springs; lateral latch separation also restrains that axis."
+      }
+    ]
+  },
+  "src/main/java/dev/fourthdimension/integration/RideAuthority.java": {
+    "sha256": "72628d8f383da4417cf64ab6d9e828f32fb57766931224178be551d77261c39f",
+    "excerpts": [
+      {
+        "first_line": 103,
+        "text": "  /** Only the current physical dock edge can exempt its two intended anchor contacts. */\n  public static boolean movingFixedEdge(ServerLevel l,BlockPos from,BlockPos to) {\n    for(var state:FoundationData.get(l).moving.assemblies.values()){\n      var edge=dev.fourthdimension.moving.MovingNativeAdapter.liveDockEdge(l,state);\n      if(edge!=null&&(edge.from().equals(from)&&edge.to().equals(to)||edge.from().equals(to)&&edge.to().equals(from)))return true;\n    }\n    return false;\n  }\n  public static boolean movingRetained(ServerLevel l,UUID id) {"
+      }
+    ]
+  }
+}

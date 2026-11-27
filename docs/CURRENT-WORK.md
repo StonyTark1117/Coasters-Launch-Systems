@@ -14,6 +14,17 @@ Git delivery uses the existing branch; no runtime case remains assigned. [Integr
 `a97c63f224f4344f677080f9e937d05d47bd3e9c` at the start of 1.0 work.
 Optional adapters remain outside this assignment; do not create a 0.7 milestone.
 
+## Assigned companion adapter for FD 1.6 — 2026-11-27
+
+The human's FD1.6 assignment authorizes the bounded LS companion repair. Root
+FD coordinator owns adapter/package integration; the existing LS owner supplied
+the finished mounting helper and its focused tests. [Contract and guidance](FD16-MOVING-HANDOFF.md).
+Companion version 1.0.1 is accepted and unpublished. Original Arrow/Wing native
+consumers, two-client occupied/restart and moving dependency-loss checks pass.
+[Integration record](evidence/fd16-integration-20261127/README.md).
+Accepted standalone1.0 and prior fixed-track cases remain closed. No publication
+or tags are authorized. All mounting-owner runtimes are stopped.
+
 Checkout: `codex/launch-systems-0-4-0` at
 `/home/braydon/Documents/Coasters: Launch Systems`. Continue this branch;
 current Git status is authoritative.

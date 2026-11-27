@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.coasterslaunchsystems.EquipmentMountingTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-27T08:55:26.655Z" hostname="Hades" time="0.01">
+  <properties/>
+  <testcase name="arrowBelowSweepMountRequiresCurrentDockAuthentication()" classname="dev.coasterslaunchsystems.EquipmentMountingTest" time="0.007"/>
+  <testcase name="nonfiniteCoordinatesCannotCertifyEitherMountingRange()" classname="dev.coasterslaunchsystems.EquipmentMountingTest" time="0.001"/>
+  <testcase name="dockExtensionHasAFourBlockRadialLimit()" classname="dev.coasterslaunchsystems.EquipmentMountingTest" time="0.0"/>
+  <testcase name="ordinaryThreeBlockReachRemainsAvailableForEveryMechanism()" classname="dev.coasterslaunchsystems.EquipmentMountingTest" time="0.001"/>
+  <testcase name="dockAuthenticationDoesNotExtendUncertifiedMechanisms()" classname="dev.coasterslaunchsystems.EquipmentMountingTest" time="0.0"/>
+  <testcase name="dockExtensionIsBelowRailAndWithinOneHorizontalBlock()" classname="dev.coasterslaunchsystems.EquipmentMountingTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

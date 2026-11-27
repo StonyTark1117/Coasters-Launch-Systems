@@ -49,10 +49,10 @@ side="BOTH"
 config="coasterslaunchsystems.mixins.json"
 
 [[dependencies.coasterslaunchsystems]]
-# Exact selected profile; current adapter additionally requires registered external authority API 1. See docs/FOURTH-DIMENSION-HANDOFF.md before changing this pin.
+# Exact qualified lines; schema 9 additionally requires moving API 1. See docs/FD16-MOVING-HANDOFF.md.
 modId="fourthdimension"
 type="optional"
-versionRange="[${fd_supported_version}]"
+versionRange="${fd_supported_range}"
 ordering="AFTER"
 side="BOTH"
 

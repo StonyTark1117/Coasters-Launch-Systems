@@ -1,0 +1,23 @@
+{
+  "base_head": "be7f4f6178c006cc3e2b05ecd0b5ab1c955c294a",
+  "branch": "codex/launch-systems-0-4-0",
+  "artifact": "/mnt/NVME4/launchsystems-runs/fd16-mounting-20261127/artifacts/coasters-launch-systems-1.0.1-mounting.jar",
+  "sha256": "b0c815dcf3b2436195f65f529a5b3433d8527163055ee6a95e092119d039989e",
+  "unit": {
+    "tests": 6,
+    "failures": 0
+  },
+  "native": {
+    "required_tests": 1,
+    "mounting_cases": 8,
+    "passed": true,
+    "fourth_dimension_loaded": false,
+    "log": "native-3.log.gz"
+  },
+  "shutdown": "GameTest server saved all dimensions and exited; Gradle command exit 0; no graphical clients/displays launched",
+  "source_changes_during_test_preparation": [
+    "src/main/java/dev/coasterslaunchsystems/gametest/EquipmentMountingGameTests.java"
+  ],
+  "combined_positive_acceptance": "FD owner; not claimed by this isolated negative test",
+  "published": false
+}

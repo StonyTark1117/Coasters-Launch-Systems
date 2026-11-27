@@ -53,7 +53,15 @@ public final class VehicleInterfaces {
     var world = NativeCableRig.worldPoint(chassis, point);
     var hit = dev.silvergold.simulatedcoasters.track.graph.CoasterPathTrackFrame.closestHitOnEdge(level,
         track.edge(), new net.minecraft.world.phys.Vec3(world.x, world.y, world.z));
-    if (hit == null) return null;
+    if (hit == null || !Double.isFinite(hit.t())) return null;
+    // Native nearest-point sampling can extrapolate at an edge end. Project onto
+    // the real endpoint before applying the existing physical pad tolerance;
+    // never pass an out-of-domain parameter into fixed-section arc distance.
+    if (hit.t() < 0 || hit.t() > 1) {
+      double t = Math.max(0, Math.min(1, hit.t()));
+      hit = new dev.silvergold.simulatedcoasters.track.graph.CoasterPathTrackFrame.GraphHit(
+          dev.silvergold.simulatedcoasters.track.graph.CoasterPathGraphManager.sampleEdgePositionPlotLocal(level, track.edge(), t), track.edge(), t);
+    }
     var center = new Vector3d(bearing.getX() + .5, bearing.getY() + .5, bearing.getZ() + .5);
     var transverse = NativeCableRig.worldPoint(chassis, center)
         .sub(accepted.hit().point().x, accepted.hit().point().y, accepted.hit().point().z)

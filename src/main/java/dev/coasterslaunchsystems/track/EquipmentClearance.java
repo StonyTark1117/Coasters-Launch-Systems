@@ -19,6 +19,7 @@ public final class EquipmentClearance {
       Mechanism mechanism) {
     if (mechanism != Mechanism.TIRE && mechanism != Mechanism.FIN_BRAKE
         && mechanism != Mechanism.EDDY_BRAKE) return;
+    boolean movingDock=dev.coasterslaunchsystems.integration.FourthDimensionMovingSupport.fixedDock(level,track.edge().from(),track.edge().to());
     int segments = Math.max(1, (int) Math.ceil((end - start) / .125));
     Vec3 previous = track.hitAtDistance(level, start).point();
     for (int i = 1; i <= segments; i++) {
@@ -32,6 +33,8 @@ public final class EquipmentClearance {
           BlockPos.containing(bounds.maxX, bounds.maxY, bounds.maxZ))) {
         if (!level.hasChunkAt(pos))
           throw new IllegalArgumentException("Equipment running clearance unavailable at " + pos.toShortString());
+        if(movingDock&&(pos.equals(track.edge().from())||pos.equals(track.edge().to()))
+            &&level.getBlockEntity(pos) instanceof dev.silvergold.simulatedcoasters.track.anchor.CoasterAnchorpointBlockEntity)continue;
         for (var box : level.getBlockState(pos).getCollisionShape(level, pos).toAabbs())
           if (bounds.intersects(box.move(pos)))
             throw new IllegalArgumentException("Obstructed equipment running clearance at " + pos.toShortString());

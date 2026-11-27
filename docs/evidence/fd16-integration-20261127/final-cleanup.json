@@ -1,0 +1,27 @@
+{
+  "fd16-occupied-20261127-server.service": {
+    "ActiveState": "inactive",
+    "MainPID": "0",
+    "Result": "success"
+  },
+  "fd16-occupied-20261127-client.service": {
+    "ActiveState": "inactive",
+    "MainPID": "0",
+    "Result": "success"
+  },
+  "fd16-occupied-20261127-xvfb.service": {
+    "ActiveState": "inactive",
+    "MainPID": "0",
+    "Result": "success"
+  },
+  "fd16-occupied-observer-20261127-client.service": {
+    "ActiveState": "inactive",
+    "MainPID": "0",
+    "Result": "success"
+  },
+  "fd16-occupied-observer-20261127-xvfb.service": {
+    "ActiveState": "inactive",
+    "MainPID": "0",
+    "Result": "success"
+  }
+}

@@ -101,9 +101,12 @@ public final class RideTransfers {
     for (var id : source.reservation()) {
       if (!(container.getSubLevel(id) instanceof ServerSubLevel cart) || cart.isRemoved()) throw new IllegalStateException("Reserved transfer chassis unavailable");
       var motion = MotionProviders.resolve(level, id).orElse(null); var contact = EngagedContacts.current(level, cart).orElse(null);
-      if (motion == null || contact == null || !Set.copyOf(motion.consist()).equals(source.reservation()) || !motion.exclusiveOperator().isEmpty()
-          || !motion.interfaces().containsAll(Set.of(Mechanism.TIRE, Mechanism.FIN_BRAKE)) || motion.maximumBrakeForce() <= 0)
-        throw new IllegalStateException("Transfer vehicle support, ownership or interfaces changed");
+      if (motion == null) throw new IllegalStateException("Transfer motion provider unavailable");
+      if (contact == null) throw new IllegalStateException("Transfer native guide contact unavailable");
+      if (!Set.copyOf(motion.consist()).equals(source.reservation()) || !motion.exclusiveOperator().isEmpty())
+        throw new IllegalStateException("Transfer vehicle ownership changed");
+      if (!motion.interfaces().containsAll(Set.of(Mechanism.TIRE, Mechanism.FIN_BRAKE)) || motion.maximumBrakeForce() <= 0)
+        throw new IllegalStateException("Transfer vehicle interfaces or brake rating unavailable");
       if (!route.matches(contact.hit())) throw new IllegalStateException("Reserved train left the paired route");
       if (ChainLiftSpanQuery.findAtGraphHit(level, contact.hit(), 0) != null) throw new IllegalStateException("Native chain owns the transfer train");
       double loaded = NativeForces.mass(level, motion); if (loaded <= 0) throw new IllegalStateException("Transfer native mass unavailable");

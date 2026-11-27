@@ -1,0 +1,20 @@
+{
+  "artifact": "/mnt/NVME4/launchsystems-runs/fd16-mounting-20261127/artifacts/coasters-launch-systems-1.0.1-mounting-tolerance.jar",
+  "sha256": "c5e1739d1e6d0f1883b75cebae5f14b7ee89882fc89de7699793f4338e995bb6",
+  "baseline_artifact": "/mnt/NVME4/launchsystems-runs/fd16-mounting-20261127/artifacts/coasters-launch-systems-1.0.1-mounting.jar",
+  "changed_jar_entries": [
+    "dev/coasterslaunchsystems/track/EquipmentMounting.class"
+  ],
+  "changed_source_files": [
+    "src/main/java/dev/coasterslaunchsystems/track/EquipmentMounting.java",
+    "src/test/java/dev/coasterslaunchsystems/EquipmentMountingTest.java"
+  ],
+  "tests": 7,
+  "failures": 0,
+  "horizontal_tolerance_metres": 1e-06,
+  "ordinary_reach_tolerance_metres": 0,
+  "total_dock_reach_tolerance_metres": 0,
+  "native_evidence_reused": "native-3.log.gz; 1 required test/8 cases PASS, absent FD",
+  "positive_native_acceptance": "FD coordinator owns combined Arrow test",
+  "published": false
+}

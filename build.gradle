@@ -17,7 +17,7 @@ if (project.hasProperty('lsBuildDirectory')) {
 def dependencyProfile = providers.gradleProperty('lsDependencyProfile').getOrElse('fd-current')
 def dependencyPins = [
     'legacy': [neo: neo_version, sable: '2.0.3', veil: '4.1.4', fd: '0.9.0-dev.1'],
-    'fd-current': [neo: '21.1.256', sable: '2.0.6', veil: '4.3.2', fd: '1.1.0']
+    'fd-current': [neo: '21.1.256', sable: '2.0.6', veil: '4.3.2', fd: '1.1.0', fdRange: '[1.1.0],[1.6.0]']
 ][dependencyProfile]
 if (dependencyPins == null) throw new GradleException('lsDependencyProfile must be legacy or fd-current')
 def gameDirectoryFor = { String property, String fallback ->
@@ -158,9 +158,9 @@ tasks.named('processResources') {
     inputs.property 'version', project.version
     inputs.property 'neo_version', dependencyPins.neo
     inputs.property 'sable_version', dependencyPins.sable
-    inputs.property 'fd_supported_version', dependencyPins.fd
+    inputs.property 'fd_supported_range', dependencyPins.fdRange ?: "[${dependencyPins.fd}]"
     inputs.property 'veil_version', dependencyPins.veil
     filesMatching('META-INF/neoforge.mods.toml') {
-        expand version: project.version, neo_version: dependencyPins.neo, sable_version: dependencyPins.sable, fd_supported_version: dependencyPins.fd, veil_version: dependencyPins.veil
+        expand version: project.version, neo_version: dependencyPins.neo, sable_version: dependencyPins.sable, fd_supported_range: dependencyPins.fdRange ?: "[${dependencyPins.fd}]", veil_version: dependencyPins.veil
     }
 }

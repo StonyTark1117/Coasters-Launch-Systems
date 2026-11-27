@@ -5,6 +5,7 @@ import dev.coasterslaunchsystems.math.Mechanism;
 import dev.coasterslaunchsystems.math.SpanInterval;
 import dev.coasterslaunchsystems.runtime.NativeCableRig;
 import dev.coasterslaunchsystems.track.DirectedTrack;
+import dev.coasterslaunchsystems.track.EquipmentMounting;
 import dev.silvergold.simulatedcoasters.track.graph.CoasterPathGraphManager;
 import dev.silvergold.simulatedcoasters.track.graph.CoasterPathTrackFrame;
 import java.util.UUID;
@@ -29,6 +30,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
   private Direction.Axis boundAxis;
   private String fault = "";
   private DirectedTrack track;
+  private Vec3 mountingPoint;
   private int revision = Integer.MIN_VALUE;
   private long handleRevision = Long.MIN_VALUE;
   private dev.coasterslaunchsystems.math.BrakeHeat heat = new dev.coasterslaunchsystems.math.BrakeHeat(4096, 8, 0);
@@ -294,8 +296,8 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     var resolved = DirectedTrack.resolve(level, first, second)
         .orElseThrow(() -> new IllegalArgumentException("Select the two anchors of one loaded fixed track edge"));
     var hit = CoasterPathTrackFrame.closestHitOnEdge(level, resolved.edge(), worldPosition.getCenter());
-    if (hit.point().distanceToSqr(worldPosition.getCenter()) > 9)
-      throw new IllegalArgumentException("Place the module within three blocks of its rail contact");
+    if (!EquipmentMounting.available(level, resolved, worldPosition, hit.point(), mechanism()))
+      throw new IllegalArgumentException("Place the module within three blocks of its rail contact; a live fixed dock permits Tire/Fin/LSM/LIM below the rail within four blocks total and one block horizontally");
     double distance = resolved.distance(hit);
     // One physical module owns two blocks around its contact, not an entire long edge.
     double beginning = Math.max(0, distance - 1), ending = Math.min(resolved.length(), distance + 1);
@@ -322,7 +324,7 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     }
     dev.coasterslaunchsystems.track.EquipmentClearance.validate(level, resolved, beginning, ending, mechanism());
     from = first.immutable(); to = second.immutable(); geometry = resolved.fingerprint();
-    start = beginning; end = ending; track = resolved;
+    start = beginning; end = ending; track = resolved; mountingPoint = hit.point();
     boundAxis = shaftAxis;
     revision = CoasterPathGraphManager.get(level).revision();
     handleRevision = dev.silvergold.simulatedcoasters.track.CoasterPeerCurveHandleLengths.revision(); fault = ""; changed();
@@ -344,7 +346,12 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
         fail("Track geometry changed; inspect and rebind"); return null;
       }
       track = resolved; revision = current; handleRevision = handles;
+      mountingPoint = CoasterPathTrackFrame.closestHitOnEdge(level, resolved.edge(), worldPosition.getCenter()).point();
     }
+    // A moving or recovering dock temporarily withdraws this mounting permission.
+    // Keep the binding for inspection/re-arm; the controller faults and consumes its
+    // request on null, while equipment applies no force. Do not require an occupied rebind.
+    if (!EquipmentMounting.available(level, track, worldPosition, mountingPoint, mechanism())) return null;
     return track;
   }
 
@@ -497,6 +504,6 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
         || (from != null && (from.equals(to) || end - start > 2.001)))
       throw new IllegalArgumentException("Invalid equipment binding");
     if (from != null) interval();
-    track = null; revision = Integer.MIN_VALUE; handleRevision = Long.MIN_VALUE;
+    track = null; mountingPoint = null; revision = Integer.MIN_VALUE; handleRevision = Long.MIN_VALUE;
   }
 }

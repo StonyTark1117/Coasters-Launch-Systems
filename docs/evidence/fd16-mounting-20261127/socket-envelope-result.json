@@ -1,0 +1,22 @@
+{
+  "artifact": "/mnt/NVME4/launchsystems-runs/fd16-mounting-20261127/artifacts/coasters-launch-systems-1.0.1-mounting-socket-envelope.jar",
+  "sha256": "66ec71f1990feb232715e8c692d81a778d28f7056dc2f0cf1e460218651fb723",
+  "baseline_artifact": "/mnt/NVME4/launchsystems-runs/fd16-mounting-20261127/artifacts/coasters-launch-systems-1.0.1-mounting-tolerance.jar",
+  "changed_jar_entries": [
+    "dev/coasterslaunchsystems/track/EquipmentMounting.class"
+  ],
+  "changed_source_files": [
+    "src/main/java/dev/coasterslaunchsystems/track/EquipmentMounting.java",
+    "src/test/java/dev/coasterslaunchsystems/EquipmentMountingTest.java"
+  ],
+  "tests": 8,
+  "failures": 0,
+  "horizontal_socket_allowance_metres": 0.025,
+  "horizontal_total_limit_metres": 1.025,
+  "ordinary_reach_tolerance_metres": 0,
+  "total_dock_reach_tolerance_metres": 0,
+  "contract": "FD 1.6 MovingNativeAdapter.POSITION_TOLERANCE; socket-contract.json",
+  "native_evidence_reused": "native-3.log.gz; 1 required test/8 cases PASS absent FD",
+  "positive_native_acceptance": "FD coordinator owns combined Arrow test",
+  "published": false
+}

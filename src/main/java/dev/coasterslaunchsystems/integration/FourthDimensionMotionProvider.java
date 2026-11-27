@@ -22,7 +22,7 @@ import java.util.UUID;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 
-/** Pinned schema-8 vehicle snapshot with a registered, token-checked native authority facade. */
+/** Pinned schema-8/schema-9 vehicle snapshot with a registered, token-checked native authority facade. */
 public final class FourthDimensionMotionProvider implements VehicleMotionProvider {
   private final Method data, markers, allows, ready, validateDispatch;
   private final FourthDimensionAuthority authority;
@@ -32,7 +32,10 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
   public FourthDimensionMotionProvider() {
     try {
       var foundation = Class.forName("dev.fourthdimension.runtime.FoundationData");
-      if (foundation.getField("SCHEMA").getInt(null) != 8)
+      int schema=foundation.getField("SCHEMA").getInt(null);
+      boolean schema9=schema==9 && Class.forName("dev.fourthdimension.integration.RideAuthority")
+          .getField("EXTERNAL_MOVING_API").getInt(null)==1;
+      if (schema != 8 && !schema9)
         throw new ReflectiveOperationException("Unsupported Fourth Dimension save/API schema");
       var vehicle = Class.forName("dev.fourthdimension.runtime.FoundationData$Vehicle");
       var carrier = Class.forName("dev.fourthdimension.runtime.FoundationData$Carrier");
@@ -100,16 +103,16 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
         var contact = EngagedContacts.current(level, cart).orElse(null);
         boolean support = contact != null && carriersAvailable(level, member)
             && (boolean) allows.invoke(null, cart, level, contact.hit());
-        boolean retained = maintenance.getBoolean(member) || !((String) fault.get(member)).isEmpty()
+        boolean retained = authority.movingRetained(level,member) || maintenance.getBoolean(member) || !((String) fault.get(member)).isEmpty()
             || !authority.supported(level, member) || authority.denied(level, member);
         boolean closed = restraints.getBoolean(member);
         dispatch &= support && !retained && closed && dispatchReady(level, member);
         boolean released = support && !retained && closed && !stopping.getBoolean(member)
-            && nativeReleased(member);
+            && (nativeReleased(member)||authority.movingDeparture(level,member));
         propel &= released && authority.permitted(level, member);
         // Safety braking retains the exact local lease across a fault/restart. It does not
         // authorize traction, dispatch, capture, or an implicit native Resume.
-        brake &= support && (released && authority.permitted(level, member)
+        brake &= !authority.movingRetained(level,member) && support && (released && authority.permitted(level, member)
             || authority.retainsBrakeLease(level, member, consist));
       }
       if (!operator.isEmpty()) { dispatch = false; propel = false; brake = false; }
