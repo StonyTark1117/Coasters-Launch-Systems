@@ -1,6 +1,6 @@
 # Launch Systems 1.0.1 release — 2026-11-27
 
-Status: release package verified; Git tag and publication verification pending.
+Status: **1.0.1 published; package, remote tag and downloaded assets verified**.
 The human explicitly authorized pushing Git and publishing 1.0.1 as the FD 1.6
 companion. Existing private repository and branch `codex/launch-systems-0-4-0`
 are retained. Starting clean HEAD `de3500944621ae487898638438e7cd3d0c0b161f`
@@ -42,3 +42,19 @@ support. Historical integration records that say unpublished describe their
 original handoff; this receipt owns the subsequent publication status. Existing
 1.0.0 assets and repository visibility are unchanged. Hosted CI was previously
 blocked before job execution by account billing limits; no hosted pass claimed.
+
+## Publication receipt
+
+[GitHub v1.0.1](https://github.com/StonyTark1117/Coasters-Launch-Systems/releases/tag/v1.0.1)
+is the latest stable release, not a draft or prerelease. Annotated tag
+`8274bab8ef663eea6707c56df1dbda14070564ab` resolves locally and remotely to
+source `0fdf6706300483b31e02d7cef2279494c82b1feb`.
+Published notes match the source release notes; both downloaded assets are
+byte-identical to their upload copies and match GitHub's SHA-256 digests.
+[publication.json](publication.json) records IDs, hashes and timestamps.
+
+Both branch/tag CI runs were rejected before execution with the existing
+account-payment/spending-limit restriction. The accepted local validation and
+identical artifact remain the basis for this release; no hosted pass is claimed.
+This follow-up receipt changes documentation only and is pushed on the same
+branch after the release source tag. All previous owned runtimes remain stopped.

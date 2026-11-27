@@ -3,8 +3,9 @@
 Updated **2026-11-27**. **LS1001 is complete: standalone 1.0.0 is published**
 in the existing private GitHub repository. The remote `v1.0.0` tag, stable release,
 JAR and checksum are verified. [Publication receipt](evidence/1.0/release-20261127/README.md).
-The accepted FD 1.6 companion is now assigned for LS 1.0.1 publication by the
-human. Hosted CI has been unavailable because of account billing limits.
+**LS 1.0.1 is also published and verified**, including its tag, JAR and checksum.
+[Publication receipt](evidence/1.0.1/release-20261127/README.md).
+No release work remains assigned. Hosted CI is blocked by account billing limits.
 
 **0.9 LS901–LS904 is accepted**: finite matrix,
 provider lifecycle, performance/accounting, remaining occupied demonstrations,
@@ -23,8 +24,8 @@ Companion version 1.0.1 is accepted. Original Arrow/Wing native
 consumers, two-client occupied/restart and moving dependency-loss checks pass.
 [Integration record](evidence/fd16-integration-20261127/README.md).
 Accepted standalone1.0 and prior fixed-track cases remain closed. The human
-authorized Git push and 1.0.1 publication on 2026-11-27. The LS owner is verifying
-the identical release artifact, tag and uploads; see
+authorized Git push and 1.0.1 publication on 2026-11-27. The LS owner verified
+the identical release artifact, remote tag and downloaded uploads; see
 [release record](evidence/1.0.1/release-20261127/README.md).
 All test runtimes are stopped.
 
