@@ -1,0 +1,27 @@
+{
+  "final_jar": "/mnt/NVME4/launchsystems-runs/ls09-integration-20261127/artifacts/coasters-launch-systems-0.9.0-final.jar",
+  "final_sha256": "693a955ed3855a2a4cfa212d562b01fcce270501db0868629029d42f2518adca",
+  "comparisons": [
+    {
+      "evidence": "occupied",
+      "jar": "/mnt/NVME4/launchsystems-runs/ls09-occupied-20261127/build/libs/coasters-launch-systems-0.9.0.jar",
+      "sha256": "6f8a8adf50528fcb5597c8a13e691a7971e8f616d81ed8ff8c77fb7ea4aeba85",
+      "classes": 109,
+      "production_differences": []
+    },
+    {
+      "evidence": "lifecycle",
+      "jar": "/mnt/NVME4/launchsystems-runs/ls09-lifecycle-20261127/artifacts/coasters-launch-systems-0.9.0-lifecycle.jar",
+      "sha256": "d18346da2fd1c43b8d5d10bd8076327086514a22776f4ffcd9318846b7807225",
+      "classes": 109,
+      "production_differences": []
+    },
+    {
+      "evidence": "performance",
+      "jar": "/mnt/NVME4/launchsystems-runs/ls09-performance-20261127/build/libs/coasters-launch-systems-0.9.0.jar",
+      "sha256": "d18346da2fd1c43b8d5d10bd8076327086514a22776f4ffcd9318846b7807225",
+      "classes": 109,
+      "production_differences": []
+    }
+  ]
+}

@@ -272,7 +272,7 @@ public final class RouteInteropGameTests {
       placed.forEach(p->level.removeBlock(p,false)); chunks.forEach(p->level.setChunkForced(p.x,p.z,false));
     }
   }
-  private static void observe(ForgeSablePrePhysicsTickEvent e) {
+  static void observe(ForgeSablePrePhysicsTickEvent e) {
     for(var s:List.copyOf(LIVE)) if(s.level==e.getPhysicsSystem().getLevel()) try {
       var body=s.body(s.lead); var optional=EngagedContacts.current(s.level,body);
       if(optional.isEmpty()) {

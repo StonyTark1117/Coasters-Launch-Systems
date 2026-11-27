@@ -7,7 +7,7 @@ The addon is MIT licensed. Minecraft textures referenced by original model JSON 
 The 2026-11-15 workflow refresh references Fourth Dimension's local instructions,
 dependency audit and private Xvfb helper in place. The helper and gameplay code
 are not bundled into this addon. See [dependency baselines](docs/DEPENDENCIES.md)
-for legacy and current-core candidate pins, and [the handoff](docs/FOURTH-DIMENSION-HANDOFF.md)
+for historical legacy and selected current-core pins, and [the handoff](docs/FOURTH-DIMENSION-HANDOFF.md)
 for the inspected sibling source revision. Optional artifact licenses remain
 subject to their individual audits before redistribution.
 

@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.9.0 — release candidate (2026-11-27)
+
+- Preserve optional vehicle ownership across provider removal and restoration.
+  A saved Fourth Dimension vehicle cannot silently become an ordinary launch-ready
+  cart; unloading retains identity, while deliberate live release and permanent
+  removal retain their intended behavior. Malformed ownership data fails closed.
+- Reconcile the finite 17-variant matrix, native mixed-consist refusals and actual
+  installed/absent/restored provider lifecycle. For old saves, first load and
+  inspect affected vehicles with 0.9 and their original provider installed, then
+  save before removing that provider; unvisited vehicles cannot be inferred.
+- Complete the four remaining real occupied FD LSM, LIM, hydraulic and pneumatic
+  demonstrations, carrying forward accepted tire/flywheel and ordinary rides.
+- Add opt-in bounded callback timing and publish a representative two-train,
+  eight-rider, 49-cabinet measurement and resource reconciliation. This measures
+  LS callback cost, not whole-server or graphical performance.
+- Reconcile the operator guide, five braking choices, recipes/Ponder, dependency
+  pins and licenses against the final package. Java 21 build and 31/31 unit tests
+  passed. [Integration evidence](docs/evidence/0.9/integration-20261127/README.md)
+  records exact artifacts, targeted checks, occupied outcomes and shutdown.
+  Optional adapters and 1.0 publication remain separate.
+
 ## 0.6.0 — bounded ride-local interoperability (2026-11-26)
 
 - Consume Fourth Dimension’s original Arrow admission and current/next block

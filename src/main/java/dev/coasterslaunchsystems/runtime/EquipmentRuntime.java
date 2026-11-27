@@ -82,6 +82,13 @@ public final class EquipmentRuntime {
     }
   }
   public static void physics(ForgeSablePrePhysicsTickEvent event) {
+    if (!CallbackTiming.ENABLED) { physicsStep(event); return; }
+    var level = event.getPhysicsSystem().getLevel();
+    long started = CallbackTiming.begin(level);
+    try { physicsStep(event); }
+    finally { CallbackTiming.end(level, started, event.getTimeStep()); }
+  }
+  private static void physicsStep(ForgeSablePrePhysicsTickEvent event) {
     var level = event.getPhysicsSystem().getLevel();
     var registered = MODULES.get(level);
     CableRecovery.stabilize(level, registered == null ? List.of() : registered.values().stream()

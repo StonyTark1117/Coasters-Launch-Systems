@@ -1,0 +1,9 @@
+{
+  "src/main/java/dev/coasterslaunchsystems/api/MotionProviders.java": "3b809e87c631e75e8a9916ff48f4cf276f3537d1c7a6a3e4d0d6b235c65c5403",
+  "src/main/java/dev/coasterslaunchsystems/api/SavedMotionOwners.java": "edba977e3a771aee6e4223bcd17218995821d106475f689e8287dc6c816ced44",
+  "src/main/java/dev/coasterslaunchsystems/runtime/EquipmentRuntime.java": "3067e560b43a0398ee88a5deffa17804e55c9a4d36d71a7fe377cc2bf7fa3d92",
+  "src/main/java/dev/coasterslaunchsystems/runtime/CallbackTiming.java": "c0f4d7263d9b1aaf3087e41974cf4b93734bb83b3485197ff0ca4a8cbf2d58e9",
+  "gradle.properties": "e7116452180d57bffbb8968e76461dcab43e33c7855aa72b6ad9df22d42f9eed",
+  "build.gradle": "218d0c1736e457a0c370e1045ced66f76442c0ba03d5631f356a9ac9764abf84",
+  "src/main/resources/META-INF/neoforge.mods.toml": "070a1380f8fea00bbbfdc998f96af20a91b25769f0a55b046f3a24ef5807e673"
+}

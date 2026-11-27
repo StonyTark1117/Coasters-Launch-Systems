@@ -1,0 +1,14 @@
+{
+  "root": "/mnt/NVME4/launchsystems-runs/ls09-integration-20261127/observer",
+  "owner": "/root",
+  "display": 397,
+  "unit_prefix": "fd-ls09-observer-20261127",
+  "player": "Observer",
+  "client_script": "/mnt/NVME4/launchsystems-runs/ls09-integration-20261127/observer/launch/client.sh",
+  "client_limit": "6G",
+  "endpoint": "127.0.0.1:25831",
+  "artifact_sha256": "6f8a8adf50528fcb5597c8a13e691a7971e8f616d81ed8ff8c77fb7ea4aeba85",
+  "server_owner": "/root/rides",
+  "server_run_record": "/mnt/NVME4/launchsystems-runs/ls09-occupied-20261127/run.json",
+  "input_baseline": "2026-11-27T07:26Z same-client relative camera turn and reachable cobblestone use passed; default bindings/rawInput true"
+}

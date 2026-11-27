@@ -1,0 +1,6 @@
+2026-11-27T07:29:13.268189+00:00
+Owner /root/foundation
+Headless GameTest runs only; no client/Xvfb/systemd units created.
+Remaining owned Java processes: 0
+
+Every selected final server log records all dimensions saved before process exit.

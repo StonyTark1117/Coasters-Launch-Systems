@@ -1,0 +1,47 @@
+{
+  "accepted_0_4_jar": "/mnt/NVME4/launchsystems-runs/ls04-integration-20261122/build/libs/coasters-launch-systems-0.4.0.jar",
+  "accepted_0_4_sha256": "e8c9eb862a0fe047ad05d0a8b61eea84263ce2e241eeaf3f61514cf229441933",
+  "measured_jar": "/mnt/NVME4/launchsystems-runs/ls09-performance-20261127/build/libs/coasters-launch-systems-0.9.0.jar",
+  "classes": [
+    {
+      "class": "dev/coasterslaunchsystems/math/DriveMath.class",
+      "unchanged": true,
+      "sha256": "8867e750cac7b98a6a1244e70ec070bc536d646e73ca6d4841461f614db5f5f7"
+    },
+    {
+      "class": "dev/coasterslaunchsystems/math/Mechanism.class",
+      "unchanged": true,
+      "sha256": "315f6faa621457992be094eda733919b1b790dcc0b4bc67dbf4897f3182d8029"
+    },
+    {
+      "class": "dev/coasterslaunchsystems/math/LinearMotor.class",
+      "unchanged": true,
+      "sha256": "6db799bf8bd692898b8c0ef0d2124d0cb9f0aa6fd08b16892206ae3e6008d6ff"
+    },
+    {
+      "class": "dev/coasterslaunchsystems/math/EnergyBuffer.class",
+      "unchanged": true,
+      "sha256": "8fe64aa809e5232501066c9c71b6a0a35dc014c2434a0202526eae25f5d264f2"
+    },
+    {
+      "class": "dev/coasterslaunchsystems/math/EnergyStore.class",
+      "unchanged": true,
+      "sha256": "a7384e75329fccb36be8b3bf99501a9fa6e09665cde37422d2ebe79a4196a561"
+    },
+    {
+      "class": "dev/coasterslaunchsystems/math/FlywheelStore.class",
+      "unchanged": true,
+      "sha256": "c7655c3780f1a437068d6f24eed76774e9e2e36c7b0a924b669ecafc7eea82f9"
+    },
+    {
+      "class": "dev/coasterslaunchsystems/math/HydraulicAccumulator.class",
+      "unchanged": true,
+      "sha256": "ad9b9b99cbc94bed51b9ac6eb63f07ebdbd0ece3316ca5afce924177b9002567"
+    },
+    {
+      "class": "dev/coasterslaunchsystems/math/AirReceiver.class",
+      "unchanged": true,
+      "sha256": "18e6f943ac6ab28f0e2dd24689c32218ec789da98863f0bace5a021e17b27c9b"
+    }
+  ]
+}

@@ -29,6 +29,7 @@ public final class LinearControllerGameTests {
   private static final class Scene {
     final RideControllerGameTests.Scene ride;
     final Mechanism mechanism;
+    boolean player;
     final Map<BlockPos, Double> energy = new HashMap<>(), heat = new HashMap<>(), pendingSourceCharge = new HashMap<>();
     double work, spent, thermal, peakSpeed, maxError, maxJoint, maxCoupler, rotorResponse;
     int steps;
@@ -47,6 +48,7 @@ public final class LinearControllerGameTests {
   private static void physics(ForgeSablePrePhysicsTickEvent event) {
     for (var s : List.copyOf(SCENES)) {
       var r = s.ride; if (r.closed || r.base.level != event.getPhysicsSystem().getLevel()) continue;
+      if (s.player && !ReleaseOccupiedGameTests.refresh(r)) continue;
       try {
         if (s.skid != null) s.skidPeakHeat = Math.max(s.skidPeakHeat, s.skid.heat());
         // Interrupt the return leg only after the first end-bank reversal has become live. This
@@ -108,6 +110,7 @@ public final class LinearControllerGameTests {
   private static void after(dev.ryanhcode.sable.neoforge.event.ForgeSablePostPhysicsTickEvent event) {
     for (var s : List.copyOf(SCENES)) {
       var r = s.ride; if (r.closed || r.base.level != event.getPhysicsSystem().getLevel()) continue;
+      if (s.player && !ReleaseOccupiedGameTests.refresh(r)) continue;
       try {
         int angle = 0;
         for (int car = 0; car < r.vehicles.size(); car++) for (var carrier : (List<?>) read(r.vehicles.get(car), "carriers")) {
@@ -160,6 +163,12 @@ public final class LinearControllerGameTests {
     return new TestFunction("launchsystems_fixed", "coasterslaunchsystems_fixed." + mechanism.name().toLowerCase(java.util.Locale.ROOT) + "_" + mode,
         "coasterslaunchsystems_fixed:empty", 1700, 0, true, helper -> run(new Scene(helper, slot, mode, mechanism)));
   }
+  static TestFunction playerCase(String name, int slot, Mechanism mechanism) {
+    return new TestFunction("launchsystems_release_occupied", "coasterslaunchsystems_release_occupied." + name,
+        "coasterslaunchsystems_release_occupied:empty", 72000, 0, true, helper -> {
+          var scene = new Scene(helper, slot, "arrow_forward", mechanism); scene.player = true; run(scene);
+        });
+  }
   private static String faultState(Scene s) {
     var r = s.ride;
     return r.controller.status() + " steps=" + s.steps + "/" + s.interruptedSteps
@@ -172,7 +181,7 @@ public final class LinearControllerGameTests {
   private static void run(Scene s) {
     var r = s.ride;
     if (!registered) { NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, LinearControllerGameTests::physics); NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, LinearControllerGameTests::after); registered = true; }
-    r.at(40, () -> { if (r.fourthDimension) r.boardFourthDimension(); else for (var body : r.base.parents) for (int seat = 0; seat < 4; seat++) r.base.board(body, seat); });
+    if (!s.player) r.at(40, () -> { if (r.fourthDimension) r.boardFourthDimension(); else for (var body : r.base.parents) for (int seat = 0; seat < 4; seat++) r.base.board(body, seat); });
     r.at(55, () -> {
       if (r.linked) r.base.helper.assertTrue(CoasterCartTrainLinkConstraint.linkCarts(r.base.level, r.base.parents.getFirst(), r.base.parents.getLast(), 6), "Linear native consist did not couple");
       for (var body : r.base.parents) {
@@ -218,8 +227,16 @@ public final class LinearControllerGameTests {
         s.skid.bind(r.base.level, r.base.from, r.base.to); s.skid.setArmed(true);
         r.equipment.add(position);
       }
-      r.controller.setArmed(true); s.snapshot(); SCENES.add(s);
+      if (!s.player) r.controller.setArmed(true);
+      else {
+        for (var position : r.equipment) ((EquipmentCabinetEntity) r.base.level.getBlockEntity(position)).setArmed(true);
+        ReleaseOccupiedGameTests.register(s.mechanism.name().toLowerCase(Locale.ROOT), r, () -> Map.of(
+            "work", s.work, "spent", s.spent, "thermal", s.thermal, "peakSpeed", s.peakSpeed,
+            "steps", s.steps, "accountingError", s.maxError, "failure", s.failure));
+      }
+      s.snapshot(); SCENES.add(s);
     });
+    if (s.player) return; // Sable GameTest success removes native bodies; keep player bootstrap alive.
     r.at(80, () -> {
       if (swing(r.mode)) return;
       if (r.mode.equals("pax_veto")) {

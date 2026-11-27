@@ -1,0 +1,38 @@
+{
+  "owner": "/root/foundation",
+  "checkout": "/home/braydon/Documents/Coasters: Launch Systems",
+  "branch": "codex/launch-systems-0-4-0",
+  "base_head": "ba555e9949853b142d9a1e2d7d546ee4ac24d1f2",
+  "run_root": "/mnt/NVME4/launchsystems-runs/ls09-lifecycle-20261127",
+  "profile": "fd-current",
+  "java": "21.0.13.1",
+  "final_packaged_jar": "/mnt/NVME4/launchsystems-runs/ls09-lifecycle-20261127/artifacts/coasters-launch-systems-0.9.0-lifecycle.jar",
+  "final_packaged_sha256": "d18346da2fd1c43b8d5d10bd8076327086514a22776f4ffcd9318846b7807225",
+  "fd_artifact": "/mnt/NVME4/launchsystems-runs/ls06-operator-20261126/artifacts/fourthdimension-route-operator-tagged-api1.jar",
+  "fd_sha256": "d676d730a02c6f9abe217985db03a3bca424892f06236a0cf64e066b82e87738",
+  "sources": {
+    "src/main/java/dev/coasterslaunchsystems/api/MotionProviders.java": "3b809e87c631e75e8a9916ff48f4cf276f3537d1c7a6a3e4d0d6b235c65c5403",
+    "src/main/java/dev/coasterslaunchsystems/api/SavedMotionOwners.java": "edba977e3a771aee6e4223bcd17218995821d106475f689e8287dc6c816ced44",
+    "src/main/java/dev/coasterslaunchsystems/gametest/LifecycleMatrixGameTests.java": "afe21e366c020d33f076fd88d4bff492b4f7c99d269e46dcd4c6ff874dd9e48c",
+    "src/main/resources/data/coasterslaunchsystems_lifecycle/structure/empty.nbt": "bfb045949a1f14b77e953023532ccb5eb7d5d644f88282e81ed70231fb487a17"
+  },
+  "final_production_classes": {
+    "dev/coasterslaunchsystems/api/MotionProviders.class": "d35eeae01c9c956d68f1ba07fc6307ef9273de828c2caccedf28acc044573832",
+    "dev/coasterslaunchsystems/api/SavedMotionOwners$1.class": "901298287d0fc85cd994a9ab8cd45584adcfc3fb2d08c893e4f9296dd32af9b5",
+    "dev/coasterslaunchsystems/api/SavedMotionOwners.class": "72eb6d077ae202838f33d6e5067f8bb8d927177201bb6f3e12cb04f4d7eb6c37"
+  },
+  "logs": {
+    "absent-before.log.gz": "dba4caaf07b20295782d11d38be22778ff5ff64328c82ba69ba9aef558b36be3",
+    "absent-diagnosed-before.log.gz": "d452677b15da26ef37edac2f67ffb25cb3627076a579829ae4c8f6f595804a80",
+    "absent-loaded-before.log.gz": "16888c56ed851e68d661aa6e9b420bc0f2e251a22ed9613a6643e450389ae08e",
+    "absent.log.gz": "c33005ad907cd967d8c6516056f3729f1b99883738ce6c8a167f50724388fce7",
+    "matrix-corrected.log.gz": "35aaed3e58ff7c45736628c52de3f0ec73d8925b46457105a43d71e8015e9ce9",
+    "matrix.log.gz": "d78e0d4fefa902b56985aa9b62192c20b9bbd1568766f4cbef1e1fa5fa569986",
+    "mixed-provider.log.gz": "d880da07d90d5fad7bda4bfa9d5fe0ea1b8be107315b9889c524892c19f8a5f5",
+    "prepare-before.log.gz": "3950b25e38eb7afb9e6e4229a8a6e345afc7739e82cba9bee82f6307ad0b859e",
+    "prepare-loaded-before.log.gz": "611f2c969a46812544caa168a7e36b6984ee1fd7fe4c3b172315c70e84531b58",
+    "prepare.log.gz": "7dd2bff9db392df30ec52fb2950977b4aae9c736d19173f83d603771fb56f372",
+    "restored.log.gz": "e24e1c2dc911dfc3060b6e30d3c3a259ccce32ede9520dc39efebd2831e1624d"
+  },
+  "scope": "Cumulative lifecycle/matrix reconciliation; final JAR is the mixed-provider/contract production revision. Earlier phases were rebuilt at their named targeted changes; no claim of one identical binary across the development sequence."
+}

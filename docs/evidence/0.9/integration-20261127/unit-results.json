@@ -1,0 +1,74 @@
+{
+  "suites": [
+    {
+      "suite": "dev.coasterslaunchsystems.CallbackTimingTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report_sha256": "a79f773ccfc85fec182aea3f179a53ab25f1cdf30d86b64446a1e4d258e6c3b6"
+    },
+    {
+      "suite": "dev.coasterslaunchsystems.LinearMotorTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report_sha256": "7c490b40d18661c7fd3ee53743990fac4b90a3bf0b59062ed4d768cac7cd5e91"
+    },
+    {
+      "suite": "dev.coasterslaunchsystems.MechanismMathTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report_sha256": "8319e3d52ae9c4a4bc3814a19ec360fdc30b136bb4608ce6a78f7347fc6302fd"
+    },
+    {
+      "suite": "dev.coasterslaunchsystems.MotionAuthorityTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report_sha256": "1f782164fc0b57038370cb6c9f9ad147dcce6b30089c2791aed7c4bcf411daee"
+    },
+    {
+      "suite": "dev.coasterslaunchsystems.StoppingEnvelopeTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report_sha256": "de8daf36cc6bd97656ee38e045965929d69f42899ae78bb787012fa16ab6f682"
+    },
+    {
+      "suite": "dev.coasterslaunchsystems.StoredEnergyTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report_sha256": "8acb4b46edb04e1a78b756b76718e4bc80cd05b533e7d0572bf7ac4c635b9d00"
+    },
+    {
+      "suite": "dev.coasterslaunchsystems.SwingLaunchProgramTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report_sha256": "203d3320b858770364c658fcde2eab321e830b7888deae8d91a8f07a6a1b3c02"
+    },
+    {
+      "suite": "dev.coasterslaunchsystems.TrackDistanceTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "report_sha256": "d1c57a46bd511860880ee63721965923bb2c74c80d415adc52ad8598750073bf"
+    }
+  ],
+  "totals": {
+    "tests": 31,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+}

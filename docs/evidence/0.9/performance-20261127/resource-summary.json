@@ -1,0 +1,13 @@
+{
+  "sampling_seconds": 1,
+  "total_samples": 24,
+  "active_samples": 23,
+  "maximum_observed_rss_bytes": 1768443904,
+  "maximum_observed_vm_hwm_bytes": 1768443904,
+  "maximum_observed_cgroup_peak_so_far_bytes": 1747775488,
+  "maximum_observed_cgroup_current_bytes": 1747775488,
+  "verified_active_caps": [
+    "6442450944"
+  ],
+  "interpretation": "OS observations across startup, workload, save and shutdown; cgroup/RSS boundaries differ. Final complete process peak was not captured after exit."
+}

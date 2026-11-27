@@ -1,0 +1,46 @@
+2026-11-27T07:46:15.875215+00:00
+Id=fd-ls-release-occupied-20261127-client.service
+ActiveState=inactive
+SubState=dead
+MainPID=0
+Result=success
+ExecMainStatus=0
+MemoryPeak=[not set]
+
+Id=fd-ls-release-occupied-20261127-server.service
+ActiveState=inactive
+SubState=dead
+MainPID=0
+Result=success
+ExecMainStatus=0
+MemoryPeak=[not set]
+
+Id=fd-ls-release-occupied-20261127-xvfb.service
+ActiveState=inactive
+SubState=dead
+MainPID=0
+Result=success
+ExecMainStatus=0
+MemoryPeak=[not set]
+
+Exact /proc executable + argv check: no owned watch.py/state.py or ffmpeg :396.0 remains.
+
+
+Final saved server tail (server log timezone America/Phoenix):
+[00:45:57] [RCON Listener #1/INFO] [minecraft/GenericThread]: Thread RCON Client /127.0.0.1 started
+[00:45:57] [Server thread/INFO] [minecraft/MinecraftServer]: [Rcon: Stopping the server]
+[00:45:57] [RCON Client /127.0.0.1 #858/INFO] [minecraft/RconClient]: Thread RCON Client /127.0.0.1 shutting down
+[00:45:57] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server
+[00:45:57] [Server thread/INFO] [minecraft/MinecraftServer]: Saving players
+[00:45:57] [Server thread/INFO] [minecraft/MinecraftServer]: Saving worlds
+[00:45:58] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[ls09-occupied-live-bootstrap]'/minecraft:overworld
+[00:45:58] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[ls09-occupied-live-bootstrap]'/minecraft:overworld
+[00:45:59] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[ls09-occupied-live-bootstrap]'/minecraft:the_end
+[00:45:59] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[ls09-occupied-live-bootstrap]'/minecraft:the_end
+[00:45:59] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[ls09-occupied-live-bootstrap]'/minecraft:the_nether
+[00:45:59] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[ls09-occupied-live-bootstrap]'/minecraft:the_nether
+[00:45:59] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (ls09-occupied-live-bootstrap): All chunks are saved
+[00:45:59] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[00:45:59] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[00:45:59] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved
+[00:45:59] [Server thread/INFO] [minecraft/GenericThread]: Thread RCON Listener stopped

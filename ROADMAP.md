@@ -1,12 +1,12 @@
 # Coasters: Launch Systems version roadmap
 
-Updated **2026-11-26 (America/Phoenix)**. **0.1.0 is accepted**: foundation
+Updated **2026-11-27 (America/Phoenix)**. **0.1.0 is accepted**: foundation
 LS001–LS005 and usable-ride packages LS101–LS106 are complete, with exact scope
 and inputs in the [integration record](docs/evidence/0.1/integration-20261122/README.md).
 The **0.4.0 six-launch outcome is accepted**, including LS201–LS205,
 LS301–LS303 and LS401–LS403; see the [combined integration record](docs/evidence/0.4/integration-20261122/README.md).
 **0.5 (LS501–LS504)** is accepted; see the [family integration record](docs/evidence/0.5/integration-20261126/README.md).
-**0.6 (LS601–LS602)** is accepted; see the [route/operator integration record](docs/evidence/0.6/integration-20261126/README.md). Later packages retain their scope and are unassigned.
+**0.6 (LS601–LS602)** is accepted; see the [route/operator integration record](docs/evidence/0.6/integration-20261126/README.md). **0.9 (LS901–LS904)** is assigned for release-candidate qualification. Optional adapters and 1.0 publication remain outside this assignment.
 [Validation](docs/VALIDATION.md) owns accepted evidence;
 [CURRENT-WORK](docs/CURRENT-WORK.md) owns assignments. Stable LS IDs retain
 scope and acceptance. Version milestones express outcomes and order, not dates.
@@ -22,7 +22,7 @@ scope and acceptance. Version milestones express outcomes and order, not dates.
 | 0.4 — Complete six-launch release | Hydraulic and pneumatic equipment join tire, LSM, LIM and flywheel; coherent usable content and interruption behavior | LS401–LS403 and preceding gates accepted: distinct occupied pressure operation, recharge, service and interruption. |
 | 0.5 — Expanded FD vehicle support | Explicit launch/brake certificates for the modern FD catalog, preserving each family's mechanics and body choices | LS501–LS504 accepted: finite family certificates, occupied controls, body-choice invariance and explicit mechanical exclusions. |
 | 0.6 — Shared ride operation | Launch Systems equipment respects FD's bounded multi-train reservations and operator controls | LS601–LS602 accepted; native bounded route, occupied conflict and explicit saved-world recovery. |
-| 0.9 — Release candidate | Reconciled advertised matrix, migration/multiplayer, measured costs and finished instructions | LS901–LS904; planned. Reuse accepted evidence and run only remaining/affected coverage. |
+| 0.9 — Release candidate | Reconciled advertised matrix, migration/multiplayer, measured costs and finished instructions | LS901–LS904 accepted; finite matrix, provider lifecycle, measured cost and occupied release gameplay reconciled. |
 | 1.0 — Stable | A supported, documented package with all required core and adopted FD outcomes accepted | LS1001; planned. Optional LS801–LS807 adapters ship only when independently accepted. |
 | After 1.0 | Consider moving-track launch interfaces, new specialty vehicles and wider routing | Separate feasibility/design decisions; no implied support or date. |
 
@@ -61,12 +61,12 @@ Newer available artifacts are candidates until their consumed contracts pass.
    passed empty/occupied circuits, exit/reboard and fresh dispatch. Reconnect,
    current authority restart and retained interruption evidence cover lifecycle.
    All owned runtimes saved and stopped; preserve applicable dev.65–72 evidence.
-4. **LS201–LS403:** finish the named remaining linear, cable and pressure
-   criteria, including current-Arrow catch recovery. Combine compatible evidence
-   to close complete packages; historical checkpoint caveats are not extra gates.
-5. Close 0.4, then implement the explicit family and ride-operation expansion.
-   Optional adapters may advance once their interfaces exist; none holds up a
-   standalone equipment release.
+4. **LS201–LS403:** accepted linear, cable and pressure outcomes include
+   current-Arrow catch recovery, normal occupied construction and physical service.
+5. **LS501–LS602:** accepted finite family certificates and bounded Arrow
+   route/operator recovery. **LS901–LS904** reconcile the supported package;
+   [current work](docs/CURRENT-WORK.md) owns its latest disposition. Optional
+   adapters and 1.0 publication remain separate assignments.
 
 [Execution guide](docs/ROADMAP-EXECUTION.md) gives package inputs and handoffs.
 [Historical dev notes](docs/ROADMAP-CHECKPOINT-HISTORY-2026-11-22.md) preserve
@@ -186,6 +186,9 @@ acceptance remain closed when compatible; qualify the new interaction.
 Adapters can be developed alongside core releases, but do not block a standalone release. Unsupported adapters stay disabled and retain their saved provider identity. PAX veto behavior is core compatibility; LS806 is additional positive functionality.
 
 ## Version 0.9 release candidate and version 1.0
+
+0.9 is accepted with the [integration record](docs/evidence/0.9/integration-20261127/README.md).
+All owned runtimes saved/stopped. Optional adapters and LS1001 publication remain separate.
 
 | ID | Work | Acceptance |
 | --- | --- | --- |

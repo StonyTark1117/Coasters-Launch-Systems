@@ -1,0 +1,86 @@
+{
+  "settling_ticks": 400,
+  "settling_after_equipment_install_ticks": 220,
+  "controllers": 2,
+  "route_edges": 8,
+  "route_reservation_blocks": 6,
+  "route_edge_lengths_blocks": [
+    36.0,
+    12.568128589667213,
+    32.0,
+    12.568128589667214,
+    36.0,
+    12.568128826865463,
+    32.0,
+    12.568128589667214
+  ],
+  "forced_chunks": 30,
+  "trains": 2,
+  "synthetic_native_seated_riders": 8,
+  "native_bodies": 6,
+  "loaded_train_masses_native_units": [
+    20.2,
+    20.2
+  ],
+  "equipment": {
+    "FIN_BRAKE": 31,
+    "TIRE": 18
+  },
+  "creative_shaft_sources": 49,
+  "origin": "320, 160, -640",
+  "timing": {
+    "wall_seconds": 5.242237586,
+    "simulated_seconds": 38.79999999999887,
+    "dropped_samples": 0,
+    "all": {
+      "samples": 1552,
+      "total_ms": 2575.383073,
+      "mean_ms": 1.6593963099226805,
+      "p50_ms": 1.602742,
+      "p95_ms": 3.353795,
+      "p99_ms": 4.123035,
+      "max_ms": 11.464647
+    },
+    "phases": {
+      "settled": {
+        "samples": 2,
+        "total_ms": 5.461577999999999,
+        "mean_ms": 2.7307889999999997,
+        "p50_ms": 2.469144,
+        "p95_ms": 2.992434,
+        "p99_ms": 2.992434,
+        "max_ms": 2.992434
+      },
+      "local_launch_capture": {
+        "samples": 240,
+        "total_ms": 718.576871,
+        "mean_ms": 2.994070295833333,
+        "p50_ms": 2.813094,
+        "p95_ms": 4.012896,
+        "p99_ms": 6.11081,
+        "max_ms": 11.464647
+      },
+      "route_transfer": {
+        "samples": 1232,
+        "total_ms": 1794.695869,
+        "mean_ms": 1.4567336599025973,
+        "p50_ms": 1.427222,
+        "p95_ms": 2.849274,
+        "p99_ms": 3.680275,
+        "max_ms": 10.230585
+      },
+      "conflict_hold": {
+        "samples": 78,
+        "total_ms": 56.648755,
+        "mean_ms": 0.7262660897435897,
+        "p50_ms": 0.676701,
+        "p95_ms": 1.015031,
+        "p99_ms": 1.400572,
+        "max_ms": 1.400572
+      }
+    }
+  },
+  "positive_queued_work_native_units": 74.59110821262846,
+  "positive_force_steps": 891,
+  "peak_native_speed_blocks_per_second": 1.3251838543817842
+}

@@ -1,10 +1,10 @@
 # Coasters: Launch Systems implementation plan
 
-Updated **2026-11-26**. Build a standalone Create: Coasters Simulated addon
+Updated **2026-11-27**. Build a standalone Create: Coasters Simulated addon
 with physical tire, LSM, LIM, flywheel, hydraulic and pneumatic launches,
 distinct brakes, finite resources and explicit vehicle/ride ownership. Native
-mechanics and tool workflows are accepted through `0.5.0`, including the foundation, usable rides, linear/skid,
-physical cable, pressure and finite modern FD family certificate outcomes.
+mechanics and tool workflows are accepted through `0.9.0`, including the foundation, usable rides, linear/skid,
+physical cable, pressure, finite modern FD family certificates and bounded Arrow route/operator outcomes. The accepted 0.9 release candidate reconciles its matrix, lifecycle, measured cost and remaining occupied gameplay.
 
 The [version roadmap](ROADMAP.md) is authoritative for scope and acceptance;
 [current work](docs/CURRENT-WORK.md) assigns remaining outcomes, and the
@@ -30,16 +30,18 @@ player-tool evidence. Original design provenance remains in
    reconciles this completed six-launch outcome.
 4. The completed **0.5** assignment extends certificates to the finite modern FD
    catalog; [integration evidence](docs/evidence/0.5/integration-20261126/README.md)
-   records the exact scope. A later assignment integrates the actual bounded
-   Arrow reservation/controls contract in 0.6. Cosmetic
+   records the exact scope. Completed **0.6** integrates the bounded Arrow
+   reservation/controls contract; see its [record](docs/evidence/0.6/integration-20261126/README.md). Cosmetic
    variants never create new mechanical eligibility. Optional operating and
-   presentation adapters remain independent; 0.9/1.0 reconcile the adopted scope.
+   presentation adapters remain independent. **0.9** reconciliation is accepted in
+   its [integration record](docs/evidence/0.9/integration-20261127/README.md);
+   1.0 publication remains separate.
 
 ## Product scope and dependencies
 
 Use **Coasters: Launch Systems**, mod ID `coasterslaunchsystems`, and original models, sounds, and recipes. Add equipment to existing coaster curves instead of replacing the track graph or introducing another vehicle solver. Start with fixed-world tracks; moving contraption tracks remain future work.
 
-| Component | Reproducible legacy | Selected current 0.1–0.4 stack |
+| Component | Reproducible legacy | Selected current 0.9 qualification stack |
 | --- | --- | --- |
 | Minecraft / Java | 1.21.1 / 21 | Same |
 | NeoForge / Sable | 21.1.248 / 2.0.3 | 21.1.256 / 2.0.6 |
@@ -62,7 +64,7 @@ Keep build outputs outside colon-containing Unix checkout paths, following Fourt
 | Project | Current planning input | Relationship |
 | --- | --- | --- |
 | Coasters Simulated | Released 0.1.6 improves sublevel-scan cost; both local projects still pin 0.1.5 | Reuse graph, engagement, linking and chain behavior. Audit the changed hooks before adopting 0.1.6. |
-| Fourth Dimension | Accepted implementation through 1.3; schema 8; explicit longitudinal authority and bounded reservations | Current bridge first; original families retain their scope, modern family certificates follow in 0.5, multi-train interaction in 0.6. |
+| Fourth Dimension | Accepted implementation through 1.3; schema 8; explicit longitudinal authority and bounded reservations | Accepted bridge, finite modern family certificates (0.5) and bounded Arrow multi-train interaction (0.6). |
 | Engineered | Exact 1.1.1 public seam and existing LS conflict-denial evidence | LS801 positive control/resource handoff; retain disjoint operation without double force. |
 | Additions | 0.2.5 introduces hydraulic/flywheel/tire launch spans as well as station/control functions | LS803 audits launch ownership and suppression, not only signals. Do not copy restricted implementation/assets. |
 | Magnetized / CTNB | FD has positive scoped authority adapters on selected families | Inputs for LS802/LS807; their FD acceptance does not establish LS compatibility. |
@@ -74,7 +76,7 @@ Exact source links and verification limits are in the
 [November 22 review](docs/DEPENDENCY-REVIEW-2026-11-22.md) and
 [optional adapter record](docs/OPTIONAL-INTEGRATIONS.md).
 
-The ecosystem already covers generic acceleration and stopping. Our differentiators are mechanical tire drives, finite stored-energy launchers, physically distinct brakes, and tested operation with articulated 4D vehicles. A minimal original LIM/LSM implementation is still needed for standalone users; installed providers remain separate equipment rather than being silently replaced.
+The ecosystem already covers generic acceleration and stopping. Our differentiators are mechanical tire drives, finite stored-energy launchers, physically distinct brakes, and tested operation with articulated 4D vehicles. Original standalone LIM/LSM implementations are accepted in 0.2; optional providers remain separate equipment.
 
 No inspected release establishes the complete set below. This is an evidence-limited finding, not proof that no other addon exists. Source inspection and combined runtime tests are required before claiming any external compatibility.
 
@@ -142,13 +144,15 @@ Continuous entry/exit detection must catch traversal of a complete short span wi
 
 ## Fourth Dimension compatibility contract
 
-Preserve ownership: Fourth Dimension controls seat profiles, rotor joints, carrier mass, restraints, boarding alignment, retention, family eligibility, and PAX lift/capture. Launch Systems controls its longitudinal equipment. Its current API-5 `VehicleMotionProvider` supplies chassis/body IDs, deduplicated consist membership, installed interface certificates, dispatch/motion vetoes, separate propulsion/brake limits and current exclusive operator. Native mass and accepted engagement are read from the referenced bodies and native guide observations. The legacy adapter retains its historical pinned schema-4 operations. The current adapter registers an explicit API 1 external owner and uses native epoch/sequence tokens for dispatch, capture, transfer and restored hold acknowledgement. It rejects unsupported variants and managed FD routes; native joint/seat behavior remains with FD. Occupied and separate-JVM lifecycle qualification is still assigned.
+Preserve ownership: Fourth Dimension controls seat profiles, rotor joints, carrier mass, restraints, boarding alignment, retention, family eligibility, and PAX lift/capture. Launch Systems controls its longitudinal equipment. Its current API-5 `VehicleMotionProvider` supplies chassis/body IDs, deduplicated consist membership, installed interface certificates, dispatch/motion vetoes, separate propulsion/brake limits and current exclusive operator. Native mass and accepted engagement are read from the referenced bodies and native guide observations. The legacy adapter retains its historical pinned schema-4 operations. The current adapter registers an explicit API 1 external owner and uses native epoch/sequence tokens for dispatch, capture, transfer and restored hold acknowledgement. It rejects unsupported variants and uncertified routes. The accepted 0.6 mode uses the bounded Arrow route authority and shared operator contract; native joint/seat behavior remains with FD. Occupied and separate-JVM lifecycle evidence is retained in the 0.1–0.6 integration records.
 
 For the current schema-8/ride-authority migration, follow [the handoff](docs/FOURTH-DIMENSION-HANDOFF.md); do not interpret the old adapter as current compatibility.
 
 Keep the neutral interface artifact with Launch Systems. Fourth Dimension can compile against that small API and register only when Launch Systems is present. Isolate optional classes and test either mod installed alone. Avoid a new mandatory shared runtime mod or circular dependence on both implementation JARs. If Fourth Dimension needs a public facade first, add it during the contract package rather than binding every adapter to private save structures.
 
-| Fourth Dimension family | Planned launch/brake eligibility |
+The following table preserves initial design intent; the [current certificate table](docs/FD-VEHICLE-CERTIFICATES.md) owns implemented family eligibility.
+
+| Fourth Dimension family | Initial planned launch/brake eligibility |
 | --- | --- |
 | Arrow controlled 4D | Candidate for tire, LIM/LSM and clamps after chassis interface/clearance certification. Cable launchers need a separately tested catch socket and loaded coupling limits. Rotation continues to follow position along matching Arrow track in either direction. |
 | Legacy ZacSpin | Individual-car tire/linear launch and braking candidates. Free rotation must retain acceleration-induced dynamics; preserve its prohibition on train coupling. |
@@ -176,9 +180,9 @@ Local block sections reserve the downstream stopping region before release and r
 Calculate a conservative stopping envelope from loaded mass, slope, brake response, available force, train length and usable span. Constant-deceleration formulas are an initial estimate only; validate speed-dependent magnetic braking with simulation and final clamp engagement. Insufficient brake distance or unavailable downstream chunks blocks arming, rather than guaranteeing a stop that the hardware cannot deliver.
 
 FD's accepted 1.2 `RideLocalOperations` already reserves a bounded Arrow route.
-LS601/LS602 must consume its admission and current/next ownership through an
-explicit contract while retaining LS stopping-distance/equipment guards. Until
-that mode is certified, deny overlapping route control. Expose ownership,
+Accepted LS601/LS602 consume its admission and current/next ownership through an
+explicit contract while retaining LS stopping-distance/equipment guards. Other
+route modes continue to deny overlapping control. Expose ownership,
 charge, blocked reason and fresh-request status through existing operator tools;
 do not introduce a second independent route scheduler. FD 1.3 body and palette
 choices remain separate from force interfaces, loaded mass and save identity.
@@ -201,4 +205,4 @@ Validation must include ordinary carts, maximum declared consists, empty and une
 
 Record launch time/distance/speed, impulse/work budget, braking distance and creep, free rotor response, constraint error, coupling retention, and server/frame costs. Establish numerical tolerances from baseline fixtures before calling any gate complete. Every advertised mechanism requires an occupied gameplay demonstration and packaged dedicated-server evidence; a rendered model or command-applied velocity is insufficient.
 
-Current-core qualification, authority migration and the 0.5 family certificates are complete. The next unassigned engineering outcome is the roadmap’s 0.6 bounded route interoperability, followed by reconciliation of the adopted 1.0 support matrix.
+Current-core qualification, authority migration, 0.5 family certificates and 0.6 bounded route interoperability are complete. The accepted 0.9 outcome reconciles the finite support matrix, provider lifecycle and occupied demonstrations, measured callback costs and packaged instructions. Optional adapters and 1.0 publication are separate assignments.

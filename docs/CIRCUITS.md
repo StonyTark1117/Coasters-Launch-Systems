@@ -1,5 +1,12 @@
 # Reserved circuit prototype: 0.0.1-dev.10
 
+**Historical checkpoint record.** Its remaining-work statements, API versions,
+artifact hashes and reproduction commands describe that checkpoint. For current
+operation use the [operator guide](OPERATOR-GUIDE.md), [supported FD certificates](FD-VEHICLE-CERTIFICATES.md)
+and [current queue](CURRENT-WORK.md). Accepted 0.1–0.6 outcomes are not reopened
+by the older limitations below. Use the [run procedure](RUN-PREPARATION.md)
+for Java 21 and persistent run directories.
+
 This page preserves its original checkpoint scope. See [dev.12 receiver recovery](RECEIVER-RECOVERY.md) for inspected replacement of a missing receiver. See [dev.11 station scope](STATIONS.md) for optional controller capture, measured boarding readiness, API 5 and schema-4 persistence.
 
 This extends the adjacent-section handoff with a unique, unbranched fixed-rail route between straight equipment sections. It is partial LS004/LS104/LS105 progress toward 0.4.0. The native fixture includes repeated laps and a provider-owned station capture/boarding prototype; automatic operator station capture and rendered demonstration rides remain unfinished.

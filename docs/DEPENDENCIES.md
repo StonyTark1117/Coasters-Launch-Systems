@@ -1,19 +1,19 @@
 # Dependency baselines
 
-Updated 2026-11-22. Profiles select a reproducible dependency set; they are not
+Updated 2026-11-27. Profiles select a reproducible dependency set; they are not
 compatibility or release acceptance claims.
 
 The [November 22 upstream review](DEPENDENCY-REVIEW-2026-11-22.md) adds Coasters
 0.1.6 and newer Maven candidates. Neither implemented profile selects them.
 `fd-current` means parity with the inspected sister stack, not automatically
 the newest upstream versions. The [roadmap](../ROADMAP.md) retains the accepted LS001/LS002 selection
-for the 0.4 baseline.
+for the accepted 0.1–0.6 baseline and unchanged 0.9 qualification inputs.
 
 Both profiles compile and generate packaged Java 21 launch scripts in the
 [2026-11-15 preparation record](evidence/workflow-refresh-20261115.md).
 Runtime qualification was not run as part of that refresh.
 
-| Component | `legacy` (explicit historical reproduction) | `fd-current` (default 0.1–0.4 stack) |
+| Component | `legacy` (explicit historical reproduction) | `fd-current` (default 0.9 qualification stack) |
 | --- | --- | --- |
 | Minecraft / Java | 1.21.1 / 21 | 1.21.1 / 21 |
 | NeoForge | 21.1.248 | 21.1.256 |
@@ -23,6 +23,7 @@ Runtime qualification was not run as part of that refresh.
 | Flywheel | 1.0.6 API/runtime | same |
 | Ponder / Registrate | 1.0.82+mc1.21.1 / MC1.21-1.3.0+67 | same |
 | Veil | 4.1.4 | 4.3.2, conditional standalone scheduler repair |
+| Sable Companion | Selected transitively by the historical Sable profile | 1.6.0 |
 | Fourth Dimension adapter | exact 0.9.0-dev.1, schema 4 | 1.1.0/schema 8 **with external authority API 1**; see pinned handoff |
 
 Select with `-PlsDependencyProfile=fd-current` or `legacy`. Use separate build
@@ -30,7 +31,7 @@ and run directories for each. `processResources` writes the selected exact
 NeoForge/Sable requirements into the JAR metadata. The default is the qualified current stack. Standalone startup, mass, native
 catch/ticket and restart checks passed, along with real occupied Arrow and
 current FD saved-world ownership recovery. Old evidence remains reproducible
-with the explicit legacy profile. The overall 0.1 gate is accepted in CURRENT-WORK. No current FD JAR is downloaded,
+with the explicit legacy profile. The overall 0.1–0.6 gates are accepted in CURRENT-WORK. No current FD JAR is downloaded,
 bundled or silently substituted.
 
 Fourth Dimension's [0.9 dependency record](<../../Coasters: Fourth Dimension/docs/evidence/0.9/dependencies/README.md>)
@@ -70,3 +71,13 @@ See [optional integrations](OPTIONAL-INTEGRATIONS.md).
 Run configuration uses the upstream [ModDevGradle run DSL](https://github.com/neoforged/ModDevGradle#runs).
 Client heap is configured on the run model so both Gradle launches and generated
 direct scripts receive it. Inspect generated arguments before execution.
+
+## Qualification pins versus metadata ranges
+
+The table identifies tested inputs, not all versions accepted by a loader range.
+Ponder metadata permits `1.0.82` and newer, while qualification selects exactly
+`1.0.82+mc1.21.1`. Create resolves the `6.0.10-280` artifact and advertises runtime
+version `6.0.10`. The expanded NeoForge, Minecraft, Create, Sable, Veil and optional
+FD requirements are inspected in the final packaged JAR. No optional dependency
+JAR is embedded. Gradle may resolve both full and slim Create artifacts; runtime
+mod discovery selects one Create instance, as shown by the packaged startup log.

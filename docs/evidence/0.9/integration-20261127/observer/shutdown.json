@@ -1,0 +1,27 @@
+{
+  "verified_utc": "2026-11-27T07:45:57.564295+00:00",
+  "owner": "/root",
+  "normal_disconnect_utc": "2026-11-27T07:45:19.072252Z",
+  "units": {
+    "fd-ls09-observer-20261127-client.service": {
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "MainPID": "0",
+      "Result": "success",
+      "ExecMainStatus": "0"
+    },
+    "fd-ls09-observer-20261127-xvfb.service": {
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "MainPID": "0",
+      "Result": "success",
+      "ExecMainStatus": "0"
+    }
+  },
+  "client_peak_bytes": 2807496704,
+  "client_limit_bytes": 6442450944,
+  "previous_client_pid": 583108,
+  "previous_xvfb_pid": 583098,
+  "server_owner": "/root/rides",
+  "server_not_stopped_by_root": true
+}

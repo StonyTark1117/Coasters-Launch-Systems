@@ -1,0 +1,18 @@
+{
+  "verified_utc": "2026-11-27T07:18:45.958399+00:00",
+  "unit": "ls09-performance-20261127-server.service",
+  "state": {
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "MainPID": "0",
+    "Result": "success",
+    "ExecMainStatus": "0"
+  },
+  "save_markers": [
+    "[00:15:30] [Server thread/INFO] [minecraft/GameTestServer]: All 1 required tests passed :)",
+    "[00:15:30] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server",
+    "[00:15:32] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved"
+  ],
+  "world": "/mnt/NVME4/launchsystems-runs/ls09-performance-20261127/server/world",
+  "no_client_or_display_started": true
+}

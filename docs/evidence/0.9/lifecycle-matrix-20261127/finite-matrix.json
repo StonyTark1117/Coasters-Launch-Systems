@@ -1,0 +1,288 @@
+{
+  "ordinary_provider": "simulatedcoasters:ordinary_0.1.5",
+  "ordinary_contacts": 9,
+  "fd_variants": [
+    {
+      "family": "ARROW",
+      "variant": "arrow_four_rail_v1",
+      "individual_contacts": [
+        "TIRE",
+        "FIN_BRAKE",
+        "SKID_BRAKE",
+        "EDDY_BRAKE",
+        "LSM",
+        "LIM"
+      ],
+      "cable_stores": [
+        "FLYWHEEL",
+        "HYDRAULIC",
+        "PNEUMATIC"
+      ],
+      "individual_offset_z": 0,
+      "cable_denial": null
+    },
+    {
+      "family": "ZACSPIN",
+      "variant": "zacspin_legacy_v1",
+      "individual_contacts": [
+        "TIRE",
+        "FIN_BRAKE",
+        "SKID_BRAKE",
+        "EDDY_BRAKE",
+        "LSM",
+        "LIM"
+      ],
+      "cable_stores": [
+        "FLYWHEEL",
+        "HYDRAULIC",
+        "PNEUMATIC"
+      ],
+      "individual_offset_z": 0,
+      "cable_denial": null
+    },
+    {
+      "family": "FREE_SPIN",
+      "variant": "sns_magnetic_v1",
+      "individual_contacts": [
+        "TIRE",
+        "FIN_BRAKE",
+        "SKID_BRAKE",
+        "EDDY_BRAKE",
+        "LSM",
+        "LIM"
+      ],
+      "cable_stores": [
+        "FLYWHEEL",
+        "HYDRAULIC",
+        "PNEUMATIC"
+      ],
+      "individual_offset_z": 0,
+      "cable_denial": null
+    },
+    {
+      "family": "ZACSPIN_REVISED",
+      "variant": "zacspin_revised_v1",
+      "individual_contacts": [
+        "TIRE",
+        "FIN_BRAKE",
+        "SKID_BRAKE",
+        "EDDY_BRAKE",
+        "LSM",
+        "LIM"
+      ],
+      "cable_stores": [
+        "FLYWHEEL",
+        "HYDRAULIC",
+        "PNEUMATIC"
+      ],
+      "individual_offset_z": 0,
+      "cable_denial": null
+    },
+    {
+      "family": "WING",
+      "variant": "wing_fixed_v1",
+      "individual_contacts": [
+        "TIRE",
+        "FIN_BRAKE",
+        "SKID_BRAKE",
+        "EDDY_BRAKE",
+        "LSM",
+        "LIM"
+      ],
+      "cable_stores": [
+        "FLYWHEEL",
+        "HYDRAULIC",
+        "PNEUMATIC"
+      ],
+      "individual_offset_z": 0,
+      "cable_denial": null
+    },
+    {
+      "family": "FIXED_INVERTED",
+      "variant": "four_abreast_v1",
+      "individual_contacts": [
+        "TIRE",
+        "FIN_BRAKE",
+        "SKID_BRAKE",
+        "EDDY_BRAKE",
+        "LSM",
+        "LIM"
+      ],
+      "cable_stores": [
+        "FLYWHEEL",
+        "HYDRAULIC",
+        "PNEUMATIC"
+      ],
+      "individual_offset_z": -5,
+      "cable_denial": null
+    },
+    {
+      "family": "SPINNING",
+      "variant": "conventional_v1",
+      "individual_contacts": [
+        "TIRE",
+        "FIN_BRAKE",
+        "SKID_BRAKE",
+        "EDDY_BRAKE",
+        "LSM",
+        "LIM"
+      ],
+      "cable_stores": [
+        "FLYWHEEL",
+        "HYDRAULIC",
+        "PNEUMATIC"
+      ],
+      "individual_offset_z": 0,
+      "cable_denial": null
+    },
+    {
+      "family": "SPINNING",
+      "variant": "launched_inverting_v1",
+      "individual_contacts": [
+        "TIRE",
+        "FIN_BRAKE",
+        "SKID_BRAKE",
+        "EDDY_BRAKE",
+        "LSM",
+        "LIM"
+      ],
+      "cable_stores": [
+        "FLYWHEEL",
+        "HYDRAULIC",
+        "PNEUMATIC"
+      ],
+      "individual_offset_z": 0,
+      "cable_denial": null
+    },
+    {
+      "family": "SUSPENDED",
+      "variant": "lateral_swing_v1",
+      "individual_contacts": [
+        "TIRE",
+        "FIN_BRAKE",
+        "SKID_BRAKE",
+        "EDDY_BRAKE",
+        "LSM",
+        "LIM"
+      ],
+      "cable_stores": [],
+      "individual_offset_z": -5,
+      "cable_denial": "Measured native sweep intersects physical guide; catalog evidence G"
+    },
+    {
+      "family": "AXIS",
+      "variant": "longitudinal_roll_v1",
+      "individual_contacts": [
+        "TIRE",
+        "FIN_BRAKE",
+        "SKID_BRAKE",
+        "EDDY_BRAKE",
+        "LSM",
+        "LIM"
+      ],
+      "cable_stores": [
+        "FLYWHEEL",
+        "HYDRAULIC",
+        "PNEUMATIC"
+      ],
+      "individual_offset_z": 0,
+      "cable_denial": null
+    },
+    {
+      "family": "FLYING",
+      "variant": "station_changeover_v1",
+      "individual_contacts": [
+        "TIRE",
+        "FIN_BRAKE",
+        "SKID_BRAKE",
+        "EDDY_BRAKE",
+        "LSM",
+        "LIM"
+      ],
+      "cable_stores": [
+        "FLYWHEEL",
+        "HYDRAULIC",
+        "PNEUMATIC"
+      ],
+      "individual_offset_z": -5,
+      "cable_denial": null
+    },
+    {
+      "family": "FLYING",
+      "variant": "route_changeover_yaw_v1",
+      "individual_contacts": [
+        "TIRE",
+        "FIN_BRAKE",
+        "SKID_BRAKE",
+        "EDDY_BRAKE",
+        "LSM",
+        "LIM"
+      ],
+      "cable_stores": [],
+      "individual_offset_z": -5,
+      "cable_denial": "Measured native sweep intersects physical guide; catalog evidence G"
+    },
+    {
+      "family": "PIPELINE",
+      "variant": "seated_side_rail_v1",
+      "individual_contacts": [
+        "TIRE",
+        "FIN_BRAKE",
+        "SKID_BRAKE",
+        "EDDY_BRAKE",
+        "LSM",
+        "LIM"
+      ],
+      "cable_stores": [
+        "FLYWHEEL",
+        "HYDRAULIC",
+        "PNEUMATIC"
+      ],
+      "individual_offset_z": -5,
+      "cable_denial": null
+    },
+    {
+      "family": "DIVE",
+      "variant": "six_abreast_v1",
+      "individual_contacts": [
+        "TIRE",
+        "FIN_BRAKE",
+        "SKID_BRAKE",
+        "EDDY_BRAKE",
+        "LSM",
+        "LIM"
+      ],
+      "cable_stores": [
+        "FLYWHEEL",
+        "HYDRAULIC",
+        "PNEUMATIC"
+      ],
+      "individual_offset_z": 0,
+      "cable_denial": null
+    },
+    {
+      "family": "POWERED_INVERTED",
+      "variant": "upright_yaw_v1",
+      "individual_contacts": [],
+      "cable_stores": [],
+      "denial": "Exclusive native Chain governor"
+    },
+    {
+      "family": "ROLLER_BALL",
+      "variant": "vertical_zigzag_v1",
+      "individual_contacts": [],
+      "cable_stores": [],
+      "denial": "Exclusive Chain lift/tumble/dock/return cycle"
+    },
+    {
+      "family": "PAX",
+      "variant": "pax_shuttle_v1",
+      "individual_contacts": [],
+      "cable_stores": [],
+      "denial": "Exclusive native winch cycle"
+    }
+  ],
+  "fd_positive_cells": 120,
+  "fd_denied_cells": 33,
+  "evidence_roles": "Positive contact/energy/catch matrix is loaded-native cumulative evidence; actual occupied demonstrations are separately reconciled by LS904. No unsupported positive adapters are advertised."
+}

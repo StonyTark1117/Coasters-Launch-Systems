@@ -1,6 +1,18 @@
 # Launch Systems validation status
 
-## Current status overlay — 2026-11-26
+## Current status overlay — 2026-11-27
+
+**0.9 is accepted.** The [integration record](evidence/0.9/integration-20261127/README.md)
+closes LS901–LS904 with the finite 17-variant matrix, native mixed-link denials,
+actual installed/absent/restored provider lifecycle, bounded measured callback
+cost and the four remaining real occupied FD launch demonstrations. The persisted
+ownership fix prevents absent-provider fallback; old-save migration requires
+loading affected vehicles with the original provider before removal. Final Java
+21 build and 31/31 unit tests passed. Exact package/class parity carries compatible
+evidence forward; all owned clients, servers, displays and helpers are stopped,
+with worlds saved. Optional adapters and 1.0 publication remain outside this outcome.
+
+## Prior accepted status — 2026-11-26
 
 The cumulative **0.1–0.6** outcome is accepted. The
 [0.6 integration record](evidence/0.6/integration-20261126/README.md) closes

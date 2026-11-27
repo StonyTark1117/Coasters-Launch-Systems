@@ -55,7 +55,8 @@ public final class CableControllerGameTests {
     String failure = "";
     Scene(GameTestHelper helper, int slot, String mode) {
       this.mode = mode;
-      player = "true".equals(System.getenv("LS_CABLE_PLAYER")) && mode.equals("fixed_inverted_controller_dispatch");
+      player = "true".equals(System.getenv("LS_CABLE_PLAYER")) && (mode.equals("fixed_inverted_controller_dispatch")
+          || ReleaseOccupiedGameTests.enabled() && mode.startsWith("arrow_") && mode.endsWith("_controller_dispatch"));
       mechanism = mode.contains("hydraulic") ? Mechanism.HYDRAULIC
           : mode.contains("pneumatic") ? Mechanism.PNEUMATIC : Mechanism.FLYWHEEL;
       ride = new RideControllerGameTests.Scene(helper, slot, mode, 224);
@@ -70,6 +71,7 @@ public final class CableControllerGameTests {
     for (var s : List.copyOf(SCENES)) {
       var r = s.ride;
       if (r.closed || r.base.level != event.getPhysicsSystem().getLevel()) continue;
+      if (s.player && !ReleaseOccupiedGameTests.refresh(r)) continue;
       try {
         if (r.controller.phase() == RideControllerEntity.State.RUNNING) {
           s.running = true;
@@ -113,6 +115,12 @@ public final class CableControllerGameTests {
     return new TestFunction("launchsystems_cable_current", "coasterslaunchsystems_cable_current." + mode,
         "coasterslaunchsystems_cable_current:empty", 1500, 0, true,
         helper -> run(new Scene(helper, slot, mode)));
+  }
+
+  static TestFunction playerCase(String name, int slot) {
+    return new TestFunction("launchsystems_release_occupied", "coasterslaunchsystems_release_occupied." + name,
+        "coasterslaunchsystems_release_occupied:empty", 72000, 0, true,
+        helper -> run(new Scene(helper, slot, "arrow_" + name + "_controller_dispatch")));
   }
 
   private static void run(Scene s) {
@@ -159,10 +167,21 @@ public final class CableControllerGameTests {
         s.preparation.add(new NativeFinClamp(SubLevelContainer.getContainer(level).physicsSystem().getPipeline(), body,
             VehicleInterfaces.brakePoint(body), new Vector3d(0, 0, 1), 128));
       if (s.player) {
-        System.out.println("LS_CABLE_PLAYER prepared family=fixed_inverted from="+r.base.from+" controller="+r.controllerPosition+" cabinet="+s.flywheel+" chassis="+r.base.parents.getFirst().getUniqueId());
+        System.out.println("LS_CABLE_PLAYER prepared family="+r.designName+" from="+r.base.from+" controller="+r.controllerPosition+" cabinet="+s.flywheel+" chassis="+r.base.parents.getFirst().getUniqueId());
+        if (ReleaseOccupiedGameTests.enabled()) {
+          for (var position : r.equipment) ((EquipmentCabinetEntity) level.getBlockEntity(position)).setArmed(true);
+          SCENES.add(s);
+          ReleaseOccupiedGameTests.register(s.mechanism.name().toLowerCase(java.util.Locale.ROOT), r, () -> java.util.Map.of(
+              "peakSpeed", s.peakSpeed, "minimumRunningEnergy", Double.isFinite(s.minimumRunningEnergy) ? s.minimumRunningEnergy : -1,
+              "running", s.running, "braking", s.braking, "distance", s.finalDistance, "failure", s.failure));
+        }
       } else { r.controller.setArmed(true); SCENES.add(s); }
     });
-    if (s.player) { s.at(200, () -> r.base.helper.succeed()); return; }
+    if (s.player) {
+      // Preserve the older catalog bootstrap; release demos retain their bodies until server shutdown.
+      if (!ReleaseOccupiedGameTests.enabled()) s.at(200, () -> r.base.helper.succeed());
+      return;
+    }
     s.at(420, () -> {
       r.base.helper.assertTrue(s.failure.isEmpty() && r.controller.phase() == RideControllerEntity.State.READY
           && s.cabinet().cableInUse() && s.cabinet().cableInstalled() && s.cabinet().cableReady(),

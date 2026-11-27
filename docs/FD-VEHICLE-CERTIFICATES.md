@@ -1,4 +1,13 @@
-# Fourth Dimension equipment certificates — 0.5
+# Fourth Dimension equipment certificates — 0.5 acceptance / 0.9 reconciliation
+
+The finite 0.5 catalog and its original artifact identities below remain accepted.
+The current 0.9 qualification uses the same catalog with FD route/operator overlay
+SHA-256 `d676d730a02c6f9abe217985db03a3bca424892f06236a0cf64e066b82e87738`.
+The [0.6 route/operator evidence](evidence/0.6/integration-20261126/README.md)
+adds the explicitly bounded Arrow managed-route contract, including conflict,
+occupied restart and fresh-request recovery. This does not certify arbitrary
+routes or expand the family/contact catalog. See the exact current
+[source/artifact handoff](FOURTH-DIMENSION-HANDOFF.md).
 
 The finite catalog is the sixteen mechanical variants in FD's accepted pre-1.0
 `TrackDesign` plus ordinary-track Wing: seventeen mechanical variants, with
@@ -19,7 +28,8 @@ correctly positioned LS block on the native chassis. A native seat magnet,
 rendered trim, body choice, color or shared save schema grants no interface.
 All positive contacts remain subject to loaded bodies, matching rail,
 restraints, native readiness/faults, whole-consist identity, local reservation
-and exact native authority. Managed FD routes remain excluded until LS601.
+and exact native authority. Managed FD routes require the accepted LS601 bounded
+route contract above; other route arrangements remain excluded.
 Native capture/locks/posture continue to belong to FD.
 
 ## Finite disposition table

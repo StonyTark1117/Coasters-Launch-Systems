@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.coasterslaunchsystems.CallbackTimingTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-27T07:14:30.808Z" hostname="Hades" time="0.011">
+  <properties/>
+  <testcase name="reportsNearestRankInMillisecondsWithoutMutatingSamples()" classname="dev.coasterslaunchsystems.CallbackTimingTest" time="0.011"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

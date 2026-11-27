@@ -1,20 +1,26 @@
 # Current work and resumption queue
 
-Updated **2026-11-26**. The user assignment **through 0.6 LS601–LS602 is complete**:
-implementation, bounded occupied multi-train recovery and integration are accepted.
-Final Git delivery uses the existing branch below. **0.1–0.5 remain accepted**;
-0.5 was the pushed starting point `f7cbb6de1d4d789ecea2d7021228056520ec11f5`.
-Preserve unchanged evidence. Optional adapters and later releases remain unassigned.
+Updated **2026-11-27**. **0.9 LS901–LS904 is accepted**: finite matrix,
+provider lifecycle, performance/accounting, remaining occupied demonstrations,
+and package/documentation review are complete. All owned runtimes saved/stopped.
+Git delivery uses the existing branch; no runtime case remains assigned. [Integration evidence](evidence/0.9/integration-20261127/README.md).
+**0.1–0.6 remain accepted**, with pushed starting HEAD
+`ba555e9949853b142d9a1e2d7d546ee4ac24d1f2`. Optional adapters and 1.0 publication
+remain outside this assignment; do not create a 0.7 milestone.
 
 Checkout: `codex/launch-systems-0-4-0` at
-`/home/braydon/Documents/Coasters: Launch Systems`; Continue the same assigned branch for 0.6. Current Git status is authoritative.
+`/home/braydon/Documents/Coasters: Launch Systems`. Continue this branch;
+current Git status is authoritative.
 
-Coordinator `/root` owns canonical status, the pinned FD prerequisite handoff,
-final integration/build/version, commits and push. `/root/bridge` owns LS601's
-explicit route authority and equipment lease contract; `/root/rides` owns native
-interop/recovery fixtures and occupied multi-train operation; `/root/foundation`
-owns LS602 shared operator status/requests and evidence. Agree the shared API
-before parallel edits. All agents share this checkout and own distinct files.
+Coordinator `/root` owns canonical status, version/package/dependency/license
+and instruction review, final integration, commits and push, and the occupied
+observer when needed. `/root/foundation` owns LS901 matrix reconciliation and
+LS902 lifecycle checks; `/root/bridge` owns LS903 instrumentation, representative
+measurement and accounting; `/root/rides` completed LS904 occupied FD
+LSM, LIM, hydraulic and pneumatic demonstrations. Existing occupied ordinary
+six-launch, FD tire/flywheel and shared lifecycle evidence carries forward.
+All agents share this checkout; coordinate shared-file edits and freeze exact
+packages before consuming them. No full-suite reset or new dependency upgrade.
 
 Use the accepted FD 1.3 plus external-API1 source/artifact below; new S2/Flying
 checks use the narrow family-power overlay in the linked handoff. The current
@@ -90,12 +96,16 @@ the primary checkout’s pre-existing untracked `logs/` remains untouched.
 | Complete — LS504 | Finite family × equipment table and persistence | Seventeen variants disposed; native body/appearance, cable positives/guide denials and translated recovery 3/3 accepted. [Table](FD-VEHICLE-CERTIFICATES.md), [evidence](evidence/ls05-catalog-20261122/README.md). | `/root/foundation`; closed and cleaned |
 | Complete — LS601 | Equipment leases under FD route authority | [Actual physical route and five guard passes](evidence/ls06-route-20261126/README.md), plus occupied A rail2 conflict with B: exact A1/2 and B3/4 pairs, both local stopping leases and same rider retained; no further work for over 60 seconds. LS602 separately completes restart/rejoin and explicit fresh recovery. | `/root/bridge`; closed and cleaned |
 | Complete — LS602 | Shared operator requests and multi-train recovery | [Native/live panel, occupied conflict and saved-world recovery](evidence/0.6/integration-20261126/README.md): explicit rearm without held-high replay, then separate fresh input with actual motion and retained rider. All runtimes saved/stopped. | `/root/foundation` and `/root/rides`; closed and cleaned |
-| Independent — LS801–LS807 | Optional adapters | Exact upstream inputs; Additions 0.2.5 adds launch overlap. Positive PAX handoff remains LS806. Optional support does not block standalone release. | Unassigned; outside active 0.6 scope |
-| Final — LS901–LS904 / LS1001 | Expanded 1.0 qualification/readiness | Reconcile accepted evidence and remaining advertised matrix; no full-suite reset after documentation/artifact changes. | Unassigned; outside active 0.6 scope |
+| Independent — LS801–LS807 | Optional adapters | Exact upstream inputs; Additions 0.2.5 adds launch overlap. Positive PAX handoff remains LS806. Optional support does not block standalone release. | Unassigned; outside the 0.9 scope |
+| Complete — LS901 | Finite supported matrix | [17 FD variants, 120 supported/33 denied cells plus ordinary contacts; actual mixed-provider/family link rejection](evidence/0.9/lifecycle-matrix-20261127/README.md). | `/root/foundation`; closed and cleaned |
+| Complete — LS902 | Provider lifecycle | [Actual same-world installed/absent/restored provider and owner contracts](evidence/0.9/lifecycle-matrix-20261127/README.md); saved identity prevents ordinary fallback while preserving deliberate live handoff. Accepted older lifecycle evidence retained. | `/root/foundation`; closed and cleaned |
+| Complete — LS903 | Performance and resource accounting | [Final integrated callback measurement](PERFORMANCE.md), exact boundaries and energy/pressure/heat reconciliation. FE remains outside scope. | `/root/bridge`; closed and cleaned |
+| Complete — LS904 | Release gameplay and package review | [Four real occupied FD demonstrations](evidence/0.9/occupied-20261127/README.md) complete six-launch coverage; [package audit](evidence/0.9/integration-20261127/README.md) reconciles instructions, tutorials, licenses and exact pins. | `/root/rides` and `/root`; closed and cleaned |
+| Later — LS1001 | 1.0 publication | Consumes accepted core gates; not authorized by this 0.9 Git-delivery assignment. | Unassigned |
 
 Record run ownership in the owned run.json and shutdown in evidence. Follow
 [AGENTS](../AGENTS.md), [validation policy](VALIDATION-POLICY.md) and
-[run preparation](RUN-PREPARATION.md). All 0.1–0.5 runtimes are stopped. The interrupted 0.5 units were verified inactive
+[run preparation](RUN-PREPARATION.md). All 0.1–0.9 runtimes are stopped. The interrupted 0.5 units were verified inactive
 on November 26 before resuming only the remaining owned fixtures; all resumed
 clients, servers and displays are now stopped. Ownership, saved worlds and
 verified shutdown are recorded in the linked evidence. Fourth Dimension's queue remains reference material;

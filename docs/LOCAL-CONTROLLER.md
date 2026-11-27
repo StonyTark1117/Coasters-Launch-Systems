@@ -1,5 +1,12 @@
 # Local controller checkpoint: 0.0.1-dev.8
 
+**Historical checkpoint record.** Its remaining-work statements, API versions,
+artifact hashes and reproduction commands describe that checkpoint. For current
+operation use the [operator guide](OPERATOR-GUIDE.md), [supported FD certificates](FD-VEHICLE-CERTIFICATES.md)
+and [current queue](CURRENT-WORK.md). Accepted 0.1–0.6 outcomes are not reopened
+by the older limitations below. Use the [run procedure](RUN-PREPARATION.md)
+for Java 21 and persistent run directories.
+
 This page preserves its original checkpoint scope. See [dev.11 station scope](STATIONS.md) for optional controller capture, measured boarding readiness, API 5 and schema-4 persistence.
 
 This records partial LS004/LS102/LS104 progress toward the full 0.4.0 goal at dev.8. The prototype controls one straight, level, unbanked fixed rail edge, within the existing equipment coordinate limits. It certifies linked tire drives and friction-fin modules. The later [dev.9 section transfer checkpoint](SECTION-TRANSFERS.md) adds departure into an adjacent reserved edge. A complete repeatable ride cycle and the remaining release gates are unfinished.

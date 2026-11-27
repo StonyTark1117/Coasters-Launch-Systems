@@ -26,6 +26,16 @@ public final class MotionProviders {
   }
 
   public static Optional<MotionVehicle> resolve(ServerLevel level, UUID chassis) {
+    var saved = SavedMotionOwners.get(level);
+    if (!saved.valid())
+      return Optional.of(new MotionVehicle("launchsystems:invalid_owner_data", chassis, List.of(chassis), List.of(chassis),
+          java.util.Set.of(), false, false, false, "launchsystems:invalid_saved_ownership", 2, 256, 0));
+    String previous = saved.owner(chassis);
+    // A missing optional implementation cannot relinquish its persisted vehicle to fallback
+    // or to a different provider. A present provider may still deliberately decline ownership.
+    if (previous != null && PROVIDERS.stream().noneMatch(p -> p.id().equals(previous)))
+      return Optional.of(new MotionVehicle(previous, chassis, List.of(chassis), List.of(chassis),
+          java.util.Set.of(), false, false, false, "launchsystems:missing_provider:" + previous, 2, 256, 0));
     MotionVehicle result = null;
     for (var provider : PROVIDERS) {
       var found = provider.resolve(level, chassis);
@@ -33,7 +43,14 @@ public final class MotionProviders {
       if (result != null) throw new IllegalStateException("Multiple providers claimed vehicle " + chassis);
       result = found.get();
     }
-    if (result == null && fallback != null) return fallback.resolve(level, chassis);
+    if (result != null) saved.remember(chassis, result.provider());
+    else {
+      var ordinary = fallback == null ? Optional.<MotionVehicle>empty() : fallback.resolve(level, chassis);
+      // A missing/unloaded body is not an intentional release. Preserve API-5's
+      // primary -> ordinary handoff only when the fallback has a live vehicle.
+      if (ordinary.isPresent()) saved.forget(chassis);
+      return ordinary;
+    }
     return Optional.ofNullable(result);
   }
 

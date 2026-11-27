@@ -1,0 +1,77 @@
+{
+  "settling_ticks": 400,
+  "settling_after_equipment_install_ticks": 220,
+  "controllers": 2,
+  "route_edges": 8,
+  "route_reservation_blocks": 6,
+  "route_edge_lengths_blocks": [
+    36.0,
+    12.568128589667213,
+    32.0,
+    12.568128589667214,
+    36.0,
+    12.568128826865463,
+    32.0,
+    12.568128589667214
+  ],
+  "forced_chunks": 30,
+  "trains": 2,
+  "synthetic_native_seated_riders": 8,
+  "native_bodies": 6,
+  "loaded_train_masses_native_units": [
+    20.2,
+    20.2
+  ],
+  "equipment": {
+    "FIN_BRAKE": 31,
+    "TIRE": 18
+  },
+  "creative_shaft_sources": 49,
+  "origin": "320, 160, -640",
+  "timing": {
+    "wall_seconds": 3.566932972,
+    "simulated_seconds": 38.74999999999887,
+    "dropped_samples": 0,
+    "all": {
+      "samples": 1550,
+      "total_ms": 1916.763604,
+      "mean_ms": 1.23662168,
+      "p50_ms": 1.193073,
+      "p95_ms": 2.455775,
+      "p99_ms": 3.411037,
+      "max_ms": 11.953615
+    },
+    "phases": {
+      "local_launch_capture": {
+        "samples": 240,
+        "total_ms": 554.085639,
+        "mean_ms": 2.3086901625,
+        "p50_ms": 2.161555,
+        "p95_ms": 3.245437,
+        "p99_ms": 5.241261,
+        "max_ms": 11.953615
+      },
+      "route_transfer": {
+        "samples": 1232,
+        "total_ms": 1315.225312,
+        "mean_ms": 1.067553012987013,
+        "p50_ms": 1.090422,
+        "p95_ms": 1.950075,
+        "p99_ms": 2.837726,
+        "max_ms": 6.585604
+      },
+      "conflict_hold": {
+        "samples": 78,
+        "total_ms": 47.452653,
+        "mean_ms": 0.6083673461538461,
+        "p50_ms": 0.584141,
+        "p95_ms": 0.697091,
+        "p99_ms": 1.022622,
+        "max_ms": 1.022622
+      }
+    }
+  },
+  "positive_queued_work_native_units": 74.59118235731536,
+  "positive_force_steps": 891,
+  "peak_native_speed_blocks_per_second": 1.325401053972648
+}

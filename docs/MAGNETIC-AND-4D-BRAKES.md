@@ -1,5 +1,12 @@
 # Magnetic and Fourth Dimension brake checkpoint: 0.0.1-dev.6
 
+**Historical checkpoint record.** Its remaining-work statements, API versions,
+artifact hashes and reproduction commands describe that checkpoint. For current
+operation use the [operator guide](OPERATOR-GUIDE.md), [supported FD certificates](FD-VEHICLE-CERTIFICATES.md)
+and [current queue](CURRENT-WORK.md). Accepted 0.1–0.6 outcomes are not reopened
+by the older limitations below. Use the [run procedure](RUN-PREPARATION.md)
+for Java 21 and persistent run directories.
+
 This advances LS003, LS004, LS102 and LS103. It is a development checkpoint toward 0.4.0; full release gates remain open.
 
 ## Passive magnetic equipment

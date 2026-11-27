@@ -1,0 +1,42 @@
+{
+  "records": [
+    {
+      "source": "docs/evidence/linear-packaged-combined.txt",
+      "sha256": "59d2f93096dadcd79868e51331c8d40bbe4eefc5fd6cbb06f75dcdc7feb85087",
+      "line": "LS_LINEAR mechanism=LSM mode=brake riders=4 mass=28.200000000000003 speed=0.0651952251791954 work=-56.15387252454071 spent=31.540508787189168 heat=87.6943813117287 charged=144.76458947741767 remaining=301.41804701087176 peak_force=19.999999999999982 steps=120 depleted_steps=0 accounting_error=3.272729309777844E-14",
+      "parsed_native_units": {
+        "work": -56.15387252454071,
+        "spent": 31.540508787189168,
+        "heat": 87.6943813117287,
+        "accounting_error": 3.272729309777844e-14
+      },
+      "draw_minus_work_minus_heat_residual": 1.1652900866465643e-12,
+      "scope": "Retained accepted native pre-constraint impulse accounting; not a new run"
+    },
+    {
+      "source": "docs/evidence/cable-dev17-focused-combined.txt",
+      "sha256": "4e293df042a3b4b3f4715912da9b3158dc9567c48faeaaaa284c8f542e3bb67d",
+      "line": "LS_CABLE mode=single_forward phase=HOME cars=1 riders=4 begin_energy=1009.7330116050013 drawn=376.36857811057513 work=319.91329139398886 heat=56.45528671658633 return_work=39.06610889509051 shaft_work=662.2979968591877 peak_speed=2.946312665939331 begin_omega=22.469234651017835 release_omega=17.795567334232786 joint_reported_force=0.0 train_traction=29.855678558349616 socket_error=6.714378874349395E-4 guide_error=8.54492185453637E-6 joint_error=0.0 coupler_error=0.0 release_distance=12.043151855706697 accounting_error=8.881784197001252E-16 pull_steps=229 return_steps=549",
+      "parsed_native_units": {
+        "drawn": 376.36857811057513,
+        "work": 319.91329139398886,
+        "heat": 56.45528671658633,
+        "accounting_error": 8.881784197001252e-16
+      },
+      "draw_minus_work_minus_heat_residual": 5.684341886080802e-14,
+      "scope": "Retained accepted native pre-constraint impulse accounting; not a new run"
+    }
+  ],
+  "fe_boundary": {
+    "searched": "src/main/java/**/*.java",
+    "terms": [
+      "IEnergyStorage",
+      "receiveEnergy",
+      "extractEnergy",
+      "Capabilities.EnergyStorage",
+      "net.neoforged.neoforge.energy"
+    ],
+    "matches": [],
+    "claim": "No implemented FE capability/conversion path; LS805 remains optional and unadvertised. Source inspection does not claim third-party FE compatibility."
+  }
+}
