@@ -1,6 +1,6 @@
 # Operating Launch Systems
 
-This guide describes the selected current-core package under 0.9 qualification.
+This guide describes the selected 1.0 package, unchanged from accepted 0.9 qualification.
 [Dependencies](DEPENDENCIES.md) identifies the exact tested stack; the
 [FD certificate table](FD-VEHICLE-CERTIFICATES.md) identifies eligible families
 and hardware. Installing a plate or changing a body appearance does not grant

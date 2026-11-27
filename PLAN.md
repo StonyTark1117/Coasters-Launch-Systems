@@ -35,13 +35,13 @@ player-tool evidence. Original design provenance remains in
    variants never create new mechanical eligibility. Optional operating and
    presentation adapters remain independent. **0.9** reconciliation is accepted in
    its [integration record](docs/evidence/0.9/integration-20261127/README.md);
-   LS1001 publishes the unchanged qualified package.
+   LS1001 published the unchanged qualified package.
 
 ## Product scope and dependencies
 
 Use **Coasters: Launch Systems**, mod ID `coasterslaunchsystems`, and original models, sounds, and recipes. Add equipment to existing coaster curves instead of replacing the track graph or introducing another vehicle solver. Start with fixed-world tracks; moving contraption tracks remain future work.
 
-| Component | Reproducible legacy | Selected current 0.9 qualification stack |
+| Component | Reproducible legacy | Selected current 1.0 release stack |
 | --- | --- | --- |
 | Minecraft / Java | 1.21.1 / 21 | Same |
 | NeoForge / Sable | 21.1.248 / 2.0.3 | 21.1.256 / 2.0.6 |
@@ -205,4 +205,4 @@ Validation must include ordinary carts, maximum declared consists, empty and une
 
 Record launch time/distance/speed, impulse/work budget, braking distance and creep, free rotor response, constraint error, coupling retention, and server/frame costs. Establish numerical tolerances from baseline fixtures before calling any gate complete. Every advertised mechanism requires an occupied gameplay demonstration and packaged dedicated-server evidence; a rendered model or command-applied velocity is insufficient.
 
-Current-core qualification, authority migration, 0.5 family certificates and 0.6 bounded route interoperability are complete. The accepted 0.9 outcome reconciles the finite support matrix, provider lifecycle and occupied demonstrations, measured callback costs and packaged instructions. LS1001 publishes this unchanged qualified package; optional adapters remain separate.
+Current-core qualification, authority migration, 0.5 family certificates and 0.6 bounded route interoperability are complete. The accepted 0.9 outcome reconciles the finite support matrix, provider lifecycle and occupied demonstrations, measured callback costs and packaged instructions. LS1001 published this unchanged qualified package; optional adapters remain separate.

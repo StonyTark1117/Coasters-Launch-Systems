@@ -1,0 +1,49 @@
+{
+  "verified_utc": "2026-11-27T08:04:16.870725+00:00",
+  "release_url": "https://github.com/StonyTark1117/Coasters-Launch-Systems/releases/tag/v1.0.0",
+  "release_id": 460308439,
+  "published_at": "2026-11-27T08:02:31Z",
+  "draft": false,
+  "prerelease": false,
+  "repository_visibility": "private (unchanged)",
+  "tag": "v1.0.0",
+  "tag_object": "9e6136f392c9df8c4dea657ecde1081a1e782719",
+  "source_commit": "041e21d72c3bdb8d0845b7cf1b5b6b1d255fb58c",
+  "source_branch": "codex/launch-systems-0-4-0",
+  "remote_tag_and_source_verified": true,
+  "published_notes_match_source": true,
+  "assets": [
+    {
+      "id": 799547306,
+      "name": "coasters-launch-systems-1.0.0.jar",
+      "size": 829921,
+      "state": "uploaded",
+      "digest": "sha256:02573aeeab64bfa38da2ca41b2927f46649e2a4044264350f15f13f9c8e69176",
+      "browser_download_url": "https://github.com/StonyTark1117/Coasters-Launch-Systems/releases/download/v1.0.0/coasters-launch-systems-1.0.0.jar"
+    },
+    {
+      "id": 799547303,
+      "name": "SHA256SUMS",
+      "size": 100,
+      "state": "uploaded",
+      "digest": "sha256:14e32961d78ffeb6dc0ec1d7ef29a5ed01347d0503a68d16b3139e6b776a21a7",
+      "browser_download_url": "https://github.com/StonyTark1117/Coasters-Launch-Systems/releases/download/v1.0.0/SHA256SUMS"
+    }
+  ],
+  "downloaded_assets_equal_local_uploads": true,
+  "downloaded_sha256": {
+    "SHA256SUMS": "14e32961d78ffeb6dc0ec1d7ef29a5ed01347d0503a68d16b3139e6b776a21a7",
+    "coasters-launch-systems-1.0.0.jar": "02573aeeab64bfa38da2ca41b2927f46649e2a4044264350f15f13f9c8e69176"
+  },
+  "ci_run_ids": [
+    45962604151,
+    45962603828
+  ],
+  "ci_check_ids": [
+    140383706165,
+    140383705681
+  ],
+  "ci_annotation": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the Billing & plans section in your settings",
+  "ci_pass_claimed": false,
+  "new_runtime_processes": 0
+}

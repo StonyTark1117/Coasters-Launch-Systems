@@ -1,9 +1,10 @@
 # Current work and resumption queue
 
-Updated **2026-11-27**. The active assignment is **LS1001: publish standalone 1.0**.
-Root owns version/package qualification and GitHub publication; foundation audits
-prerequisites, bridge audits dependency/license/install boundaries, and rides
-prepares release notes. The existing private repository remains the destination.
+Updated **2026-11-27**. **LS1001 is complete: standalone 1.0.0 is published**
+in the existing private GitHub repository. The remote `v1.0.0` tag, stable release,
+JAR and checksum are verified. [Publication receipt](evidence/1.0/release-20261127/README.md).
+No core runtime or publication case remains assigned; optional adapters await a
+separate assignment. Hosted CI cannot start because of account billing limits.
 
 **0.9 LS901–LS904 is accepted**: finite matrix,
 provider lifecycle, performance/accounting, remaining occupied demonstrations,
@@ -101,16 +102,16 @@ the primary checkout’s pre-existing untracked `logs/` remains untouched.
 | Complete — LS504 | Finite family × equipment table and persistence | Seventeen variants disposed; native body/appearance, cable positives/guide denials and translated recovery 3/3 accepted. [Table](FD-VEHICLE-CERTIFICATES.md), [evidence](evidence/ls05-catalog-20261122/README.md). | `/root/foundation`; closed and cleaned |
 | Complete — LS601 | Equipment leases under FD route authority | [Actual physical route and five guard passes](evidence/ls06-route-20261126/README.md), plus occupied A rail2 conflict with B: exact A1/2 and B3/4 pairs, both local stopping leases and same rider retained; no further work for over 60 seconds. LS602 separately completes restart/rejoin and explicit fresh recovery. | `/root/bridge`; closed and cleaned |
 | Complete — LS602 | Shared operator requests and multi-train recovery | [Native/live panel, occupied conflict and saved-world recovery](evidence/0.6/integration-20261126/README.md): explicit rearm without held-high replay, then separate fresh input with actual motion and retained rider. All runtimes saved/stopped. | `/root/foundation` and `/root/rides`; closed and cleaned |
-| Independent — LS801–LS807 | Optional adapters | Exact upstream inputs; Additions 0.2.5 adds launch overlap. Positive PAX handoff remains LS806. Optional support does not block standalone release. | Unassigned; outside the 0.9 scope |
+| Independent — LS801–LS807 | Optional adapters | Exact upstream inputs; Additions 0.2.5 adds launch overlap. Positive PAX handoff remains LS806. Optional support does not block standalone release. | Unassigned; outside the 1.0 scope |
 | Complete — LS901 | Finite supported matrix | [17 FD variants, 120 supported/33 denied cells plus ordinary contacts; actual mixed-provider/family link rejection](evidence/0.9/lifecycle-matrix-20261127/README.md). | `/root/foundation`; closed and cleaned |
 | Complete — LS902 | Provider lifecycle | [Actual same-world installed/absent/restored provider and owner contracts](evidence/0.9/lifecycle-matrix-20261127/README.md); saved identity prevents ordinary fallback while preserving deliberate live handoff. Accepted older lifecycle evidence retained. | `/root/foundation`; closed and cleaned |
 | Complete — LS903 | Performance and resource accounting | [Final integrated callback measurement](PERFORMANCE.md), exact boundaries and energy/pressure/heat reconciliation. FE remains outside scope. | `/root/bridge`; closed and cleaned |
 | Complete — LS904 | Release gameplay and package review | [Four real occupied FD demonstrations](evidence/0.9/occupied-20261127/README.md) complete six-launch coverage; [package audit](evidence/0.9/integration-20261127/README.md) reconciles instructions, tutorials, licenses and exact pins. | `/root/rides` and `/root`; closed and cleaned |
-| Active — LS1001 | Standalone 1.0 publication | Final version-only package, exact parity with accepted 0.9, installation/release notes, tag and GitHub release verification. Reuse all accepted core evidence. | `/root` integration; agents review/notes |
+| Complete — LS1001 | Standalone 1.0 publication | [Verified stable release, source tag and downloaded JAR/checksum](evidence/1.0/release-20261127/README.md). Exact version-only parity carries all accepted core evidence. | `/root`; closed, no new runtime |
 
 Record run ownership in the owned run.json and shutdown in evidence. Follow
 [AGENTS](../AGENTS.md), [validation policy](VALIDATION-POLICY.md) and
-[run preparation](RUN-PREPARATION.md). All 0.1–0.9 runtimes are stopped. The interrupted 0.5 units were verified inactive
+[run preparation](RUN-PREPARATION.md). All 0.1–0.9 runtimes are stopped; 1.0 created no new runtime. The interrupted 0.5 units were verified inactive
 on November 26 before resuming only the remaining owned fixtures; all resumed
 clients, servers and displays are now stopped. Ownership, saved worlds and
 verified shutdown are recorded in the linked evidence. Fourth Dimension's queue remains reference material;

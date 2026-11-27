@@ -1,5 +1,15 @@
 # Launch Systems validation status
 
+## Published 1.0 — 2026-11-27
+
+**LS1001 is complete.** The [stable release receipt](evidence/1.0/release-20261127/README.md)
+verifies the remote source tag and both downloaded GitHub assets. Local Java 21
+build and 31/31 unit tests passed. All 183 class entries and every non-version
+resource match the accepted 0.9 package, preserving the evidence below. No new
+runtime was launched. Hosted CI was blocked before execution by account billing;
+no hosted pass is claimed. Exact standalone installation pins and optional FD
+snapshot limitations are in the [release notes](releases/1.0.0.md).
+
 ## Current status overlay — 2026-11-27
 
 **0.9 is accepted.** The [integration record](evidence/0.9/integration-20261127/README.md)

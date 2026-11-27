@@ -1,7 +1,7 @@
 # Launch Systems 1.0 release qualification — 2026-11-27
 
-Status: package qualified; tag/publication verification follows this release
-source commit. LS1001 consumes accepted core outcomes without changing gameplay.
+Status: **LS1001 complete and 1.0.0 published**. The release and both downloaded
+assets are verified. LS1001 consumes accepted core outcomes without changing gameplay.
 Existing checkout `/home/braydon/Documents/Coasters: Launch Systems`, branch
 `codex/launch-systems-0-4-0`, starting source
 `a97c63f224f4344f677080f9e937d05d47bd3e9c`. Root owns integration/publication;
@@ -75,5 +75,17 @@ this is disclosed, with no hosted-CI pass claimed. Sable's Maven endpoint return
 403 during the dependency audit, while its public binary download was available;
 this cached local build does not establish fresh-network build availability.
 
-After publication, the current branch's delivery receipt records the exact
-release/tag/source, downloaded-asset verification and actual CI disposition.
+## Verified publication
+
+[GitHub release v1.0.0](https://github.com/StonyTark1117/Coasters-Launch-Systems/releases/tag/v1.0.0)
+was published at 2026-11-27 08:02:31 UTC, stable and not a draft. Annotated tag
+`v1.0.0` resolves to release source `041e21d72c3bdb8d0845b7cf1b5b6b1d255fb58c`;
+both the remote tag object and peeled source commit match local Git. The
+[publication receipt](publication.json) records release/asset IDs, server hashes,
+download hashes and CI annotations. Both downloaded files are byte-identical to
+the audited upload copies, and published release notes equal their source.
+
+The branch/tag CI runs failed before starting because of the same account billing
+restriction. No required functionality test failed; hosted execution remains
+unavailable. This publication record is a documentation-only follow-up to the
+release source tag and does not alter its artifact or accepted behavior.

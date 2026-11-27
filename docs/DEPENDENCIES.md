@@ -7,13 +7,13 @@ The [November 22 upstream review](DEPENDENCY-REVIEW-2026-11-22.md) adds Coasters
 0.1.6 and newer Maven candidates. Neither implemented profile selects them.
 `fd-current` means parity with the inspected sister stack, not automatically
 the newest upstream versions. The [roadmap](../ROADMAP.md) retains the accepted LS001/LS002 selection
-for the accepted 0.1–0.6 baseline and unchanged 0.9 qualification inputs.
+for the accepted 0.1–0.9 baseline and unchanged 1.0 release inputs.
 
 Both profiles compile and generate packaged Java 21 launch scripts in the
 [2026-11-15 preparation record](evidence/workflow-refresh-20261115.md).
 Runtime qualification was not run as part of that refresh.
 
-| Component | `legacy` (explicit historical reproduction) | `fd-current` (default 0.9 qualification stack) |
+| Component | `legacy` (explicit historical reproduction) | `fd-current` (default 1.0 release stack) |
 | --- | --- | --- |
 | Minecraft / Java | 1.21.1 / 21 | 1.21.1 / 21 |
 | NeoForge | 21.1.248 | 21.1.256 |
