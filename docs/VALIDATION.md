@@ -2,7 +2,15 @@
 
 ## Current status overlay — 2026-11-26
 
-The cumulative **0.1–0.5** outcome is accepted. The
+The cumulative **0.1–0.6** outcome is accepted. The
+[0.6 integration record](evidence/0.6/integration-20261126/README.md) closes
+LS601–LS602 with six native physical/guard passes, shared operator tests,
+real occupied separation, saved-world restart/rejoin and explicit recovery
+requiring a separate fresh request. A targeted retained-transfer fix passed
+on the preserved world; package differences and fixture corrections are recorded.
+All five occupied runtime units are independently verified stopped, with worlds saved.
+
+The prior **0.5** outcome remains accepted. The
 [0.5 integration record](evidence/0.5/integration-20261126/README.md) closes
 LS501–LS504 through loaded family contacts, relevant occupied native operation,
 translated catch recovery, explicit exclusions and body-choice invariance.
@@ -14,8 +22,8 @@ physical-return and occupied-player evidence. [Linear/skid](evidence/ls02-linear
 [cable](evidence/0.3/cable-current-20261122/README.md) and
 [pressure](evidence/ls04-pressure-20261122/README.md) close LS201–LS205,
 LS301–LS303 and LS401–LS403 while preserving the accepted foundation below.
-Shared multi-train operation remains later 0.6 scope; the exact seventeen-variant
-[certificate table](FD-VEHICLE-CERTIFICATES.md) defines 0.5 coverage.
+The exact seventeen-variant [certificate table](FD-VEHICLE-CERTIFICATES.md)
+defines 0.5 coverage; 0.6 adds only the bounded original-Arrow route interaction.
 Use [CURRENT-WORK](CURRENT-WORK.md) for assignment state and
 [VALIDATION-POLICY](VALIDATION-POLICY.md) before scheduling another run.
 

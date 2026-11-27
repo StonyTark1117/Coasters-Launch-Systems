@@ -1,0 +1,29 @@
+{
+  "verified_utc": "2026-11-27T05:18:25.464549+00:00",
+  "reviewer": "root/bridge",
+  "scope": "Independent immutable-JAR hash and entry comparison; no build or runtime launched.",
+  "before_path": "/mnt/NVME4/launchsystems-runs/ls06-integration-20261126/artifacts/coasters-launch-systems-0.6.0-before-recovery.jar",
+  "before_sha256": "0f56f483f235dff798034aaddce4eed20e5d6d8b940a8cd6e4d9161749a8d534",
+  "after_path": "/mnt/NVME4/launchsystems-runs/ls06-integration-20261126/artifacts/coasters-launch-systems-0.6.0-recovery-eb0c84cefa90.jar",
+  "after_sha256": "eb0c84cefa907a62eb43a58166225326489ebeaf749569037de3926632ce9c78",
+  "production_filter": "dev/ .class entries excluding /gametest/",
+  "production_classes": 105,
+  "changed_production_classes": [
+    "dev/coasterslaunchsystems/runtime/RideTransfers.class"
+  ],
+  "preserved_production_classes": 104,
+  "added_production_classes": [],
+  "removed_production_classes": [],
+  "non_dev_embedded_classes_unchanged": {
+    "fixtures/api4/Api4ImplicitProvider.class": true
+  },
+  "resources_excluding_manifest": 132,
+  "json_resources_parsed": 100,
+  "changed_resources": [],
+  "all_changed_entries": [
+    "dev/coasterslaunchsystems/gametest/RouteInteropGameTests$Scene.class",
+    "dev/coasterslaunchsystems/gametest/RouteInteropGameTests.class",
+    "dev/coasterslaunchsystems/runtime/RideTransfers.class"
+  ],
+  "occupied_recovery": "Pending separate same-world continuation receipt; historical native-verification.json unchanged."
+}

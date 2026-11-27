@@ -1,6 +1,6 @@
 # Coasters: Launch Systems
 
-A standalone Create: Coasters Simulated addon with **0.5.0 accepted**: tire,
+A standalone Create: Coasters Simulated addon with **0.6.0 accepted**: tire,
 LSM, LIM, finite flywheel, hydraulic and pneumatic launches; friction-fin,
 skid and passive magnetic brakes; local ride control; and explicit certificates for the eligible Fourth Dimension catalog.
 
@@ -12,7 +12,9 @@ links exact artifacts, accepted evidence and exclusions. It builds on the
 The [0.5 integration record](docs/evidence/0.5/integration-20261126/README.md)
 adds the [finite family × equipment table](docs/FD-VEHICLE-CERTIFICATES.md),
 actual mounted contacts, translated catches and occupied native controls.
-Bounded multi-train operation remains 0.6 work.
+The [0.6 integration record](docs/evidence/0.6/integration-20261126/README.md)
+adds native bounded Arrow reservations, shared operator controls, occupied
+conflict handling and explicit saved-world recovery without request replay.
 
 ## Previous accepted checkpoint
 
@@ -25,7 +27,7 @@ That historical checkpoint preceded the accepted 0.1–0.4 work above. The adapt
 The [November 22 roadmap](ROADMAP.md) keeps **0.4** as the first complete
 six-launch milestone, now accepted with its core/FD authority, player rides
 and equipment/lifecycle criteria. **0.5**, also accepted, adds explicit
-certificates for the expanded FD catalog; **0.6** integrates its bounded multi-train operation;
+certificates for the expanded FD catalog; **0.6**, now accepted, integrates its bounded multi-train operation;
 **0.9/1.0** reconcile and ship the supported package. Accepted evidence carries
 forward. See [upstream dependency findings](docs/DEPENDENCY-REVIEW-2026-11-22.md)
 and the [execution guide](docs/ROADMAP-EXECUTION.md).

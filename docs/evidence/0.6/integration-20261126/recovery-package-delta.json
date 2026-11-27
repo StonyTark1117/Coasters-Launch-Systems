@@ -1,0 +1,11 @@
+{
+  "before": "0f56f483f235dff798034aaddce4eed20e5d6d8b940a8cd6e4d9161749a8d534",
+  "after": "eb0c84cefa907a62eb43a58166225326489ebeaf749569037de3926632ce9c78",
+  "frozen_recovery_jar": "/mnt/NVME4/launchsystems-runs/ls06-integration-20261126/artifacts/coasters-launch-systems-0.6.0-recovery-eb0c84cefa90.jar",
+  "changed_production_classes": [
+    "dev/coasterslaunchsystems/runtime/RideTransfers.class"
+  ],
+  "preserved_production_classes": 104,
+  "production_filter": "dev/ classes excluding /gametest/; separately embedded API4 test fixture unchanged",
+  "scope": "Retained stopped transfer explicit resume; GameTest fixture adds guarded authored entry-drive correction. Earlier native/occupied evidence retains its original package."
+}

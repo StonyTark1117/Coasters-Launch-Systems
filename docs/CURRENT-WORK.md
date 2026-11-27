@@ -1,29 +1,26 @@
 # Current work and resumption queue
 
-Updated **2026-11-26**. The **0.5 LS501–LS504 assignment is complete**;
-[the integration record](evidence/0.5/integration-20261126/README.md) records
-its package, tests, exclusions and cleanup. The integration commit containing
-this queue delivers the completed outcome on the existing branch. **0.1–0.4
-remain accepted**, including the prior pushed `2d625b9407023be5989b1d2093e91ac1bac1d4cf`.
-All later packages remain unassigned. Preserve unchanged accepted evidence.
+Updated **2026-11-26**. The user assignment **through 0.6 LS601–LS602 is complete**:
+implementation, bounded occupied multi-train recovery and integration are accepted.
+Final Git delivery uses the existing branch below. **0.1–0.5 remain accepted**;
+0.5 was the pushed starting point `f7cbb6de1d4d789ecea2d7021228056520ec11f5`.
+Preserve unchanged evidence. Optional adapters and later releases remain unassigned.
 
 Checkout: `codex/launch-systems-0-4-0` at
-`/home/braydon/Documents/Coasters: Launch Systems`; 0.5 started from that clean commit. Continue the same branch for any later
-authorized work. Current Git status is authoritative.
+`/home/braydon/Documents/Coasters: Launch Systems`; Continue the same assigned branch for 0.6. Current Git status is authoritative.
 
-Coordinator chat `01a2049e-cf6c-7fe0-88fe-c814e690d101` (`/root`) owns canonical
-status, final integration, build/version, commits and push. `/root/bridge`
-owns the shared family certificate/provider implementation and LS501;
-`/root/rides` owns LS502 articulated/posture family tests and operation;
-`/root/foundation` owns LS503 Roller Ball/PAX boundaries and LS504 certificate
-table/body-appearance persistence. Coordinate shared helper/source edits before
-changing another owner's file. All agents share this checkout.
+Coordinator `/root` owns canonical status, the pinned FD prerequisite handoff,
+final integration/build/version, commits and push. `/root/bridge` owns LS601's
+explicit route authority and equipment lease contract; `/root/rides` owns native
+interop/recovery fixtures and occupied multi-train operation; `/root/foundation`
+owns LS602 shared operator status/requests and evidence. Agree the shared API
+before parallel edits. All agents share this checkout and own distinct files.
 
 Use the accepted FD 1.3 plus external-API1 source/artifact below; new S2/Flying
 checks use the narrow family-power overlay in the linked handoff. The current
 sister checkout has since published 1.5.0 and integrated the additive overlay; inspect the pinned source with `git show`, not its dirty files as if they
-were the accepted artifact. FD1.4 vehicles, moving tracks, LS0.6 multi-train
-integration and optional positive PAX delegation remain outside this assignment.
+were the accepted artifact. FD1.4 vehicles, moving tracks and optional positive PAX delegation remain
+outside this assignment. LS0.6 integrates only the accepted bounded Arrow route.
 
 The prerequisite FD facade used a dedicated parallel worktree at
 `/home/braydon/.codex/worktrees/launch-systems-authority/Coasters: Fourth Dimension`,
@@ -45,6 +42,38 @@ Native external/built-in authority checks passed 2/2 with clean shutdown.
 The LS combined snapshot remains pinned to that isolated facade build;
 [handoff](FOURTH-DIMENSION-HANDOFF.md) records its identity.
 
+For 0.6 the same worktree was restored again and resumed on
+`codex/launch-systems-authority`, starting clean at `dc1c83a`. `/root` owns
+any additive FD route facade there and coordinates selective main integration
+with the FD owner. This does not switch the LS baseline to FD 1.5. The additive route/operator contract is implemented and pushed as `9f0bbf47`.
+The external panel and final route fixtures pass; their servers saved/stopped.
+The first frozen `97772d1d…` JAR is preserved. Readiness follow-up
+`79119987` is pushed, with focused native route PASS1/1 and saved/stopped server.
+The selected `fd267b3d…` JAR exposes the native five-stopped-tick dispatch guard;
+`/root/rides` consumes it for immediate first-READY and occupied recovery checks.
+The FD owner first integrated the overlay into current main as `9c9d4538`,
+verified pushed; 3/3 focused checks passed. The readiness follow-up is pushed as
+`05d38b81`, independently remote-verified, with its focused route/readiness check
+passing 1/1. Both native servers saved/stopped. See the [handoff](FOURTH-DIMENSION-HANDOFF.md#06-route-and-operator-extension--accepted).
+
+The actual loaded route and all five affected guard variants now pass, with saved
+and stopped native servers. Final review's native Capture payload regression is
+fixed and panel-only PASS1/1 in pushed FD source `b6147959`; the selected occupied
+input is `d676d730…`. Its current-main integration is pushed and remote-verified as `3ac29538`;
+the panel regression passed 1/1 and server saved/stopped. The occupied conflict and separate-process restart/rejoin passed on LS package
+`0f56f483…`. Normal removal of empty B released only B’s blocks 3/4. Explicit
+source rearm exposed a retained-transfer Resume omission; the narrow fix passed
+on the preserved world using frozen package `eb0c84ce…`. After rearm, the high
+lever did not replay; a separate low/high input produced actual 1.312 m/s motion,
+valid A2/3 reservations and the same rejoined rider. The authored entry-tire
+correction preserved all native/body/route/request state. Exact package deltas,
+receipts and exclusions are in the [integration record](evidence/0.6/integration-20261126/README.md).
+Both clients, the server and both private displays are verified inactive/PID 0;
+the server saved all dimensions and all worlds/evidence are preserved. The clean,
+pushed FD worktree at `b6147959` was archived after verified shutdown; its
+main integration remains at `3ac29538`. No FD files were left modified by this task;
+the primary checkout’s pre-existing untracked `logs/` remains untouched.
+
 | Order / package | Remaining outcome | Next action / evidence to reuse | Owner |
 | --- | --- | --- | --- |
 | 1 — LS001/LS002 | Standalone current-core outcome complete | [Packaged client/server, 4/4 native and 1/1 + 1/1 restart evidence](evidence/foundation-current-20261122/README.md). Coasters 0.1.6 and newer loader/renderer candidates explicitly deferred. The accepted current stack is now the default; legacy remains explicit. | `/root/foundation`; closed |
@@ -59,9 +88,10 @@ The LS combined snapshot remains pinned to that isolated facade build;
 | Complete — LS502 | Articulated/posture-dependent certificates | Loaded contacts, connected skid, power loss, missing deck and Powered Yaw denial accepted. All six eligible occupied launches and native unloading passed. [Evidence](evidence/ls05-articulated-20261122/README.md). | `/root/rides`; closed and cleaned |
 | Complete — LS503 | Specialized cycle boundaries | Loaded Roller Ball/PAX ownership denials accepted; native cycle ownership remains exclusive. | `/root/foundation`; closed |
 | Complete — LS504 | Finite family × equipment table and persistence | Seventeen variants disposed; native body/appearance, cable positives/guide denials and translated recovery 3/3 accepted. [Table](FD-VEHICLE-CERTIFICATES.md), [evidence](evidence/ls05-catalog-20261122/README.md). | `/root/foundation`; closed and cleaned |
-| After interfaces — LS601/LS602 | FD bounded multi-train interoperability | Consume accepted FD 1.2 route semantics; qualify LS leases/requests under one reservation contract. 0.6 closure follows 0.4. | Unassigned; outside active 0.5 scope |
-| Independent — LS801–LS807 | Optional adapters | Exact upstream inputs; Additions 0.2.5 adds launch overlap. Positive PAX handoff remains LS806. Optional support does not block standalone release. | Unassigned; outside active 0.5 scope |
-| Final — LS901–LS904 / LS1001 | Expanded 1.0 qualification/readiness | Reconcile accepted evidence and remaining advertised matrix; no full-suite reset after documentation/artifact changes. | Unassigned; outside active 0.5 scope |
+| Complete — LS601 | Equipment leases under FD route authority | [Actual physical route and five guard passes](evidence/ls06-route-20261126/README.md), plus occupied A rail2 conflict with B: exact A1/2 and B3/4 pairs, both local stopping leases and same rider retained; no further work for over 60 seconds. LS602 separately completes restart/rejoin and explicit fresh recovery. | `/root/bridge`; closed and cleaned |
+| Complete — LS602 | Shared operator requests and multi-train recovery | [Native/live panel, occupied conflict and saved-world recovery](evidence/0.6/integration-20261126/README.md): explicit rearm without held-high replay, then separate fresh input with actual motion and retained rider. All runtimes saved/stopped. | `/root/foundation` and `/root/rides`; closed and cleaned |
+| Independent — LS801–LS807 | Optional adapters | Exact upstream inputs; Additions 0.2.5 adds launch overlap. Positive PAX handoff remains LS806. Optional support does not block standalone release. | Unassigned; outside active 0.6 scope |
+| Final — LS901–LS904 / LS1001 | Expanded 1.0 qualification/readiness | Reconcile accepted evidence and remaining advertised matrix; no full-suite reset after documentation/artifact changes. | Unassigned; outside active 0.6 scope |
 
 Record run ownership in the owned run.json and shutdown in evidence. Follow
 [AGENTS](../AGENTS.md), [validation policy](VALIDATION-POLICY.md) and

@@ -1,0 +1,45 @@
+{
+  "at": "2026-11-27T05:23:25.829678+00:00",
+  "units": {
+    "fd-ls-route-20261126-client.service": {
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "MainPID": "0",
+      "Result": "success"
+    },
+    "fd-ls-route-20261126-server.service": {
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "MainPID": "0",
+      "Result": "success"
+    },
+    "fd-ls-route-20261126-xvfb.service": {
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "MainPID": "0",
+      "Result": "success"
+    }
+  },
+  "saved_world": "/mnt/NVME4/launchsystems-runs/ls06-route-20261126/server/world",
+  "preserved_snapshots": [
+    "/mnt/NVME4/launchsystems-runs/ls06-route-20261126/blocked-world-before-restart",
+    "/mnt/NVME4/launchsystems-runs/ls06-route-20261126/postremoval-prepatch-world"
+  ],
+  "former_client_pid": 510409,
+  "former_server_pid": 510020,
+  "remaining_owned_helpers": [],
+  "save_log_tail": [
+    "[26Nov2026 22:23:00.737] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving worlds",
+    "[26Nov2026 22:23:00.813] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld",
+    "[26Nov2026 22:23:00.813] [Server thread/INFO] [dev.ryanhcode.sable.Sable/]: Saving sub-levels for level 'ServerLevel[world]'/minecraft:overworld",
+    "[26Nov2026 22:23:01.092] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_end",
+    "[26Nov2026 22:23:01.092] [Server thread/INFO] [dev.ryanhcode.sable.Sable/]: Saving sub-levels for level 'ServerLevel[world]'/minecraft:the_end",
+    "[26Nov2026 22:23:01.096] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_nether",
+    "[26Nov2026 22:23:01.096] [Server thread/INFO] [dev.ryanhcode.sable.Sable/]: Saving sub-levels for level 'ServerLevel[world]'/minecraft:the_nether",
+    "[26Nov2026 22:23:01.100] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (world): All chunks are saved",
+    "[26Nov2026 22:23:01.100] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved",
+    "[26Nov2026 22:23:01.100] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved",
+    "[26Nov2026 22:23:01.100] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage: All dimensions are saved",
+    "[26Nov2026 22:23:01.108] [Server thread/INFO] [net.minecraft.server.rcon.thread.GenericThread/]: Thread RCON Listener stopped"
+  ]
+}

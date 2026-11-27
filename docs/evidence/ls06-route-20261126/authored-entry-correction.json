@@ -1,0 +1,9 @@
+{
+  "artifact": "eb0c84cefa907a62eb43a58166225326489ebeaf749569037de3926632ce9c78",
+  "at": "2026-11-27T05:18:13Z",
+  "operation": "Disclosed validation-only saved fixture correction, not normal occupied editing",
+  "receipt": {
+    "command": "lsroute author-entry-drive",
+    "result": "AUTHORED FIXTURE ONLY: existing tire/motor moved one block upstream (330,158,-587/-586) to (329,158,-587/-586), identity 627c1e0b-75d2-4e43-81d7-1069da2dcaac, -32 RPM, interval SpanInterval[start=0.0, end=1.9999999999999432]; only receiver modules/source receiver_manifest position changed; native cars, bodies, poses, velocity, route reservations, authority and controller/request state unchanged\n"
+  }
+}

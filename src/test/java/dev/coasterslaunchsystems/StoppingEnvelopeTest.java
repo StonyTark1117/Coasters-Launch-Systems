@@ -5,6 +5,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StoppingEnvelopeTest {
+  @Test void touchingFinProjectionSeamsDoNotAdmitPhysicalGaps() {
+    assertTrue(StoppingEnvelope.coverageConnects(18.00000005045945, 18.000001538574388));
+    assertTrue(StoppingEnvelope.coverageConnects(28.0, 28.000002014074244));
+    assertTrue(StoppingEnvelope.coverageConnects(18, 17.5));
+    assertFalse(StoppingEnvelope.coverageConnects(18, 18.001));
+    assertFalse(StoppingEnvelope.coverageConnects(18, 20));
+    assertFalse(StoppingEnvelope.coverageConnects(Double.NaN, 18));
+    assertFalse(StoppingEnvelope.coverageConnects(18, Double.POSITIVE_INFINITY));
+  }
+
   @Test void loadedTrainLengthAndResponseConsumeRealCoverage() {
     var envelope = new StoppingEnvelope(64, 4, 128, 0, .1, 12);
     assertEquals(17.4, envelope.requiredLength(), 1e-10);

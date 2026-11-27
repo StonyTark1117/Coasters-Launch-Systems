@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-27T05:12:12Z",
+  "owner": "/root/foundation",
+  "normalDisconnectAt": "20261127T051210.783703Z",
+  "serverPlayersAfter": [
+    "Dev"
+  ],
+  "client": {
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "MainPID": 0,
+    "Result": "success"
+  },
+  "display": {
+    "number": 399,
+    "ownership": "Retained by /root/foundation for patched sameworld continuation"
+  },
+  "priorPeakBytes": 2488483840,
+  "limitBytes": 6442450944
+}

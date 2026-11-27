@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.6.0 — bounded ride-local interoperability (2026-11-26)
+
+- Consume Fourth Dimension’s original Arrow admission and current/next block
+  reservations through an additive opt-in contract; native FD remains the sole
+  route reservation owner. Equipment leases retain stopping authority on denied
+  reservations, changed owners, opposing motion, rollback and unavailable bodies.
+- Share controller identity, charge, blocking reason and fresh-request state with
+  the existing FD operator panel and local controller/cabinet status. Dispatch
+  enters the normal LS request loop with a transient freshness token.
+- Keep captured route handoffs held until explicit recovery and a separate new
+  dispatch. Saved requests and pre-reload operator tokens cannot restart a ride.
+- The supported route remains eight segments, six blocks and at most three
+  original Arrow trains. Occupied separation, blocked-world restart/rejoin,
+  explicit rearm and separate fresh dispatch passed; all owned runtimes stopped.
+  [Integration evidence](docs/evidence/0.6/integration-20261126/README.md) preserves
+  exact artifacts, targeted fixes and disclosed fixture setup. Earlier accepted
+  0.1–0.5 behavior carries forward where unchanged.
+
 ## 0.5.0 — expanded Fourth Dimension certificates (2026-11-26)
 
 - Publish the complete seventeen-variant family × equipment disposition: fourteen

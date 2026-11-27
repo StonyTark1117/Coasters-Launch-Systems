@@ -1,0 +1,22 @@
+{
+  "ls_base_commit": "f7cbb6de1d4d789ecea2d7021228056520ec11f5",
+  "ls_branch": "codex/launch-systems-0-4-0",
+  "ls_loading": "development classes, not a packaged LS JAR",
+  "ls_class_directory": "/mnt/NVME4/launchsystems-runs/ls06-route-20261126/build/classes/java/main",
+  "operator_class_hashes": "compiled-operator.sha256",
+  "source_hashes": "source.sha256",
+  "source_snapshot_note": "Captured after operator pass; later unrelated route edits are independently qualified. Four compiled operator/presentation classes retained unchanged from this run.",
+  "fd_artifact": "/mnt/NVME4/launchsystems-runs/ls06-operator-20261126/artifacts/fourthdimension-route-operator-final-api1.jar",
+  "fd_sha256": "97772d1d9cba7a843ecb845a442841fe0d553edacd1dae951aef8e1777c8e010",
+  "runtime_owner": "/root/rides",
+  "test_owner": "/root/foundation",
+  "java": "Arch Linux OpenJDK 21.0.13.1+2",
+  "minecraft": "1.21.1",
+  "neoforge": "21.1.256",
+  "operator_result": "PASS",
+  "combined_process_result": "exit 1 from separate route coverage numeric-tolerance failure",
+  "save_and_exit_local": "2026-11-26 21:25:35 America/Phoenix",
+  "save_and_exit_utc": "2026-11-27T04:25:35Z",
+  "shutdown_evidence": "native-operator-pass-and-route-diagnostic.txt lines 176-177",
+  "owned_graphical_runtime": "none"
+}

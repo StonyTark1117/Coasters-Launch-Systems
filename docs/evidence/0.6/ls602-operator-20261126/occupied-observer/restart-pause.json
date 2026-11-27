@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-27T04:57:12.153746+00:00",
+  "reason": "Minecraft rejected4 simulation distance at startup; set valid minimum5 for continuing reconnect, input settings unchanged",
+  "before": {
+    "renderDistance": "4",
+    "simulationDistance": "4",
+    "rawMouseInput": "true",
+    "key_key.use": "key.mouse.right",
+    "key_key.attack": "key.mouse.left"
+  },
+  "after_simulationDistance": 5,
+  "client": "ActiveState=inactive\nMainPID=0\nResult=success\n",
+  "display": "399 retained by same owner for active continuing restart case"
+}

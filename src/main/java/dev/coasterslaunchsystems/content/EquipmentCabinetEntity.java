@@ -353,10 +353,13 @@ public final class EquipmentCabinetEntity extends KineticBlockEntity {
     if (!fault.equals(message) || armed) { fault = message; armed = false; changed(); }
   }
   public String status() {
+    var owner = level instanceof ServerLevel server ? dev.coasterslaunchsystems.runtime.RideControllers.owner(server, this) : null;
     return mechanism() + ": " + (armed ? "armed" : "disarmed") + ", " + getSpeed()
         + " RPM. " + padStatus()
         + (from == null ? "Select two track anchors, then use the span tool here." : "Contact " + start + ".." + end + ".")
-        + (fault.isEmpty() ? "" : " " + fault);
+        + (fault.isEmpty() ? "" : " " + fault)
+        + (level instanceof ServerLevel server && owner != null
+            ? " " + dev.coasterslaunchsystems.runtime.OperatorStatus.summary(server, owner) : "");
   }
   private String padStatus() {
     if (mechanism().cable())

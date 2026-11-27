@@ -1,0 +1,103 @@
+{
+  "verified_utc": "2026-11-27T04:50:24.800203+00:00",
+  "reviewer": "root/bridge",
+  "scope": "Read-only independent log/hash and packaged production-class reconciliation; no tests or runtimes launched.",
+  "log_manifest": "docs/evidence/ls06-route-20261126/native-logs.sha256",
+  "native_results": [
+    {
+      "result_name": "coasterslaunchsystems_route_interop.bounded_route_physical_conflict",
+      "original_log": "/mnt/NVME4/launchsystems-runs/ls06-route-20261126/native-transfer-powered.log",
+      "sha256": "67446cc253fde589be1dcf88cc1c1fa5574ff3d0273d841706c801c9a94e48d4",
+      "manifest_hash_matches": true,
+      "result": "PASS",
+      "pass_marker": "LS_ROUTE_PASS loaded_riders=8 work=74.59117512169759 drive_steps=891 peak_speed=1.325186595799247 retained={1=af8f775c-5e05-4400-86e9-469b7beabfc4, 2=af8f775c-5e05-4400-86e9-469b7beabfc4, 3=ac4b25a3-113f-4a5e-93f3-670d3d75e745, 4=ac4b25a3-113f-4a5e-93f3-670d3d75e745} status=FourthDimensionRouteStatus[managed=true, permitted=false, owner=af8f775c-5e05-4400-86e9-469b7beabfc4, currentBlock=1, nextBlock=2, reason=Native route held; explicit Resume and a fresh request required, freshRequestRequired=true]",
+      "shutdown": {
+        "required_pass": "[21:41:17] [Server thread/INFO] [minecraft/GameTestServer]: All 1 required tests passed :)",
+        "server_stop": "[21:41:17] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server",
+        "worlds_saved": "[21:41:19] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved",
+        "process_completion": "BUILD SUCCESSFUL in 20s"
+      }
+    },
+    {
+      "result_name": "coasterslaunchsystems_route_interop.bounded_route_changed_owner",
+      "original_log": "/mnt/NVME4/launchsystems-runs/ls06-route-20261126/native-changed_owner.log",
+      "sha256": "d38a2f22b3076600c8a7479f7f46fbed587b93b2f9d0bdb2f3baf86ed1a60717",
+      "manifest_hash_matches": true,
+      "result": "PASS",
+      "pass_marker": "LS_ROUTE_GUARD_PASS mode=changed_owner work=25.533508710697205 source=Ride controller: FAULT, reserved chassis 1, required brake length 11.93/26.00, transfer false, station capture true, swing off, boarding ready false. Vehicle authority unavailable; inspect and explicitly re-arm the retained controller Owner 915a799e-2cc5-4626-8e2e-0f3f45dea1ca; FAULT; Native current/next reservation pair changed; Continuous shaft supply; no finite store; Fresh panel request required; lower lever before another rising edge status=FourthDimensionRouteStatus[managed=true, permitted=false, owner=01ea1ca2-ea26-414b-a462-b3eeda342811, currentBlock=0, nextBlock=1, reason=Native current/next reservation pair changed, freshRequestRequired=true] retained={0=01ea1ca2-ea26-414b-a462-b3eeda342811, 1=78784fd8-a80d-421a-92e7-f63beef3185e, 3=78784fd8-a80d-421a-92e7-f63beef3185e, 4=78784fd8-a80d-421a-92e7-f63beef3185e}",
+      "shutdown": {
+        "required_pass": "[21:42:02] [Server thread/INFO] [minecraft/GameTestServer]: All 1 required tests passed :)",
+        "server_stop": "[21:42:02] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server",
+        "worlds_saved": "[21:42:05] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved",
+        "process_completion": "BUILD SUCCESSFUL in 16s"
+      }
+    },
+    {
+      "result_name": "coasterslaunchsystems_route_interop.bounded_route_stale_controller",
+      "original_log": "/mnt/NVME4/launchsystems-runs/ls06-route-20261126/native-stale_controller.log",
+      "sha256": "46966f159696abbd47f3c585c82a0e4b02b1eff1d3cc7c65079fcb978b8ab69c",
+      "manifest_hash_matches": true,
+      "result": "PASS",
+      "pass_marker": "LS_ROUTE_GUARD_PASS mode=stale_controller work=25.533508710697205 source=Ride controller: FAULT, reserved chassis 1, required brake length 11.93/26.00, transfer false, station capture true, swing off, boarding ready false. Linked module identity or controller ownership changed at BlockPos{x=319, y=158, z=-624} Owner 527d4437-5d19-43e7-8a38-293f1b111c5c; FAULT; Linked equipment identity or owner is unavailable; Continuous shaft supply; no finite store; Fresh panel request required; lower lever before another rising edge status=FourthDimensionRouteStatus[managed=true, permitted=true, owner=5d56fb53-d178-48e6-85f6-34ca4b2d9811, currentBlock=0, nextBlock=1, reason=, freshRequestRequired=false] retained={0=5d56fb53-d178-48e6-85f6-34ca4b2d9811, 1=5d56fb53-d178-48e6-85f6-34ca4b2d9811, 3=90f98193-ac7b-402e-a535-03339f280163, 4=90f98193-ac7b-402e-a535-03339f280163}",
+      "shutdown": {
+        "required_pass": "[21:42:16] [Server thread/INFO] [minecraft/GameTestServer]: All 1 required tests passed :)",
+        "server_stop": "[21:42:16] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server",
+        "worlds_saved": "[21:42:18] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved",
+        "process_completion": "BUILD SUCCESSFUL in 13s"
+      }
+    },
+    {
+      "result_name": "coasterslaunchsystems_route_interop.bounded_route_opposed_direction",
+      "original_log": "/mnt/NVME4/launchsystems-runs/ls06-route-20261126/native-opposed_direction.log",
+      "sha256": "01c26be338a0bd4fa65b44396ceb619882bd007a4e0be897a98b98f3a723e29b",
+      "manifest_hash_matches": true,
+      "result": "PASS",
+      "pass_marker": "LS_ROUTE_GUARD_PASS mode=opposed_direction work=25.533508710697205 source=Ride controller: FAULT, reserved chassis 1, required brake length 11.93/26.00, transfer false, station capture true, swing off, boarding ready false. A linked module changed its rail section or direction Owner 83f9103d-275b-40d3-886e-1db6a13c13dd; FAULT; Equipment direction opposes or leaves the native route; Continuous shaft supply; no finite store; Fresh panel request required; lower lever before another rising edge status=FourthDimensionRouteStatus[managed=true, permitted=false, owner=92b411f6-6459-4f0d-99c2-85ef1bdff4a7, currentBlock=0, nextBlock=1, reason=Equipment direction opposes or leaves the native route, freshRequestRequired=true] retained={0=92b411f6-6459-4f0d-99c2-85ef1bdff4a7, 1=92b411f6-6459-4f0d-99c2-85ef1bdff4a7, 3=283175e3-41ed-434a-a08d-5461552f5c99, 4=283175e3-41ed-434a-a08d-5461552f5c99}",
+      "shutdown": {
+        "required_pass": "[21:42:30] [Server thread/INFO] [minecraft/GameTestServer]: All 1 required tests passed :)",
+        "server_stop": "[21:42:30] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server",
+        "worlds_saved": "[21:42:32] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved",
+        "process_completion": "BUILD SUCCESSFUL in 13s"
+      }
+    },
+    {
+      "result_name": "coasterslaunchsystems_route_interop.bounded_route_rollback",
+      "original_log": "/mnt/NVME4/launchsystems-runs/ls06-route-20261126/native-rollback.log",
+      "sha256": "c42e858e710e2306ec32f624889728d4307bb5dadb7afc1e4368f890af4821ed",
+      "manifest_hash_matches": true,
+      "result": "PASS",
+      "pass_marker": "LS_ROUTE_GUARD_PASS mode=rollback work=25.533508710697205 source=Ride controller: FAULT, reserved chassis 1, required brake length 11.93/26.00, transfer false, station capture true, swing off, boarding ready false. Vehicle authority unavailable; inspect and explicitly re-arm the retained controller Owner f83eca71-a91c-459f-9fe6-25c78591c9d5; FAULT; Native route held; explicit Resume and a fresh request required; Continuous shaft supply; no finite store; Fresh panel request required; lower lever before another rising edge status=FourthDimensionRouteStatus[managed=true, permitted=false, owner=ebb255ef-3d40-440c-af78-b26c62728f79, currentBlock=0, nextBlock=1, reason=Native route held; explicit Resume and a fresh request required, freshRequestRequired=true] retained={0=ebb255ef-3d40-440c-af78-b26c62728f79, 1=ebb255ef-3d40-440c-af78-b26c62728f79, 3=4c36049b-87c8-492a-917a-d50e54085c46, 4=4c36049b-87c8-492a-917a-d50e54085c46}",
+      "shutdown": {
+        "required_pass": "[21:42:43] [Server thread/INFO] [minecraft/GameTestServer]: All 1 required tests passed :)",
+        "server_stop": "[21:42:43] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server",
+        "worlds_saved": "[21:42:45] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved",
+        "process_completion": "BUILD SUCCESSFUL in 13s"
+      }
+    },
+    {
+      "result_name": "coasterslaunchsystems_route_interop.bounded_route_missing_carrier",
+      "original_log": "/mnt/NVME4/launchsystems-runs/ls06-route-20261126/native-missing_carrier.log",
+      "sha256": "585cbbac2b0d0b22a65ae4511f8ea87698af875f3af2404bc84ea12fea399b9f",
+      "manifest_hash_matches": true,
+      "result": "PASS",
+      "pass_marker": "LS_ROUTE_GUARD_PASS mode=missing_carrier work=25.533508710697205 source=Ride controller: FAULT, reserved chassis 1, required brake length 11.93/26.00, transfer false, station capture true, swing off, boarding ready false. Vehicle authority unavailable; inspect and explicitly re-arm the retained controller Owner 21fd1297-af2c-439f-9741-5d1b6b9b9851; FAULT; Complete native route bodies required; Continuous shaft supply; no finite store; Fresh panel request required; lower lever before another rising edge status=FourthDimensionRouteStatus[managed=true, permitted=false, owner=0a5d51a5-fd06-480a-86ef-738f11c83152, currentBlock=0, nextBlock=1, reason=Complete native route bodies required, freshRequestRequired=true] retained={0=0a5d51a5-fd06-480a-86ef-738f11c83152, 1=0a5d51a5-fd06-480a-86ef-738f11c83152, 3=5971c52b-7f4c-4008-a174-46d125331537, 4=5971c52b-7f4c-4008-a174-46d125331537}",
+      "shutdown": {
+        "required_pass": "[21:42:56] [Server thread/INFO] [minecraft/GameTestServer]: All 1 required tests passed :)",
+        "server_stop": "[21:42:56] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server",
+        "worlds_saved": "[21:42:59] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved",
+        "process_completion": "BUILD SUCCESSFUL in 13s"
+      }
+    }
+  ],
+  "artifact_parity": {
+    "root_jar": "/mnt/NVME4/launchsystems-runs/ls06-integration-20261126/build/libs/coasters-launch-systems-0.6.0.jar",
+    "rides_jar": "/mnt/NVME4/launchsystems-runs/ls06-route-20261126/client-build/libs/coasters-launch-systems-0.6.0.jar",
+    "root_sha256": "0f56f483f235dff798034aaddce4eed20e5d6d8b940a8cd6e4d9161749a8d534",
+    "rides_sha256": "0f56f483f235dff798034aaddce4eed20e5d6d8b940a8cd6e4d9161749a8d534",
+    "whole_jar_identical": true,
+    "production_class_filter": "All .class entries except /gametest/",
+    "production_class_count": 106,
+    "production_classes_identical": true
+  },
+  "shutdown_scope": "All six native Gradle invocations logged stopping server, all dimensions saved and BUILD SUCCESSFUL. This receipt does not assert shutdown of the separately active occupied player runtime."
+}

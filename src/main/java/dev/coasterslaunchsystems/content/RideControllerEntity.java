@@ -46,6 +46,8 @@ public final class RideControllerEntity extends BlockEntity {
   private boolean armed, high, inputObserved, launchRequested;
   private State phase = State.INSPECTION;
   private String fault = "";
+  private String blockedReason = "";
+  private long requestRevision = UUID.randomUUID().getLeastSignificantBits();
   private double required, available;
 
   public RideControllerEntity(BlockPos pos, BlockState state) { super(EquipmentContent.CONTROLLER_ENTITY.get(), pos, state); }
@@ -54,7 +56,7 @@ public final class RideControllerEntity extends BlockEntity {
     RideControllers.register(server, this);
     // Only the top is a request input; outputs cannot feed their own request latch.
     boolean powered = server.getSignal(worldPosition.above(), Direction.UP) > 0;
-    if (inputObserved && powered && !high && (phase == State.READY || phase == State.READY_EXIT)) launchRequested = true;
+    if (inputObserved && powered && !high && (phase == State.READY || phase == State.READY_EXIT)) { launchRequested = true; changed(); }
     high = powered; inputObserved = true;
   }
   public BlockPos from() { return from; }
@@ -200,13 +202,43 @@ public final class RideControllerEntity extends BlockEntity {
     stationCapture = value; boardingReady = false; changed();
   }
   public String fault() { return fault; }
-  public boolean consumeRequest() { boolean value = launchRequested; launchRequested = false; return value; }
+  public boolean consumeRequest() { boolean value = launchRequested; launchRequested = false; if (value) changed(); return value; }
+  public long requestRevision() { return requestRevision; }
+  public boolean requestPending() { return launchRequested; }
+  public boolean requestInputHigh() { return high; }
+  public void checkRequestRevision(long expected) {
+    if (expected != requestRevision) throw new IllegalArgumentException("Controller changed; refresh the operator panel");
+  }
+  /** One fresh operator request joins the normal loop; it never directly releases a vehicle hold. */
+  public void requestDispatch(long expected) {
+    checkRequestRevision(expected);
+    if (!(level instanceof ServerLevel) || !armed || !fault.isEmpty() || launchRequested
+        || (phase != State.READY && phase != State.READY_EXIT))
+      throw new IllegalArgumentException(blockedReason().isEmpty() ? "Controller is not ready for a fresh request" : blockedReason());
+    launchRequested = true; changed();
+  }
+  public void blockedReason(String reason) {
+    String value = reason == null ? "" : reason;
+    if (!blockedReason.equals(value)) { blockedReason = value; changed(); }
+  }
+  public String blockedReason() {
+    if (!fault.isEmpty()) return fault;
+    if (!blockedReason.isEmpty()) return blockedReason;
+    return switch (phase) {
+      case READY, READY_EXIT -> "";
+      case INSPECTION -> "Inspect and explicitly arm the controller";
+      case HOLD -> reservation.isEmpty() ? "No reserved train in this section" : "Waiting for launch readiness";
+      case CAPTURING, BOARDING -> "Native station alignment or restraints are not ready";
+      case RECEIVING -> "Incoming transfer retains this section";
+      default -> "Controller is " + phase;
+    };
+  }
   public void setArmed(boolean value) {
     if (value && (from == null || modules.isEmpty())) throw new IllegalArgumentException("Bind a rail section and link its drive/fin modules first");
     if (value && level instanceof ServerLevel server && resolve(server) == null) throw new IllegalArgumentException(fault);
     if (!value && level instanceof ServerLevel server && modules.stream().anyMatch(m -> server.getBlockEntity(m.position()) instanceof EquipmentCabinetEntity cabinet && cabinet.cableInUse()))
       throw new IllegalArgumentException("Retained cable catch requires physical return or inspected recovery");
-    requestedRepair = null; armed = value; boardingReady = false; launchRequested = false; inputObserved = false; fault = "";
+    requestedRepair = null; blockedReason = ""; armed = value; boardingReady = false; launchRequested = false; inputObserved = false; fault = "";
     if (value) { completedSwingPasses = 0; forwardTailClear = false; backwardTailClear = false; }
     phase = value ? State.HOLD : State.INSPECTION; changed();
     if (value && level instanceof ServerLevel server)
@@ -279,7 +311,7 @@ public final class RideControllerEntity extends BlockEntity {
     if (reservation.isEmpty()) { reservation.addAll(members); changed(); }
   }
   public void clearVerifiedReservation() { reservation.clear(); boardingReady = false; phase = State.HOLD; completedSwingPasses = 0; forwardTailClear = false; backwardTailClear = false; changed(); }
-  public void state(State next) { if (phase != next) { phase = next; if (next == State.RUNNING || next == State.BRAKING || next == State.EXITING || next == State.RECEIVING || next == State.FAULT || next == State.INSPECTION) boardingReady = false; changed(); } }
+  public void state(State next) { if (phase != next) { phase = next; blockedReason = ""; if (next == State.RUNNING || next == State.BRAKING || next == State.EXITING || next == State.RECEIVING || next == State.FAULT || next == State.INSPECTION) boardingReady = false; changed(); } }
   public void envelope(double needed, double usable) { required = needed; available = usable; }
   public void fail(String reason) {
     String message = reason == null || reason.isBlank() ? "Controller validation failed" : reason;
@@ -298,8 +330,10 @@ public final class RideControllerEntity extends BlockEntity {
   }
   public String status() { return "Ride controller: " + phase + ", reserved chassis " + reservation.size()
       + ", required brake length " + String.format(java.util.Locale.ROOT, "%.2f/%.2f", required, available) + ", transfer " + transferring + ", station capture " + stationCapture
-      + ", swing " + (swingProgram ? ((completedSwingPasses + 1) + "/3 " + swingDirection()) : "off") + ", boarding ready " + boardingReady + ". " + fault; }
+      + ", swing " + (swingProgram ? ((completedSwingPasses + 1) + "/3 " + swingDirection()) : "off") + ", boarding ready " + boardingReady + ". " + fault
+      + (level instanceof ServerLevel server ? " " + dev.coasterslaunchsystems.runtime.OperatorStatus.summary(server, this) : ""); }
   private void changed() {
+    requestRevision++;
     setChanged();
     if (level != null) { level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3); level.updateNeighborsAt(worldPosition, getBlockState().getBlock()); }
   }
@@ -375,5 +409,6 @@ public final class RideControllerEntity extends BlockEntity {
     cachedTrack = null; graphRevision = Integer.MIN_VALUE; routeChunks.clear();
     cachedTransfer = null; transferRevision = Integer.MIN_VALUE;
     requestedRepair = null; high = false; inputObserved = false; launchRequested = false;
+    blockedReason = ""; requestRevision = UUID.randomUUID().getLeastSignificantBits();
   }
 }

@@ -256,7 +256,7 @@ public final class RideControllers {
     if (forwardStops.isEmpty()) { controller.fail("A downstream friction-fin bank is required"); return; }
     double forwardStopStart = forwardStops.getFirst().interval().start(), forwardStopEnd = forwardStops.getFirst().interval().end();
     for (var stop : forwardStops.subList(1, forwardStops.size())) {
-      if (stop.interval().start() > forwardStopEnd + 1e-6) { controller.fail("Downstream friction-fin coverage has a gap"); return; }
+      if (!StoppingEnvelope.coverageConnects(forwardStopEnd, stop.interval().start())) { controller.fail("Downstream friction-fin coverage has a gap"); return; }
       forwardStopEnd = Math.max(forwardStopEnd, stop.interval().end());
     }
     var backwardStops = controller.swingProgram() ? modules.stream()
@@ -267,7 +267,7 @@ public final class RideControllers {
       if (backwardStops.isEmpty()) { controller.fail("Swing launch requires a continuous upstream friction-fin bank"); return; }
       backwardStopStart = backwardStops.getFirst().interval().start(); backwardStopEnd = backwardStops.getFirst().interval().end();
       for (var stop : backwardStops.subList(1, backwardStops.size())) {
-        if (stop.interval().start() > backwardStopEnd + 1e-6) { controller.fail("Upstream friction-fin coverage has a gap"); return; }
+        if (!StoppingEnvelope.coverageConnects(backwardStopEnd, stop.interval().start())) { controller.fail("Upstream friction-fin coverage has a gap"); return; }
         backwardStopEnd = Math.max(backwardStopEnd, stop.interval().end());
       }
     }
@@ -382,6 +382,9 @@ public final class RideControllers {
     // A swing may stage on its upstream end bank; holding there is the required starting pose.
     boolean clearOfForward = largest + radius < forwardStopStart && largestFin < forwardStopStart - .6;
     controller.state(held && ready && powered && charged && clearOfForward ? State.READY : State.HOLD);
+    controller.blockedReason(!held ? "Complete train is not physically held" : !ready ? "Native vehicle dispatch guards are not ready"
+        : !powered ? "Launch or spring-pad release power is unavailable" : !charged ? "Launch energy reserve is charging"
+        : !clearOfForward ? "Train is already in the downstream stopping bank" : "");
     if (!controller.consumeRequest() || controller.phase() != State.READY) return;
     // The route has already been reserved. Delegate release to the uniquely resolved vehicle owner.
     if (!MotionProviders.requestDispatch(level, members.iterator().next())) { controller.fail("Vehicle provider rejected dispatch"); return; }

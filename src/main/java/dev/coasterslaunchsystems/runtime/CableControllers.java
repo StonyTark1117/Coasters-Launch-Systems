@@ -228,6 +228,10 @@ final class CableControllers {
           && cabinet.cableInUse() && rig.phase() == NativeCableRig.Phase.ENGAGED
           && Math.max(frontFin, maximum + radius) < stopStart;
       controller.state(dispatchable ? State.READY : State.HOLD);
+      controller.blockedReason(!held ? "Complete train is not physically held" : !ready ? "Native vehicle dispatch guards are not ready"
+          : !launchPower ? "Cable launch charge or shaft power is unavailable" : !padPower ? "Spring-pad release power is unavailable"
+          : !cabinet.cableInUse() || rig.phase() != NativeCableRig.Phase.ENGAGED ? "Catch must engage at its physical home"
+          : Math.max(frontFin, maximum + radius) >= stopStart ? "Train is already in the downstream stopping bank" : "");
       if (controller.consumeRequest() && dispatchable) {
         try { rig.beginPull(); controller.state(State.RUNNING); }
         catch (RuntimeException failure) { controller.fail("Cable dispatch failed: " + failure.getMessage()); return; }

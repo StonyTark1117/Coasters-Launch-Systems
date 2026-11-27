@@ -1,0 +1,11 @@
+{
+  "fd_readiness_to_tagged_changed_classes": [
+    "dev/fourthdimension/client/tools/OperatorScreen.class",
+    "dev/fourthdimension/editor/EditorNetwork$Edit.class",
+    "dev/fourthdimension/editor/EditorNetwork$Result.class",
+    "dev/fourthdimension/editor/EditorNetwork$Target.class",
+    "dev/fourthdimension/editor/EditorNetwork.class",
+    "dev/fourthdimension/gametest/ExternalOperatorGameTests.class"
+  ],
+  "route_authority_and_local_operations_byte_identical": true
+}

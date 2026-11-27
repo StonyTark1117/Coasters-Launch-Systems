@@ -1,0 +1,17 @@
+{
+  "operator-ready-owner.png": "20261127T045045.892173Z-after.png",
+  "fresh-panel-dispatch.png": "20261127T045059.397583Z-after.png",
+  "occupied-first-hold.png": "20261127T045158.131111Z-after.png",
+  "transfer-lever-high.png": "20261127T045253.672386Z-after.png",
+  "occupied-transfer.png": "20261127T045322.866163Z-state.png",
+  "blocked-panel.png": "20261127T045556.801116Z-after.png",
+  "blocked-dispatch.png": "20261127T045614.209444Z-after.png",
+  "normal-disconnect.png": "20261127T045644.231684Z-after.png",
+  "empty-b-native-removal.png": "20261127T050945.862753Z-after.png",
+  "receiver-explicit-rearm.png": "20261127T051025.620259Z-after.png",
+  "recovery-source-ready.png": "20261127T051959.826661Z-after.png",
+  "recovery-fresh-low.png": "20261127T052036.502252Z-after.png",
+  "recovery-fresh-high.png": "20261127T052058.193677Z-after.png",
+  "recovery-final-seated-stop.png": "20261127T052214.995120Z-state.png",
+  "final-disconnect.png": "20261127T052235.005053Z-after.png"
+}

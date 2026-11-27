@@ -1,0 +1,18 @@
+{
+  "owner": "/root/foundation",
+  "root": "/mnt/NVME4/launchsystems-runs/ls06-operator-20261126/observer",
+  "display": 399,
+  "player": "Observer",
+  "unit_prefix": "fd-ls06-operator-observer-20261126",
+  "client_script": "/mnt/NVME4/launchsystems-runs/ls06-operator-20261126/observer/build/moddev/runClient.sh",
+  "server_root": "/mnt/NVME4/launchsystems-runs/ls06-route-20261126/server",
+  "server_unit": "fd-ls-route-20261126-server.service",
+  "endpoint": "127.0.0.1:25821",
+  "client_limit": "6G",
+  "heap": "1536M",
+  "lifecycle": "Complete: normal Disconnect2026-11-27T05:22:35Z; client and display inactive/MainPID0/success; no owned runtime retained",
+  "artifacts": {
+    "/mnt/NVME4/launchsystems-runs/ls06-operator-20261126/observer/artifacts/fourthdimension-route-operator-tagged-api1.jar": "d676d730a02c6f9abe217985db03a3bca424892f06236a0cf64e066b82e87738",
+    "/mnt/NVME4/launchsystems-runs/ls06-operator-20261126/observer/artifacts/coasters-launch-systems-0.6.0-recovery-eb0c84cefa90.jar": "eb0c84cefa907a62eb43a58166225326489ebeaf749569037de3926632ce9c78"
+  }
+}

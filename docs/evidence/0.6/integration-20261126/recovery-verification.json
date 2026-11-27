@@ -1,0 +1,380 @@
+{
+  "verified_utc": "2026-11-27T05:24:44.415593+00:00",
+  "verifier": "bridge independent read-only evidence reconciliation",
+  "result": "PASS",
+  "scope": "Targeted saved-world active-transfer recovery: explicit source rearm consumes pending native resume, retained HIGH does not replay, distinct LOW/HIGH produces actual occupied departure. No additional runtime launched.",
+  "ls_sha256": "eb0c84cefa907a62eb43a58166225326489ebeaf749569037de3926632ce9c78",
+  "fd_sha256": "d676d730a02c6f9abe217985db03a3bca424892f06236a0cf64e066b82e87738",
+  "package_verification": "recovery-package-verification.json",
+  "identity": {
+    "chassis": "f40f9395-9ef1-4076-be9d-71cecc3915d4",
+    "owner": "249dd7d7-05a2-4bf0-a02f-54ee9bcadf38",
+    "postpatch_dev_seat": "52184253-2aa9-4b56-9691-153ff60b5ccf",
+    "note": "Seat entity was recreated across JVM reload; continuity assertion applies to the postpatch rejoin/rearm/departure sequence."
+  },
+  "input_events": [
+    {
+      "line": 122,
+      "at": "20261127T051959.826661Z",
+      "action": "use",
+      "modifier": "Shift_L",
+      "mouse_binding": "use/right",
+      "expected": "Patched explicit source rearm consumes only native resume and reaches READY_EXIT without dispatch while lever stays high",
+      "after": "/mnt/NVME4/launchsystems-runs/ls06-operator-20261126/observer/evidence/20261127T051959.826661Z-after.png"
+    },
+    {
+      "line": 124,
+      "at": "20261127T052036.502252Z",
+      "action": "use",
+      "modifier": null,
+      "mouse_binding": "use/right",
+      "expected": "One normal lever Use lowers retained HIGH to LOW; train stays READY_EXIT with no request",
+      "after": "/mnt/NVME4/launchsystems-runs/ls06-operator-20261126/observer/evidence/20261127T052036.502252Z-after.png"
+    },
+    {
+      "line": 126,
+      "at": "20261127T052058.193677Z",
+      "action": "use",
+      "modifier": null,
+      "mouse_binding": "use/right",
+      "expected": "Distinct normal lever HIGH creates one fresh post-recovery request and occupied departure",
+      "after": "/mnt/NVME4/launchsystems-runs/ls06-operator-20261126/observer/evidence/20261127T052058.193677Z-after.png"
+    }
+  ],
+  "readbacks": [
+    {
+      "line": 84,
+      "time": 1795756800.6822083,
+      "command": "data get block 324 158 -624 armed",
+      "result": "324, 158, -624 has the following block data: 1b\n"
+    },
+    {
+      "line": 85,
+      "time": 1795756800.6834657,
+      "command": "data get block 324 158 -624 phase",
+      "result": "324, 158, -624 has the following block data: \"READY_EXIT\"\n"
+    },
+    {
+      "line": 86,
+      "time": 1795756800.683983,
+      "command": "data get block 324 158 -624 fault",
+      "result": "324, 158, -624 has the following block data: \"\"\n"
+    },
+    {
+      "line": 87,
+      "time": 1795756800.6972017,
+      "command": "execute if block 324 159 -624 minecraft:lever[powered=true] run data get block 324 158 -624 reservation",
+      "result": "324, 158, -624 has the following block data: [{id: [I; -200305771, -1628356490, -1096977970, -868674092]}]\n"
+    },
+    {
+      "line": 88,
+      "time": 1795756800.6986437,
+      "command": "data get entity Dev RootVehicle.Attach",
+      "result": "Dev has the following entity data: [I; 1377321555, 715737942, -1768876737, -167027505]\n"
+    },
+    {
+      "line": 90,
+      "time": 1795756837.1438522,
+      "command": "execute if block 324 159 -624 minecraft:lever[powered=false] run data get block 324 158 -624 phase",
+      "result": "324, 158, -624 has the following block data: \"READY_EXIT\"\n"
+    },
+    {
+      "line": 91,
+      "time": 1795756837.1455357,
+      "command": "data get entity Dev RootVehicle.Attach",
+      "result": "Dev has the following entity data: [I; 1377321555, 715737942, -1768876737, -167027505]\n"
+    },
+    {
+      "line": 92,
+      "time": 1795756858.8317444,
+      "command": "execute if block 324 159 -624 minecraft:lever[powered=true] run data get block 324 158 -624 phase",
+      "result": "324, 158, -624 has the following block data: \"EXITING\"\n"
+    },
+    {
+      "line": 93,
+      "time": 1795756858.8330038,
+      "command": "data get block 324 158 -624 fault",
+      "result": "324, 158, -624 has the following block data: \"\"\n"
+    },
+    {
+      "line": 94,
+      "time": 1795756858.8427103,
+      "command": "data get entity Dev RootVehicle.Attach",
+      "result": "Dev has the following entity data: [I; 1377321555, 715737942, -1768876737, -167027505]\n"
+    }
+  ],
+  "state_samples": [
+    {
+      "line": 23,
+      "at": "2026-11-27T05:18:40.202517+00:00",
+      "source_phase": "INSPECTION",
+      "route_reservations": {
+        "1": "f40f9395-9ef1-4076-be9d-71cecc3915d4",
+        "2": "f40f9395-9ef1-4076-be9d-71cecc3915d4"
+      },
+      "authority": {
+        "owner": "249dd7d7-05a2-4bf0-a02f-54ee9bcadf38",
+        "epoch": 8,
+        "sequence": 10,
+        "held": true,
+        "suspended": true,
+        "reason": "Restored authority requires explicit Resume",
+        "stoppedTicks": 5
+      },
+      "carrier_bodies": [
+        "977a2551-d265-47f5-b054-655ea5ebe005",
+        "8d06ce7a-1465-4377-aaab-27834f785534"
+      ],
+      "carrier_capture": [
+        true,
+        true
+      ],
+      "dev_seat": "52184253-2aa9-4b56-9691-153ff60b5ccf",
+      "position": [
+        328.5,
+        162.2,
+        -587.4
+      ],
+      "velocity": [
+        0.0002311,
+        -0.000492,
+        2.15e-07
+      ]
+    },
+    {
+      "line": 25,
+      "at": "2026-11-27T05:19:56.184460+00:00",
+      "source_phase": "INSPECTION",
+      "route_reservations": {
+        "1": "f40f9395-9ef1-4076-be9d-71cecc3915d4",
+        "2": "f40f9395-9ef1-4076-be9d-71cecc3915d4"
+      },
+      "authority": {
+        "owner": "249dd7d7-05a2-4bf0-a02f-54ee9bcadf38",
+        "epoch": 8,
+        "sequence": 10,
+        "held": true,
+        "suspended": true,
+        "reason": "Restored authority requires explicit Resume",
+        "stoppedTicks": 5
+      },
+      "carrier_bodies": [
+        "977a2551-d265-47f5-b054-655ea5ebe005",
+        "8d06ce7a-1465-4377-aaab-27834f785534"
+      ],
+      "carrier_capture": [
+        true,
+        true
+      ],
+      "dev_seat": "52184253-2aa9-4b56-9691-153ff60b5ccf",
+      "position": [
+        328.5,
+        162.2,
+        -587.4
+      ],
+      "velocity": [
+        0.0002302,
+        -0.000492,
+        2.159e-07
+      ]
+    },
+    {
+      "line": 26,
+      "at": "2026-11-27T05:20:10.003433+00:00",
+      "source_phase": "READY_EXIT",
+      "route_reservations": {
+        "2": "f40f9395-9ef1-4076-be9d-71cecc3915d4",
+        "3": "f40f9395-9ef1-4076-be9d-71cecc3915d4"
+      },
+      "authority": {
+        "owner": "249dd7d7-05a2-4bf0-a02f-54ee9bcadf38",
+        "epoch": 9,
+        "sequence": 11,
+        "held": true,
+        "suspended": false,
+        "reason": "",
+        "stoppedTicks": 5
+      },
+      "carrier_bodies": [
+        "977a2551-d265-47f5-b054-655ea5ebe005",
+        "8d06ce7a-1465-4377-aaab-27834f785534"
+      ],
+      "carrier_capture": [
+        true,
+        true
+      ],
+      "dev_seat": "52184253-2aa9-4b56-9691-153ff60b5ccf",
+      "position": [
+        328.5,
+        162.2,
+        -587.4
+      ],
+      "velocity": [
+        -0.0008264,
+        -0.0004914,
+        1.815e-07
+      ]
+    },
+    {
+      "line": 27,
+      "at": "2026-11-27T05:20:57.505578+00:00",
+      "source_phase": "READY_EXIT",
+      "route_reservations": {
+        "2": "f40f9395-9ef1-4076-be9d-71cecc3915d4",
+        "3": "f40f9395-9ef1-4076-be9d-71cecc3915d4"
+      },
+      "authority": {
+        "owner": "249dd7d7-05a2-4bf0-a02f-54ee9bcadf38",
+        "epoch": 9,
+        "sequence": 11,
+        "held": true,
+        "suspended": false,
+        "reason": "",
+        "stoppedTicks": 5
+      },
+      "carrier_bodies": [
+        "977a2551-d265-47f5-b054-655ea5ebe005",
+        "8d06ce7a-1465-4377-aaab-27834f785534"
+      ],
+      "carrier_capture": [
+        true,
+        true
+      ],
+      "dev_seat": "52184253-2aa9-4b56-9691-153ff60b5ccf",
+      "position": [
+        328.5,
+        162.2,
+        -587.4
+      ],
+      "velocity": [
+        -0.0008252,
+        -0.0004914,
+        1.824e-07
+      ]
+    },
+    {
+      "line": 28,
+      "at": "2026-11-27T05:21:02.935544+00:00",
+      "source_phase": "EXITING",
+      "route_reservations": {
+        "2": "f40f9395-9ef1-4076-be9d-71cecc3915d4",
+        "3": "f40f9395-9ef1-4076-be9d-71cecc3915d4"
+      },
+      "authority": {
+        "owner": "249dd7d7-05a2-4bf0-a02f-54ee9bcadf38",
+        "epoch": 9,
+        "sequence": 12,
+        "held": false,
+        "suspended": false,
+        "reason": "",
+        "stoppedTicks": 0
+      },
+      "carrier_bodies": [
+        "977a2551-d265-47f5-b054-655ea5ebe005",
+        "8d06ce7a-1465-4377-aaab-27834f785534"
+      ],
+      "carrier_capture": [
+        false,
+        false
+      ],
+      "dev_seat": "52184253-2aa9-4b56-9691-153ff60b5ccf",
+      "position": [
+        333.4,
+        162.2,
+        -587.4
+      ],
+      "velocity": [
+        1.312,
+        -0.0004858,
+        -2.469e-07
+      ]
+    },
+    {
+      "line": 30,
+      "at": "2026-11-27T05:22:05.926440+00:00",
+      "source_phase": "TRANSFER_BRAKING",
+      "route_reservations": {
+        "2": "f40f9395-9ef1-4076-be9d-71cecc3915d4",
+        "3": "f40f9395-9ef1-4076-be9d-71cecc3915d4"
+      },
+      "authority": {
+        "owner": "249dd7d7-05a2-4bf0-a02f-54ee9bcadf38",
+        "epoch": 9,
+        "sequence": 12,
+        "held": false,
+        "suspended": false,
+        "reason": "",
+        "stoppedTicks": 5
+      },
+      "carrier_bodies": [
+        "977a2551-d265-47f5-b054-655ea5ebe005",
+        "8d06ce7a-1465-4377-aaab-27834f785534"
+      ],
+      "carrier_capture": [
+        false,
+        false
+      ],
+      "dev_seat": "52184253-2aa9-4b56-9691-153ff60b5ccf",
+      "position": [
+        334.3,
+        162.2,
+        -587.4
+      ],
+      "velocity": [
+        -0.0007086,
+        -0.0004907,
+        -8.305e-09
+      ]
+    }
+  ],
+  "disclosures": [
+    "Conflict train B was removed through normal block interactions before this recovery; only train A remains in route reservations.",
+    "Validation-only author-entry-drive moved the existing receiver tire/motor one block upstream, preserving module identity/settings and vehicle/body/pose/velocity/authority/request state; this is disclosed fixture preparation, not normal occupied editing evidence.",
+    "Final observed stopped phase was TRANSFER_BRAKING with the same rider and no fault; this receipt claims successful recovery and fresh occupied motion, not a completed downstream handoff or full circuit."
+  ],
+  "shutdown": {
+    "receipt": "/home/braydon/Documents/Coasters: Launch Systems/docs/evidence/0.6/integration-20261126/shutdown-verification.json",
+    "verified_utc": "2026-11-27T05:23:33.977796+00:00",
+    "all_five_units_inactive_pid_zero_success": true,
+    "server_saved_all_dimensions": true,
+    "saved_world": "/mnt/NVME4/launchsystems-runs/ls06-route-20261126/server/world"
+  },
+  "sources": [
+    {
+      "path": "/mnt/NVME4/launchsystems-runs/ls06-route-20261126/evidence/route-state.jsonl",
+      "sha256": "de630bb24b6a7b11b8eb3d433efbbc7b3d7b4d0f97da705d44dd1628d3797bb1"
+    },
+    {
+      "path": "/mnt/NVME4/launchsystems-runs/ls06-operator-20261126/observer/evidence/input.jsonl",
+      "sha256": "60d5112ddcbb9f6e204f914a455e37e5f4abcc3faeaf2a7a7a57e11cf71e6e0e"
+    },
+    {
+      "path": "/mnt/NVME4/launchsystems-runs/ls06-operator-20261126/observer/evidence/setup-readback.jsonl",
+      "sha256": "d564a2e28ff23229e7e53660e1dde11a62d045747e603ef171aa51c95db2c7ce"
+    },
+    {
+      "path": "/home/braydon/Documents/Coasters: Launch Systems/docs/evidence/ls06-route-20261126/authored-entry-correction.json",
+      "sha256": "8f7abcade7925d61741252307c0df51c304e833f06729478d015c0d1527a7edc"
+    },
+    {
+      "path": "/home/braydon/Documents/Coasters: Launch Systems/docs/evidence/0.6/integration-20261126/shutdown-verification.json",
+      "sha256": "f75be05a7be6600c91f6e6cae86aecab562d65c002585ee72e4ab79177757d4f"
+    },
+    {
+      "path": "/home/braydon/Documents/Coasters: Launch Systems/docs/evidence/ls06-route-20261126/runtime-cleanup.json",
+      "sha256": "7d2deec6cd390fbb729946b9c4f63a9750eeda7dd01b7011f0a8f34631fe4f2e"
+    },
+    {
+      "path": "/mnt/NVME4/launchsystems-runs/ls06-operator-20261126/observer/evidence/final-cleanup.txt",
+      "sha256": "ed492dce56526f467f0fd3f7fa8b2f47466b80c8615cc1360e2570ef59cef70a"
+    },
+    {
+      "path": "/mnt/NVME4/launchsystems-runs/ls06-route-20261126/evidence/server.log",
+      "sha256": "fea4d6c92e913497b0cf4e466f36c472747634637981edb008e44cc2095fd3e9"
+    },
+    {
+      "path": "/mnt/NVME4/launchsystems-runs/ls06-route-20261126/evidence/fresh-recovery-motion.mp4",
+      "sha256": "057341a4ccb4ac256f262f93386140ebeb58a7a9cbf4cd45931b52177c56fa04"
+    }
+  ]
+}

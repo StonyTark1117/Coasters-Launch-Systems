@@ -72,7 +72,7 @@ public final class RideTransfers {
     if (bank.isEmpty()) throw new IllegalStateException("Transfer section has no downstream friction bank");
     double start = bank.getFirst().interval().start(), end = bank.getFirst().interval().end();
     for (var module : bank.subList(1, bank.size())) {
-      if (module.interval().start() > end + 1e-6) throw new IllegalStateException("Transfer stopping coverage has a gap");
+      if (!StoppingEnvelope.coverageConnects(end, module.interval().start())) throw new IllegalStateException("Transfer stopping coverage has a gap");
       end = Math.max(end, module.interval().end());
     }
     return new Section(controller, track, launch, exit, fins, start, end);
@@ -224,6 +224,24 @@ public final class RideTransfers {
       var first = section(level, controller, track); var second = section(level, target, target.resolve(level)); var route = controller.transferRoute(level, target); var train = train(level, controller, route);
       if (occupied(level, route, controller.reservation()) || !RideControllers.routeAvailable(level, controller, target, route)) throw new IllegalStateException("Another train entered the reserved transfer");
       if (controller.phase() != State.EXITING && controller.phase() != State.TRANSFER_BRAKING) {
+        // Saved active pairs bypass the ordinary local loop. Consume only the source's
+        // explicitly queued rearm, after proving the retained complete train is stopped.
+        var pipeline = SubLevelContainer.getContainer(level).physicsSystem().getPipeline();
+        boolean stopped = train.rows().stream().allMatch(r -> {
+          var velocity = pipeline.getLinearVelocity(r.cart(), new Vector3d());
+          var point = VehicleInterfaces.tirePoint(r.cart());
+          if (point == null) return false;
+          var arm = new Vector3d(point).sub(r.cart().getMassTracker().getCenterOfMass()).rotate(r.cart().logicalPose().orientation());
+          var pointVelocity = pipeline.getAngularVelocity(r.cart(), new Vector3d()).cross(arm).add(velocity);
+          return Double.isFinite(velocity.lengthSquared()) && Double.isFinite(pointVelocity.lengthSquared())
+              && velocity.length() < .03 && pointVelocity.length() < .03
+              && (EquipmentRuntime.activeFinClamps(level, r.cart().getUniqueId()) > 0
+                  || StationCapture.vehicleHeld(level, r.cart().getUniqueId()));
+        });
+        if (!stopped) { controller.state(State.HOLD); controller.consumeRequest(); return true; }
+        if (!MotionProviders.reserveAuthority(level, controller.reservation().iterator().next(), controller.getBlockPos()))
+          throw new IllegalStateException("Transfer source authority unavailable; inspect and explicitly re-arm the retained controller");
+        train = train(level, controller, route);
         prepare(level, controller, target, first, second, route, train); return true;
       }
       if (chainOnRoute(level, route)) throw new IllegalStateException("Native chain entered the reserved transfer route");

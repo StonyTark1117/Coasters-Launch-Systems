@@ -151,11 +151,13 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
     if (snapshot == null || !snapshot.exclusiveOperator().isEmpty() || snapshot.maximumBrakeForce() <= 0
         || !snapshot.interfaces().containsAll(Set.of(Mechanism.TIRE, Mechanism.FIN_BRAKE))) return dev.coasterslaunchsystems.api.CaptureState.DENIED;
     try {
-      var map = (Map<?, ?>) vehicles.get(data.invoke(null, level)); boolean captured = true, aligned = true;
+      var map = (Map<?, ?>) vehicles.get(data.invoke(null, level)); boolean captured = true, aligned = true, retainedRoute = true;
       for (var id : snapshot.consist()) {
         var member = map.get(id); var cart = CoasterCartResolve.findCartById(level, id);
         var contact = cart == null ? null : EngagedContacts.current(level, cart).orElse(null);
-        if (member == null || contact == null || !authority.supported(level, member) || authority.denied(level, member)
+        boolean service = member != null && authority.retainedRouteService(level, member, Set.copyOf(snapshot.consist()));
+        retainedRoute &= service;
+        if (member == null || contact == null || !authority.supported(level, member) || authority.denied(level, member) && !service
             || !carriersAvailable(level, member) || maintenance.getBoolean(member)
             || !((String) fault.get(member)).isEmpty() || !(boolean) allows.invoke(null, cart, level, contact.hit()))
           return dev.coasterslaunchsystems.api.CaptureState.DENIED;
@@ -163,7 +165,8 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
         aligned &= (boolean) ready.invoke(null, level, member);
       }
       return captured ? aligned ? dev.coasterslaunchsystems.api.CaptureState.READY : dev.coasterslaunchsystems.api.CaptureState.ALIGNING
-          : snapshot.propulsionAllowed() && snapshot.brakingAllowed() ? dev.coasterslaunchsystems.api.CaptureState.RELEASED : dev.coasterslaunchsystems.api.CaptureState.DENIED;
+          : (snapshot.propulsionAllowed() || retainedRoute) && snapshot.brakingAllowed()
+              ? dev.coasterslaunchsystems.api.CaptureState.RELEASED : dev.coasterslaunchsystems.api.CaptureState.DENIED;
     } catch (ReflectiveOperationException failure) { throw new IllegalStateException("Fourth Dimension capture readiness unavailable", failure); }
   }
   @Override public boolean requestCapture(ServerLevel level, UUID chassis) {
@@ -242,7 +245,7 @@ public final class FourthDimensionMotionProvider implements VehicleMotionProvide
     return result;
   }
   private boolean dispatchReady(ServerLevel level, Object member) throws ReflectiveOperationException {
-    try { validateDispatch.invoke(null, level, member); return true; }
+    try { validateDispatch.invoke(null, level, member); return authority.dispatchReady(level, member); }
     catch (java.lang.reflect.InvocationTargetException rejected) {
       if (rejected.getCause() instanceof IllegalArgumentException || rejected.getCause() instanceof IllegalStateException) return false;
       throw rejected;

@@ -1,0 +1,194 @@
+> Task :createMinecraftArtifacts UP-TO-DATE
+> Task :compileJava
+> Task :compileApi4Fixture UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes
+> Task :downloadAssets UP-TO-DATE
+> Task :writeGameTestServerLegacyClasspath UP-TO-DATE
+> Task :prepareGameTestServerRun UP-TO-DATE
+
+> Task :runGameTestServer
+WARN StatusConsoleListener Advanced terminal features are not available in this environment
+[21:25:11] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgeserverdev, --gameDir, ., --fml.fmlVersion, 4.0.45, --fml.mcVersion, 1.21.1, --fml.neoForgeVersion, 21.1.256, --fml.neoFormVersion, 20240808.144430]
+[21:25:11] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: JVM identified as Arch Linux OpenJDK 64-Bit Server VM 21.0.13.1+2
+[21:25:11] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: ModLauncher 11.0.5+main.901c6ea8 starting: java version 21.0.13.1 by Arch Linux; OS Linux arch amd64 version 7.3.5-zen1-1-zen
+[21:25:11] [main/INFO] [ne.ne.fm.lo.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgeserverdev
+[21:25:11] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=union:/home/braydon/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.16.4+mixin.0.8.7/26d01f0567ab46e9ca0d2ed89d0ecc11aadbd433/sponge-mixin-0.16.4+mixin.0.8.7.jar%2394!/ Service=ModLauncher Env=SERVER
+[21:25:11] [main/WARN] [ne.ne.ja.se.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: veil. Using Mod File: /home/braydon/.gradle/caches/modules-2/files-2.1/foundry.veil/veil-neoforge-1.21.1/4.3.2/3d4056e31dd8a06e35901c3b82210c3d471e1e48/veil-neoforge-1.21.1-4.3.2.jar
+[21:25:11] [main/WARN] [ne.ne.ja.se.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: sablecompanion. Using Mod File: /home/braydon/.gradle/caches/modules-2/files-2.1/dev.ryanhcode.sable-companion/sable-companion-common-1.21.1/1.6.0/370be7db705926176e05c0215ed676150c45daae/sable-companion-common-1.21.1-1.6.0.jar
+[21:25:11] [main/WARN] [ne.ne.ja.se.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: library:sable_rapier. Using Mod File: /home/braydon/.gradle/caches/modules-2/files-2.1/dev.ryanhcode.sable/sable-sable_rapier-1.21.1/2.0.6/d095eff41df82fbd8b321c2467b712ff35cb6bf1/sable-sable_rapier-1.21.1-2.0.6.jar
+[21:25:11] [main/INFO] [ne.ne.fm.lo.mo.lo.JarInJarDependencyLocator/]: Found 4 dependencies adding them to mods collection
+[21:25:11] [main/INFO] [ne.ne.fm.lo.mo.ModDiscoverer/]: 
+     Mod List:
+		Name Version (Mod Id)
+
+		Coasters: Fourth Dimension 1.1.0 (fourthdimension)
+		Coasters: Launch Systems 0.6.0 (coasterslaunchsystems)
+		Create 6.0.10 (create)
+		Create: Coasters Simulated 0.1.5 (simulatedcoasters)
+		Flywheel 1.0.6 (flywheel)
+		Minecraft 1.21.1 (minecraft)
+		NeoForge 21.1.256 (neoforge)
+		Ponder 1.0.82+mc1.21.1 (ponder)
+		Sable 2.0.6 (sable)
+		Sable Companion 1.6.0 (sablecompanion)
+		Veil 4.3.2 (veil)
+[21:25:11] [main/INFO] [mixin/]: Compatibility level set to JAVA_21
+[21:25:11] [main/INFO] [cp.mo.mo.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgeserverdev' with arguments [--gameDir, .]
+[21:25:11] [main/WARN] [mixin/]: Reference map 'ponder.refmap.json' for ponder-common.mixins.json could not be read. If this is a development environment you can ignore this message
+[21:25:11] [main/INFO] [de.ry.sa.mi.AbstractSableMixinPlugin/]: Using Vanilla renderer mixins
+[21:25:11] [main/INFO] [de.ry.sa.mi.AbstractSableMixinPlugin/]: Using Vanilla renderer mixins
+[21:25:11] [main/WARN] [mixin/]: Error loading class: dev/simulated_team/simulated/content/blocks/merging_glue/MergingGlueBlockEntity (java.lang.ClassNotFoundException: dev.simulated_team.simulated.content.blocks.merging_glue.MergingGlueBlockEntity)
+[21:25:11] [main/WARN] [mixin/]: @Mixin target dev.simulated_team.simulated.content.blocks.merging_glue.MergingGlueBlockEntity was not found simulatedcoasters.mixins.json:compat.MergingGlueBlockEntityRivetMixin from mod simulatedcoasters
+[21:25:12] [main/WARN] [mixin/]: Error loading class: dev/jwaterfall/coastersengineered/MotorDrive (java.lang.ClassNotFoundException: dev.jwaterfall.coastersengineered.MotorDrive)
+[21:25:12] [main/WARN] [mixin/]: Error loading class: dev/jwaterfall/coastersengineered/CartAssembly (java.lang.ClassNotFoundException: dev.jwaterfall.coastersengineered.CartAssembly)
+[21:25:12] [main/WARN] [mixin/]: Error loading class: dev/plushivr/coasterfins/block/StationBlockEntity (java.lang.ClassNotFoundException: dev.plushivr.coasterfins.block.StationBlockEntity)
+[21:25:12] [main/WARN] [mixin/]: Error loading class: dev/notzyvex/coasters_extras/track/TrackRepaint (java.lang.ClassNotFoundException: dev.notzyvex.coasters_extras.track.TrackRepaint)
+[21:25:12] [main/WARN] [mixin/]: Error loading class: dev/notzyvex/coasters_extras/net/ModNetwork (java.lang.ClassNotFoundException: dev.notzyvex.coasters_extras.net.ModNetwork)
+[21:25:12] [main/WARN] [mixin/]: Error loading class: medev/coaster/skins/skin/CartSkinTargets (java.lang.ClassNotFoundException: medev.coaster.skins.skin.CartSkinTargets)
+[21:25:12] [main/WARN] [mixin/]: Error loading class: medev/coaster/skins/skin/LinkedCartSkins (java.lang.ClassNotFoundException: medev.coaster.skins.skin.LinkedCartSkins)
+[21:25:12] [main/WARN] [mixin/]: Error loading class: medev/coaster/skins/skin/CartSkinData (java.lang.ClassNotFoundException: medev.coaster.skins.skin.CartSkinData)
+[21:25:12] [main/WARN] [mixin/]: Error loading class: medev/coaster/skins/item/ScrewDriverItem (java.lang.ClassNotFoundException: medev.coaster.skins.item.ScrewDriverItem)
+[21:25:12] [main/WARN] [mixin/]: Error loading class: dev/plushivr/coasterfins/block/CoasterSeatBlockEntity (java.lang.ClassNotFoundException: dev.plushivr.coasterfins.block.CoasterSeatBlockEntity)
+[21:25:12] [main/WARN] [mixin/]: Error loading class: dev/plushivr/coasterfins/event/SeatDismountHandler (java.lang.ClassNotFoundException: dev.plushivr.coasterfins.event.SeatDismountHandler)
+[21:25:12] [main/WARN] [mixin/]: Error loading class: org/jetbrains/annotations/ApiStatus$ScheduledForRemoval (java.lang.ClassNotFoundException: org.jetbrains.annotations.ApiStatus$ScheduledForRemoval)
+[21:25:12] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.5).
+[21:25:15] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[21:25:15] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[21:25:15] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[21:25:15] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[21:25:15] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[21:25:15] [modloading-worker-0/INFO] [Veil/]: Veil is initializing.
+[21:25:15] [modloading-worker-0/INFO] [ne.ne.ne.co.NeoForgeMod/NEOFORGE-MOD]: NeoForge mod loading, version 21.1.256, for MC 1.21.1
+[21:25:15] [modloading-worker-0/INFO] [co.si.cr.Create/]: Create 6.0.10 initializing! Commit hash: ac0c444d9828da3453ae8cc65338e8de063286fb
+[21:25:15] [modloading-worker-0/INFO] [de.ry.sa.Sable/]: Sable loaded!
+[21:25:15] [modloading-worker-0/INFO] [de.fo.FourthDimension/]: Coasters: Fourth Dimension loaded from union:/mnt/NVME4/launchsystems-runs/ls06-operator-20261126/artifacts/fourthdimension-route-operator-final-api1.jar%23129!/
+[21:25:15] [modloading-worker-0/INFO] [de.co.LaunchSystems/]: Coasters: Launch Systems loaded from union:/mnt/NVME4/launchsystems-runs/ls06-route-20261126/build/classes/java/main/%23127!/
+[21:25:16] [main/INFO] [mojang/YggdrasilAuthenticationService]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[21:25:16] [NeoForge Version Check/INFO] [ne.ne.fm.VersionChecker/]: [create] Starting version check at https://api.modrinth.com/updates/create/forge_updates.json?neoforge=only
+[21:25:16] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/mnt/NVME4/launchsystems-runs/ls06-route-20261126/build/moddev/artifacts/neoforge-21.1.256.jar%23125!/assets/.mcassetsroot' uses unexpected schema
+[21:25:16] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/mnt/NVME4/launchsystems-runs/ls06-route-20261126/build/moddev/artifacts/neoforge-21.1.256.jar%23125!/data/.mcassetsroot' uses unexpected schema
+[21:25:16] [main/INFO] [co.si.cr.Create/]: Created 157 recipes which will be injected into the game
+[21:25:16] [main/INFO] [co.si.cr.Create/]: Created 0 tags which will be injected into the game
+[21:25:16] [main/INFO] [ne.ne.ne.ga.GameTestHooks/]: Enabled Gametest Namespaces: [coasterslaunchsystems_route_interop, coasterslaunchsystems_operator]
+[21:25:17] [NeoForge Version Check/INFO] [ne.ne.fm.VersionChecker/]: [create] Found status: OUTDATED Current: 6.0.10 Target: 6.0.10+mc1.21.1
+[21:25:17] [main/INFO] [minecraft/RecipeManager]: Loaded 2886 recipes
+[21:25:17] [main/INFO] [minecraft/AdvancementTree]: Loaded 2522 advancements
+[21:25:18] [Server thread/INFO] [de.ry.sa.Sable/]: Creating physics pipeline for ResourceKey[minecraft:dimension / minecraft:overworld] using RapierPhysicsPipelineProvider
+[21:25:18] [Server thread/INFO] [de.ry.sa.Sable/]: Using game directory relative Sable Rapier native directory /mnt/NVME4/launchsystems-runs/ls06-route-20261126/native-physical/.sable/natives
+[2026-11-27T04:25:18.314268332Z] [[32mINFO[0m] (sable_rapier) Rapier scene initialized
+[21:25:18] [Server thread/INFO] [de.ry.sa.Sable/]: Creating physics pipeline for ResourceKey[minecraft:dimension / minecraft:the_end] using RapierPhysicsPipelineProvider
+[2026-11-27T04:25:18.541323895Z] [[32mINFO[0m] (sable_rapier) Rapier scene initialized
+[21:25:18] [Server thread/INFO] [de.ry.sa.Sable/]: Creating physics pipeline for ResourceKey[minecraft:dimension / minecraft:the_nether] using RapierPhysicsPipelineProvider
+[2026-11-27T04:25:18.567269733Z] [[32mINFO[0m] (sable_rapier) Rapier scene initialized
+[21:25:18] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing start region for dimension minecraft:overworld
+[21:25:18] [worldgen/INFO] [minecraft/LoggerChunkProgressListener]: Preparing spawn area: 2%
+[21:25:18] [Server thread/INFO] [minecraft/LoggerChunkProgressListener]: Time elapsed: 94 ms
+[21:25:18] [Server thread/INFO] [minecraft/GameTestServer]: Started game test server
+[21:25:18] [Server thread/INFO] [ne.ne.ne.se.pe.PermissionAPI/]: Successfully initialized permission handler neoforge:default_handler
+[21:25:18] [Server thread/INFO] [minecraft/GameTestServer]: 2 tests are now running at position 4025606, -59, -962396!
+[21:25:18] [Server thread/INFO] [minecraft/GameTestRunner]: Running test batch 'ls_operator:0' (1 tests)...
+[21:25:18] [Server thread/INFO] [minecraft/GameTestServer]: [  ]
+[21:25:18] [Server thread/INFO] [minecraft/GameTestServer]: [  ]
+[21:25:19] [Server thread/INFO] [minecraft/GameTestServer]: [_ ]
+[21:25:19] [Server thread/INFO] [minecraft/GameTestServer]: [_ ]
+[21:25:19] [Server thread/INFO] [minecraft/GameTestServer]: [_ ]
+[21:25:19] [Server thread/INFO] [minecraft/GameTestServer]: [_ ]
+[21:25:19] [Server thread/INFO] [minecraft/GameTestServer]: [_ ]
+[21:25:19] [Server thread/INFO] [minecraft/GameTestServer]: [_ ]
+[21:25:19] [Server thread/INFO] [minecraft/GameTestServer]: [_ ]
+[21:25:19] [Server thread/INFO] [minecraft/GameTestServer]: [_ ]
+[21:25:19] [Server thread/INFO] [minecraft/GameTestServer]: [_ ]
+[21:25:19] [Server thread/INFO] [minecraft/GameTestServer]: [_ ]
+[21:25:19] [Server thread/INFO] [minecraft/GameTestServer]: [_ ]
+[21:25:19] [Server thread/INFO] [minecraft/GameTestServer]: [_ ]
+LS602_LOCAL_OPERATOR PASS actualArrow=true ownerChargeReasonParity=true transientQueue=true replayDenied=true retainedStop=true resumeNoDispatch=true reloadInvalidatesRequest=true
+[21:25:19] [Server thread/INFO] [minecraft/GameTestRunner]: Running test batch 'launchsystems_route_interop:0' (1 tests)...
+[21:25:20] [Server thread/INFO] [minecraft/GameTestServer]: [+ ]
+[21:25:20] [Server thread/INFO] [minecraft/GameTestServer]: [+_]
+[21:25:20] [Server thread/INFO] [minecraft/GameTestServer]: [+_]
+[21:25:20] [Server thread/INFO] [minecraft/GameTestServer]: [+_]
+[21:25:20] [Server thread/INFO] [minecraft/GameTestServer]: [+_]
+[21:25:20] [Server thread/INFO] [minecraft/GameTestServer]: [+_]
+[21:25:20] [Server thread/INFO] [minecraft/GameTestServer]: [+_]
+[21:25:20] [Server thread/INFO] [minecraft/GameTestServer]: [+_]
+[21:25:20] [Server thread/INFO] [minecraft/GameTestServer]: [+_]
+[21:25:20] [Server thread/INFO] [minecraft/GameTestServer]: [+_]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=TIRE exit=false span=SpanInterval[start=7.000000318681497, end=9.000000318681497]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=TIRE exit=false span=SpanInterval[start=9.000001004823996, end=11.000001004823996]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=TIRE exit=false span=SpanInterval[start=11.000000891924163, end=13.000000891924163]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=6.000000373106762, end=8.000000373106761]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=8.0, end=10.0]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=10.000000404526684, end=12.000000404526684]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=12.000000288025097, end=14.000000288025097]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=14.000000172456048, end=16.000000172456048]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=16.00000005045945, end=18.00000005045945]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=18.000001538574388, end=20.000001538574388]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=20.000000353684772, end=22.000000353684772]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=22.00000130526553, end=24.00000130526553]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=24.000000110056842, end=26.000000110056842]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=26.0, end=28.0]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=28.000002014074244, end=30.000002014074244]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=30.000000824517915, end=32.00000082451791]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=32.000001779984665, end=34.000001779984665]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=34.000000586579716, end=36.0]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=TIRE exit=true span=SpanInterval[start=10.000000404526684, end=12.000000404526684]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=TIRE exit=true span=SpanInterval[start=12.000000288025097, end=14.000000288025097]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=TIRE exit=true span=SpanInterval[start=14.000000172456048, end=16.000000172456048]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=TIRE exit=true span=SpanInterval[start=16.00000005045945, end=18.00000005045945]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=TIRE exit=true span=SpanInterval[start=18.000001538574388, end=20.000001538574388]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=TIRE exit=true span=SpanInterval[start=20.000000353684772, end=22.000000353684772]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=TIRE exit=true span=SpanInterval[start=22.00000130526553, end=24.00000130526553]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=TIRE exit=true span=SpanInterval[start=24.000000110056842, end=26.000000110056842]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=TIRE exit=true span=SpanInterval[start=26.0, end=28.0]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=TIRE exit=true span=SpanInterval[start=28.000002014074244, end=30.000002014074244]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=TIRE exit=true span=SpanInterval[start=30.000000824517915, end=32.00000082451791]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=TIRE exit=true span=SpanInterval[start=32.000001779984665, end=34.000001779984665]
+LS_ROUTE_MODULE controller=324, 158, -624 mechanism=TIRE exit=true span=SpanInterval[start=34.000000586579716, end=36.0]
+LS_ROUTE_MODULE controller=331, 158, -584 mechanism=TIRE exit=false span=SpanInterval[start=1.0000000000000568, end=3.000000000000057]
+LS_ROUTE_MODULE controller=331, 158, -584 mechanism=TIRE exit=false span=SpanInterval[start=3.0, end=5.0]
+LS_ROUTE_MODULE controller=331, 158, -584 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=0.0, end=1.9999999999999432]
+LS_ROUTE_MODULE controller=331, 158, -584 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=2.0, end=4.0]
+LS_ROUTE_MODULE controller=331, 158, -584 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=4.000000000000057, end=6.000000000000057]
+LS_ROUTE_MODULE controller=331, 158, -584 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=6.0, end=8.0]
+LS_ROUTE_MODULE controller=331, 158, -584 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=8.0, end=10.0]
+LS_ROUTE_MODULE controller=331, 158, -584 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=9.999999999999943, end=11.999999999999943]
+LS_ROUTE_MODULE controller=331, 158, -584 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=12.0, end=14.0]
+LS_ROUTE_MODULE controller=331, 158, -584 mechanism=FIN_BRAKE exit=false span=SpanInterval[start=14.000000000000057, end=16.0]
+[21:25:20] [Server thread/ERROR] [minecraft/LogTestReporter]: coasterslaunchsystems_route_interop.bounded_route_physical_conflict failed at 4025614, -60, -962396! Unexpected local preparation fault: Ride controller: FAULT, reserved chassis 0, required brake length 0.00/0.00, transfer false, station capture true, swing off, boarding ready false. Downstream friction-fin coverage has a gap Owner 17915546-4497-42d7-8cea-ea73bc2b302d; FAULT; Downstream friction-fin coverage has a gap; Continuous shaft supply; no finite store; Fresh panel request or new rising edge required
+[21:25:20] [Server thread/INFO] [minecraft/GameTestServer]: [+X]
+[21:25:20] [Server thread/INFO] [minecraft/GameTestServer]: ========= 2 GAME TESTS COMPLETE IN 1.983 s ======================
+[21:25:20] [Server thread/INFO] [minecraft/GameTestServer]: 1 required tests failed :(
+[21:25:20] [Server thread/INFO] [minecraft/GameTestServer]:    - coasterslaunchsystems_route_interop.bounded_route_physical_conflict
+[21:25:20] [Server thread/INFO] [minecraft/GameTestServer]: ====================================================
+[21:25:20] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server
+[21:25:20] [Server thread/INFO] [minecraft/MinecraftServer]: Saving players
+[21:25:20] [Server thread/INFO] [minecraft/MinecraftServer]: Saving worlds
+[21:25:21] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:overworld
+[21:25:21] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:overworld
+[21:25:35] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_end
+[21:25:35] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:the_end
+[21:25:35] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[21:25:35] [Server thread/INFO] [de.ry.sa.Sable/]: Saving sub-levels for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[21:25:35] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[21:25:35] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[21:25:35] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[21:25:35] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved
+[21:25:35] [Server thread/INFO] [minecraft/GameTestServer]: Game test server shutting down
+
+> Task :runGameTestServer FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':runGameTestServer'.
+> Process 'command '/usr/lib/jvm/java-21-openjdk/bin/java'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to generate a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 26s
+8 actionable tasks: 2 executed, 6 up-to-date

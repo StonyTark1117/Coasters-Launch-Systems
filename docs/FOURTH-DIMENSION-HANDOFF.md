@@ -82,6 +82,79 @@ valid where these narrow changes do not affect its claim. Powered Inverted Yaw
 retains its mandatory native whole-circuit Chain/governor ownership and is not
 included in this extension.
 
+## 0.6 route and operator extension — accepted
+
+The restored `codex/launch-systems-authority` worktree starts at `dc1c83a` and
+adds `EXTERNAL_ROUTE_API = 1` without changing external API1 or the accepted
+family contract. Providers explicitly opt into managed routes and declare their
+actual directed equipment corridor. `requestRoute` performs stopped native
+admission before claim; `resumeRoute` performs explicit stopped recovery before
+longitudinal Resume. Neither operation dispatches. FD retains its eight-segment,
+six-block, three-train original Arrow grammar and owns all reservation changes.
+
+Live route status checks the saved admitted consist, complete bodies, current/next
+ownership, directed progression, support geometry and rollback. A transient
+observation detects changed reservation pairs even if their owner map is changed
+at the same time; it does not own or persist a second reservation system. Reload
+requires explicit recovery. Captured transfers retain route and longitudinal
+holds until receiver rearm and a fresh request. Older providers keep the managed
+route veto, including dynamic proxies that do not implement the new defaults.
+
+The existing operator panel uses `operatorStatus` and `operatorAction` callbacks
+through the exact registered owner. LS supplies its shared status and transient
+request revision. Ordinary native capture/restraint/vehicle tools stay native;
+external dispatch or resume without a fresh panel revision fails closed. See
+[operator controls](OPERATOR-INTEROPERABILITY.md). The panel fixture has passed;
+the focused route fixture has also passed. Loaded interop and actual occupied
+recovery are accepted in the [0.6 integration record](evidence/0.6/integration-20261126/README.md).
+The frozen source is `9f0bbf479576c988f32b6930432f94f3bb3a30a1`, pushed on
+`codex/launch-systems-authority`. Its selected artifact is
+`/mnt/NVME4/launchsystems-runs/ls06-operator-20261126/artifacts/fourthdimension-route-operator-final-api1.jar`,
+SHA-256 `97772d1d9cba7a843ecb845a442841fe0d553edacd1dae951aef8e1777c8e010`.
+The [focused FD receipt](<../../Coasters: Fourth Dimension/docs/evidence/launch-systems-route-20261126/README.md>)
+records panel PASS and final route PASS1/1, preserved raw evidence and saved/stopped
+servers. The FD owner selectively integrated the seam into current `main` as
+`9c9d4538ea08b55ed2f960b68f465107d197689e`, verified on the remote. All three
+focused family-authority, route and operator tests passed on current main, with
+the server saved/stopped; [integration receipt](<../../Coasters: Fourth Dimension/docs/evidence/launch-systems-route-main-20261126/README.md>).
+The first consumer run exposed an early READY state before native authority's
+five stopped ticks. Follow-up source `79119987a600f8f427656bda7b404546ede3ab47`
+is pushed on the same branch and adds exact-token `dispatchReady`; LS consumes
+that native guard without adding a settling timer. The focused route case passed
+again, asserting immediate not-ready and successful settled native dispatch.
+The intermediate readiness runtime input was
+`/mnt/NVME4/launchsystems-runs/ls06-operator-20261126/artifacts/fourthdimension-route-operator-readiness-api1.jar`,
+SHA-256 `fd267b3d627c8db3a4d4b71d70ecb465bcf9a54768405d7ffb72af607884a167`.
+The previous artifact and receipts remain historical evidence. The FD owner integrated the follow-up and pushed current main
+`05d38b81e84cab6d4b436c5d584f95e97154f99c`; the coordinator independently
+verified the remote SHA. Its focused route check passed 1/1, additionally asserting
+the positive readiness result before dispatch; the server saved and stopped.
+The query never dispatches or releases, but its native safety refresh can suspend
+invalid authority or reconcile route state.
+
+Final control review found that native editor action10 includes tuning text.
+Follow-up `b6147959c16c89170067829e57deaa174bd36baf`, pushed on the same branch,
+uses an explicit `ls-operator:` prefix for the existing panel's equipment requests.
+Native Capture text stays native; untagged external Dispatch/Resume fail closed.
+The focused panel regression passed1/1 with saved/stopped server. Its selective
+main integration is pushed as `3ac29538b928b00939f1ce690f331f3a4a438a72`,
+independently remote-verified; the affected current-main panel test passed 1/1
+and the server saved/stopped, preserving current moving-retention guards. This control-only correction carries forward the
+physical route and five guard passes without repeating them.
+The selected occupied-runtime FD input is now
+`/mnt/NVME4/launchsystems-runs/ls06-operator-20261126/artifacts/fourthdimension-route-operator-tagged-api1.jar`,
+SHA-256 `d676d730a02c6f9abe217985db03a3bca424892f06236a0cf64e066b82e87738`.
+It includes the unchanged readiness/route contract; earlier artifacts stay preserved.
+
+Moving-track/specialty guards and published FD 1.5.0 artifacts are unchanged.
+Combined LS acceptance separately covers native conflict/guards, occupied
+separation, blocked-world restart/rejoin, explicit rearm and fresh dispatch.
+All owned clients, servers and displays are stopped; saved worlds/artifacts
+remain on persistent storage. The isolated FD branch is clean and pushed at
+`b6147959`; its current-main integration is independently verified at `3ac29538`.
+The isolated worktree was archived after verified shutdown; external artifacts
+and saved worlds remain preserved.
+
 ## Select an integrated source and artifact
 
 The primary checkout has since published 1.5.0 and integrated the family-power

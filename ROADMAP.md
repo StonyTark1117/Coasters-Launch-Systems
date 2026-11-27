@@ -6,7 +6,7 @@ and inputs in the [integration record](docs/evidence/0.1/integration-20261122/RE
 The **0.4.0 six-launch outcome is accepted**, including LS201–LS205,
 LS301–LS303 and LS401–LS403; see the [combined integration record](docs/evidence/0.4/integration-20261122/README.md).
 **0.5 (LS501–LS504)** is accepted; see the [family integration record](docs/evidence/0.5/integration-20261126/README.md).
-0.6 and later retain their scope and are unassigned.
+**0.6 (LS601–LS602)** is accepted; see the [route/operator integration record](docs/evidence/0.6/integration-20261126/README.md). Later packages retain their scope and are unassigned.
 [Validation](docs/VALIDATION.md) owns accepted evidence;
 [CURRENT-WORK](docs/CURRENT-WORK.md) owns assignments. Stable LS IDs retain
 scope and acceptance. Version milestones express outcomes and order, not dates.
@@ -21,7 +21,7 @@ scope and acceptance. Version milestones express outcomes and order, not dates.
 | 0.3 — Physical cable launch | Finite flywheel energy, constrained catch/carriage, release, physical return and inspected recovery | LS301–LS303 accepted: occupied pull, finite work, physical return/service and current Arrow recovery. |
 | 0.4 — Complete six-launch release | Hydraulic and pneumatic equipment join tire, LSM, LIM and flywheel; coherent usable content and interruption behavior | LS401–LS403 and preceding gates accepted: distinct occupied pressure operation, recharge, service and interruption. |
 | 0.5 — Expanded FD vehicle support | Explicit launch/brake certificates for the modern FD catalog, preserving each family's mechanics and body choices | LS501–LS504 accepted: finite family certificates, occupied controls, body-choice invariance and explicit mechanical exclusions. |
-| 0.6 — Shared ride operation | Launch Systems equipment respects FD's bounded multi-train reservations and operator controls | LS601–LS602; newly planned, after LS004 and relevant vehicle/equipment certificates. |
+| 0.6 — Shared ride operation | Launch Systems equipment respects FD's bounded multi-train reservations and operator controls | LS601–LS602 accepted; native bounded route, occupied conflict and explicit saved-world recovery. |
 | 0.9 — Release candidate | Reconciled advertised matrix, migration/multiplayer, measured costs and finished instructions | LS901–LS904; planned. Reuse accepted evidence and run only remaining/affected coverage. |
 | 1.0 — Stable | A supported, documented package with all required core and adopted FD outcomes accepted | LS1001; planned. Optional LS801–LS807 adapters ship only when independently accepted. |
 | After 1.0 | Consider moving-track launch interfaces, new specialty vehicles and wider routing | Separate feasibility/design decisions; no implied support or date. |
@@ -152,6 +152,8 @@ reason; "not tested yet" remains open. Cable/flywheel/hydraulic/pneumatic suppor
 continues to require a certified socket and measured loaded-consist limits.
 
 ## Version 0.6 ride-local operations interoperability
+
+Accepted with [integrated native and occupied recovery evidence](docs/evidence/0.6/integration-20261126/README.md); all owned runtimes saved/stopped.
 
 FD 1.2 already owns a bounded original-Arrow circuit: eight route segments,
 six reservation blocks, at most three trains. It is not an arbitrary park
