@@ -4,14 +4,16 @@
     "sha256": "c9fd469c9ac7fbcdb074ac1f97153a8fd9d8676bb04712197d7105164d12d84c",
     "base": "3ac29538b928b00939f1ce690f331f3a4a438a72",
     "branch": "main",
-    "reproducible_archive": true
+    "reproducible_archive": true,
+    "implementation_commit": "126022a8bc4e549bd7380adc5e2b23c883f135c8"
   },
   "ls": {
     "path": "/mnt/NVME4/launchsystems-runs/fd16-mounting-20261127/artifacts/coasters-launch-systems-1.0.1-mounting-socket-envelope.jar",
     "sha256": "66ec71f1990feb232715e8c692d81a778d28f7056dc2f0cf1e460218651fb723",
     "base": "be7f4f6",
     "branch": "codex/launch-systems-0-4-0",
-    "reproduced_by_adapter_check": true
+    "reproduced_by_adapter_check": true,
+    "implementation_commit": "498f70ade44e46191df77d1b165b6a66ed274421"
   },
   "occupied_fd_production_class_differences": [],
   "published": false
