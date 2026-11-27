@@ -5,6 +5,10 @@ in the existing private GitHub repository. The remote `v1.0.0` tag, stable relea
 JAR and checksum are verified. [Publication receipt](evidence/1.0/release-20261127/README.md).
 **LS 1.0.1 is also published and verified**, including its tag, JAR and checksum.
 [Publication receipt](evidence/1.0.1/release-20261127/README.md).
+The human-authorized first marketplace uploads are complete: unchanged 1.0.0 and
+1.0.1 JARs were uploaded as **betas** to new Modrinth and CurseForge projects.
+Both projects await moderation; upload success is not public approval.
+[Marketplace receipt](publishing/marketplaces-20261127/README.md).
 No release work remains assigned. Hosted CI is blocked by account billing limits.
 
 **0.9 LS901–LS904 is accepted**: finite matrix,
