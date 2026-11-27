@@ -1,0 +1,125 @@
+{
+  "1.0.1": {
+    "game_versions": [
+      "1.21.1"
+    ],
+    "loaders": [
+      "neoforge"
+    ],
+    "environment": "client_and_server",
+    "id": "x5GP1hOC",
+    "project_id": "83qFweBK",
+    "author_id": "Fi9azyOI",
+    "featured": false,
+    "name": "Launch Systems 1.0.1 (Beta)",
+    "version_number": "1.0.1",
+    "changelog": "Compatibility beta required for optional [Fourth Dimension 1.6.0](https://modrinth.com/mod/coasters-fourth-dimension/version/pPt5lvrN) integration. Launch Systems also runs without Fourth Dimension. Adds the accepted original Arrow/Wing moving-bed handoff for Tire/LSM/LIM launches and fin brakes, preserving native retention during movement. Receiving launch requires destination release, explicit arming and a fresh request. Includes the authenticated deep-dock mounting adjustment. Occupied handoff, power-loss and cold-restart checks passed. Other moving families, moving cable/swing and managed circuits are not certified.\n\nLicense-only update (2026-11-27): dedicated under CC0 1.0 Universal (CC0-1.0). Embedded license text and metadata updated; gameplay classes and other resources are unchanged.",
+    "changelog_url": null,
+    "date_published": "2026-11-27T15:21:35.816258Z",
+    "downloads": 2,
+    "version_type": "beta",
+    "status": "listed",
+    "requested_status": null,
+    "files": [
+      {
+        "id": "5r6rK4bh",
+        "hashes": {
+          "sha512": "449801c81c3728da0872a49404ccbe14e4af3d0ab9ae1410f009af87710824fc135f7e729da9e056a86749d28794103a9f0cd16e3b6242e4e547e0ec17c4feed",
+          "sha1": "dc6caab688941b636dbbea941986e8d08d3434d3"
+        },
+        "url": "https://cdn.modrinth.com/data/83qFweBK/versions/x5GP1hOC/coasters-launch-systems-1.0.1-cc0.jar",
+        "filename": "coasters-launch-systems-1.0.1-cc0.jar",
+        "primary": false,
+        "size": 844036,
+        "file_type": null
+      }
+    ],
+    "dependencies": [
+      {
+        "version_id": null,
+        "project_id": "T9PomCSv",
+        "file_name": null,
+        "dependency_type": "required"
+      },
+      {
+        "version_id": null,
+        "project_id": "LNytGWDc",
+        "file_name": null,
+        "dependency_type": "required"
+      },
+      {
+        "version_id": null,
+        "project_id": "W1ZUfWdr",
+        "file_name": null,
+        "dependency_type": "required"
+      }
+    ]
+  },
+  "1.0.0": {
+    "game_versions": [
+      "1.21.1"
+    ],
+    "loaders": [
+      "neoforge"
+    ],
+    "environment": "client_and_server",
+    "id": "DcYKnKNH",
+    "project_id": "83qFweBK",
+    "author_id": "Fi9azyOI",
+    "featured": false,
+    "name": "Launch Systems 1.0.0 (Beta)",
+    "version_number": "1.0.0",
+    "changelog": "Initial standalone/fixed-track beta. Adds tire, LSM, LIM, flywheel cable, hydraulic cable and pneumatic cable launches; fin, skid and magnetic brakes; local controllers and Ponder guides. Requires Create 6.0.10, Create: Coasters Simulated 0.1.5 and Sable 2.0.6 on Minecraft 1.21.1 NeoForge. For Fourth Dimension 1.6.0 compatibility, use Launch Systems 1.0.1 instead.\n\nLicense-only update (2026-11-27): dedicated under CC0 1.0 Universal (CC0-1.0). Embedded license text and metadata updated; gameplay classes and other resources are unchanged.",
+    "changelog_url": null,
+    "date_published": "2026-11-27T15:18:24.926210Z",
+    "downloads": 1,
+    "version_type": "beta",
+    "status": "listed",
+    "requested_status": null,
+    "files": [
+      {
+        "id": "3ukk30p9",
+        "hashes": {
+          "sha512": "0590bd6fe9bfa2ac19ef7afc962897c8188c39f280d36804e2ce8adc5c6ebf806ff3a5f9f63fffaf81600f490f3aee3fb3316601758a9379dd3723e881896e91",
+          "sha1": "cbeb926e95323c526470ca46679945052c921562"
+        },
+        "url": "https://cdn.modrinth.com/data/83qFweBK/versions/DcYKnKNH/coasters-launch-systems-1.0.0-cc0.jar",
+        "filename": "coasters-launch-systems-1.0.0-cc0.jar",
+        "primary": false,
+        "size": 832083,
+        "file_type": null
+      }
+    ],
+    "dependencies": [
+      {
+        "version_id": null,
+        "project_id": "W1ZUfWdr",
+        "file_name": null,
+        "dependency_type": "required"
+      },
+      {
+        "version_id": null,
+        "project_id": "LNytGWDc",
+        "file_name": null,
+        "dependency_type": "required"
+      },
+      {
+        "version_id": null,
+        "project_id": "T9PomCSv",
+        "file_name": null,
+        "dependency_type": "required"
+      }
+    ]
+  },
+  "project": {
+    "id": "83qFweBK",
+    "slug": "coasters-launch-systems",
+    "license": {
+      "id": "CC0-1.0",
+      "name": "Creative Commons Zero v1.0 Universal",
+      "url": null
+    },
+    "status": "processing",
+    "body": "Coasters: Launch Systems adds physical launches, brakes, and local ride controls to Create: Coasters Simulated.\n\nFeatures include tire, LSM and LIM launches; flywheel, hydraulic and pneumatic cable launches; friction fin, skid and passive magnetic brakes; and in-game Ponder guides. Controllers require explicit arming and fresh launch requests, with finite work and stored energy.\n\nRequires Minecraft 1.21.1, NeoForge and Java 21. Install on both client and server with Create 6.0.10, Create: Coasters Simulated 0.1.5, Sable 2.0.6, and their dependencies.\n\nFourth Dimension is optional. Use Launch Systems 1.0.1 with Fourth Dimension 1.6.0. Tested moving-bed integration covers original Arrow/Wing handoffs with Tire/LSM/LIM launches and fin brakes. Native retention owns the train during movement; launch resumes only after destination release, receiving-side arming and a fresh request. Other moving families, moving cable/swing and managed circuits are not certified.\n\n1.0.0 is the standalone/fixed-track baseline. Choose 1.0.1 for current Fourth Dimension compatibility. These first marketplace uploads are betas. License: CC0 1.0 Universal (CC0-1.0)."
+  }
+}

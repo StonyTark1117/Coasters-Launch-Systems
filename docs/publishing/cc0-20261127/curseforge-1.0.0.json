@@ -1,0 +1,37 @@
+{
+  "response": {
+    "id": 9849322
+  },
+  "metadata": {
+    "displayName": "Launch Systems 1.0.0 (Beta, CC0)",
+    "changelog": "Initial standalone/fixed-track beta. Adds tire, LSM, LIM, flywheel cable, hydraulic cable and pneumatic cable launches; fin, skid and magnetic brakes; local controllers and Ponder guides. Requires Create 6.0.10, Create: Coasters Simulated 0.1.5 and Sable 2.0.6 on Minecraft 1.21.1 NeoForge. For Fourth Dimension 1.6.0 compatibility, use Launch Systems 1.0.1 instead.\n\nLicense-only update (2026-11-27): source code and original assets are dedicated under CC0 1.0 Universal (CC0-1.0). Embedded license text and metadata updated; gameplay classes and other resources are unchanged.",
+    "changelogType": "markdown",
+    "gameVersions": [
+      9638,
+      9639,
+      10150,
+      11135,
+      11779
+    ],
+    "releaseType": "beta",
+    "relations": {
+      "projects": [
+        {
+          "slug": "create",
+          "projectID": 328085,
+          "type": "requiredDependency"
+        },
+        {
+          "slug": "create-coasters-simulated",
+          "projectID": 1601871,
+          "type": "requiredDependency"
+        },
+        {
+          "slug": "sable",
+          "projectID": 1312371,
+          "type": "requiredDependency"
+        }
+      ]
+    }
+  }
+}

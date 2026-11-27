@@ -1,0 +1,42 @@
+{
+  "response": {
+    "id": 9849324
+  },
+  "metadata": {
+    "displayName": "Launch Systems 1.0.1 (Beta, CC0)",
+    "changelog": "Compatibility beta required for optional [Fourth Dimension 1.6.0](https://modrinth.com/mod/coasters-fourth-dimension/version/pPt5lvrN) integration. Launch Systems also runs without Fourth Dimension. Adds the accepted original Arrow/Wing moving-bed handoff for Tire/LSM/LIM launches and fin brakes, preserving native retention during movement. Receiving launch requires destination release, explicit arming and a fresh request. Includes the authenticated deep-dock mounting adjustment. Occupied handoff, power-loss and cold-restart checks passed. Other moving families, moving cable/swing and managed circuits are not certified.\n\nLicense-only update (2026-11-27): source code and original assets are dedicated under CC0 1.0 Universal (CC0-1.0). Embedded license text and metadata updated; gameplay classes and other resources are unchanged.",
+    "changelogType": "markdown",
+    "gameVersions": [
+      9638,
+      9639,
+      10150,
+      11135,
+      11779
+    ],
+    "releaseType": "beta",
+    "relations": {
+      "projects": [
+        {
+          "slug": "create",
+          "projectID": 328085,
+          "type": "requiredDependency"
+        },
+        {
+          "slug": "create-coasters-simulated",
+          "projectID": 1601871,
+          "type": "requiredDependency"
+        },
+        {
+          "slug": "sable",
+          "projectID": 1312371,
+          "type": "requiredDependency"
+        },
+        {
+          "slug": "coasters-fourth-dimension",
+          "projectID": 1809752,
+          "type": "optionalDependency"
+        }
+      ]
+    }
+  }
+}

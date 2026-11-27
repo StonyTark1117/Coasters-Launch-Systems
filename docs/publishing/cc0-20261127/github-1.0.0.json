@@ -1,0 +1,21 @@
+{
+  "id": 460308439,
+  "tag_name": "v1.0.0",
+  "html_url": "https://github.com/StonyTark1117/Coasters-Launch-Systems/releases/tag/v1.0.0",
+  "assets": [
+    {
+      "id": 801089049,
+      "name": "coasters-launch-systems-1.0.0.jar",
+      "digest": "sha256:ac9ccdc01dc05b99f98c9996ccbb39de43f54aab4a1a5179e3e260927b9b5493",
+      "size": 832083
+    },
+    {
+      "id": 801089051,
+      "name": "SHA256SUMS",
+      "digest": "sha256:b45f9fabb24135dfbb81329529b19e56f4c87a708aad58466a26efd52716abc1",
+      "size": 100
+    }
+  ],
+  "packaging_commit": "6bf06b44577602fed3779c60c49e855e43ebc02a",
+  "download_bytes_verified": true
+}

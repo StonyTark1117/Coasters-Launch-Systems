@@ -1,0 +1,30 @@
+[
+  {
+    "version": "1.0.0",
+    "old_path": "/mnt/NVME4/launchsystems-runs/ls10-release-20261127/artifacts/coasters-launch-systems-1.0.0.jar",
+    "old_sha256": "02573aeeab64bfa38da2ca41b2927f46649e2a4044264350f15f13f9c8e69176",
+    "path": "/mnt/NVME4/launchsystems-runs/cc0-20261127/1.0.0/coasters-launch-systems-1.0.0.jar",
+    "sha256": "ac9ccdc01dc05b99f98c9996ccbb39de43f54aab4a1a5179e3e260927b9b5493",
+    "sha512": "0590bd6fe9bfa2ac19ef7afc962897c8188c39f280d36804e2ce8adc5c6ebf806ff3a5f9f63fffaf81600f490f3aee3fb3316601758a9379dd3723e881896e91",
+    "sha1": "cbeb926e95323c526470ca46679945052c921562",
+    "changed_entries": [
+      "META-INF/neoforge.mods.toml",
+      "META-INF/LICENSE-coasterslaunchsystems.txt"
+    ],
+    "all_other_entries_identical": true
+  },
+  {
+    "version": "1.0.1",
+    "old_path": "/mnt/NVME4/launchsystems-runs/ls101-release-20261127/upload/coasters-launch-systems-1.0.1.jar",
+    "old_sha256": "66ec71f1990feb232715e8c692d81a778d28f7056dc2f0cf1e460218651fb723",
+    "path": "/mnt/NVME4/launchsystems-runs/cc0-20261127/1.0.1/coasters-launch-systems-1.0.1.jar",
+    "sha256": "cf6581db4b7b12f59daa52d81d2a67bed21650fa28196f828568116da8a2014f",
+    "sha512": "449801c81c3728da0872a49404ccbe14e4af3d0ab9ae1410f009af87710824fc135f7e729da9e056a86749d28794103a9f0cd16e3b6242e4e547e0ec17c4feed",
+    "sha1": "dc6caab688941b636dbbea941986e8d08d3434d3",
+    "changed_entries": [
+      "META-INF/neoforge.mods.toml",
+      "META-INF/LICENSE-coasterslaunchsystems.txt"
+    ],
+    "all_other_entries_identical": true
+  }
+]

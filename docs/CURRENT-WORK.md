@@ -9,7 +9,11 @@ The human-authorized first marketplace uploads are complete: unchanged 1.0.0 and
 1.0.1 JARs were uploaded as **betas** to new Modrinth and CurseForge projects.
 Both projects await moderation; upload success is not public approval.
 [Marketplace receipt](publishing/marketplaces-20261127/README.md).
-No release work remains assigned. Hosted CI is blocked by account billing limits.
+The authorized CC0-1.0 license-only replacement is complete for both versions
+on GitHub, Modrinth and CurseForge. The missing CurseForge 1.0.1 changelog is
+fixed; old CurseForge files are archived, and replacements await moderation.
+Gameplay acceptance carries forward. [CC0 receipt](publishing/cc0-20261127/README.md).
+Hosted CI is blocked by account billing limits.
 
 **0.9 LS901–LS904 is accepted**: finite matrix,
 provider lifecycle, performance/accounting, remaining occupied demonstrations,

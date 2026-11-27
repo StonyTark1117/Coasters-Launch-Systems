@@ -1,5 +1,7 @@
 # First marketplace uploads — 2026-11-27
 
+> Superseded for license and artifact identities by the [CC0 replacement receipt](../cc0-20261127/README.md). This record preserves the initial uploads.
+
 The human authorized creation of Launch Systems projects and upload of both
 1.0.0 and 1.0.1 as betas using the existing Zen browser. All four uploads are
 confirmed. Both new projects await moderation; public availability is not yet
