@@ -1,12 +1,17 @@
 # Current work and resumption queue
 
-Updated **2026-11-27**. **0.9 LS901–LS904 is accepted**: finite matrix,
+Updated **2026-11-27**. The active assignment is **LS1001: publish standalone 1.0**.
+Root owns version/package qualification and GitHub publication; foundation audits
+prerequisites, bridge audits dependency/license/install boundaries, and rides
+prepares release notes. The existing private repository remains the destination.
+
+**0.9 LS901–LS904 is accepted**: finite matrix,
 provider lifecycle, performance/accounting, remaining occupied demonstrations,
 and package/documentation review are complete. All owned runtimes saved/stopped.
 Git delivery uses the existing branch; no runtime case remains assigned. [Integration evidence](evidence/0.9/integration-20261127/README.md).
 **0.1–0.6 remain accepted**, with pushed starting HEAD
-`ba555e9949853b142d9a1e2d7d546ee4ac24d1f2`. Optional adapters and 1.0 publication
-remain outside this assignment; do not create a 0.7 milestone.
+`a97c63f224f4344f677080f9e937d05d47bd3e9c` at the start of 1.0 work.
+Optional adapters remain outside this assignment; do not create a 0.7 milestone.
 
 Checkout: `codex/launch-systems-0-4-0` at
 `/home/braydon/Documents/Coasters: Launch Systems`. Continue this branch;
@@ -101,7 +106,7 @@ the primary checkout’s pre-existing untracked `logs/` remains untouched.
 | Complete — LS902 | Provider lifecycle | [Actual same-world installed/absent/restored provider and owner contracts](evidence/0.9/lifecycle-matrix-20261127/README.md); saved identity prevents ordinary fallback while preserving deliberate live handoff. Accepted older lifecycle evidence retained. | `/root/foundation`; closed and cleaned |
 | Complete — LS903 | Performance and resource accounting | [Final integrated callback measurement](PERFORMANCE.md), exact boundaries and energy/pressure/heat reconciliation. FE remains outside scope. | `/root/bridge`; closed and cleaned |
 | Complete — LS904 | Release gameplay and package review | [Four real occupied FD demonstrations](evidence/0.9/occupied-20261127/README.md) complete six-launch coverage; [package audit](evidence/0.9/integration-20261127/README.md) reconciles instructions, tutorials, licenses and exact pins. | `/root/rides` and `/root`; closed and cleaned |
-| Later — LS1001 | 1.0 publication | Consumes accepted core gates; not authorized by this 0.9 Git-delivery assignment. | Unassigned |
+| Active — LS1001 | Standalone 1.0 publication | Final version-only package, exact parity with accepted 0.9, installation/release notes, tag and GitHub release verification. Reuse all accepted core evidence. | `/root` integration; agents review/notes |
 
 Record run ownership in the owned run.json and shutdown in evidence. Follow
 [AGENTS](../AGENTS.md), [validation policy](VALIDATION-POLICY.md) and

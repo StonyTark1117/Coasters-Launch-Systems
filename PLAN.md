@@ -3,7 +3,7 @@
 Updated **2026-11-27**. Build a standalone Create: Coasters Simulated addon
 with physical tire, LSM, LIM, flywheel, hydraulic and pneumatic launches,
 distinct brakes, finite resources and explicit vehicle/ride ownership. Native
-mechanics and tool workflows are accepted through `0.9.0`, including the foundation, usable rides, linear/skid,
+mechanics and tool workflows are accepted through the `1.0.0` release baseline, including the foundation, usable rides, linear/skid,
 physical cable, pressure, finite modern FD family certificates and bounded Arrow route/operator outcomes. The accepted 0.9 release candidate reconciles its matrix, lifecycle, measured cost and remaining occupied gameplay.
 
 The [version roadmap](ROADMAP.md) is authoritative for scope and acceptance;
@@ -35,7 +35,7 @@ player-tool evidence. Original design provenance remains in
    variants never create new mechanical eligibility. Optional operating and
    presentation adapters remain independent. **0.9** reconciliation is accepted in
    its [integration record](docs/evidence/0.9/integration-20261127/README.md);
-   1.0 publication remains separate.
+   LS1001 publishes the unchanged qualified package.
 
 ## Product scope and dependencies
 
@@ -205,4 +205,4 @@ Validation must include ordinary carts, maximum declared consists, empty and une
 
 Record launch time/distance/speed, impulse/work budget, braking distance and creep, free rotor response, constraint error, coupling retention, and server/frame costs. Establish numerical tolerances from baseline fixtures before calling any gate complete. Every advertised mechanism requires an occupied gameplay demonstration and packaged dedicated-server evidence; a rendered model or command-applied velocity is insufficient.
 
-Current-core qualification, authority migration, 0.5 family certificates and 0.6 bounded route interoperability are complete. The accepted 0.9 outcome reconciles the finite support matrix, provider lifecycle and occupied demonstrations, measured callback costs and packaged instructions. Optional adapters and 1.0 publication are separate assignments.
+Current-core qualification, authority migration, 0.5 family certificates and 0.6 bounded route interoperability are complete. The accepted 0.9 outcome reconciles the finite support matrix, provider lifecycle and occupied demonstrations, measured callback costs and packaged instructions. LS1001 publishes this unchanged qualified package; optional adapters remain separate.

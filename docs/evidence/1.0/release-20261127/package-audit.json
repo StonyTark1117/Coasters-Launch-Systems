@@ -1,0 +1,19 @@
+{
+  "release_version": "1.0.0",
+  "jar": "coasters-launch-systems-1.0.0.jar",
+  "sha256": "02573aeeab64bfa38da2ca41b2927f46649e2a4044264350f15f13f9c8e69176",
+  "accepted_09_sha256": "693a955ed3855a2a4cfa212d562b01fcce270501db0868629029d42f2518adca",
+  "zip_entries": 409,
+  "identical_class_entries": 183,
+  "identical_runtime_classes": 109,
+  "json_documents_parsed": 100,
+  "only_changed_entry": [
+    "META-INF/neoforge.mods.toml"
+  ],
+  "only_change": "mod version 0.9.0 to 1.0.0 in expanded NeoForge metadata",
+  "bundled_dependency_jars": [],
+  "license_matches_source": true,
+  "dependency_pins_unchanged": true,
+  "all_other_resources_identical": true,
+  "expanded_metadata": "modLoader=\"javafml\"\nloaderVersion=\"[4,)\"\nlicense=\"MIT\"\n\n[[mods]]\nmodId=\"coasterslaunchsystems\"\nversion=\"1.0.0\"\ndisplayName=\"Coasters: Launch Systems\"\ndescription='''Physical launch and brake equipment for Create: Coasters Simulated.'''\n\n[[dependencies.coasterslaunchsystems]]\nmodId=\"neoforge\"\ntype=\"required\"\nversionRange=\"[21.1.256]\"\nordering=\"NONE\"\nside=\"BOTH\"\n[[dependencies.coasterslaunchsystems]]\nmodId=\"minecraft\"\ntype=\"required\"\nversionRange=\"[1.21.1]\"\nordering=\"NONE\"\nside=\"BOTH\"\n[[dependencies.coasterslaunchsystems]]\nmodId=\"create\"\ntype=\"required\"\nversionRange=\"[6.0.10]\"\nordering=\"AFTER\"\nside=\"BOTH\"\n[[dependencies.coasterslaunchsystems]]\nmodId=\"ponder\"\ntype=\"required\"\nversionRange=\"[1.0.82,)\"\nordering=\"AFTER\"\nside=\"CLIENT\"\n[[dependencies.coasterslaunchsystems]]\nmodId=\"sable\"\ntype=\"required\"\nversionRange=\"[2.0.6]\"\nordering=\"AFTER\"\nside=\"BOTH\"\n[[dependencies.coasterslaunchsystems]]\nmodId=\"simulatedcoasters\"\ntype=\"required\"\nversionRange=\"[0.1.5]\"\nordering=\"AFTER\"\nside=\"BOTH\"\n\n[[mixins]]\nconfig=\"coasterslaunchsystems.mixins.json\"\n\n[[dependencies.coasterslaunchsystems]]\n# Exact selected profile; current adapter additionally requires registered external authority API 1. See docs/FOURTH-DIMENSION-HANDOFF.md before changing this pin.\nmodId=\"fourthdimension\"\ntype=\"optional\"\nversionRange=\"[1.1.0]\"\nordering=\"AFTER\"\nside=\"BOTH\"\n\n# Scheduler compatibility is inspected against the selected exact Veil release.\n[[dependencies.coasterslaunchsystems]]\nmodId=\"veil\"\ntype=\"required\"\nversionRange=\"[4.3.2]\"\nordering=\"AFTER\"\nside=\"CLIENT\"\n"
+}

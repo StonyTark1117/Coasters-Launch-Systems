@@ -6,7 +6,7 @@ and inputs in the [integration record](docs/evidence/0.1/integration-20261122/RE
 The **0.4.0 six-launch outcome is accepted**, including LS201–LS205,
 LS301–LS303 and LS401–LS403; see the [combined integration record](docs/evidence/0.4/integration-20261122/README.md).
 **0.5 (LS501–LS504)** is accepted; see the [family integration record](docs/evidence/0.5/integration-20261126/README.md).
-**0.6 (LS601–LS602)** is accepted; see the [route/operator integration record](docs/evidence/0.6/integration-20261126/README.md). **0.9 (LS901–LS904)** is assigned for release-candidate qualification. Optional adapters and 1.0 publication remain outside this assignment.
+**0.6 (LS601–LS602)** is accepted; see the [route/operator integration record](docs/evidence/0.6/integration-20261126/README.md). **0.9 (LS901–LS904)** is accepted. **1.0 (LS1001)** is qualified for publication on the same supported baseline; publication verification is the remaining action. Optional adapters remain outside this assignment.
 [Validation](docs/VALIDATION.md) owns accepted evidence;
 [CURRENT-WORK](docs/CURRENT-WORK.md) owns assignments. Stable LS IDs retain
 scope and acceptance. Version milestones express outcomes and order, not dates.
@@ -23,15 +23,15 @@ scope and acceptance. Version milestones express outcomes and order, not dates.
 | 0.5 — Expanded FD vehicle support | Explicit launch/brake certificates for the modern FD catalog, preserving each family's mechanics and body choices | LS501–LS504 accepted: finite family certificates, occupied controls, body-choice invariance and explicit mechanical exclusions. |
 | 0.6 — Shared ride operation | Launch Systems equipment respects FD's bounded multi-train reservations and operator controls | LS601–LS602 accepted; native bounded route, occupied conflict and explicit saved-world recovery. |
 | 0.9 — Release candidate | Reconciled advertised matrix, migration/multiplayer, measured costs and finished instructions | LS901–LS904 accepted; finite matrix, provider lifecycle, measured cost and occupied release gameplay reconciled. |
-| 1.0 — Stable | A supported, documented package with all required core and adopted FD outcomes accepted | LS1001; planned. Optional LS801–LS807 adapters ship only when independently accepted. |
+| 1.0 — Stable | A supported, documented package with all required core and adopted FD outcomes accepted | LS1001; qualified, publication verification in progress. Optional LS801–LS807 adapters ship only when independently accepted. |
 | After 1.0 | Consider moving-track launch interfaces, new specialty vehicles and wider routing | Separate feasibility/design decisions; no implied support or date. |
 
 0.1–0.4 are cumulative acceptance milestones, not four required publication
 ceremonies. Preserve the original six-launch scope. Do not delay 0.4 for the
 new 0.5/0.6 expansion or optional adapters. Newly allocated 0.5/0.6 outcomes
 belong to the expanded 1.0 plan. FD 1.4 specialty vehicles and moving tracks
-remain outside that finite catalog. No source version bump, upload or tag is
-part of this planning change.
+remain outside that finite catalog. The active LS1001 assignment publishes the qualified standalone 1.0 package;
+optional adapters remain separate.
 
 ## What changed and what to do next
 
@@ -188,7 +188,8 @@ Adapters can be developed alongside core releases, but do not block a standalone
 ## Version 0.9 release candidate and version 1.0
 
 0.9 is accepted with the [integration record](docs/evidence/0.9/integration-20261127/README.md).
-All owned runtimes saved/stopped. Optional adapters and LS1001 publication remain separate.
+All owned runtimes saved/stopped. LS1001 now consumes this accepted baseline for
+[1.0 publication](docs/evidence/1.0/release-20261127/README.md); optional adapters remain separate.
 
 | ID | Work | Acceptance |
 | --- | --- | --- |

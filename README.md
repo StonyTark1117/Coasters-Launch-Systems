@@ -1,6 +1,6 @@
 # Coasters: Launch Systems
 
-A standalone Create: Coasters Simulated addon with **0.9.0 release candidate accepted**: tire,
+A standalone Create: Coasters Simulated addon with **1.0.0 standalone release**: tire,
 LSM, LIM, finite flywheel, hydraulic and pneumatic launches; friction-fin,
 skid and passive magnetic brakes; local ride control; and explicit certificates for the eligible Fourth Dimension catalog.
 
@@ -21,6 +21,10 @@ and remaining occupied FD demonstrations. Old saves must first load affected
 vehicles with 0.9 and their original provider installed, then save before provider
 removal; see the migration instructions in the operator guide.
 
+The [1.0.0 release](https://github.com/StonyTark1117/Coasters-Launch-Systems/releases/tag/v1.0.0)
+provides the JAR and checksum. [Release notes](docs/releases/1.0.0.md) list exact
+installation downloads and the optional FD snapshot boundary.
+
 For installation, braking choices, fresh requests and recovery, read the
 [current operator guide](docs/OPERATOR-GUIDE.md).
 
@@ -36,7 +40,7 @@ The [November 22 roadmap](ROADMAP.md) keeps **0.4** as the first complete
 six-launch milestone, now accepted with its core/FD authority, player rides
 and equipment/lifecycle criteria. **0.5**, also accepted, adds explicit
 certificates for the expanded FD catalog; **0.6**, now accepted, integrates its bounded multi-train operation;
-**0.9**, now accepted, reconciles the supported package; **1.0** publication remains separate. Accepted evidence carries
+**0.9**, now accepted, reconciles the supported package; **1.0** publishes that qualified standalone package. Accepted evidence carries
 forward. See [upstream dependency findings](docs/DEPENDENCY-REVIEW-2026-11-22.md)
 and the [execution guide](docs/ROADMAP-EXECUTION.md).
 

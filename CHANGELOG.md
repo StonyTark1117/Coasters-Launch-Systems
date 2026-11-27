@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0 — standalone stable release (2026-11-27)
+
+- Publish the accepted six-launch package for Minecraft 1.21.1 / NeoForge
+  21.1.256, with exact installation downloads, a checksum and migration notes.
+- Promote 0.9 without gameplay, dependency or asset changes: all 183 compiled
+  class entries and every other resource match except the mod-version metadata.
+  The Java 21 build and 31/31 unit tests passed locally.
+- Keep optional integrations scoped to their accepted evidence. The exact FD
+  qualification snapshot is unpublished and not included; standalone operation
+  does not require FD. Optional LS801–LS807 adapters remain unadvertised.
+- [Release notes](docs/releases/1.0.0.md) and
+  [qualification](docs/evidence/1.0/release-20261127/README.md) record the artifact,
+  carried evidence and hosted CI limitations.
+
 ## 0.9.0 — release candidate (2026-11-27)
 
 - Preserve optional vehicle ownership across provider removal and restoration.
