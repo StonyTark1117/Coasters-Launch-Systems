@@ -1,6 +1,6 @@
 # Coasters: Launch Systems
 
-A standalone Create: Coasters Simulated addon with **1.0.0 standalone release**: tire,
+A standalone Create: Coasters Simulated addon with **1.0.1 release and FD 1.6 compatibility**: tire,
 LSM, LIM, finite flywheel, hydraulic and pneumatic launches; friction-fin,
 skid and passive magnetic brakes; local ride control; and explicit certificates for the eligible Fourth Dimension catalog.
 
@@ -21,9 +21,11 @@ and remaining occupied FD demonstrations. Old saves must first load affected
 vehicles with 0.9 and their original provider installed, then save before provider
 removal; see the migration instructions in the operator guide.
 
-The [1.0.0 release](https://github.com/StonyTark1117/Coasters-Launch-Systems/releases/tag/v1.0.0)
-provides the JAR and checksum. [Release notes](docs/releases/1.0.0.md) list exact
-installation downloads and the optional FD snapshot boundary.
+The [1.0.1 release](https://github.com/StonyTark1117/Coasters-Launch-Systems/releases/tag/v1.0.1)
+provides the JAR and checksum. Use **LS 1.0.1 with Fourth Dimension 1.6.0**;
+LS 1.0.0 does not include the current adapter. [Release notes](docs/releases/1.0.1.md)
+describe installation and the accepted original Arrow/Wing moving handoff.
+Standalone operation and prior fixed-track certificates remain supported.
 
 For installation, braking choices, fresh requests and recovery, read the
 [current operator guide](docs/OPERATOR-GUIDE.md).

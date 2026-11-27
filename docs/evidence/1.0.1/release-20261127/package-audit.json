@@ -1,0 +1,18 @@
+{
+  "sha256": "66ec71f1990feb232715e8c692d81a778d28f7056dc2f0cf1e460218651fb723",
+  "byte_identical_to_accepted_integration": true,
+  "entries": 415,
+  "class_entries": 186,
+  "dependencies": {
+    "neoforge": "[21.1.256]",
+    "minecraft": "[1.21.1]",
+    "create": "[6.0.10]",
+    "ponder": "[1.0.82,)",
+    "sable": "[2.0.6]",
+    "simulatedcoasters": "[0.1.5]",
+    "fourthdimension": "[1.1.0],[1.6.0]",
+    "veil": "[4.3.2]"
+  },
+  "fd_classes_bundled": false,
+  "all_json_parsed": true
+}

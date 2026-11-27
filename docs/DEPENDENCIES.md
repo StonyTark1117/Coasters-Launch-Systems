@@ -84,7 +84,7 @@ mod discovery selects one Create instance, as shown by the packaged startup log.
 
 ## FD 1.6 companion adapter
 
-Unpublished LS 1.0.1 adds exact FD 1.6.0 with schema9 and moving API1; the earlier
+LS 1.0.1 adds exact FD 1.6.0 with schema9 and moving API1; the earlier
 FD 1.1.0/schema8 external-API1 line remains supported. Published LS 1.0.0 is not
 this adapter. The [integration record](evidence/fd16-integration-20261127/README.md)
 contains the consumed package identities and finite original Arrow/Wing moving

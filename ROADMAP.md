@@ -11,6 +11,10 @@ LS301–LS303 and LS401–LS403; see the [combined integration record](docs/evid
 [CURRENT-WORK](docs/CURRENT-WORK.md) owns assignments. Stable LS IDs retain
 scope and acceptance. Version milestones express outcomes and order, not dates.
 
+**1.0.1** is the accepted FD 1.6 companion release, with original Arrow/Wing
+moving handoffs and unchanged standalone/fixed-track certificates.
+[Release notes](docs/releases/1.0.1.md) define the compatibility scope.
+
 ## Release map
 
 | Version / stage | Player outcome | Packages / status |

@@ -3,8 +3,8 @@
 Updated **2026-11-27**. **LS1001 is complete: standalone 1.0.0 is published**
 in the existing private GitHub repository. The remote `v1.0.0` tag, stable release,
 JAR and checksum are verified. [Publication receipt](evidence/1.0/release-20261127/README.md).
-No core runtime or publication case remains assigned; optional adapters await a
-separate assignment. Hosted CI cannot start because of account billing limits.
+The accepted FD 1.6 companion is now assigned for LS 1.0.1 publication by the
+human. Hosted CI has been unavailable because of account billing limits.
 
 **0.9 LS901–LS904 is accepted**: finite matrix,
 provider lifecycle, performance/accounting, remaining occupied demonstrations,
@@ -19,11 +19,14 @@ Optional adapters remain outside this assignment; do not create a 0.7 milestone.
 The human's FD1.6 assignment authorizes the bounded LS companion repair. Root
 FD coordinator owns adapter/package integration; the existing LS owner supplied
 the finished mounting helper and its focused tests. [Contract and guidance](FD16-MOVING-HANDOFF.md).
-Companion version 1.0.1 is accepted and unpublished. Original Arrow/Wing native
+Companion version 1.0.1 is accepted. Original Arrow/Wing native
 consumers, two-client occupied/restart and moving dependency-loss checks pass.
 [Integration record](evidence/fd16-integration-20261127/README.md).
-Accepted standalone1.0 and prior fixed-track cases remain closed. No publication
-or tags are authorized. All mounting-owner runtimes are stopped.
+Accepted standalone1.0 and prior fixed-track cases remain closed. The human
+authorized Git push and 1.0.1 publication on 2026-11-27. The LS owner is verifying
+the identical release artifact, tag and uploads; see
+[release record](evidence/1.0.1/release-20261127/README.md).
+All test runtimes are stopped.
 
 Checkout: `codex/launch-systems-0-4-0` at
 `/home/braydon/Documents/Coasters: Launch Systems`. Continue this branch;

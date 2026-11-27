@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.1 — Fourth Dimension 1.6 companion (2026-11-27)
+
+- Add the versioned FD 1.6 adapter and accepted original Arrow/Wing moving-bed
+  handoffs with fixed Tire/LSM/LIM equipment and fin brakes.
+- Preserve native retention, explicit receiving arm and fresh launch requests
+  through movement, power interruption, restart and dependency/controller loss.
+- Add authenticated below-dock mounting with a horizontal allowance matching
+  FD's 25mm socket tolerance; ordinary reach remains unchanged.
+- Publish the exact accepted integration JAR, with standalone/fixed-track
+  evidence retained. [Release notes](docs/releases/1.0.1.md) and
+  [integration evidence](docs/evidence/fd16-integration-20261127/README.md).
+
 ## 1.0.0 — standalone stable release (2026-11-27)
 
 - Publish the accepted six-launch package for Minecraft 1.21.1 / NeoForge

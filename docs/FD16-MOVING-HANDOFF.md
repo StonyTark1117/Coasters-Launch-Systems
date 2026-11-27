@@ -1,10 +1,10 @@
 # Fourth Dimension 1.6 moving handoff
 
-Acceptance complete, 2026-11-27; companion remains unpublished.
+Acceptance complete, 2026-11-27; companion release is LS 1.0.1.
 [Integration evidence](evidence/fd16-integration-20261127/README.md). Source owner for this adapter: `/root` in the existing
 `codex/launch-systems-0-4-0` checkout, starting from published source `041e21d`
-and publication receipt commit `be7f4f6`. Version 1.0.1 is an unpublished
-integration candidate; published 1.0.0 remains unchanged.
+and publication receipt commit `be7f4f6`. Use version 1.0.1 for FD 1.6.0;
+the earlier published 1.0.0 remains unchanged. [Release notes](releases/1.0.1.md).
 
 The schema-8/API1 fixed-track adapter remains available. Schema 9 requires
 Fourth Dimension's explicit `EXTERNAL_MOVING_API = 1` and exact FD 1.6.0 loader
